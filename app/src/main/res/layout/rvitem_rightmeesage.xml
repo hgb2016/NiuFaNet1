@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/shape_coner6e"
+    android:layout_marginTop="13dp"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_marginLeft="18dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center_vertical"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="40dp"
+            android:background="@drawable/shape_circle_cal3"
+            android:visibility="gone"
+            android:layout_height="40dp" />
+        <TextView
+            android:id="@+id/username_tv"
+            android:layout_width="wrap_content"
+            android:text="水无伤"
+            android:textSize="13sp"
+            android:textColor="@color/black"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/typetip_tv"
+            android:layout_width="wrap_content"
+            android:text="邀请你参加"
+            android:textSize="13sp"
+            android:textColor="@color/color6c"
+            android:layout_marginLeft="9dp"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <TextView
+        android:id="@+id/content_tv"
+        android:layout_width="wrap_content"
+        android:textColor="@color/black"
+        android:text="你哈哈看啊哈哈打卡阿辉阿卡哈"
+        android:textSize="13sp"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="18dp"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/duration_tv"
+        android:layout_width="wrap_content"
+        android:textColor="@color/color6c"
+        android:text="11.13(周六) 16:30 ~ 17:45"
+        android:textSize="12sp"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="18dp"
+        android:layout_height="wrap_content" />
+    <RelativeLayout
+        android:id="@+id/old_relay"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="已过期"
+            android:layout_alignParentRight="true"
+            android:layout_margin="10dp"
+            android:textSize="12sp"
+            android:textColor="@color/color6c"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+    <LinearLayout
+        android:id="@+id/reply_lay"
+        android:layout_width="match_parent"
+        android:gravity="end"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/refuse_tv"
+            android:layout_width="wrap_content"
+            android:text="拒绝"
+            android:paddingTop="9dp"
+            android:paddingLeft="24dp"
+            android:paddingBottom="9dp"
+            android:paddingRight="24dp"
+            android:textColor="@color/color6c"
+            android:background="@drawable/shape_feedback_stroke"
+            android:layout_marginRight="22dp"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/agree_tv"
+            android:layout_width="wrap_content"
+            android:text="同意"
+            android:paddingTop="9dp"
+            android:paddingLeft="24dp"
+            android:paddingBottom="9dp"
+            android:paddingRight="24dp"
+            android:textColor="@color/colorfe"
+            android:background="@drawable/shape_candy1"
+            android:layout_marginRight="14dp"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="wrap_content">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_marginTop="23dp"
+            android:background="@drawable/shape_white_corner"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="欧阳"
+                android:textColor="@color/color26"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="30dp"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="邀请您参加日程"
+                android:textSize="15sp"
+                android:textColor="@color/main_botblack"
+                android:layout_marginLeft="14dp"
+                android:layout_marginTop="13dp"
+                android:layout_height="wrap_content" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_marginTop="15dp"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:src="@mipmap/event"
+                    android:layout_marginLeft="15dp"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:text="周末去XXX讨论app的开发流程上岛咖啡拉时代峰峻sad六块腹肌施蒂利克"
+                    android:layout_marginRight="15dp"
+                    android:textSize="15sp"
+                    android:textColor="@color/color31"
+                    android:layout_marginLeft="21dp"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_marginTop="15dp"
+                android:gravity="center_vertical"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:src="@mipmap/time"
+                    android:layout_marginLeft="15dp"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:text="11.03(周四) 16:00~18:00"
+                    android:layout_marginLeft="15dp"
+                    android:textColor="@color/color333"
+                    android:textSize="12sp"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_marginTop="15dp"
+                android:gravity="center_vertical"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:src="@mipmap/location"
+                    android:layout_marginLeft="15dp"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:text="深圳市南山区沙河西路2009号2402牛法网"
+                    android:textColor="@color/color333"
+                    android:textSize="12sp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_marginTop="15dp"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:src="@mipmap/write"
+                    android:layout_marginLeft="15dp"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:text="撒酒疯SDK垃圾焚烧拉克几十地方改肯定是第三方了的困惑分党纪国法的两个兄"
+                    android:textColor="@color/color333"
+                    android:textSize="12sp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_marginTop="47dp"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="18dp"
+                    android:gravity="end"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:layout_width="67.5dp"
+                        android:background="@color/candy"
+                        android:layout_height="69.5dp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:text="在微信中长按图片参加邀约"
+                        android:textSize="10sp"
+                        android:textColor="@color/color333"
+                        android:layout_marginTop="9dp"
+                        android:layout_marginBottom="12dp"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+            </RelativeLayout>
+        </LinearLayout>
+        <ImageView
+            android:layout_width="46dp"
+            android:background="@drawable/shape_circle_voice"
+            android:layout_centerHorizontal="true"
+
+            android:layout_height="46dp" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:paddingBottom="2dp"
+        android:paddingTop="5dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/shape_white_corner"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginLeft="70dp"
+            android:gravity="center"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/wechat_iv"
+                android:layout_width="wrap_content"
+                android:src="@mipmap/wechat"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="微信好友"
+                android:textSize="10sp"
+                android:textColor="@color/color333"
+                android:layout_marginTop="5dp"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="70dp"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/qq_iv"
+                android:layout_width="wrap_content"
+                android:src="@mipmap/qq"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="QQ好友"
+                android:textSize="10sp"
+                android:textColor="@color/color333"
+                android:layout_marginTop="5dp"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </RelativeLayout>
+</RelativeLayout>

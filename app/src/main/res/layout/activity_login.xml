@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/root_lay"
+    android:background="@drawable/them_bg2"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_height">
+
+        <RelativeLayout
+            android:id="@+id/back_relay"
+            android:layout_width="@dimen/dimen45"
+            android:layout_height="@dimen/dimen45"
+            android:layout_marginLeft="@dimen/padding15">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/left_arrow" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:layout_height="wrap_content">
+
+        <com.dream.NiuFaNet.CustomView.ContentTextview
+            android:layout_width="wrap_content"
+            android:text="WELCOME"
+            android:textSize="36sp"
+            android:textColor="@color/white"
+            android:layout_marginTop="87dp"
+            android:layout_height="wrap_content" />
+
+        <RelativeLayout
+            android:layout_width="264.5dp"
+            android:layout_marginTop="27dp"
+            android:gravity="center_vertical"
+            android:background="@drawable/shape_inputkuang"
+            android:layout_height="46dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:src="@mipmap/icon_id"
+                android:padding="15dp"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:id="@+id/phone_edt"
+                android:layout_width="match_parent"
+                android:gravity="center"
+                android:hint="输入您的账号"
+                android:textSize="12sp"
+                android:textColorHint="@color/white_alpha64"
+                android:background="@null"
+                android:layout_centerInParent="true"
+                android:textColor="@color/white"
+                android:layout_marginRight="@dimen/padding15"
+                android:inputType="phone"
+                android:layout_height="match_parent" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="264.5dp"
+            android:layout_marginTop="33dp"
+            android:gravity="center_vertical"
+            android:background="@drawable/shape_inputkuang"
+            android:layout_height="46dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:src="@mipmap/icon_key"
+                android:padding="15dp"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:id="@+id/pwd_edt"
+                android:layout_width="match_parent"
+                android:gravity="center"
+                android:hint="输入您的密码"
+                android:textSize="12sp"
+                android:textColorHint="@color/white_alpha64"
+                android:background="@null"
+                android:layout_centerInParent="true"
+                android:textColor="@color/white"
+                android:inputType="textPassword"
+                android:layout_marginRight="@dimen/padding15"
+                android:layout_height="match_parent" />
+        </RelativeLayout>
+
+        <com.dream.NiuFaNet.CustomView.ContentTextview
+            android:id="@+id/findpwd_tv"
+            android:layout_width="wrap_content"
+            android:text="忘记密码?"
+            android:layout_marginTop="17dp"
+            android:textColor="@color/white_alpha64"
+            android:textSize="12sp"
+            android:layout_height="wrap_content" />
+
+        <com.dream.NiuFaNet.CustomView.ContentTextview
+            android:id="@+id/login_tv"
+            android:layout_width="100dp"
+            android:text="登录"
+            android:layout_marginTop="35dp"
+            android:background="@drawable/shape_registerkuang"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:layout_height="47dp" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <com.dream.NiuFaNet.CustomView.ContentTextview
+                android:layout_width="wrap_content"
+                android:text="其他方式登录"
+                android:textColor="@color/white_alpha64"
+                android:textSize="12sp"
+                android:layout_marginLeft="65dp"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/padding15"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/qq_login"
+                android:layout_width="wrap_content"
+                android:src="@mipmap/qq"
+                android:layout_marginLeft="57.5dp"
+                android:layout_centerVertical="true"
+                android:layout_height="wrap_content" />
+            <ImageView
+                android:id="@+id/wechat_login"
+                android:layout_width="wrap_content"
+                android:src="@mipmap/wechat"
+                android:layout_toRightOf="@+id/qq_login"
+                android:layout_marginLeft="24dp"
+                android:layout_centerVertical="true"
+                android:layout_height="wrap_content" />
+            <RelativeLayout
+                android:id="@+id/register_relay"
+                android:layout_width="@dimen/login_width"
+                android:layout_alignParentRight="true"
+                android:layout_height="@dimen/login_height">
+                <com.dream.NiuFaNet.CustomView.UView
+                    android:id="@+id/uview"
+                    android:layout_width="@dimen/login_width"
+                    android:layout_centerInParent="true"
+                    android:layout_height="@dimen/login_height">
+                </com.dream.NiuFaNet.CustomView.UView>
+                <com.dream.NiuFaNet.CustomView.ContentTextview
+                    android:layout_width="wrap_content"
+                    android:text="注册"
+                    android:textColor="@color/white"
+                    android:layout_centerInParent="true"
+                    android:textSize="18sp"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+        </RelativeLayout>
+    </LinearLayout>
+</RelativeLayout>

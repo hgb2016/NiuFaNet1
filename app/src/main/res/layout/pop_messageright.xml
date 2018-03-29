@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_marginLeft="45dp"
+    android:background="@color/white"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:id="@+id/pop_ttrelay"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_height">
+
+        <ImageView
+            android:id="@+id/close_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:visibility="gone"
+            android:src="@mipmap/icon_back" />
+
+        <TextView
+            android:id="@+id/title_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center_horizontal"
+            android:text="系统消息"
+            android:textColor="@color/color6c"
+            android:textSize="16.5sp" />
+        <TextView
+            android:id="@+id/deleteall_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="全部删除"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"
+            android:layout_centerVertical="true"
+            android:textColor="@color/color6c"
+            android:textSize="13sp" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:id="@+id/newmessage_lay"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/new_tv"
+                android:layout_width="wrap_content"
+                android:text="新的提醒"
+                android:textColor="@color/black"
+                android:layout_height="wrap_content" />
+            <View
+                android:id="@+id/line_new"
+                android:layout_width="match_parent"
+                android:background="@color/exit_candy"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="8dp"
+                android:layout_height="2dp"></View>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/jiumessage_lay"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/jiu_tv"
+                android:layout_width="wrap_content"
+                android:text="过期提醒"
+                android:textColor="@color/color6c"
+                android:layout_height="wrap_content" />
+            <View
+                android:id="@+id/line_jiu"
+                android:layout_width="match_parent"
+                android:background="@color/white"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="8dp"
+                android:layout_height="2dp"></View>
+        </LinearLayout>
+    </LinearLayout>
+    <android.support.v4.view.ViewPager
+        android:id="@+id/message_vp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></android.support.v4.view.ViewPager>
+</LinearLayout>

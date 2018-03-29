@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root_lay"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/them_bg2"
+    tools:context=".Ui.Activity.MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/title_height">
+
+            <RelativeLayout
+                android:id="@+id/back_relay"
+                android:layout_width="@dimen/dimen45"
+                android:layout_height="@dimen/dimen45"
+                android:layout_marginLeft="@dimen/padding15">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/left_arrow" />
+            </RelativeLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="@string/app_name"
+                android:textColor="@color/white"
+                android:textSize="@dimen/title_textsize"
+                android:layout_gravity="center_horizontal"
+                android:layout_centerInParent="true"
+                android:layout_height="wrap_content" />
+
+            <RelativeLayout
+                android:id="@+id/more_relay"
+                android:layout_width="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:id="@+id/userinfo_iv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/padding15"
+                    android:src="@drawable/more" />
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <com.kevin.wraprecyclerview.WrapRecyclerView
+                android:id="@+id/chat_rv"
+                android:layout_width="match_parent"
+                android:overScrollMode="never"
+                android:layout_height="match_parent"></com.kevin.wraprecyclerview.WrapRecyclerView>
+            <RelativeLayout
+                android:id="@+id/right_voice_relay"
+                android:layout_width="37dp"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/shape_circle_voice2"
+                android:layout_marginTop="@dimen/padding15"
+                android:layout_marginRight="@dimen/padding15"
+                android:layout_height="37dp">
+                <ImageView
+                    android:id="@+id/right_voice"
+                    android:layout_width="wrap_content"
+                    android:src="@mipmap/volume_off"
+                    android:layout_centerInParent="true"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+        </RelativeLayout>
+
+       <!-- <com.dream.NiuFaNet.CustomView.CustomeGridView
+            android:id="@+id/mid_gv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/alpha20"
+            android:numColumns="1"
+            android:visibility="gone"
+            android:verticalSpacing="10dp"></com.dream.NiuFaNet.CustomView.CustomeGridView>-->
+
+        <com.dream.NiuFaNet.CustomView.CustomeGridView
+            android:id="@+id/recom_gv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/alpha20"
+            android:horizontalSpacing="10dp"
+            android:numColumns="2"
+            android:verticalSpacing="10dp"
+            android:visibility="gone"></com.dream.NiuFaNet.CustomView.CustomeGridView>
+
+        <RelativeLayout
+            android:id="@+id/bot_lay"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/input_height"
+            android:background="@color/alpha20">
+
+            <LinearLayout
+                android:id="@+id/input_lay"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:background="@color/alpha20"
+                android:paddingBottom="10dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="10dp">
+
+                <ImageView
+                    android:id="@+id/voice_iv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:src="@mipmap/icon_audio" />
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_weight="1">
+
+                    <EditText
+                        android:id="@+id/input_edt"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical"
+                        android:background="@drawable/list_edittextbg"
+                        android:textColor="@color/white"
+                        android:textCursorDrawable="@drawable/color_cursor"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/input_tv"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="25dp"
+                        android:background="@drawable/selector_voice"
+                        android:gravity="center"
+                        android:text="按住 说话"
+                        android:clickable="true"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        android:visibility="gone" />
+
+                </RelativeLayout>
+
+                <com.dream.NiuFaNet.CustomView.ContentTextview
+                    android:id="@+id/send_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center"
+                    android:text="发送"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
+            </LinearLayout>
+        </RelativeLayout>
+    </LinearLayout>
+    <RelativeLayout
+        android:id="@+id/audio_lay"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:background="@color/black_alpha"
+        android:layout_marginBottom="60dp"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="25dp"
+                android:text="您可以这样说......"
+                android:textColor="@color/white"
+                android:textSize="19sp"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/voiceContent_rv"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:padding="20dp"></android.support.v7.widget.RecyclerView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/bot_lay"
+                android:layout_marginBottom="@dimen/dimen_left"
+                android:layout_marginLeft="@dimen/dimen_left"
+                android:layout_marginRight="@dimen/dimen_left"
+                android:background="@drawable/shape_white2"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                >
+
+                <TextView
+                    android:id="@+id/audiores_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_vertical">
+
+                    <com.dream.NiuFaNet.CustomView.AudioAnimView
+                        android:id="@+id/audioview_left"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"/>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:src="@mipmap/icon_audio"/>
+
+                    <com.dream.NiuFaNet.CustomView.AudioAnimView
+                        android:id="@+id/audioview_right"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"/>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/close_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true">
+
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_centerInParent="true"
+                android:layout_margin="@dimen/padding15"
+                android:src="@mipmap/icon_close_red"/>
+        </RelativeLayout>
+    </RelativeLayout>
+</RelativeLayout>

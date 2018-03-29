@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/root_lay"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_height">
+
+        <RelativeLayout
+            android:id="@+id/back_relay"
+            android:layout_width="@dimen/dimen45"
+            android:layout_height="@dimen/dimen45"
+            android:layout_marginLeft="@dimen/padding15">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/icon_back"/>
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="13sp"
+            android:text="我的"
+            android:textColor="@color/text_color"
+            android:textSize="@dimen/title_textsize"/>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:paddingBottom="@dimen/mineTop"
+        android:paddingTop="@dimen/mineTop">
+
+        <ImageView
+            android:id="@+id/head_icon"
+            android:layout_width="77dp"
+            android:layout_height="77dp"
+            android:layout_marginLeft="40dp"
+            android:src="@mipmap/niu"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="28dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/username_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="抠脚大汉"
+                android:textColor="#1a1a1a"
+                android:textSize="15sp"/>
+
+            <TextView
+                android:id="@+id/phone_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="13dp"
+                android:text="18277750576"
+                android:textColor="@color/text_color"
+                android:textSize="13sp"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/moren_f2"></View>
+
+    <LinearLayout
+        android:id="@+id/userinfo_lay"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.2"
+        android:gravity="center_vertical"
+        android:paddingBottom="12dp"
+        android:paddingLeft="52dp"
+        android:paddingTop="12dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/icon_information"/>
+
+        <com.dream.NiuFaNet.CustomView.ContentTextview
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/padding15"
+            android:text="个人信息"
+            android:textColor="@color/text_color"
+            android:textSize="14sp"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="@color/moren_f2"></View>
+
+    <LinearLayout
+        android:id="@+id/myfriends_lay"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/mineLeft">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/friends"/>
+
+        <com.dream.NiuFaNet.CustomView.ContentTextview
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/padding15"
+            android:text="我的好友"
+            android:textColor="@color/text_color"
+            android:textSize="14sp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/addfriend_lay"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/mineLeft">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/addf"/>
+
+        <com.dream.NiuFaNet.CustomView.ContentTextview
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/padding15"
+            android:text="添加好友"
+            android:textColor="@color/text_color"
+            android:textSize="14sp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/jobvi_lay"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/mineLeft">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/authorization"/>
+
+        <com.dream.NiuFaNet.CustomView.ContentTextview
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/padding15"
+            android:text="谁可以看我的工作"
+            android:textColor="@color/text_color"
+            android:textSize="14sp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/sharefriend_lay"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/mineLeft">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/share_friend"/>
+
+        <com.dream.NiuFaNet.CustomView.ContentTextview
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/padding15"
+            android:text="分享给好友"
+            android:textColor="@color/text_color"
+            android:textSize="14sp"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="@color/moren_f2"></View>
+
+    <LinearLayout
+        android:id="@+id/feedback_lay"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/mineLeft">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/icon_opinion"/>
+
+        <com.dream.NiuFaNet.CustomView.ContentTextview
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/padding15"
+            android:text="意见反馈"
+            android:textColor="@color/text_color"
+            android:textSize="14sp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/aboutus_lay"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/mineLeft">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/icon_about_us"/>
+
+        <com.dream.NiuFaNet.CustomView.ContentTextview
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/padding15"
+            android:text="关于我们"
+            android:textColor="@color/text_color"
+            android:textSize="14sp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/update_lay"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/mineLeft">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/update"/>
+
+        <com.dream.NiuFaNet.CustomView.ContentTextview
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/padding15"
+            android:text="检查更新"
+            android:textColor="@color/text_color"
+            android:textSize="14sp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/set_lay"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/mineLeft">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/icon_set"/>
+
+        <com.dream.NiuFaNet.CustomView.ContentTextview
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/padding15"
+            android:text="设置"
+            android:textColor="@color/text_color"
+            android:textSize="14sp"/>
+    </LinearLayout>
+</LinearLayout>

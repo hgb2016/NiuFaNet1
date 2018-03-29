@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">NiuFaNet</string>
+    <string name="failconnect">The link server failed, please check the network</string>
+    <string name="voicefirst">What can I do for you?</string>
+
+
+</resources>

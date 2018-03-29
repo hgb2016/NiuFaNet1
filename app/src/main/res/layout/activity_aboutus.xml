@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:id="@+id/root_lay"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:background="@color/layou_mrbg"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:layout_height="@dimen/dimen45">
+        <RelativeLayout
+            android:id="@+id/back_relay"
+            android:layout_width="@dimen/dimen45"
+            android:layout_height="@dimen/dimen45">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:src="@mipmap/icon_back"
+                android:layout_marginLeft="@dimen/padding15"
+                android:layout_centerVertical="true"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+        <com.dream.NiuFaNet.CustomView.TitleTextview
+            android:layout_width="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="关于我们"
+            android:textColor="@color/text_color"
+            android:textSize="18sp"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+    <WebView
+        android:id="@+id/aboutus_web"
+        android:layout_width="match_parent"
+        android:overScrollMode="never"
+        android:layout_height="match_parent"></WebView>
+   <!-- <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:background="@color/white"
+            android:layout_marginTop="5dp"
+            android:gravity="center_horizontal"
+            android:layout_height="match_parent">
+
+           &lt;!&ndash; <com.dream.NiuFaNet.CustomView.ContentTextview
+                android:layout_width="wrap_content"
+                android:text="牛法网官网："
+                android:layout_marginTop="50dp"
+                android:textSize="15sp"
+                android:textColor="@color/text_color"
+                android:layout_height="wrap_content" />
+            <com.dream.NiuFaNet.CustomView.ContentTextview
+                android:layout_width="wrap_content"
+                android:text="www.niufa.cn"
+                android:textSize="16sp"
+                android:textColor="@color/text_color"
+                android:layout_marginTop="10dp"
+                android:layout_height="wrap_content" />
+            <com.dream.NiuFaNet.CustomView.ContentTextview
+                android:layout_width="wrap_content"
+                android:text="牛法网微信："
+                android:textSize="15sp"
+                android:textColor="@color/text_color"
+                android:layout_marginTop="10dp"
+                android:layout_height="wrap_content" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:src="@mipmap/qr_code"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="@dimen/padding15"
+                android:layout_height="wrap_content" />&ndash;&gt;
+        </LinearLayout>
+    </ScrollView>-->
+
+</LinearLayout>

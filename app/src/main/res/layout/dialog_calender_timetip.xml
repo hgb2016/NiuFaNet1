@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:background="@drawable/shape_white_corner"
+        android:layout_centerVertical="true"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            android:text="日程提醒"
+            android:textColor="@color/color2b"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="可多选"
+            android:textColor="@color/color999"
+            android:textSize="13sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_marginTop="11dp"
+            android:background="@color/color98" />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/timetip_rv"
+            android:layout_width="match_parent"
+            android:layout_marginTop="5dp"
+            android:paddingLeft="38dp"
+            android:paddingRight="38dp"
+            android:layout_height="wrap_content">
+        </android.support.v7.widget.RecyclerView>
+        <View
+            android:layout_width="match_parent"
+            android:background="@color/colorb5"
+            android:layout_height="1dp"></View>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/cancel_tv"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="取消"
+                android:textSize="16sp"
+                android:textColor="@color/color999"
+                android:gravity="center"
+                android:layout_height="match_parent" />
+            <View
+                android:layout_width="1dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"
+                android:background="@color/colorb5"
+                android:layout_height="30dp"></View>
+            <TextView
+                android:id="@+id/sure_tv"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="确定"
+                android:textSize="16sp"
+                android:textColor="@color/main_botcandy"
+                android:gravity="center"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

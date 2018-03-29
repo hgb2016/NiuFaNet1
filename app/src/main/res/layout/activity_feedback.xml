@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@color/layou_mrbg"
+    android:orientation="vertical"
+    android:id="@+id/root_lay"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:layout_height="@dimen/dimen45">
+        <RelativeLayout
+            android:id="@+id/back_relay"
+            android:layout_width="@dimen/dimen45"
+            android:layout_height="@dimen/dimen45">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:src="@mipmap/icon_back"
+                android:layout_marginLeft="@dimen/padding15"
+                android:layout_centerVertical="true"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+        <com.dream.NiuFaNet.CustomView.TitleTextview
+            android:layout_width="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="意见反馈"
+            android:textColor="@color/text_color"
+            android:textSize="18sp"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:layout_marginTop="5dp"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:gravity="center_vertical"
+            android:layout_marginTop="22dp"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:src="@mipmap/icon_write"
+                android:layout_marginLeft="23.5dp"
+                android:layout_height="wrap_content" />
+            <com.dream.NiuFaNet.CustomView.ContentTextview
+                android:layout_width="wrap_content"
+                android:text="写下您宝贵的意见:"
+                android:layout_marginLeft="5dp"
+                android:textColor="@color/text_color"
+                android:textSize="15sp"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_margin="23.5dp"
+            android:background="@drawable/shape_feedback_stroke"
+            android:layout_height="169dp">
+            <EditText
+                android:id="@+id/content_edt"
+                android:layout_width="match_parent"
+                android:background="@null"
+                android:padding="10dp"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+        <com.dream.NiuFaNet.CustomView.ContentTextview
+            android:id="@+id/submit_tv"
+            android:layout_width="95dp"
+            android:text="提交意见"
+            android:gravity="center"
+            android:background="@color/sure_btncolor"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_height="38dp" />
+    </LinearLayout>
+</LinearLayout>

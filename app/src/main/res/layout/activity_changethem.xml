@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@drawable/them_bg2"
+    android:id="@id/root_lay"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_height">
+        <RelativeLayout
+            android:id="@+id/back_relay"
+            android:layout_width="@dimen/dimen45"
+            android:layout_marginLeft="@dimen/padding15"
+            android:layout_height="@dimen/dimen45">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:src="@mipmap/left_arrow"
+                android:layout_centerVertical="true"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+    </RelativeLayout>
+    <com.dream.NiuFaNet.CustomView.ContentTextview
+        android:id="@+id/style_tv"
+        android:layout_width="wrap_content"
+        android:text="您正在使用糖果粉"
+        android:textColor="@color/white"
+        android:layout_marginTop="125dp"
+        android:textSize="30sp"
+        android:layout_marginLeft="@dimen/marginleft"
+        android:layout_height="wrap_content" />
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:background="@color/black_alpha24"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_height="185.5dp">
+
+        <RadioButton
+            android:id="@+id/candy_rb"
+            android:layout_width="65dp"
+            android:background="@drawable/selector_candy"
+            android:button="@null"
+            android:checked="true"
+            android:layout_height="65dp" />
+        <RadioButton
+            android:id="@+id/black_rb"
+            android:layout_width="65dp"
+            android:background="@drawable/selector_gqblack"
+            android:button="@null"
+            android:layout_marginLeft="94.5dp"
+            android:layout_height="65dp" />
+    </RadioGroup>
+</RelativeLayout>

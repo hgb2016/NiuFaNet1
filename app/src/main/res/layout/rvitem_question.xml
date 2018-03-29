@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/chatitem_margin"
+    android:layout_marginBottom="@dimen/chatitem_margin"
+    >
+
+    <ImageView
+        android:id="@+id/left_headiv"
+        android:layout_width="@dimen/head_icon"
+        android:layout_height="@dimen/head_icon"
+        android:src="@mipmap/img_niuniu" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_headicon"
+        android:layout_marginRight="@dimen/margin_head"
+        android:layout_toRightOf="@+id/left_headiv"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/chat_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/right_voice_relay"
+            android:background="@drawable/leftbubble"
+            android:paddingRight="@dimen/chatitem_paddingright"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/chatitem_paddingleft"
+            android:paddingTop="@dimen/chatitem_paddingtop"
+            android:lineSpacingExtra="5dp"
+            android:paddingBottom="@dimen/chatitem_paddingbot"
+            android:text="我是妞妞，有什么可以帮您?"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+        <LinearLayout
+            android:id="@+id/rotate_lay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="3dp"
+            android:padding="12dp"
+            android:background="@drawable/shape_question"
+            android:orientation="vertical" >
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/question_icon" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="相关问题"
+                    android:textColor="@color/white"
+                    android:textSize="15sp" />
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:background="@color/white"
+                android:layout_marginTop="4dp"
+                android:layout_height="1dp"></View>
+            <com.dream.NiuFaNet.CustomView.MyListView
+                android:id="@+id/rvleft_lv"
+                android:layout_width="match_parent"
+                android:scrollbars="none"
+                android:divider="@color/white_alpha20"
+                android:dividerHeight="1dp"
+                android:layout_height="wrap_content"></com.dream.NiuFaNet.CustomView.MyListView>
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:background="@color/white"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:id="@+id/share_lay"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_marginTop="15dp"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:src="@drawable/more_share"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="分享"
+            android:layout_marginLeft="30dp"
+            android:textColor="@color/text_color"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="@color/fengexiane8"
+        android:layout_marginTop="10dp"
+        android:layout_height="1dp"></RelativeLayout>
+    <LinearLayout
+        android:id="@+id/function_lay"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_marginTop="15dp"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:src="@drawable/more_gn"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="功能"
+            android:layout_marginLeft="30dp"
+            android:textColor="@color/text_color"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="@color/fengexian"
+        android:layout_marginTop="10dp"
+        android:layout_height="1dp"></RelativeLayout>
+    <LinearLayout
+        android:id="@+id/mine_lay"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:src="@drawable/more_mine"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="我的"
+            android:layout_marginLeft="30dp"
+            android:textColor="@color/text_color"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</LinearLayout>

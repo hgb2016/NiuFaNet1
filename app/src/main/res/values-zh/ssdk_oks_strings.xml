@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">法律机器人</string>
+    <string name="failconnect">连接服务器失败，请检查网络</string>
+    <string name="voicefirst">我是妞妞，有什么可以帮您？</string>
+
+
+    <!--极光推送集成所需-->
+
+
+</resources>

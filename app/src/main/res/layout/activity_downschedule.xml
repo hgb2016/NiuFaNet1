@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:focusable="true"
+              android:focusableInTouchMode="true"
+              android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/title_relay"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_height">
+
+        <RelativeLayout
+            android:id="@+id/back_relay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:src="@mipmap/back"/>
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/titletv"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:text="项目标题"
+            android:textColor="@color/main_botblack"
+            android:textSize="15sp"/>
+    </RelativeLayout>
+
+
+        <TextView
+            android:id="@+id/tip_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="20dp"
+            android:text="选择下载时间段"
+            android:textColor="#2b2b2b"
+            android:textSize="16sp"/>
+
+        <RelativeLayout
+            android:id="@+id/foot_view"
+            android:layout_width="match_parent"
+            android:layout_height="8dp"
+            android:layout_marginTop="10dp"
+            android:background="@mipmap/img_shade_up"></RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen40"
+            android:layout_marginTop="10dp"
+            android:gravity="left">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="开始时间"
+                android:textColor="#404040"
+                android:layout_marginLeft="30dp"
+                android:textSize="15sp"/>
+
+            <TextView
+                android:id="@+id/start_timetv"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="35dp"
+                android:gravity="center"
+                android:text="2018-01-02"
+                android:textColor="#404040"
+                android:textSize="15sp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen40"
+            android:gravity="left">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="结束时间"
+                android:textColor="#404040"
+                android:layout_marginLeft="30dp"
+                android:textSize="15sp"/>
+
+            <TextView
+                android:id="@+id/endtime_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="35dp"
+                android:gravity="center"
+                android:text="2018-01-30"
+                android:textColor="#404040"
+                android:textSize="15sp"/>
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/email_edt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/shape_inputkuang4"
+            android:hint="输入您的邮箱"
+            android:minLines="2"
+            android:paddingBottom="2dp"
+            android:paddingLeft="@dimen/padding15"
+            android:paddingRight="@dimen/padding15"
+            android:paddingTop="2dp"
+            android:textSize="15sp"/>
+
+
+    <TextView
+        android:id="@+id/tip_positive"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="导出"
+        android:textColor="#d65858"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="40dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:background="@drawable/shape_feedback_stroke"
+        android:textSize="16sp"/>
+</LinearLayout>

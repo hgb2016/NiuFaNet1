@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root_lay"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/layou_mrbg"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen45"
+        android:background="@color/white">
+        <RelativeLayout
+            android:id="@+id/back_relay"
+            android:layout_width="@dimen/dimen45"
+            android:layout_height="@dimen/dimen45">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/padding15"
+                android:src="@mipmap/icon_back" />
+        </RelativeLayout>
+
+        <com.dream.NiuFaNet.CustomView.TitleTextview
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="设置"
+            android:textColor="@color/text_color"
+            android:textSize="18sp" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/change_pwd"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/white"
+        android:layout_marginTop="5dp"
+        android:gravity="center_vertical">
+
+        <com.dream.NiuFaNet.CustomView.ContentTextview
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/marginleft"
+            android:text="修改密码"
+            android:textColor="@color/text_color"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/change_them"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/white"
+        android:gravity="center_vertical">
+
+        <com.dream.NiuFaNet.CustomView.ContentTextview
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/marginleft"
+            android:text="更换背景"
+            android:textColor="@color/text_color"
+            android:textSize="16sp" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/exit_login"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/white"
+        android:visibility="gone"
+        android:gravity="center_vertical">
+
+        <com.dream.NiuFaNet.CustomView.ContentTextview
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/marginleft"
+            android:text="退出登录"
+            android:textColor="@color/text_color"
+            android:textSize="16sp" />
+    </LinearLayout>
+</LinearLayout>

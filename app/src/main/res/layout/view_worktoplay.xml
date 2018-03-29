@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="39dp">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/day_tv"
+                        android:layout_width="wrap_content"
+                        android:text="11.02"
+                        android:textSize="18sp"
+                        android:textColor="@color/black"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:id="@+id/week_tv"
+                        android:layout_width="wrap_content"
+                        android:text="周四"
+                        android:textSize="13sp"
+                        android:textColor="@color/main_botblack"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="7dp"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+                <ImageView
+                    android:id="@+id/share_iv"
+                    android:layout_width="wrap_content"
+                    android:src="@mipmap/add_schedule1"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+            <View
+                android:layout_width="match_parent"
+                android:background="@color/fengexiand9"
+                android:layout_height="0.5dp"></View>
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

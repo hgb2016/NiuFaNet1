@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/them_bg2"
+    android:id="@+id/root_lay"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_height">
+
+        <RelativeLayout
+            android:id="@+id/userinfo_relay"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentRight="true">
+
+            <ImageView
+                android:id="@+id/userinfo_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15dp"
+                android:src="@drawable/shareunselect" />
+        </RelativeLayout>
+
+        <com.dream.NiuFaNet.CustomView.TitleTextview
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="法律机器人"
+            android:visibility="gone"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="@dimen/head_icon"
+            android:layout_height="@dimen/head_icon"
+            android:layout_marginLeft="17dp"
+            android:src="@mipmap/service" />
+
+        <com.dream.NiuFaNet.CustomView.ContentTextview
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="9dp"
+            android:background="@drawable/left"
+            android:gravity="center"
+            android:paddingLeft="13dp"
+            android:paddingRight="5dp"
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp"
+            android:text="我是妞妞，有什么可以帮您？"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/cmd_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="35dp"
+        android:text="您可以这样指挥我："
+        android:textColor="@color/white"
+        android:textSize="20sp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.kevin.wraprecyclerview.WrapRecyclerView
+                android:id="@+id/chat_rv"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="25dp"
+                android:layout_weight="1"
+                android:overScrollMode="never"
+                android:paddingLeft="17dp"
+                android:paddingRight="17dp"></com.kevin.wraprecyclerview.WrapRecyclerView>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:src="@drawable/down"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="15dp"
+                android:layout_height="wrap_content" />
+
+            <com.dream.NiuFaNet.CustomView.ContentTextview
+                android:id="@+id/huo_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:gravity="center"
+                android:text="或"
+                android:textColor="@color/white_alpha80"
+                android:textSize="16sp" />
+
+            <com.dream.NiuFaNet.CustomView.ContentTextview
+                android:id="@+id/liaowo_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="30dp"
+                android:layout_marginTop="15dp"
+                android:gravity="center"
+                android:text="随便撩我呀......"
+                android:textColor="@color/white_alpha80"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/audio_lay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/anm_candy"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/audiores_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/white"
+                android:textSize="15sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="20dp"
+                android:gravity="center_vertical">
+
+                <com.dream.NiuFaNet.CustomView.AudioAnimView
+                    android:id="@+id/audioview_left"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:src="@mipmap/icon_audio" />
+
+                <com.dream.NiuFaNet.CustomView.AudioAnimView
+                    android:id="@+id/audioview_right"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </RelativeLayout>
+</LinearLayout>

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/title_relay"
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:layout_height="@dimen/dimen45">
+        <com.dream.NiuFaNet.CustomView.TitleTextview
+            android:layout_width="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="工具"
+            android:textColor="@color/main_botblack"
+            android:textSize="@dimen/title_textsize"
+            android:layout_height="wrap_content" />
+        <RelativeLayout
+            android:id="@+id/share_relay"
+            android:layout_width="@dimen/dimen45"
+            android:layout_alignParentRight="true"
+            android:layout_height="@dimen/dimen45">
+
+            <ImageView
+                android:id="@+id/right_editiv"
+                android:layout_width="wrap_content"
+                android:src="@drawable/share_c"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/padding15"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </LinearLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:scrollbars="none"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:background="@color/white"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="查询"
+                android:textSize="16sp"
+                android:padding="10dp"
+                android:layout_height="wrap_content" />
+            <View
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:background="#cccccc"
+                android:layout_width="match_parent"
+                android:layout_height="1px"/>
+            <com.dream.NiuFaNet.CustomView.MyGridView
+                android:layout_marginTop="10dp"
+                android:id="@+id/find_gv"
+                android:verticalSpacing="10dp"
+                android:layout_width="match_parent"
+                android:numColumns="4"
+                android:layout_height="wrap_content"/>
+            <View
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="20dp"
+                android:background="#cccccc"
+                android:layout_width="match_parent"
+                android:layout_height="1px"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="46dp"
+                android:padding="10dp"
+                android:text="计算"
+                android:textSize="16sp" />
+            <View
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:background="#cccccc"
+                android:layout_width="match_parent"
+                android:layout_height="1px"/>
+            <com.dream.NiuFaNet.CustomView.MyGridView
+                android:verticalSpacing="10dp"
+                android:layout_marginTop="10dp"
+                android:id="@+id/caculate_gv"
+                android:layout_width="match_parent"
+                android:numColumns="4"
+                android:layout_height="wrap_content"/>
+            <View
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="20dp"
+                android:background="#cccccc"
+                android:layout_width="match_parent"
+                android:layout_height="1px"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="劳动类"
+                android:textSize="16sp"
+                android:padding="10dp"
+                android:layout_height="wrap_content" />
+            <View
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:background="#cccccc"
+                android:layout_width="match_parent"
+                android:layout_height="1px"/>
+            <com.dream.NiuFaNet.CustomView.MyGridView
+                android:verticalSpacing="10dp"
+                android:layout_marginTop="10dp"
+                android:id="@+id/labor_gv"
+                android:layout_width="match_parent"
+                android:numColumns="4"
+                android:layout_height="wrap_content">
+
+            </com.dream.NiuFaNet.CustomView.MyGridView>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="25dp"></RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

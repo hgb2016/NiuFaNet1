@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="33dp"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/only_iv"
+            android:layout_width="33dp"
+            android:layout_marginTop="4dp"
+            android:layout_height="33dp" />
+        <ImageView
+            android:id="@+id/close_iv"
+            android:layout_width="13dp"
+            android:src="@mipmap/filedelete"
+            android:layout_alignParentRight="true"
+            android:visibility="gone"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/only_tv"
+        android:layout_width="wrap_content"
+        android:textSize="13sp"
+        android:textColor="@color/black"
+        android:layout_marginTop="3dp"
+        android:layout_height="wrap_content" />
+</LinearLayout>

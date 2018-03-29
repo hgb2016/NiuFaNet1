@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:background="@color/white"
+        android:layout_centerInParent="true"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:layout_marginTop="40dp"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:src="@mipmap/checkmark"
+                android:layout_height="wrap_content" />
+            <com.dream.NiuFaNet.CustomView.ContentTextview
+                android:id="@+id/dialogtip_tv"
+                android:layout_width="wrap_content"
+                android:text="绑定成功!"
+                android:layout_marginLeft="12dp"
+                android:textSize="20sp"
+                android:textColor="@color/text_color"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <com.dream.NiuFaNet.CustomView.ContentTextview
+            android:id="@+id/dialog_suretv"
+            android:layout_width="wrap_content"
+            android:text="确定"
+            android:textSize="20sp"
+            android:textColor="@color/text_color"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="76dp"
+            android:gravity="center"
+            android:layout_marginBottom="20dp"
+            android:layout_height="@dimen/dimen45" />
+    </LinearLayout>
+
+</RelativeLayout>

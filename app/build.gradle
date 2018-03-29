@@ -1,0 +1,145 @@
+apply plugin: 'com.android.application'
+// 应用插件
+apply plugin: 'com.neenbedankt.android-apt'
+
+android {
+
+    signingConfigs {
+        config {
+            keyAlias 'nfw'
+            keyPassword '123456'
+            storeFile file('C:/Users/Administrator/Desktop/APK签名/nfw.jks')
+            storePassword '123456'
+        }
+    }
+    compileSdkVersion 24
+    buildToolsVersion "24.0.3"
+    defaultConfig {
+        applicationId "com.dream.NiuFaNet"
+        minSdkVersion 15
+        targetSdkVersion 22
+        versionCode 12
+        versionName "1.2.3"
+        multiDexEnabled true
+    }
+    buildTypes {
+        release {
+            // 不显示Log
+            buildConfigField "boolean", "LOG_DEBUG", "false"
+            //Zipalign优化
+            zipAlignEnabled true
+            //是否混淆
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            // 移除无用的resource文件
+            shrinkResources true
+            signingConfig signingConfigs.config
+        }
+    }
+    dexOptions {
+//        incremental = true;
+//        preDexLibraries = false
+        javaMaxHeapSize "8g"
+    }
+
+    //执行lint检查，有任何的错误或者警告提示，都会终止构建，我们可以将其关掉。
+    lintOptions {
+        abortOnError false
+    }
+}
+
+repositories {
+    jcenter()
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+    flatDir {
+        dirs 'libs'//arr文件的目录地址
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:appcompat-v7:24.2.1'
+    compile 'com.android.support:support-annotations:24.0.3'
+    //RV
+    compile 'com.android.support:design:24.0.0'
+    compile 'com.kevin:wraprecyclerview:1.0.6'
+    compile 'com.github.AItsuki:SwipeMenuRecyclerView:1.1.1'
+    //侧滑删除
+
+    // Rx
+    compile 'io.reactivex:rxandroid:1.1.0'
+    compile 'io.reactivex:rxjava:1.1.5'
+    //    compile 'io.reactivex.rxjava2:rxjava:2.0.8'
+    compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
+
+    // Net:retrofit2+okhttp3
+    compile 'com.squareup.retrofit2:retrofit:2.1.0'
+    compile 'com.squareup.retrofit2:adapter-rxjava:2.0.1'
+    compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta4'
+    compile 'com.squareup.retrofit2:converter-scalars:2.0.0-beta4'
+    compile 'com.squareup.okhttp3:okhttp:3.2.0'
+    //    compile 'com.zhy:okhttputils:2.0.0'
+
+    // Annotation:dagger2+butterknife7
+    compile 'com.google.dagger:dagger:2.4'
+    apt 'com.google.dagger:dagger-compiler:2.4'
+    compile 'org.glassfish:javax.annotation:10.0-b28'
+    // 添加java 注解库
+    compile 'com.jakewharton:butterknife:7.0.1'
+    // broadcast
+    compile 'org.greenrobot:eventbus:3.0.0'
+    //imgload
+    compile 'com.github.bumptech.glide:glide:3.7.0'
+    //内存泄漏检测工具
+
+    //    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
+
+    //    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
+
+    //    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
+
+    //ShareSDK
+    compile files('libs/Msc.jar')
+    compile files('libs/Sunflower.jar')
+    compile files('libs/MobCommons-2017.0914.1125.jar')
+    compile files('libs/MobTools-2017.0914.1125.jar')
+    compile files('libs/ShareSDK-Core-3.1.0.jar')
+    compile files('libs/ShareSDK-QQ-3.1.0.jar')
+    compile files('libs/ShareSDK-SinaWeibo-3.1.0.jar')
+    compile files('libs/ShareSDK-Wechat-3.1.0.jar')
+    compile files('libs/ShareSDK-Wechat-Core-3.1.0.jar')
+    compile files('libs/ShareSDK-Wechat-Favorite-3.1.0.jar')
+    compile files('libs/ShareSDK-Wechat-Moments-3.1.0.jar')
+    //日历相关
+    compile 'joda-time:joda-time:2.3'
+    compile 'com.joybar.calendar:librarycalendar:1.0.5'
+    compile 'com.contrarywind:Android-PickerView:3.2.5'
+    //banner
+    compile 'com.youth.banner:banner:1.4.10'
+    compile files('libs/jcore-android-1.1.8.jar')
+    compile files('libs/jpush-android-3.1.0.jar')
+    compile files('libs/pinyin4j-2.5.0.jar')
+    //refresh
+    compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.4'
+    //takePhoto
+    compile 'com.jph.takephoto:takephoto_library:4.0.3'
+    //fresco
+    compile 'com.facebook.fresco:fresco:0.14.1'
+    compile 'com.facebook.fresco:animated-base-support:0.14.1'
+    compile 'com.facebook.fresco:animated-gif:0.14.1'
+    compile 'com.facebook.fresco:webpsupport:0.14.1'
+    compile 'com.facebook.fresco:animated-webp:0.14.1'
+    compile 'com.facebook.fresco:imagepipeline-okhttp3:0.14.1'
+    //picture
+    compile 'com.github.Awent:PhotoPick-Master:v1.095'
+
+    //dex
+    compile "com.android.support:multidex:1.0.0"
+
+    compile 'com.gyf.barlibrary:barlibrary:2.3.0'
+
+    //日历插件
+    compile 'com.haibin:calendarview:3.2.7'
+}

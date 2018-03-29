@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:id="@+id/root_lay"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:text="长按语音说出您的日程"
+        android:textSize="21sp"
+        android:textColor="@color/color6c"
+        android:layout_marginTop="52dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_height="wrap_content" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:layout_height="0dp">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/calvoice_rv"
+            android:layout_width="match_parent"
+            android:layout_marginTop="21dp"
+            android:paddingBottom="10dp"
+            android:overScrollMode="never"
+            android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+        <LinearLayout
+            android:id="@+id/audio_lay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/bot_lay"
+            android:layout_marginBottom="60dp"
+            android:background="@color/anm_black"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:layout_alignParentBottom="true"
+            android:visibility="gone">
+            <TextView
+                android:id="@+id/audiores_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/white"
+                android:textSize="15sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="20dp"
+                android:gravity="center_vertical">
+
+                <com.dream.NiuFaNet.CustomView.AudioAnimView
+                    android:id="@+id/audioview_left"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:src="@mipmap/icon_audio" />
+
+                <com.dream.NiuFaNet.CustomView.AudioAnimView
+                    android:id="@+id/audioview_right"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/calvoice_iv"
+            android:layout_width="33.5dp"
+            android:src="@mipmap/record_t"
+            android:layout_centerInParent="true"
+            android:layout_marginBottom="23dp"
+            android:scaleType="centerCrop"
+            android:layout_height="42.5dp" />
+        <ImageView
+            android:id="@+id/close_iv"
+            android:layout_width="17.5dp"
+            android:src="@mipmap/icon_close_red"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"
+            android:layout_centerVertical="true"
+            android:layout_height="17.5dp" />
+    </RelativeLayout>
+
+</LinearLayout>

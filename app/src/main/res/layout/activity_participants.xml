@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:orientation="vertical"
+              android:background="@color/white"
+              android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_height">
+
+        <RelativeLayout
+            android:id="@+id/back_relay"
+            android:layout_width="@dimen/dimen45"
+            android:layout_height="@dimen/dimen45"
+            android:layout_marginLeft="@dimen/padding15">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/icon_back"/>
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="13sp"
+            android:text="参与人"
+            android:textColor="@color/text_color"
+            android:textSize="@dimen/title_textsize"/>
+        <ImageView
+            android:id="@+id/sure_iv"
+            android:layout_width="wrap_content"
+            android:src="@mipmap/finish"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="12dp"
+            android:visibility="gone"
+            android:layout_height="wrap_content"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="@color/moren_f2"
+        android:layout_height="30dp">
+        <TextView
+            android:id="@+id/participant_numtv"
+            android:layout_width="wrap_content"
+            android:text="共2人"
+            android:textSize="15sp"
+            android:textColor="@color/color2a"
+            android:layout_marginLeft="15dp"
+            android:layout_centerVertical="true"
+            android:layout_height="wrap_content"/>
+    </RelativeLayout>
+
+    <com.aitsuki.swipe.SwipeMenuRecyclerView
+        android:id="@+id/participant_rv"
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:background="@color/white"
+        android:layout_height="0dp"></com.aitsuki.swipe.SwipeMenuRecyclerView>
+
+    <RelativeLayout
+        android:id="@+id/invite_relay"
+        android:layout_width="match_parent"
+        android:layout_height="48dp">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_centerInParent="true"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/jia_iv"
+                android:layout_width="wrap_content"
+                android:src="@mipmap/invite"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/bot_tv"
+                android:layout_width="wrap_content"
+                android:text="添加参与人"
+                android:layout_marginLeft="10dp"
+                android:textSize="15sp"
+                android:textColor="@color/color6c"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </RelativeLayout>
+</LinearLayout>

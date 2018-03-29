@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:id="@+id/root_lay"
+    android:orientation="vertical"
+    android:background="@color/layou_mrbg"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:layout_height="@dimen/dimen45">
+        <RelativeLayout
+            android:id="@+id/back_relay"
+            android:layout_width="@dimen/dimen45"
+            android:layout_height="@dimen/dimen45">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:src="@mipmap/icon_back"
+                android:layout_marginLeft="@dimen/padding15"
+                android:layout_centerVertical="true"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+        <com.dream.NiuFaNet.CustomView.TitleTextview
+            android:layout_width="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="个人信息"
+            android:textColor="@color/text_color"
+            android:textSize="18sp"
+            android:layout_height="wrap_content" />
+        <RelativeLayout
+            android:id="@+id/edit_relay"
+            android:layout_width="@dimen/dimen45"
+            android:layout_alignParentRight="true"
+            android:layout_height="@dimen/dimen45">
+            <ImageView
+                android:id="@+id/right_editiv"
+                android:layout_width="wrap_content"
+                android:src="@mipmap/icon_editor"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/padding15"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+    </RelativeLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="match_parent">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:background="@color/white"
+                android:layout_marginTop="4dp"
+                android:layout_height="134dp">
+                <com.dream.NiuFaNet.CustomView.ContentTextview
+                    android:id="@+id/username_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:textColor="#2e2e2e"
+                    android:textSize="20sp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="23.5dp"
+                    android:layout_height="wrap_content" />
+                <EditText
+                    android:id="@+id/username_edt"
+                    android:layout_width="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:textColor="#2e2e2e"
+                    android:textSize="20sp"
+                    android:textColorHint="@color/color98"
+                    android:hint="未填写"
+                    android:background="@null"
+                    android:visibility="gone"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="23.5dp"
+                    android:layout_height="wrap_content" />
+                <ImageView
+                    android:id="@+id/head_icon"
+                    android:layout_width="78dp"
+                    android:src="@mipmap/img_user_big"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="19.5dp"
+                    android:layout_centerVertical="true"
+                    android:layout_height="78dp" />
+            </RelativeLayout>
+            <LinearLayout
+                android:id="@+id/info_lay"
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:layout_marginTop="6.5dp"
+                android:background="@color/white"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:gravity="center_vertical"
+                    android:layout_height="67dp">
+                    <com.dream.NiuFaNet.CustomView.ContentTextview
+                        android:layout_width="wrap_content"
+                        android:text="性别"
+                        android:layout_marginLeft="23.5dp"
+                        android:textSize="15sp"
+                        android:textColor="@color/text_color"
+                        android:gravity="center"
+                        android:layout_height="match_parent" />
+                    <com.dream.NiuFaNet.CustomView.ContentTextview
+                        android:id="@+id/sex_tv"
+                        android:layout_width="@dimen/infoedtwidth"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="24dp"
+                        android:textSize="15sp"
+                        android:textColor="@color/text_color"
+                        android:background="@null"
+                        android:gravity="center_vertical|end"
+                        android:layout_height="match_parent" />
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:gravity="center_vertical"
+                    android:layout_height="67dp">
+                    <com.dream.NiuFaNet.CustomView.ContentTextview
+                        android:layout_width="wrap_content"
+                        android:text="公司"
+                        android:layout_marginLeft="23.5dp"
+                        android:textSize="15sp"
+                        android:textColor="@color/text_color"
+                        android:gravity="center"
+                        android:layout_height="match_parent" />
+                    <com.dream.NiuFaNet.CustomView.ContentTextview
+                        android:id="@+id/company_tv"
+                        android:layout_width="@dimen/infoedtwidth"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="24dp"
+                        android:textSize="15sp"
+                        android:textColor="@color/text_color"
+                        android:background="@null"
+                        android:gravity="center_vertical|end"
+                        android:layout_height="match_parent" />
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:gravity="center_vertical"
+                    android:layout_height="67dp">
+                    <com.dream.NiuFaNet.CustomView.ContentTextview
+                        android:layout_width="wrap_content"
+                        android:text="职务"
+                        android:layout_marginLeft="23.5dp"
+                        android:textSize="15sp"
+                        android:textColor="@color/text_color"
+                        android:gravity="center"
+                        android:layout_height="match_parent" />
+                    <com.dream.NiuFaNet.CustomView.ContentTextview
+                        android:id="@+id/duty_tv"
+                        android:layout_width="@dimen/infoedtwidth"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="24dp"
+                        android:textSize="15sp"
+                        android:textColor="@color/text_color"
+                        android:background="@null"
+                        android:gravity="center_vertical|end"
+                        android:layout_height="match_parent" />
+                </RelativeLayout>
+                <RelativeLayout
+                    android:id="@+id/phone_relay"
+                    android:layout_width="match_parent"
+                    android:gravity="center_vertical"
+                    android:layout_height="67dp">
+                    <com.dream.NiuFaNet.CustomView.ContentTextview
+                        android:layout_width="wrap_content"
+                        android:text="手机号"
+                        android:layout_marginLeft="23.5dp"
+                        android:textSize="15sp"
+                        android:textColor="@color/text_color"
+                        android:layout_height="wrap_content" />
+                    <com.dream.NiuFaNet.CustomView.ContentTextview
+                        android:id="@+id/userphone_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="24dp"
+                        android:textSize="15sp"
+                        android:textColor="@color/text_color"
+                        android:layout_height="wrap_content" />
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:gravity="center_vertical"
+                    android:visibility="gone"
+                    android:layout_height="67dp">
+                    <com.dream.NiuFaNet.CustomView.ContentTextview
+                        android:layout_width="wrap_content"
+                        android:text="微信"
+                        android:layout_marginLeft="23.5dp"
+                        android:textSize="15sp"
+                        android:textColor="@color/text_color"
+                        android:gravity="center"
+                        android:layout_height="match_parent" />
+                    <com.dream.NiuFaNet.CustomView.ContentTextview
+                        android:layout_width="@dimen/infoedtwidth"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="24dp"
+                        android:textSize="15sp"
+                        android:textColor="@color/text_color"
+                        android:background="@null"
+                        android:gravity="center_vertical|end"
+                        android:layout_height="match_parent" />
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:gravity="center_vertical"
+                    android:layout_height="67dp">
+                    <com.dream.NiuFaNet.CustomView.ContentTextview
+                        android:layout_width="wrap_content"
+                        android:text="邮箱"
+                        android:layout_marginLeft="23.5dp"
+                        android:textSize="15sp"
+                        android:textColor="@color/text_color"
+                        android:gravity="center"
+                        android:layout_height="match_parent" />
+                    <com.dream.NiuFaNet.CustomView.ContentTextview
+                        android:id="@+id/email_tv"
+                        android:layout_width="250dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="24dp"
+                        android:textSize="15sp"
+                        android:textColor="@color/text_color"
+                        android:background="@null"
+                        android:gravity="center_vertical|end"
+                        android:layout_height="match_parent" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/edit_lay"
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:layout_marginTop="6.5dp"
+                android:background="@color/white"
+                android:visibility="gone"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:gravity="center_vertical"
+                    android:layout_height="67dp">
+                    <com.dream.NiuFaNet.CustomView.ContentTextview
+                        android:layout_width="wrap_content"
+                        android:text="性别"
+                        android:layout_marginLeft="23.5dp"
+                        android:textSize="15sp"
+                        android:textColor="@color/text_color"
+                        android:gravity="center"
+                        android:layout_height="match_parent" />
+                    <com.dream.NiuFaNet.CustomView.ContentTextview
+                        android:id="@+id/sex_edt"
+                        android:layout_width="@dimen/infoedtwidth"
+                        style="@style/infoEditor"
+                        android:hint=""
+                        android:layout_alignParentRight="true"
+                        android:layout_height="match_parent" />
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:gravity="center_vertical"
+                    android:layout_height="67dp">
+                    <com.dream.NiuFaNet.CustomView.ContentTextview
+                        android:layout_width="wrap_content"
+                        android:text="公司"
+                        android:layout_marginLeft="23.5dp"
+                        android:textSize="15sp"
+                        android:textColor="@color/text_color"
+                        android:gravity="center"
+                        android:layout_height="match_parent" />
+                    <EditText
+                        android:id="@+id/company_edt"
+                        android:layout_width="@dimen/infoedtwidth"
+                        style="@style/infoEditor"
+                        android:hint="请输入公司名称"
+                        android:layout_alignParentRight="true"
+                        android:layout_height="match_parent" />
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:gravity="center_vertical"
+                    android:layout_height="67dp">
+                    <com.dream.NiuFaNet.CustomView.ContentTextview
+                        android:layout_width="wrap_content"
+                        android:text="职务"
+                        android:layout_marginLeft="23.5dp"
+                        android:textSize="15sp"
+                        android:textColor="@color/text_color"
+                        android:gravity="center"
+                        android:layout_height="match_parent" />
+                    <EditText
+                        android:id="@+id/duty_edt"
+                        android:layout_width="@dimen/infoedtwidth"
+                        style="@style/infoEditor"
+                        android:hint="请输入职务"
+                        android:layout_alignParentRight="true"
+                        android:layout_height="match_parent" />
+                </RelativeLayout>
+                <RelativeLayout
+                    android:id="@+id/phone_bdrelay"
+                    android:layout_width="match_parent"
+                    android:gravity="center_vertical"
+                    android:layout_height="67dp">
+                    <com.dream.NiuFaNet.CustomView.ContentTextview
+                        android:layout_width="wrap_content"
+                        android:text="手机号"
+                        android:layout_marginLeft="23.5dp"
+                        android:textSize="15sp"
+                        android:textColor="@color/text_color"
+                        android:layout_height="wrap_content" />
+                    <com.dream.NiuFaNet.CustomView.ContentTextview
+                        android:id="@+id/userphone_tv2"
+                        android:layout_width="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="24dp"
+                        android:textSize="15sp"
+                        android:hint=""
+                        android:textColor="@color/text_color"
+                        android:layout_height="wrap_content" />
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:gravity="center_vertical"
+                    android:visibility="gone"
+                    android:layout_height="67dp">
+                    <com.dream.NiuFaNet.CustomView.ContentTextview
+                        android:layout_width="wrap_content"
+                        android:text="微信"
+                        android:layout_marginLeft="23.5dp"
+                        android:textSize="15sp"
+                        android:textColor="@color/text_color"
+                        android:gravity="center"
+                        android:layout_height="match_parent" />
+                    <EditText
+                        android:id="@+id/wechat_edt"
+                        android:layout_width="@dimen/infoedtwidth"
+                        style="@style/infoEditor"
+                        android:hint="输入您的微信号"
+                        android:layout_alignParentRight="true"
+                        android:layout_height="match_parent" />
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:gravity="center_vertical"
+                    android:layout_height="67dp">
+                    <com.dream.NiuFaNet.CustomView.ContentTextview
+                        android:layout_width="wrap_content"
+                        android:text="邮箱"
+                        android:layout_marginLeft="23.5dp"
+                        android:textSize="15sp"
+                        android:textColor="@color/text_color"
+                        android:gravity="center"
+                        android:layout_height="match_parent" />
+                    <EditText
+                        android:id="@+id/email_edt"
+                        android:layout_width="@dimen/infoedtwidth"
+                        style="@style/infoEditor"
+                        android:hint="请输入您的邮箱"
+                        android:layout_alignParentRight="true"
+                        android:layout_height="match_parent" />
+                </RelativeLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

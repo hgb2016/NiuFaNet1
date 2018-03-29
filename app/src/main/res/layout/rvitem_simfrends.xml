@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:orientation="vertical"
+              android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="@color/moren_f2"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/headchar_tv"
+            android:layout_width="wrap_content"
+            android:text="A"
+            android:textSize="15sp"
+            android:textColor="#757474"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="7dp"
+            android:layout_marginBottom="7dp"
+            android:layout_height="wrap_content"/>
+    </RelativeLayout>
+    <com.dream.NiuFaNet.CustomView.MyListView
+        android:id="@+id/contacts_lv"
+        android:layout_width="match_parent"
+        android:paddingLeft="15dp"
+        android:paddingRight="35dp"
+        android:layout_height="wrap_content"></com.dream.NiuFaNet.CustomView.MyListView>
+</LinearLayout>

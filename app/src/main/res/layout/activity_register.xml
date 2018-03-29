@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@drawable/them_bg1"
+    android:id="@+id/root_lay"
+    android:orientation="vertical"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_height">
+
+        <RelativeLayout
+            android:id="@+id/back_relay"
+            android:layout_width="@dimen/dimen45"
+            android:layout_height="@dimen/dimen45"
+            android:layout_marginLeft="@dimen/padding15">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/left_arrow" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:layout_height="match_parent">
+            <com.dream.NiuFaNet.CustomView.ContentTextview
+                android:layout_width="wrap_content"
+                android:text="WELCOME"
+                android:textSize="36sp"
+                android:textColor="@color/white"
+                android:layout_marginTop="15dp"
+                android:layout_height="wrap_content" />
+
+            <RelativeLayout
+                android:layout_width="264.5dp"
+                android:layout_marginTop="27dp"
+                android:gravity="center_vertical"
+                android:background="@drawable/shape_inputkuang"
+                android:layout_height="46dp">
+
+                <ImageView
+                    android:id="@+id/weliv1"
+                    android:layout_width="wrap_content"
+                    android:src="@mipmap/icon_id"
+                    android:padding="@dimen/padding15"
+                    android:layout_height="wrap_content" />
+
+                <EditText
+                    android:id="@+id/phone_edt"
+                    android:layout_width="wrap_content"
+                    android:gravity="center"
+                    android:hint="输入您的手机号"
+                    android:textSize="12sp"
+                    android:layout_centerInParent="true"
+                    android:textColorHint="@color/white_alpha64"
+                    android:background="@null"
+                    android:textColor="@color/white"
+                    android:layout_marginRight="@dimen/padding15"
+                    android:layout_height="match_parent" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:gravity="center_vertical"
+                    android:layout_height="match_parent">
+                    <RelativeLayout
+                        android:layout_width="2dp"
+                        android:background="@color/white_alpha64"
+                        android:layout_marginRight="10dp"
+                        android:layout_height="30dp"></RelativeLayout>
+                    <com.dream.NiuFaNet.CustomView.ContentTextview
+                        android:id="@+id/yzcode_tv"
+                        android:layout_width="wrap_content"
+                        android:textSize="12sp"
+                        android:textColor="@color/white_alpha64"
+                        android:text="获取验证码"
+                        android:layout_marginRight="10dp"
+                        android:gravity="center"
+                        android:layout_height="match_parent" />
+                </LinearLayout>
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="264.5dp"
+                android:layout_marginTop="25dp"
+                android:gravity="center_vertical"
+                android:background="@drawable/shape_inputkuang"
+                android:layout_height="46dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:src="@mipmap/sms_code"
+                    android:padding="@dimen/padding15"
+                    android:layout_height="wrap_content" />
+
+                <EditText
+                    android:id="@+id/yzcode_edt"
+                    android:layout_width="wrap_content"
+                    android:gravity="center"
+                    android:hint="输入验证码"
+                    android:textSize="12sp"
+                    android:textColorHint="@color/white_alpha64"
+                    android:background="@null"
+                    android:inputType="number"
+                    android:textColor="@color/white"
+                    android:layout_centerInParent="true"
+                    android:layout_marginRight="@dimen/padding15"
+                    android:layout_height="match_parent" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="264.5dp"
+                android:layout_marginTop="25dp"
+                android:gravity="center_vertical"
+                android:background="@drawable/shape_inputkuang"
+                android:layout_height="46dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:src="@mipmap/icon_key"
+                    android:padding="@dimen/padding15"
+                    android:layout_height="wrap_content" />
+
+                <EditText
+                    android:id="@+id/pwd_edt1"
+                    android:layout_width="wrap_content"
+                    android:gravity="center"
+                    android:hint="输入您的密码"
+                    android:textSize="12sp"
+                    android:textColorHint="@color/white_alpha64"
+                    android:background="@null"
+                    android:textColor="@color/white"
+                    android:inputType="textPassword"
+                    android:layout_centerInParent="true"
+                    android:layout_marginRight="@dimen/padding15"
+                    android:layout_height="match_parent" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="264.5dp"
+                android:layout_marginTop="25dp"
+                android:gravity="center_vertical"
+                android:background="@drawable/shape_inputkuang"
+                android:layout_height="46dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:src="@mipmap/icon_keys"
+                    android:padding="@dimen/padding15"
+                    android:layout_height="wrap_content" />
+
+                <EditText
+                    android:id="@+id/pwd_edt2"
+                    android:layout_width="wrap_content"
+                    android:gravity="center"
+                    android:hint="再次确认密码"
+                    android:textSize="12sp"
+                    android:textColorHint="@color/white_alpha64"
+                    android:background="@null"
+                    android:textColor="@color/white"
+                    android:layout_centerInParent="true"
+                    android:inputType="textPassword"
+                    android:layout_marginRight="@dimen/padding15"
+                    android:layout_height="match_parent" />
+            </RelativeLayout>
+
+            <com.dream.NiuFaNet.CustomView.ContentTextview
+                android:id="@+id/register_tv"
+                android:layout_width="100dp"
+                android:text="注册"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/shape_registerkuang"
+                android:gravity="center"
+                android:textSize="18sp"
+                android:textColor="@color/white"
+                android:layout_height="47dp" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_marginBottom="15dp"
+                android:layout_marginTop="@dimen/padding20"
+                android:layout_height="@dimen/login_height">
+                <RelativeLayout
+                    android:id="@+id/login_relay"
+                    android:layout_width="@dimen/login_width"
+                    android:layout_alignParentRight="true"
+                    android:layout_height="@dimen/login_height">
+                    <com.dream.NiuFaNet.CustomView.UView
+                        android:id="@+id/uview"
+                        android:layout_width="@dimen/login_width"
+                        android:layout_centerInParent="true"
+                        android:layout_height="@dimen/login_height">
+                    </com.dream.NiuFaNet.CustomView.UView>
+                    <com.dream.NiuFaNet.CustomView.ContentTextview
+                        android:layout_width="wrap_content"
+                        android:text="登录"
+                        android:textColor="@color/white"
+                        android:layout_centerInParent="true"
+                        android:textSize="18sp"
+                        android:layout_height="wrap_content" />
+                </RelativeLayout>
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

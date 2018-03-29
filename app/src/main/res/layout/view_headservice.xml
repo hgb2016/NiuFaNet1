@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_marginTop="15dp"
+    android:layout_marginBottom="@dimen/chatitem_margin"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/left_headiv"
+        android:layout_width="@dimen/head_icon"
+        android:src="@mipmap/img_niuniu"
+        android:layout_centerVertical="true"
+        android:layout_height="@dimen/head_icon" />
+
+    <com.dream.NiuFaNet.CustomView.ContentTextview
+        android:id="@+id/chat_contenttv"
+        android:layout_width="wrap_content"
+        android:text="我是妞妞，有什么可以帮您?"
+        android:layout_toRightOf="@+id/left_headiv"
+        android:layout_centerVertical="true"
+        android:textColor="@color/white"
+        android:background="@drawable/left"
+        android:gravity="center"
+        android:layout_marginLeft="@dimen/margin_headicon"
+        android:paddingRight="@dimen/chatitem_paddingright"
+        android:paddingLeft="@dimen/chatitem_paddingleft"
+        android:paddingTop="@dimen/chatitem_paddingtop"
+        android:paddingBottom="@dimen/chatitem_paddingbot"
+        android:layout_marginRight="5dp"
+        android:textSize="16sp"
+        android:layout_toLeftOf="@+id/right_voice_relay"
+        android:layout_height="wrap_content" />
+
+</RelativeLayout>

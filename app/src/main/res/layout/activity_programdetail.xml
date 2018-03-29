@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/title_relay"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_height">
+        <RelativeLayout
+            android:id="@+id/back_relay"
+            android:layout_width="wrap_content"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:src="@mipmap/back"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+        <TextView
+            android:id="@+id/titletv"
+            android:layout_width="wrap_content"
+            android:text="项目详情"
+            android:textColor="@color/main_botblack"
+            android:textSize="15sp"
+            android:layout_gravity="center_horizontal"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:layout_height="match_parent" />
+        <ImageView
+            android:id="@+id/more_iv"
+            android:layout_width="wrap_content"
+            android:src="@mipmap/more"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="16dp"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_marginTop="20dp"
+        android:paddingBottom="@dimen/dimen_left"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:src="@mipmap/event"
+            android:layout_marginLeft="16dp"
+            android:layout_height="wrap_content" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/title_tv"
+                android:layout_width="wrap_content"
+                android:layout_marginRight="13dp"
+                android:textSize="15sp"
+                android:textColor="@color/color26"
+                android:layout_marginLeft="15dp"
+                android:layout_height="wrap_content" />
+            <EditText
+                android:id="@+id/title_edt"
+                android:layout_width="wrap_content"
+                android:layout_marginRight="13dp"
+                android:textSize="15sp"
+                android:textColor="@color/color26"
+                android:paddingLeft="15dp"
+                android:background="@null"
+                android:visibility="gone"
+                android:hint="请输入标题"
+                android:paddingRight="5dp"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:background="@color/fengexiand9"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:layout_height="0.5dp"></View>
+    <LinearLayout
+        android:id="@+id/annum_relay"
+        android:layout_width="match_parent"
+        android:paddingTop="@dimen/dimen_left"
+        android:paddingBottom="@dimen/dimen_left"
+        android:gravity="center_vertical"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:src="@mipmap/annum"
+            android:layout_marginLeft="15dp"
+            android:layout_height="wrap_content" />
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/duration_tv"
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/color28"
+                android:textSize="13sp"
+                android:layout_height="wrap_content" />
+            <EditText
+                android:id="@+id/duration_edt"
+                android:layout_width="wrap_content"
+                android:paddingLeft="10dp"
+                android:textColor="@color/color28"
+                android:textSize="13sp"
+                android:background="@null"
+                android:hint="请输入案号"
+                android:inputType="text"
+                android:paddingRight="5dp"
+                android:visibility="gone"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+    </LinearLayout>
+    <View
+        android:id="@+id/line_annum"
+        android:layout_width="match_parent"
+        android:background="@color/fengexiand9"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:layout_height="0.5dp"></View>
+    <RelativeLayout
+        android:id="@+id/status_relay"
+        android:layout_width="match_parent"
+        android:paddingTop="@dimen/dimen_left"
+        android:paddingBottom="@dimen/dimen_left"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_centerVertical="true"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:src="@mipmap/time"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:text="项目状态"
+                android:textColor="@color/color28"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/doing_iv"
+            android:layout_width="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="30dp"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:background="@color/fengexiand9"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:layout_height="0.5dp"></View>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:paddingTop="@dimen/dimen_left"
+        android:paddingBottom="@dimen/dimen_left"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:src="@mipmap/follow"
+            android:layout_marginLeft="15dp"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="项目成员"
+            android:textColor="@color/color28"
+            android:textSize="15sp"
+            android:layout_marginLeft="10dp"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <com.dream.NiuFaNet.CustomView.MyGridView
+        android:id="@+id/particepant_gv"
+        android:layout_width="match_parent"
+        android:numColumns="4"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:gravity="center"
+        android:layout_height="wrap_content"></com.dream.NiuFaNet.CustomView.MyGridView>
+    <View
+        android:layout_width="match_parent"
+        android:background="@color/fengexiand9"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:layout_height="0.5dp"></View>
+    <LinearLayout
+        android:id="@+id/beizu_relay"
+        android:layout_width="match_parent"
+        android:paddingTop="@dimen/dimen_left"
+        android:paddingBottom="@dimen/dimen_left"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:src="@mipmap/write"
+            android:layout_marginLeft="15dp"
+            android:layout_height="wrap_content" />
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/beizu_tv"
+                android:layout_width="wrap_content"
+                android:textColor="@color/color28"
+                android:textSize="15sp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="20dp"
+                android:layout_height="wrap_content" />
+            <EditText
+                android:id="@+id/beizu_edt"
+                android:layout_width="wrap_content"
+                android:textColor="@color/color28"
+                android:textSize="15sp"
+                android:paddingLeft="10dp"
+                android:layout_marginRight="20dp"
+                android:visibility="gone"
+                android:background="@null"
+                android:hint="请输入备注信息"
+                android:paddingRight="5dp"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+    </LinearLayout>
+    <View
+        android:id="@+id/line_beizu"
+        android:layout_width="match_parent"
+        android:background="@color/fengexiand9"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:layout_height="0.5dp"></View>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/common_rv"
+            android:layout_marginTop="35dp"
+            android:overScrollMode="never"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <View
+                android:layout_width="match_parent"
+                android:background="@color/fengexiand9"
+                android:layout_centerVertical="true"
+                android:layout_height="0.5dp"></View>
+            <ImageView
+                android:id="@+id/add_schedule"
+                android:layout_width="wrap_content"
+                android:src="@mipmap/add_schedule"
+                android:layout_centerInParent="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="6dp"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+        <ImageView
+            android:id="@+id/downSchedule_iv"
+            android:layout_width="wrap_content"
+            android:src="@drawable/download"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginRight="@dimen/dimen_left"
+            android:layout_marginBottom="@dimen/dimen_left"
+            android:layout_height="wrap_content"/>
+    </RelativeLayout>
+</LinearLayout>
+

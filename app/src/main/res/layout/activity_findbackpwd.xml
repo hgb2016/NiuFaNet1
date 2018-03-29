@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:id="@+id/root_lay"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen45"
+        android:background="@color/white">
+        <RelativeLayout
+            android:id="@+id/back_relay"
+            android:layout_width="@dimen/dimen45"
+            android:layout_height="@dimen/dimen45">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/padding15"
+                android:src="@mipmap/icon_back" />
+        </RelativeLayout>
+
+        <com.dream.NiuFaNet.CustomView.TitleTextview
+            android:id="@+id/title_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="找回密码"
+            android:textColor="@color/text_color"
+            android:textSize="18sp" />
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:paddingRight="19dp"
+        android:paddingLeft="19dp"
+        android:background="@color/layou_mrbg"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_marginTop="17dp"
+            android:layout_height="48.5dp">
+            <EditText
+                android:id="@+id/phone_edt"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:hint="请输入您的手机号"
+                android:background="@color/white"
+                android:textSize="12sp"
+                android:textColor="#b0afaf"
+                android:paddingLeft="15dp"
+                android:layout_height="match_parent" />
+            <com.dream.NiuFaNet.CustomView.ContentTextview
+                android:id="@+id/yzcode_tv"
+                android:layout_width="80dp"
+                android:text="获取验证码"
+                android:gravity="center"
+                android:layout_marginLeft="8dp"
+                android:textSize="13sp"
+                android:background="#dd5c5c"
+                android:textColor="@color/white"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+        <EditText
+            android:id="@+id/code_edt"
+            android:layout_width="match_parent"
+            android:layout_marginTop="16.5dp"
+            android:hint="请输入验证码"
+            android:background="@color/white"
+            android:textSize="12sp"
+            android:textColor="#b0afaf"
+            android:paddingLeft="15dp"
+            android:layout_height="48.5dp" />
+        <com.dream.NiuFaNet.CustomView.ContentTextview
+            android:id="@+id/sure_tv"
+            android:layout_width="match_parent"
+            android:layout_marginTop="16.5dp"
+            android:text="验证"
+            android:gravity="center"
+            android:background="#dd5c5c"
+            android:textSize="15sp"
+            android:textColor="@color/white"
+            android:paddingLeft="15dp"
+            android:layout_height="48.5dp" />
+
+    </LinearLayout>
+</LinearLayout>

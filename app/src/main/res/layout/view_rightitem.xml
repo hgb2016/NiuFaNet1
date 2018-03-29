@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_marginTop="@dimen/chatitem_margin"
+    android:layout_marginBottom="@dimen/chatitem_margin"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/right_headiv"
+        android:layout_width="@dimen/head_icon"
+        android:layout_alignParentRight="true"
+        android:src="@mipmap/niu"
+        android:layout_height="@dimen/head_icon" />
+
+    <RelativeLayout
+        android:id="@+id/mRootLayout"
+        android:layout_width="wrap_content"
+        android:orientation="vertical"
+        android:layout_toLeftOf="@+id/right_headiv"
+        android:layout_marginRight="@dimen/margin_headicon"
+        android:layout_marginLeft="@dimen/margin_left"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/right_contv"
+            android:layout_width="wrap_content"
+            android:layout_centerVertical="true"
+            android:textSize="16sp"
+            android:background="@drawable/right"
+            android:textIsSelectable="false"
+            android:textColor="@color/white"
+            android:paddingRight="@dimen/chatitem_paddingleft"
+            android:paddingLeft="@dimen/chatitem_paddingright"
+            android:lineSpacingExtra="5dp"
+            android:paddingTop="@dimen/chatitem_paddingtop"
+            android:paddingBottom="@dimen/chatitem_paddingbot"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

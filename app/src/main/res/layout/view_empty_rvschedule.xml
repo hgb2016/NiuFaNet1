@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_centerHorizontal="true"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/dimen_left">
+
+        <RelativeLayout
+            android:layout_width="6dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp">
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="12dp"
+                android:layout_centerHorizontal="true"
+                android:background="@color/color999"></View>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:background="@drawable/shape_circle_cal"
+                android:gravity="center"
+                android:text="例"
+                android:textColor="@color/white"
+                android:textSize="8sp"/>
+
+            <ImageView
+                android:id="@+id/dot_iv"
+                android:layout_width="6dp"
+                android:layout_height="6dp"
+                android:layout_marginLeft="8dp"
+                android:background="@drawable/shape_circle_voice"/>
+
+            <TextView
+                android:id="@+id/begint_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:text="2017-11-25 17:20"
+                android:textColor="@color/black"
+                android:textSize="13sp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:layout_width="6dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="20dp">
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_centerHorizontal="true"
+                    android:background="@color/color999"></View>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/title_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:text="明天上午10点罗湖法律议会"
+                    android:textColor="@color/color333"
+                    android:textSize="12sp"/>
+
+                <View
+                    android:id="@+id/xuxian_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="32dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/shape_xuxian"
+                    android:layerType="software">
+                </View>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/dimen_left">
+
+        <RelativeLayout
+            android:layout_width="6dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp">
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="12dp"
+                android:layout_centerHorizontal="true"
+                android:background="@color/color999"></View>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:background="@drawable/shape_circle_cal"
+                android:gravity="center"
+                android:text="例"
+                android:textColor="@color/white"
+                android:textSize="8sp"/>
+
+            <ImageView
+                android:id="@+id/dot1_iv"
+                android:layout_width="6dp"
+                android:layout_height="6dp"
+                android:layout_marginLeft="8dp"
+                android:background="@drawable/shape_circle_voice"/>
+
+            <TextView
+                android:id="@+id/begint1_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:text="2017-11-25 17:20"
+                android:textColor="@color/black"
+                android:textSize="13sp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:layout_width="6dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="20dp">
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_centerHorizontal="true"
+                    android:background="@color/color999"></View>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/title1_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:text="下午三点篮球赛"
+                    android:textColor="@color/color333"
+                    android:textSize="12sp"/>
+
+                <View
+                    android:id="@+id/xuxian1_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="32dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/shape_xuxian"
+                    android:layerType="software">
+                </View>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/week_tv"
+        android:layout_width="wrap_content"
+        android:textColor="@color/calender_week"
+        android:text="日"
+        android:textSize="11sp"
+        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:layout_marginTop="8dp"
+        android:id="@+id/select_lay"
+        android:layout_width="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:layout_height="wrap_content">
+        <TextView
+           android:gravity="center"
+            android:id="@+id/gday_tv"
+            android:layout_width="30dp"
+            android:textColor="@color/black"
+            android:text="12"
+            android:layout_height="30dp" />
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/nday_tv"
+            android:layout_width="wrap_content"
+            android:textColor="@color/content_color"
+            android:text="廿四"
+            android:textSize="9sp"
+            android:layout_marginTop="3dp"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:id="@+id/work_iv"
+            android:layout_width="wrap_content"
+            android:background="@drawable/shape_circle_cal"
+            android:layout_marginTop="2dp"
+            android:visibility="gone"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</LinearLayout>
