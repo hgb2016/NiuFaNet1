@@ -4,6 +4,7 @@
     android:orientation="vertical"
     android:layout_height="match_parent">
     <RelativeLayout
+        android:layout_marginTop="@dimen/icon_size_20dp"
         android:layout_width="match_parent"
         android:background="@color/white"
         android:layout_height="@dimen/dimen45">
@@ -13,7 +14,7 @@
             android:layout_height="@dimen/dimen45">
             <ImageView
                 android:layout_width="wrap_content"
-                android:src="@mipmap/icon_back"
+                android:src="@mipmap/back"
                 android:layout_marginLeft="@dimen/padding15"
                 android:layout_centerVertical="true"
                 android:layout_height="wrap_content" />
@@ -21,13 +22,17 @@
         <TextView
             android:layout_width="wrap_content"
             android:text="@string/app_name"
-            android:textColor="@color/main_botblack"
+            android:textColor="@color/black"
             android:textSize="@dimen/title_textsize"
             android:layout_gravity="center_horizontal"
             android:layout_centerInParent="true"
             android:layout_height="wrap_content" />
+        <View
+            android:background="@color/gray"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/layout_padding_1dp"/>
     </RelativeLayout>
-
     <WebView
         android:id="@+id/web_view"
         android:layout_width="match_parent"

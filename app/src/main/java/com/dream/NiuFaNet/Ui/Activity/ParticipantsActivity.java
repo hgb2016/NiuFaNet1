@@ -4,20 +4,19 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.aitsuki.swipe.SwipeMenuRecyclerView;
+import com.bumptech.glide.Glide;
+import com.dream.NiuFaNet.Bean.CommonBean1;
 import com.dream.NiuFaNet.Base.CommonActivity;
 import com.dream.NiuFaNet.Base.RVBaseAdapter;
 import com.dream.NiuFaNet.Base.RVBaseHolder;
-import com.dream.NiuFaNet.Bean.BaseBean;
 import com.dream.NiuFaNet.Bean.CalendarDetailBean;
 import com.dream.NiuFaNet.Bean.CommonBean;
 import com.dream.NiuFaNet.Bean.InputGetBean;
@@ -27,15 +26,15 @@ import com.dream.NiuFaNet.Component.DaggerNFComponent;
 import com.dream.NiuFaNet.Contract.CalendarDetailContract;
 import com.dream.NiuFaNet.Contract.NewCalenderContract;
 import com.dream.NiuFaNet.Listener.NoDoubleClickListener;
+import com.dream.NiuFaNet.Other.CommonAction;
 import com.dream.NiuFaNet.Other.Const;
 import com.dream.NiuFaNet.Other.MyApplication;
 import com.dream.NiuFaNet.Presenter.CalendarDetailPresenter;
 import com.dream.NiuFaNet.Presenter.NewCalenderPresenter;
 import com.dream.NiuFaNet.R;
-import com.dream.NiuFaNet.Utils.AppManager;
 import com.dream.NiuFaNet.Utils.Dialog.DialogUtils;
+import com.dream.NiuFaNet.Utils.GlideCircleTransform;
 import com.dream.NiuFaNet.Utils.HttpUtils;
-import com.dream.NiuFaNet.Utils.IntentUtils;
 import com.dream.NiuFaNet.Utils.RvUtils;
 import com.dream.NiuFaNet.Utils.ToastUtils;
 import com.google.gson.Gson;
@@ -50,7 +49,6 @@ import java.util.Map;
 import javax.inject.Inject;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -59,8 +57,8 @@ import butterknife.OnClick;
 public class ParticipantsActivity extends CommonActivity implements CalendarDetailContract.View,NewCalenderContract.View {
     @Bind(R.id.back_relay)
     RelativeLayout mBackRelay;
-    @Bind(R.id.sure_iv)
-    ImageView mSureIv;
+    @Bind(R.id.sure_tv)
+    TextView mSureIv;
     @Bind(R.id.participant_numtv)
     TextView mParticipantNumtv;
     @Bind(R.id.participant_rv)
@@ -69,8 +67,15 @@ public class ParticipantsActivity extends CommonActivity implements CalendarDeta
     ImageView mJiaIv;
     @Bind(R.id.bot_tv)
     TextView mBotTv;
-    @Bind(R.id.invite_relay)
-    RelativeLayout mInviteRelay;
+    @Bind(R.id.createdtime_tv)
+    TextView createdtime_tv;
+    @Bind(R.id.createduser_tv)
+    TextView createduser_tv;
+    @Bind(R.id.createduser_iv)
+    ImageView createduser_iv;
+    @Bind(R.id.sure_relay)
+    RelativeLayout sure_relay;
+
 
     @Inject
     CalendarDetailPresenter calendarDetailPresenter;
@@ -110,17 +115,36 @@ public class ParticipantsActivity extends CommonActivity implements CalendarDeta
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             tempData = (CalendarDetailBean.DataBean) extras.getSerializable("data");
+            createdtime_tv.setText(tempData.getCreateTime());
+            if (!tempData.getCreateHeadUrl().isEmpty()){
+                Glide.with(MyApplication.getInstance())
+                        .load(tempData.getCreateHeadUrl())
+                        .transform(new GlideCircleTransform(MyApplication.getInstance()))
+                        .into(createduser_iv);
+            }else {
+            }
+            if (tempData.getCreateUserId().equals(CommonAction.getUserId())){
+                createduser_tv.setText("我");
+                createduser_tv.setTextColor(getResources().getColor(R.color.blue_title));
+            }else {
+                createduser_tv.setText(tempData.getCreateUserName());
+            }
             scheduleId = extras.getString("scheduleId");
             if (tempData != null) {
                 participantList.clear();
                 List<CalendarDetailBean.DataBean.participantBean> participant = tempData.getParticipant();
                 if (participant != null && participant.size() > 0) {
+                    for (int i=0;i<participant.size();i++){
+                        if (participant.get(i).getUserId().equals(tempData.getCreateUserId())){
+                            participant.remove(i);
+                        }
+                    }
                     participantList.addAll(participant);
                 }
                 for (int i = 0; i < participantList.size(); i++) {
                     participantList.get(i).setSouce(true);
                 }
-                mParticipantNumtv.setText("共" + participantList.size() + "人");
+                mParticipantNumtv.setText("参与人");
                 origParts.addAll(participantList);
                 mParserAdapter = new PartsAdapter(this, participantList, R.layout.rvitem_participants_deleteble);
                 RvUtils.setOptionnoLine(mParticipantRv, this);
@@ -134,14 +158,16 @@ public class ParticipantsActivity extends CommonActivity implements CalendarDeta
 
     }
 
-    @OnClick({R.id.back_relay, R.id.sure_iv, R.id.invite_relay})
+    @OnClick({R.id.back_relay, R.id.sure_tv, R.id.sure_relay,R.id.addcontact_relay})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.back_relay:
                 setResult(102);
                 finish();
                 break;
-            case R.id.sure_iv:
+            case R.id.sure_tv:
+                break;
+            case R.id.sure_relay:
                 if (tempData != null && scheduleId != null) {
                     tempData.setScheduleId(scheduleId);
                     tempPart.clear();
@@ -156,11 +182,18 @@ public class ParticipantsActivity extends CommonActivity implements CalendarDeta
                         Log.e("tag", "data=" + data);
                         mLoadingDialog.show();
                         calendarDetailPresenter.edtCalender(HttpUtils.getBody(data), HttpUtils.getRequestBodyParts("file", new ArrayList<File>()));
+                    }else {
+                        ToastUtils.showToast1(mActivity,"没有增加参与人");
                     }
                 }
                 break;
-            case R.id.invite_relay:
-                IntentUtils.toActivityWithTag(MyFrendsActivity.class, mActivity, "newcal", 101);
+            case  R.id.addcontact_relay:
+                Intent intent1=new Intent(mContext,MyFrendsActivity.class);
+                intent1.putExtra( Const.intentTag,"caldetail");
+                Bundle bundle=new Bundle();
+                bundle.putSerializable("peoplelist", (Serializable) participantList);
+                intent1.putExtra("people",bundle);
+                startActivityForResult(intent1,101);
                 break;
         }
     }
@@ -171,7 +204,8 @@ public class ParticipantsActivity extends CommonActivity implements CalendarDeta
         if (requestCode == 101 && resultCode == 102 && data != null) {
             List<MyFrendBean.DataBean> selectdata = (List<MyFrendBean.DataBean>) data.getExtras().getSerializable("selectdata");
             if (selectdata != null && selectdata.size() > 0) {
-                mSureIv.setVisibility(View.VISIBLE);
+                mSureIv.setVisibility(View.GONE);
+                sure_relay.setVisibility(View.VISIBLE);
                 participantList.clear();
                 for (Map.Entry<String, CalendarDetailBean.DataBean.participantBean> mm:map.entrySet()){
                     if (!mm.getValue().isSouce()){
@@ -182,12 +216,15 @@ public class ParticipantsActivity extends CommonActivity implements CalendarDeta
                 for (int i = 0; i < selectdata.size(); i++) {
                     MyFrendBean.DataBean dataBean = selectdata.get(i);
                     CalendarDetailBean.DataBean.participantBean bean = new CalendarDetailBean.DataBean.participantBean();
-                    bean.setUserId(dataBean.getFriendId());
-                    Log.e("tag", "userName=" + dataBean.getFriendName());
-                    bean.setUserName(dataBean.getFriendName());
-                    bean.setHeadUrl(dataBean.getHeadUrl());
-                    bean.setSouce(false);
-                    map.put(dataBean.getFriendId(), bean);
+                    if (!tempData.getCreateUserId().equals(dataBean.getFriendId())) {
+                        bean.setUserId(dataBean.getFriendId());
+                        Log.e("tag", "userName=" + dataBean.getFriendName());
+                        bean.setUserName(dataBean.getFriendName());
+                        bean.setHeadUrl(dataBean.getHeadUrl());
+                        bean.setSouce(false);
+                        bean.setStatus("0");
+                        map.put(dataBean.getFriendId(), bean);
+                    }
                 }
 
                 //把原来的参与人重新加上
@@ -198,7 +235,7 @@ public class ParticipantsActivity extends CommonActivity implements CalendarDeta
                 for (Map.Entry<String, CalendarDetailBean.DataBean.participantBean> item : map.entrySet()) {
                     participantList.add(item.getValue());
                 }
-                mParticipantNumtv.setText("共" + participantList.size() + "人");
+                mParticipantNumtv.setText("参与人");
                 mParserAdapter.notifyDataSetChanged();
             }
         }
@@ -226,6 +263,11 @@ public class ParticipantsActivity extends CommonActivity implements CalendarDeta
 
     @Override
     public void deleteCalResult(CommonBean dataBean) {
+
+    }
+
+    @Override
+    public void validateProjectShowResult(CommonBean1 databean) {
 
     }
 
@@ -276,6 +318,13 @@ public class ParticipantsActivity extends CommonActivity implements CalendarDeta
         public void onBind(RVBaseHolder holder, final CalendarDetailBean.DataBean.participantBean baseBean, final int position) {
             ImageView only_iv = holder.getView(R.id.particepant_headiv);
             final TextView status_tv = holder.getView(R.id.status_tv);
+            TextView reject_tv = holder.getView(R.id.reject_tv);
+            if (baseBean.getRejectRemark()!=null&&!baseBean.getRejectRemark().isEmpty()) {
+                    reject_tv.setText(baseBean.getRejectRemark());
+                    reject_tv.setVisibility(View.VISIBLE);
+            }  else {
+                reject_tv.setVisibility(View.GONE);
+            }
             String headUrl = baseBean.getHeadUrl();
             if (headUrl != null && !headUrl.isEmpty()) {
                 holder.setImageByUrl(R.id.particepant_headiv, headUrl, true);
@@ -303,11 +352,16 @@ public class ParticipantsActivity extends CommonActivity implements CalendarDeta
                     }
                 }
             });
-            holder.setText(R.id.username_tv, baseBean.getUserName());
-            String status = baseBean.getStatus();
-            if (tempData.getCreateUserId().equals(baseBean.getUserId())) {
-                status_tv.setText("发起人");
+            TextView username_tv=holder.getView(R.id.username_tv);
+            if (baseBean.getUserId().equals(CommonAction.getUserId())){
+                username_tv.setTextColor(getResources().getColor(R.color.blue_title));
+                username_tv.setText("我");
+            }else {
+                username_tv.setTextColor(getResources().getColor(R.color.black));
+                holder.setText(R.id.username_tv, baseBean.getUserName());
             }
+
+            String status = baseBean.getStatus();
             if (status != null) {
                 switch (status) {
                     case "0"://默认
@@ -323,6 +377,9 @@ public class ParticipantsActivity extends CommonActivity implements CalendarDeta
                         status_tv.setText("待邀请");
                         break;
                 }
+            }
+            if (tempData.getCreateUserId().equals(baseBean.getUserId())) {
+                status_tv.setText("发起人");
             }
         }
     }

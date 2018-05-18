@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -18,7 +19,9 @@ import com.dream.NiuFaNet.Base.CommonAdapter;
 import com.dream.NiuFaNet.Base.RVBaseAdapter;
 import com.dream.NiuFaNet.Base.RVBaseHolder;
 import com.dream.NiuFaNet.Bean.BusBean.RefreshBean;
+import com.dream.NiuFaNet.Bean.CalendarDetailBean;
 import com.dream.NiuFaNet.Bean.MyFrendBean;
+import com.dream.NiuFaNet.Bean.ProgramDetailBean;
 import com.dream.NiuFaNet.Component.DaggerNFComponent;
 import com.dream.NiuFaNet.Contract.MyFrendsContract;
 import com.dream.NiuFaNet.Listener.NoDoubleClickListener;
@@ -61,8 +64,8 @@ public class MyFrendsActivity extends CommonActivity implements MyFrendsContract
     RecyclerView users_rv;
     @Bind(R.id.fixgrid_lay)
     GridView fixgrid_lay;
-    @Bind(R.id.addfrends_iv)
-    ImageView addfrends_iv;
+    @Bind(R.id.empty_lay)
+    LinearLayout empty_lay;
     @Bind(R.id.invite_relay)
     RelativeLayout invite_relay;
 
@@ -75,6 +78,8 @@ public class MyFrendsActivity extends CommonActivity implements MyFrendsContract
 
     private boolean isSelect;
     private int rightTag;
+    private String tag;
+
     @Override
     public int getLayoutId() {
         return R.layout.activity_myfrends;
@@ -93,11 +98,9 @@ public class MyFrendsActivity extends CommonActivity implements MyFrendsContract
 
         selectedAdapter = new SelectedAdapter(this,selectList,R.layout.gvitem_timg_btext);
         fixgrid_lay.setAdapter(selectedAdapter);
-
-        String tag = getIntent().getStringExtra(Const.intentTag);
+        tag = getIntent().getStringExtra(Const.intentTag);
         if (tag!=null){
             isSelect = true;
-            addfrends_iv.setImageResource(R.mipmap.finish);
             rightTag = 1;
             invite_relay.setVisibility(View.VISIBLE);
         }
@@ -114,13 +117,13 @@ public class MyFrendsActivity extends CommonActivity implements MyFrendsContract
 
     }
 
-    @OnClick({R.id.back_relay, R.id.search_iv,R.id.addfrends_iv,R.id.invite_relay})
+    @OnClick({R.id.back_relay, R.id.search_iv,R.id.sure_relay,R.id.invite_relay})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.back_relay:
                 finish();
                 break;
-            case R.id.addfrends_iv:
+            case R.id.sure_relay:
                 if (rightTag==1){
                     Intent intent = getIntent();
                     Bundle bundle = new Bundle();
@@ -165,12 +168,57 @@ public class MyFrendsActivity extends CommonActivity implements MyFrendsContract
     public void showData(MyFrendBean dataBean) {
         if (dataBean.getError().equals(Const.success)){
             List<MyFrendBean.DataBean> data = dataBean.getData();
-            if (data!=null){
+            if (data!=null&&data.size()!=0){
                 dataList.clear();
                 dataList.addAll(data);
+                Bundle people = getIntent().getBundleExtra("people");
+                if (people!=null){
+                    List<CalendarDetailBean.DataBean.participantBean> participantBeanList=new ArrayList<>();
+                    List<ProgramDetailBean.DataBean.participantBean> participantBeanList1=new ArrayList<>();
+                    if (tag!=null){
+                        if (tag.equals("newpro")){
+                            participantBeanList1  = (List<ProgramDetailBean.DataBean.participantBean>) people.getSerializable("peoplelist");
+                            for (int i=0;i<participantBeanList1.size();i++){
+                                for (int j=0;j<dataList.size();j++){
+                                    if (dataList.get(j).getFriendId().equals(participantBeanList1.get(i).getUserId())){
+                                        dataList.remove(j);
+                                    }
+                                }
+                            }
+                        }else {
+                            participantBeanList  = (List<CalendarDetailBean.DataBean.participantBean>) people.getSerializable("peoplelist");
+                            for (int i=0;i<participantBeanList.size();i++){
+                                for (int j=0;j<dataList.size();j++){
+                                    if (dataList.get(j).getFriendId().equals(participantBeanList.get(i).getUserId())){
+                                        dataList.remove(j);
+                                    }
+                                }
+                            }
+                       /*    // Log.i("myTag",new Gson().toJson(participantBeanList)+"-------------"+new Gson().toJson(dataList));
+                            for (int i=0;i<dataList.size();i++){
+                                for (int j=0;j<participantBeanList.size();j++) {
+                                    if (participantBeanList.get(j).getUserId().equals(dataList.get(i).getFriendId())){
+                                       // dataList.get(i).setSelect(true);
+                                       // dataList.remove(i);
+                                        //selectList.add(dataList.get(i));
+                                    }
+                                }
+                            }*/
+                            Log.e("tag","去重结果="+new Gson().toJson(dataList));
+                        }
+                    }
+                }
+                fixgrid_lay.setVisibility(View.VISIBLE);
+                users_rv.setVisibility(View.VISIBLE);
+                empty_lay.setVisibility(View.GONE);
                 usersAdapter.notifyDataSetChanged();
+                selectedAdapter.notifyDataSetChanged();
+            }else {
+                fixgrid_lay.setVisibility(View.GONE);
+                users_rv.setVisibility(View.GONE);
+                empty_lay.setVisibility(View.VISIBLE);
             }
-            Log.e("tag","data="+new Gson().toJson(data));
+            Log.e("tag","data="+new Gson().toJson(dataList));
         }else {
             ToastUtils.Toast_short(ResourcesUtils.getString(R.string.failconnect));
         }
@@ -188,7 +236,7 @@ public class MyFrendsActivity extends CommonActivity implements MyFrendsContract
                 String s = "用户" + position;
                 holder.setText(R.id.username_tv, "用户"+s.hashCode());
             }else {
-                holder.setText(R.id.username_tv, dataBean.getFriendName());
+                holder.setText(R.id.username_tv, dataBean.getShowName());
             }
             final ImageView select_iv = holder.getView(R.id.select_iv);
             final ImageView head_icon = holder.getView(R.id.head_icon);
@@ -196,9 +244,9 @@ public class MyFrendsActivity extends CommonActivity implements MyFrendsContract
             if (isSelect){
                 select_iv.setVisibility(View.VISIBLE);
                 if (dataBean.isSelect()){
-                    select_iv.setImageResource(R.mipmap.choose);
+                    select_iv.setImageResource(R.mipmap.check_green);
                 }else {
-                    select_iv.setImageResource(R.drawable.shape_circle_noselect);
+                    select_iv.setImageResource(R.mipmap.emptycheck_2);
                 }
 
             }else {
@@ -217,7 +265,7 @@ public class MyFrendsActivity extends CommonActivity implements MyFrendsContract
 
                     if (isSelect){
                         if (dataBean.isSelect()){
-                            select_iv.setImageResource(R.drawable.shape_circle_noselect);
+                            select_iv.setImageResource(R.mipmap.emptycheck_2);
                             dataBean.setSelect(false);
                             for (int i = 0; i < selectList.size(); i++) {
                                 if (selectList.get(i).getId().equals(dataBean.getId())){
@@ -225,7 +273,7 @@ public class MyFrendsActivity extends CommonActivity implements MyFrendsContract
                                 }
                             }
                         }else {
-                            select_iv.setImageResource(R.mipmap.choose);
+                            select_iv.setImageResource(R.mipmap.check_green);
                             dataBean.setSelect(true);
                             selectList.add(dataBean);
                         }
@@ -239,7 +287,7 @@ public class MyFrendsActivity extends CommonActivity implements MyFrendsContract
             holder.setOnClickListener(R.id.next_info, new NoDoubleClickListener() {
                 @Override
                 public void onNoDoubleClick(View view) {
-                    Intent intent = new Intent(mActivity,FrendScheduleActivity.class);
+                    Intent intent = new Intent(mActivity,FriendCalenderActivity.class);
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("data",dataBean);
                     intent.putExtras(bundle);
@@ -271,7 +319,7 @@ public class MyFrendsActivity extends CommonActivity implements MyFrendsContract
             if (item.getFriendName().isEmpty()){
                 only_tv.setText( "用户"+position);
             }else {
-                only_tv.setText(item.getFriendName());
+                only_tv.setText(item.getShowName());
             }
             helper.setOnClickListener(R.id.close_iv, new NoDoubleClickListener() {
                 @Override

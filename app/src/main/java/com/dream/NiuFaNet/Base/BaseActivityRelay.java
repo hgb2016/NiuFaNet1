@@ -15,6 +15,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Window;
 import android.widget.RelativeLayout;
 
+import com.baidu.mobstat.StatService;
 import com.dream.NiuFaNet.Contract.PermissionListener;
 import com.dream.NiuFaNet.R;
 import com.dream.NiuFaNet.Utils.Dialog.DialogUtils;

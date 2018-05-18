@@ -1,34 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:background="@color/layou_mrbg"
+    android:background="@color/white"
     android:orientation="vertical"
     android:id="@+id/root_lay"
     android:layout_height="match_parent">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:background="@color/white"
-        android:layout_height="@dimen/dimen45">
+        android:layout_height="@dimen/title_height"
+        android:layout_marginTop="20dp">
+
         <RelativeLayout
             android:id="@+id/back_relay"
-            android:layout_width="@dimen/dimen45"
-            android:layout_height="@dimen/dimen45">
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:gravity="center">
+
             <ImageView
                 android:layout_width="wrap_content"
-                android:src="@mipmap/icon_back"
-                android:layout_marginLeft="@dimen/padding15"
-                android:layout_centerVertical="true"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:src="@mipmap/back" />
         </RelativeLayout>
-        <com.dream.NiuFaNet.CustomView.TitleTextview
+
+        <TextView
+            android:id="@+id/title1_tv"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_centerInParent="true"
+            android:layout_gravity="center_horizontal"
             android:text="意见反馈"
-            android:textColor="@color/text_color"
-            android:textSize="18sp"
-            android:layout_height="wrap_content" />
+            android:textColor="@color/black"
+            android:textSize="17sp" />
     </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray" />
     <LinearLayout
+
         android:layout_width="match_parent"
         android:background="@color/white"
         android:layout_marginTop="5dp"
@@ -65,7 +76,40 @@
                 android:padding="10dp"
                 android:layout_height="wrap_content" />
         </RelativeLayout>
+        <LinearLayout
+            android:layout_marginRight="@dimen/margin_right25dp"
+            android:layout_marginLeft="25dp"
+            android:gravity="center_vertical"
+            android:background="@drawable/shape_search"
+            android:layout_width="match_parent"
+            android:layout_height="40dp">
+            <TextView
+                android:layout_marginLeft="10dp"
+                android:text="手机号："
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <EditText
+                android:id="@+id/phone_edt"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:paddingLeft="@dimen/padding15"
+                android:hint="请输入您的手机号"
+                android:background="@null"
+                android:textSize="14sp"
+                android:textColor="@color/black"
+                android:layout_height="30dp" />
+        </LinearLayout>
+        <Button
+            android:id="@+id/submit_btn"
+            android:layout_marginTop="35dp"
+            android:layout_gravity="center_horizontal"
+            android:text="提交意见"
+            android:textColor="@color/white"
+            android:background="@drawable/shape_friendsdetail"
+            android:layout_width="150dp"
+            android:layout_height="44dp" />
         <com.dream.NiuFaNet.CustomView.ContentTextview
+            android:visibility="gone"
             android:id="@+id/submit_tv"
             android:layout_width="95dp"
             android:text="提交意见"

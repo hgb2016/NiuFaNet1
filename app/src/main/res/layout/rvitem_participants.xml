@@ -7,31 +7,48 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="70dp">
         <LinearLayout
+            android:layout_marginLeft="20dp"
+            android:layout_centerVertical="true"
             android:layout_width="wrap_content"
             android:gravity="center_vertical"
             android:layout_height="wrap_content">
             <ImageView
+                android:src="@mipmap/icon_user"
                 android:id="@+id/particepant_headiv"
-                android:layout_width="32dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="9dp"
-                android:layout_marginBottom="9dp"
-                android:layout_height="32dp"/>
+                android:layout_width="36dp"
+                android:layout_height="36dp"/>
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
             <TextView
+                android:text="胡军"
                 android:id="@+id/username_tv"
                 android:layout_width="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:textSize="15sp"
+                android:layout_marginLeft="14dp"
+                android:textSize="16sp"
                 android:textColor="@color/color2a"
                 android:layout_height="wrap_content"/>
+                <TextView
+                    android:text="没时间"
+                    android:id="@+id/reject_tv"
+                    android:layout_marginTop="@dimen/layout_margin_5dp"
+                    android:visibility="gone"
+                    android:layout_marginLeft="14dp"
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/gray_d7"
+                    android:textSize="12sp"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
         </LinearLayout>
         <TextView
+            android:text=""
             android:id="@+id/status_tv"
             android:layout_width="wrap_content"
-            android:textColor="@color/color6c"
-            android:textSize="13sp"
+            android:textColor="@color/textcolor_93"
+            android:textSize="14sp"
             android:layout_alignParentRight="true"
             android:layout_marginRight="20dp"
             android:layout_centerVertical="true"
@@ -40,8 +57,6 @@
     <View
         android:id="@+id/fegexian_line"
         android:layout_width="match_parent"
-        android:background="@color/fengexiand9"
-        android:layout_marginLeft="63dp"
-        android:layout_marginRight="20dp"
-        android:layout_height="0.5dp"></View>
+        android:background="@color/gray"
+        android:layout_height="1dp"/>
 </LinearLayout>

@@ -24,7 +24,7 @@ public class CustomHelper {
     private TakePhoto mTakePhoto;
     private boolean mCropYes;
     //选择图片的数量(默认一张)
-    private int limit = 1;
+    private int limit = 9;
     private String mCropWidth, mCropHeight;
 
 
@@ -60,7 +60,7 @@ public class CustomHelper {
             }
             //相册
         } else {
-            if (limit > 1) {
+            if (limit > 9) {
                 if (mCropYes) {
                     mTakePhoto.onPickMultipleWithCrop(limit, getCropOptions());
                 } else {

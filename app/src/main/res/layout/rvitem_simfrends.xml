@@ -6,23 +6,21 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:background="@color/moren_f2"
-        android:layout_height="wrap_content">
+        android:background="#f6f6f6"
+        android:layout_height="24dp">
         <TextView
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/icon_size_20dp"
             android:id="@+id/headchar_tv"
             android:layout_width="wrap_content"
             android:text="A"
-            android:textSize="15sp"
-            android:textColor="#757474"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="7dp"
-            android:layout_marginBottom="7dp"
+            android:textSize="12sp"
+            android:textColor="@color/black"
             android:layout_height="wrap_content"/>
     </RelativeLayout>
     <com.dream.NiuFaNet.CustomView.MyListView
         android:id="@+id/contacts_lv"
+        android:divider="@null"
         android:layout_width="match_parent"
-        android:paddingLeft="15dp"
-        android:paddingRight="35dp"
-        android:layout_height="wrap_content"></com.dream.NiuFaNet.CustomView.MyListView>
+        android:layout_height="match_parent"/>
 </LinearLayout>

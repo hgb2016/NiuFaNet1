@@ -3,6 +3,7 @@
     <integer name="animduration">150</integer>
     <string name="failconnect">连接服务器失败，请检查网络</string>
     <string name="voicefirst">我是妞妞，有什么可以帮您？</string>
+    <string name="pleaseinputkeyword">请输入搜索关键字</string>
 
-<!--极光推送集成所需-->
+    <!--极光推送集成所需-->
 </resources>

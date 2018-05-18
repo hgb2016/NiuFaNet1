@@ -25,7 +25,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.awen.photo.photopick.controller.PhotoPagerConfig;
-import com.bigkoo.pickerview.TimePickerView;
+
 import com.bumptech.glide.Glide;
 import com.dream.NiuFaNet.Adapter.CalDetailParticipantAdapter;
 import com.dream.NiuFaNet.Base.BaseViewHolder;
@@ -61,6 +61,7 @@ import com.dream.NiuFaNet.Utils.ResourcesUtils;
 import com.dream.NiuFaNet.Utils.SpUtils;
 import com.dream.NiuFaNet.Utils.SpannableStringUtil;
 import com.dream.NiuFaNet.Utils.ToastUtils;
+import com.example.zhouwei.library.CustomPopWindow;
 import com.google.gson.Gson;
 
 import java.io.File;
@@ -79,16 +80,19 @@ import butterknife.OnClick;
 import cn.sharesdk.wechat.friends.Wechat;
 
 /**
+ *日程详情
  * Created by Administrator on 2017/11/19 0019.
  */
-public class CalenderDetailActivity1 extends CommonActivity implements CalendarDetailContract.View,ProgramDetailContract.View {
+public class CalenderDetailActivity1 extends CommonActivity {
 
 
     @Inject
     CalendarDetailPresenter detailPresenter;
     @Inject
     ProgramDetailPresenter programDetailPresenter;
-
+    private CustomPopWindow mCustomPopWindow;
+    @Bind(R.id.more_relay)
+    RelativeLayout more_relay;
     @Override
     public int getLayoutId() {
         return R.layout.activity_calenderdetail1;
@@ -96,12 +100,6 @@ public class CalenderDetailActivity1 extends CommonActivity implements CalendarD
 
     @Override
     public void initView() {
-        DaggerNFComponent.builder()
-                .appComponent(MyApplication.getInstance().getAppComponent())
-                .build()
-                .inject(this);
-        detailPresenter.attachView(this);
-        programDetailPresenter.attachView(this);
 
     }
 
@@ -117,49 +115,6 @@ public class CalenderDetailActivity1 extends CommonActivity implements CalendarD
     @Override
     public void eventListener() {
     }
-
-
-
-
-
-
-
-
-    @Override
-    public void showData(CalendarDetailBean dataBean) {
-
-    }
-
-
-    @Override
-    public void deletePicResult(CommonBean dataBean, int position) {
-
-    }
-
-    @Override
-    public void edtCalendar(NewCalResultBean dataBean) {
-
-    }
-
-    private void refreshData() {
-
-    }
-
-    @Override
-    public void deleteCalResult(CommonBean dataBean) {
-
-    }
-
-    @Override
-    public void showError() {
-
-    }
-
-    @Override
-    public void complete() {
-
-    }
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -200,31 +155,60 @@ public class CalenderDetailActivity1 extends CommonActivity implements CalendarD
     private void parseDate(Intent data, int picture, Activity mActivity) {
 
     }
-
-    @Override
-    public void showData(ProgramDetailBean dataBean) {
-
-    }
-
-    @Override
-    public void showEdtData(CommonBean dataBean) {
-
-    }
-
-    @Override
-    public void showDeleteData(CommonBean dataBean) {
-
-
-    }
-
-    @Override
-    public void showDownload(CommonBean dataBean) {
-
-    }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
     }
 
+
+    @OnClick({R.id.more_relay})
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.more_relay:
+                showPopMenu();
+                break;
+        }
+    }
+    private void showPopMenu() {
+        View contentView = LayoutInflater.from(this).inflate(R.layout.pop_menu,null);
+        //处理popWindow 显示内容
+        handleLogic(contentView);
+        //创建并显示popWindow
+        mCustomPopWindow= new CustomPopWindow.PopupWindowBuilder(this)
+                .setView(contentView)
+                .setBgDarkAlpha(0.7f)
+                .enableBackgroundDark(true)
+                .create()
+                .showAsDropDown(more_relay,40,20);
+    }
+
+    /**
+     * 处理添加按钮弹出显示内容、点击事件等逻辑
+     * @param contentView
+     */
+    private void handleLogic(View contentView){
+        View.OnClickListener listener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mCustomPopWindow!=null){
+                    mCustomPopWindow.dissmiss();
+                }
+                switch (v.getId()){
+                    case R.id.menu1_log:
+                        startActivity(new Intent(getApplicationContext(),CalenderLogActivity.class));
+                        break;
+                    case R.id.menu2_update:
+                        startActivity(new Intent(getApplicationContext(),EditCalenderActivity.class));
+                        break;
+                    case R.id.menu3_delete:
+
+                        break;
+                }
+                //Toast.makeText(HomeActivity.this,showContent,Toast.LENGTH_SHORT).show();
+            }
+        };
+        contentView.findViewById(R.id.menu1_log).setOnClickListener(listener);
+        contentView.findViewById(R.id.menu2_update).setOnClickListener(listener);
+        contentView.findViewById(R.id.menu3_delete).setOnClickListener(listener);
+    }
 }

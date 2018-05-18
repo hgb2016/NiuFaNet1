@@ -6,9 +6,13 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -32,12 +36,15 @@ import com.dream.NiuFaNet.R;
 import com.dream.NiuFaNet.Utils.CheckForAllUtils;
 import com.dream.NiuFaNet.Utils.Dialog.DialogUtils;
 import com.dream.NiuFaNet.Utils.FrendsUtils;
+import com.dream.NiuFaNet.Utils.IntentUtils;
+import com.dream.NiuFaNet.Utils.LocalGroupSearch;
 import com.dream.NiuFaNet.Utils.PinYinUtil;
 import com.dream.NiuFaNet.Utils.ResourcesUtils;
 import com.dream.NiuFaNet.Utils.RvUtils;
 import com.dream.NiuFaNet.Utils.SpUtils;
 import com.dream.NiuFaNet.Utils.StringUtil;
 import com.dream.NiuFaNet.Utils.ToastUtils;
+import com.dream.NiuFaNet.jpush.Logger;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -67,7 +74,10 @@ public class MySimFrendsActivity extends CommonActivity implements SimFrendsCont
     SmartRefreshLayout mFrendsRefresh;
     @Bind(R.id.back_relay)
     RelativeLayout back_relay;
-
+    @Bind(R.id.search_edt)
+    EditText search_edt;
+    @Bind(R.id.search_lay)
+    LinearLayout search_lay;
     private String[] lArray = new String[]{"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
 
     private FrendsRvAdapter mFrendsRvAdapter;
@@ -101,6 +111,7 @@ public class MySimFrendsActivity extends CommonActivity implements SimFrendsCont
         letterAdapter = new LetterAdapter(this, letterList, R.layout.rvitem_onlytext);
         mLetterRv.setAdapter(letterAdapter);
         mLoadingDialog = DialogUtils.initLoadingDialog(this);
+
     }
 
     @Override
@@ -121,8 +132,7 @@ public class MySimFrendsActivity extends CommonActivity implements SimFrendsCont
         }
 
         if (!letters.isEmpty()) {
-            List<String> data = new Gson().fromJson(letters, new TypeToken<List<String>>() {
-            }.getType());
+            List<String> data = new Gson().fromJson(letters, new TypeToken<List<String>>() {}.getType());
             if (data != null) {
                 letterList.clear();
                 letterList.addAll(data);
@@ -149,6 +159,12 @@ public class MySimFrendsActivity extends CommonActivity implements SimFrendsCont
             @Override
             public void onNoDoubleClick(View view) {
                 finish();
+            }
+        });
+        search_lay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                IntentUtils.toActivityWithTag(SearchNewFriendsActivity.class,mActivity,"simfriend");
             }
         });
     }
@@ -199,12 +215,12 @@ public class MySimFrendsActivity extends CommonActivity implements SimFrendsCont
             TextView addfrends_tv = helper.getView(R.id.addfrends_tv);
             if (item.isSend()) {
                 addfrends_tv.setBackgroundColor(ResourcesUtils.getColor(R.color.white));
-                addfrends_tv.setTextColor(ResourcesUtils.getColor(R.color.color6c));
+                addfrends_tv.setTextColor(ResourcesUtils.getColor(R.color.textcolor_blue2));
                 addfrends_tv.setText("已推荐");
             } else {
                 addfrends_tv.setText("推荐给TA");
-                addfrends_tv.setBackgroundResource(R.drawable.shape_addfrends);
-                addfrends_tv.setTextColor(ResourcesUtils.getColor(R.color.white));
+                addfrends_tv.setBackgroundResource(R.drawable.shape_blue);
+                addfrends_tv.setTextColor(ResourcesUtils.getColor(R.color.textcolor_blue2));
             }
 
             addfrends_tv.setOnClickListener(new NoDoubleClickListener() {
@@ -228,7 +244,7 @@ public class MySimFrendsActivity extends CommonActivity implements SimFrendsCont
         public void onBind(RVBaseHolder holder, final String cityBean, int position) {
             TextView only_tv = holder.getView(R.id.only_tv);
             only_tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10);
-            only_tv.setTextColor(ResourcesUtils.getColor(R.color.letterTvColor));
+            only_tv.setTextColor(ResourcesUtils.getColor(R.color.black));
             only_tv.setText(cityBean);
             holder.itemView.setOnClickListener(new NoDoubleClickListener() {
                 @Override
@@ -250,14 +266,12 @@ public class MySimFrendsActivity extends CommonActivity implements SimFrendsCont
     }
 
     private class DataTask extends AsyncTask<String, String, List<SimFrendsBean>> {
-
-
         @Override
         protected List<SimFrendsBean> doInBackground(String... strings) {
             List<SimFrendsBean> frends = new ArrayList<>();
             try {
                 List<Contact> contacts = FrendsUtils.loadContacts(mActivity);
-                Log.e("tag", "contacs.size()=" + contacts.size());
+                Log.e("wwj", "contacs.size()=" + contacts.size());
                 if (contacts != null) {
                     letterList.clear();
                     for (int i = 0; i < lArray.length; i++) {
@@ -268,11 +282,13 @@ public class MySimFrendsActivity extends CommonActivity implements SimFrendsCont
                             String phoneNumber = contacts.get(j).getPhoneNumber();
                             if (name != null && !name.isEmpty()) {
                                 String pinYinHeadChar = PinYinUtil.getInstance().getPinYinHeadChar(name.substring(0, 1));
+                                Log.e("wwj", "pinYinHeadChar------>" + pinYinHeadChar);
                                 if (lArray[i].equals(pinYinHeadChar) && phoneNumber != null && !phoneNumber.isEmpty()&& CheckForAllUtils.isMobileNO(phoneNumber)) {
                                     contactList.add(contacts.get(j));
                                 }
                             }
                         }
+                        Log.e("wwj", "contactList.size()=" + contactList.size());
                         if (contactList.size() != 0) {
                             simFrend.setLetter(lArray[i]);
                             simFrend.setContacts(contactList);
@@ -287,6 +303,7 @@ public class MySimFrendsActivity extends CommonActivity implements SimFrendsCont
                         }
                     });
                     SpUtils.savaUserInfo(Const.Letter, new Gson().toJson(letterList));
+                   // SpUtils.savaUserInfo(Const.Contact,new Gson().toJson(frends));
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -297,13 +314,16 @@ public class MySimFrendsActivity extends CommonActivity implements SimFrendsCont
         @Override
         protected void onPostExecute(List<SimFrendsBean> simFrendsBeen) {
             super.onPostExecute(simFrendsBeen);
+            mLoadingDialog.dismiss();
+            Log.e("wwj", "simFrendsBeen.size()=" + simFrendsBeen.size()+","+new Gson().toJson(simFrendsBeen));
             if (simFrendsBeen.size() > 0) {
                 frendsList.clear();
                 frendsList.addAll(simFrendsBeen);
                 mFrendsRvAdapter.notifyDataSetChanged();
                 letterAdapter.notifyDataSetChanged();
-                mLoadingDialog.dismiss();
                 mFrendsRefresh.finishRefresh();
+            }else {
+                ToastUtils.Toast_short(mActivity,"通讯录里没有暂时没有联系人");
             }
         }
     }

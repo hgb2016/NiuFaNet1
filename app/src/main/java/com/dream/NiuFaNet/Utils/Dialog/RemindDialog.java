@@ -75,7 +75,7 @@ public abstract class RemindDialog {
                 }
                 Collections.sort(tipList, new Comparator<TimeTipBean>() {
                     @Override
-                    public int compare(TimeTipBean lhs, TimeTipBean rhs) {
+                    public int  compare(TimeTipBean lhs, TimeTipBean rhs) {
                         if (lhs.getMinute() < rhs.getMinute()) {
                             return 1;
                         } else {

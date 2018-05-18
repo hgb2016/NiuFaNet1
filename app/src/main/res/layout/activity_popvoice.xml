@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@color/white"
+    android:gravity="center_horizontal"
+    android:layout_height="match_parent">
+    <TextView
+        android:textSize="@dimen/text_size_18sp"
+        android:layout_marginTop="33dp"
+        android:text="你可以这样说"
+        android:textColor="@color/gray_d7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:textSize="13sp"
+        android:layout_marginTop="19dp"
+        android:text="明天下午4点到7点和MIKE在星巴克见面"
+        android:textColor="@color/gray_d7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:textSize="13sp"
+        android:layout_marginTop="19dp"
+        android:text="明早去找当事人收集证据"
+        android:textColor="@color/gray_d7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="30dp">
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/tip_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="正在倾听......"
+        android:textColor="@color/black"
+        android:textSize="18sp" />
+    </LinearLayout>
+    <TextView
+        android:layout_marginRight="@dimen/icon_size_20dp"
+        android:layout_marginLeft="@dimen/icon_size_20dp"
+        android:id="@+id/audiores_tv"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text=""
+        android:textColor="@color/textcolor_ac"
+        android:textSize="15sp" />
+    <LinearLayout
+        android:visibility="visible"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center">
+        <com.dream.NiuFaNet.CustomView.AudioAnimView
+            android:visibility="visible"
+            android:id="@+id/audioview"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+    </LinearLayout>
+    <RelativeLayout
+        android:id="@+id/voice_bot_relay"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:visibility="visible">
+        <LinearLayout
+            android:layout_width="310dp"
+            android:layout_height="33dp"
+            android:layout_centerInParent="true"
+            android:background="@drawable/shape_search1"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:src="@mipmap/voice1" />
+
+            <TextView
+                android:id="@+id/voice_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/layout_margin_5dp"
+                android:text="我说完了"
+                android:textColor="@color/black" />
+        </LinearLayout>
+
+
+    </RelativeLayout>
+</LinearLayout>

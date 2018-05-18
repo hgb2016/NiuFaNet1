@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.baidu.mobstat.StatService;
 import com.dream.NiuFaNet.Contract.PermissionListener;
 import com.dream.NiuFaNet.Utils.Dialog.DialogUtils;
 import com.gyf.barlibrary.ImmersionBar;

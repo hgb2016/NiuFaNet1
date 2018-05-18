@@ -36,7 +36,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * Created by Administrator on 2017/12/4 0004.
+ * Created by Administrator on 2018/12/4 0004.
  */
 public class MineActivity extends BaseActivity implements VersionUpdateContract.View {
 
@@ -153,14 +153,14 @@ public class MineActivity extends BaseActivity implements VersionUpdateContract.
                 if (CommonAction.getIsLogin()) {
                     IntentUtils.toActivity_result(UserInfoActivity.class,mActivity,28);
                 } else {
-                    IntentUtils.toActivity_result(LoginActivity.class,mActivity,21);
+                    IntentUtils.toActivity_result(LoginActivity1.class,mActivity,21);
                 }
                 break;
             case R.id.userinfo_lay:
                 if (CommonAction.getIsLogin()) {
                     IntentUtils.toActivity_result(UserInfoActivity.class,mActivity,28);
                 } else {
-                    IntentUtils.toActivity_result(LoginActivity.class,mActivity,21);
+                    IntentUtils.toActivity_result(LoginActivity1.class,mActivity,21);
                 }
                 break;
             case R.id.feedback_lay:

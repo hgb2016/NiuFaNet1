@@ -1,126 +1,153 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:orientation="vertical"
+    android:layout_height="match_parent"
     android:background="@color/white"
-    android:layout_height="match_parent">
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:layout_weight="1"
-        android:orientation="vertical"
-        android:layout_height="0dp">
+        android:orientation="vertical">
+
         <LinearLayout
             android:id="@+id/top_lay"
             android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
             <RelativeLayout
+                android:layout_marginTop="@dimen/icon_size_20dp"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen45">
+
                 <RelativeLayout
                     android:id="@+id/back_relay"
                     android:layout_width="@dimen/dimen45"
                     android:layout_height="@dimen/dimen45">
+
                     <ImageView
                         android:layout_width="wrap_content"
-                        android:src="@mipmap/icon_back"
-                        android:layout_marginLeft="@dimen/padding15"
+                        android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_height="wrap_content" />
+                        android:layout_marginLeft="@dimen/padding15"
+                        android:src="@mipmap/back" />
                 </RelativeLayout>
-                <com.dream.NiuFaNet.CustomView.TitleTextview
+
+                <TextView
                     android:id="@+id/title_tv"
                     android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:text="allow的日程"
-                    android:textColor="@color/main_botblack"
-                    android:textSize="15sp"
-                    android:layout_height="wrap_content" />
+                    android:textColor="@color/black"
+                    android:textSize="15sp" />
+
                 <RelativeLayout
                     android:id="@+id/head_icon"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/title_height"
-                    android:gravity="center_vertical"
                     android:layout_alignParentRight="true"
-                    android:paddingRight="15dp"
-                    android:layout_marginLeft="12dp">
+                    android:layout_marginLeft="12dp"
+                    android:gravity="center_vertical"
+                    android:paddingRight="15dp">
+
                     <ImageView
                         android:id="@+id/mine_iv"
                         android:layout_width="19dp"
-                        android:src="@drawable/mine_c"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/mine_c" />
                 </RelativeLayout>
+                <View
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/gray"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"/>
             </RelativeLayout>
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <com.dream.NiuFaNet.CustomView.TitleTextview
                     android:id="@+id/curent_datetv"
                     android:layout_width="wrap_content"
-                    android:textSize="16sp"
-                    android:textColor="@color/color48"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="12dp"
                     android:layout_marginTop="10dp"
-                    android:layout_height="wrap_content" />
+                    android:textColor="@color/color48"
+                    android:textSize="16sp" />
+
                 <ImageView
                     android:id="@+id/today_iv"
                     android:layout_width="wrap_content"
-                    android:src="@drawable/today_c"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="15dp"
                     android:layout_marginTop="6dp"
-                    android:layout_height="wrap_content" />
+                    android:src="@drawable/today_c" />
             </RelativeLayout>
+
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/week_rv"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
+                android:layout_height="wrap_content"/>
+
             <View
                 android:layout_width="match_parent"
-                android:background="@color/fengexian6c"
-                android:layout_height="1dp"></View>
+                android:layout_height="1dp"
+                android:background="@color/fengexian6c"/>
         </LinearLayout>
+
         <ImageView
             android:layout_width="match_parent"
-            android:background="@mipmap/img_shade_below"
-            android:layout_height="8dp" />
+            android:layout_height="8dp"
+            android:background="@mipmap/img_shade_below" />
+
         <com.dream.NiuFaNet.CustomView.CalenderRvUtils.CalendarRecyclerView
             android:id="@+id/work_rv"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"></com.dream.NiuFaNet.CustomView.CalenderRvUtils.CalendarRecyclerView>
+            android:layout_height="match_parent">
+
+        </com.dream.NiuFaNet.CustomView.CalenderRvUtils.CalendarRecyclerView>
 
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_alignParentBottom="true"
-        android:orientation="vertical"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
         <ImageView
             android:layout_width="match_parent"
-            android:background="@mipmap/img_shade_below"
-            android:layout_height="5dp" />
+            android:layout_height="5dp"
+            android:background="@mipmap/img_shade_below" />
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/title_height">
+
             <LinearLayout
                 android:id="@+id/invite_lay"
                 android:layout_width="wrap_content"
-                android:gravity="center_vertical"
+                android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:layout_height="wrap_content">
+                android:gravity="center_vertical">
+
                 <ImageView
                     android:layout_width="20dp"
-                    android:src="@mipmap/add1"
-                    android:layout_height="20dp" />
+                    android:layout_height="20dp"
+                    android:src="@mipmap/add1" />
+
                 <com.dream.NiuFaNet.CustomView.ContentTextview
                     android:layout_width="wrap_content"
-                    android:text="约TA"
-                    android:textSize="15sp"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
+                    android:text="约TA"
                     android:textColor="@color/color6c"
-                    android:layout_height="wrap_content" />
+                    android:textSize="15sp" />
             </LinearLayout>
         </RelativeLayout>
     </LinearLayout>

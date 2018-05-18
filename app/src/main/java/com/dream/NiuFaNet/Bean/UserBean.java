@@ -12,6 +12,24 @@ public class UserBean {
     private String sex;
     private String company;
     private String duty;
+    private String hourRate;
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    private String address;
+    public String getHourRate() {
+        return hourRate;
+    }
+
+    public void setHourRate(String hourRate) {
+        this.hourRate = hourRate;
+    }
 
     public String getUserId() {
         return userId;

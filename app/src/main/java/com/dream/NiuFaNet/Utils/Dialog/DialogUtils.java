@@ -44,6 +44,7 @@ import com.dream.NiuFaNet.Other.Const;
 import com.dream.NiuFaNet.Other.MyApplication;
 import com.dream.NiuFaNet.R;
 import com.dream.NiuFaNet.Ui.Activity.LoginActivity;
+import com.dream.NiuFaNet.Ui.Activity.LoginActivity1;
 import com.dream.NiuFaNet.Utils.AppManager;
 import com.dream.NiuFaNet.Utils.CustomHelper;
 import com.dream.NiuFaNet.Utils.FileUtil;
@@ -442,7 +443,7 @@ public class DialogUtils {
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Intent intent = new Intent(activity, LoginActivity.class);
+                Intent intent = new Intent(activity, LoginActivity1.class);
                 activity.startActivity(intent);
             }
         }).setNegativeButton("取消", new DialogInterface.OnClickListener() {

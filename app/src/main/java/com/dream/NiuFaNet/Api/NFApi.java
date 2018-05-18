@@ -3,17 +3,20 @@ package com.dream.NiuFaNet.Api;
 
 import com.dream.NiuFaNet.Bean.ApplyBeFrendBean;
 import com.dream.NiuFaNet.Bean.BannerBean;
-import com.dream.NiuFaNet.Bean.BaseBean;
 import com.dream.NiuFaNet.Bean.CalInviteBean;
 import com.dream.NiuFaNet.Bean.CalendarDetailBean;
 import com.dream.NiuFaNet.Bean.CalenderedBean;
 import com.dream.NiuFaNet.Bean.ChatBean;
 import com.dream.NiuFaNet.Bean.CommonBean;
+import com.dream.NiuFaNet.Bean.CommonBean1;
+import com.dream.NiuFaNet.Bean.FriendNoticeBean;
 import com.dream.NiuFaNet.Bean.FunctionBean;
+import com.dream.NiuFaNet.Bean.MyToolsBean;
 import com.dream.NiuFaNet.Bean.HeadPortraitBean;
 import com.dream.NiuFaNet.Bean.InputGetBean;
 import com.dream.NiuFaNet.Bean.LoginBean;
 import com.dream.NiuFaNet.Bean.MainFunctionBean;
+import com.dream.NiuFaNet.Bean.MarkDateBean;
 import com.dream.NiuFaNet.Bean.MyFrendBean;
 import com.dream.NiuFaNet.Bean.NewCalResultBean;
 import com.dream.NiuFaNet.Bean.NewProResultBean;
@@ -24,11 +27,12 @@ import com.dream.NiuFaNet.Bean.RegisterBean;
 import com.dream.NiuFaNet.Bean.RemindWordBean;
 import com.dream.NiuFaNet.Bean.SearchUserBean;
 import com.dream.NiuFaNet.Bean.ShareBean;
+import com.dream.NiuFaNet.Bean.ShowCountBean;
+import com.dream.NiuFaNet.Bean.UserInfoBean;
 import com.dream.NiuFaNet.Bean.VersionBean;
 import com.dream.NiuFaNet.Bean.VoiceRvBean;
 import com.dream.NiuFaNet.Bean.WorkVisibleBean;
 import com.dream.NiuFaNet.Other.Const;
-import com.dream.NiuFaNet.Utils.SpUtils;
 
 import java.io.File;
 import java.util.List;
@@ -40,8 +44,7 @@ import okhttp3.RequestBody;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.Field;
-import retrofit2.http.Part;
+import retrofit2.http.FieldMap;
 import rx.Observable;
 
 /**
@@ -182,8 +185,8 @@ public class NFApi {
     public Observable<CommonBean> searchProjectSchedule(String projectId) {
         return service.searchProjectSchedule(projectId);
     }
-    public Observable<ProgramDetailBean> getProjectDetail(String projectId) {
-        return service.getProjectDetail(projectId);
+    public Observable<ProgramDetailBean> getProjectDetail(String projectId,String userId,String page) {
+        return service.getProjectDetail(projectId,userId,page);
     }
     public Observable<CommonBean> edtProject(String data) {
         return service.edtProject(data);
@@ -209,8 +212,8 @@ public class NFApi {
     public Observable<CalInviteBean> getCalInviteList(String userId) {
         return service.getCalInviteList(userId);
     }
-    public Observable<CommonBean> replySchedule(String id,String status,String userId) {
-        return service.replySchedule(id,status,userId);
+    public Observable<CommonBean> replySchedule(String id,String status,String userId,String rejectRemark) {
+        return service.replySchedule(id,status,userId,rejectRemark);
     }
     public Observable<CommonBean> deleteParticipant(String scheduleId,String userId) {
         return service.deleteParticipant(scheduleId,userId);
@@ -233,7 +236,50 @@ public class NFApi {
     public Observable<CommonBean> exportProjectSchedule(Map<String,String> map) {
         return service.exportProjectSchedule(map);
     }
+    public Observable<MarkDateBean> getMakeDate(String userId, String beginTime, String endTime) {
+        return service.getMakeDate(userId,beginTime,endTime);
+    }
+    public Observable<UserInfoBean> getUserInfo(String user) {
+        return service.getUserInfo(user);
+    }
+    public Observable<CommonBean> deleteUserFriends(String userId,String friendId) {
+        return service.deleteUserFriends(userId,friendId);
+    }
+    public Observable<CommonBean> editFriendRemark(String userId,String friendId,String friendRemark) {
+        return service.editFriendRemark(userId,friendId,friendRemark);
+    }
+    public Observable<UserInfoBean> searchFriendInfo(String userId,String friendId) {
+        return service.searchFriendInfo(userId,friendId);
+    }
+    public Observable<CommonBean> inviteFriends(String userId,String friendId) {
+        return service.inviteFriends(userId,friendId);
+    }
+    public Observable<FriendNoticeBean> searchFriendNotice(String userId) {
+        return service.searchFriendNotice(userId);
+    }
+    public Observable<CommonBean> receiveFriend(String userId,String friendId) {
+        return service.receiveFriend(userId,friendId);
+    }
+    public Observable<ShowCountBean> searchFriendNoticeShowCount(String userId) {
+        return service.searchFriendNoticeShowCount(userId);
+    }
+    public Observable<CalendarDetailBean> editScheduleRemind(String data) {
+        return service.editScheduleRemind(data);
+    }
+    public Observable<CommonBean> editScheduleInfo(String data) {
+        return service.editScheduleInfo(data);
+    }
+    public Observable<MyToolsBean> selectMyTools(String data) {
+        return service.selectMyTools(data);
+    }
+    public Observable<CommonBean> editMyTools(String data) {
+        return service.editMyTools(data);
+    }
 
-
-
+    public Observable<CommonBean1> validateProjectShow(@FieldMap Map<String,String> map) {
+        return service.validateProjectShow(map);
+    }
+    public Observable<CommonBean> uploadApk(MultipartBody.Part fdImg_file, RequestBody version) {
+        return service.uploadApk(fdImg_file,version);
+    }
 }

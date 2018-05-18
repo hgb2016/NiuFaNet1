@@ -1,11 +1,12 @@
 package com.dream.NiuFaNet.Bean;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by Administrator on 2017/11/12 0012.
  */
-public class CalendarBean {
+public class CalendarBean implements Serializable{
     private String gDay;
     private String nDay;
     private String weekDay;

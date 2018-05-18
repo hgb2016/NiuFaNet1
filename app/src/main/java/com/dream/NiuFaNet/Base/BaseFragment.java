@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.baidu.mobstat.StatService;
 import com.dream.NiuFaNet.Other.MyApplication;
 
 import butterknife.ButterKnife;

@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.text.TextUtils;
 
+import com.dream.NiuFaNet.R;
 import com.haibin.calendarview.Calendar;
 import com.haibin.calendarview.WeekView;
 
@@ -64,7 +65,7 @@ public class CustomWeekView extends WeekView {
         mTextPaint.setFakeBoldText(true);
 
 
-        mSolarTermTextPaint.setColor(0xff489dff);
+        mSolarTermTextPaint.setColor(Color.GRAY);
         mSolarTermTextPaint.setAntiAlias(true);
         mSolarTermTextPaint.setTextAlign(Paint.Align.CENTER);
 
@@ -82,7 +83,7 @@ public class CustomWeekView extends WeekView {
 
         mCurrentDayPaint.setAntiAlias(true);
         mCurrentDayPaint.setStyle(Paint.Style.FILL);
-        mCurrentDayPaint.setColor(0xFFeaeaea);
+        mCurrentDayPaint.setColor(getResources().getColor(R.color.yellow_1));
 
 
         mCircleRadius = dipToPx(getContext(), 7);
@@ -118,7 +119,7 @@ public class CustomWeekView extends WeekView {
         if (isSelected) {
             mPointPaint.setColor(Color.WHITE);
         } else {
-            mPointPaint.setColor(Color.GRAY);
+            mPointPaint.setColor(Color.RED);
         }
 
         canvas.drawCircle(x + mItemWidth / 2, mItemHeight - 3 * mPadding, mPointRadius, mPointPaint);
@@ -135,26 +136,25 @@ public class CustomWeekView extends WeekView {
         }
 
         if(hasScheme){
-            canvas.drawCircle(x + mItemWidth - mPadding - mCircleRadius / 2, mPadding + mCircleRadius, mCircleRadius, mSchemeBasicPaint);
+           // canvas.drawCircle(x + mItemWidth - mPadding - mCircleRadius / 2, mPadding + mCircleRadius, mCircleRadius, mSchemeBasicPaint);
 
-            mTextPaint.setColor(calendar.getSchemeColor());
+           // mTextPaint.setColor(calendar.getSchemeColor());
 
-            canvas.drawText(calendar.getScheme(), x + mItemWidth - mPadding - mCircleRadius, mPadding + mSchemeBaseLine, mTextPaint);
+           // canvas.drawText(calendar.getScheme(), x + mItemWidth - mPadding - mCircleRadius, mPadding + mSchemeBaseLine, mTextPaint);
         }
 
         if (calendar.isWeekend() && calendar.isCurrentMonth()) {
-            mCurMonthTextPaint.setColor(0xFF489dff);
-            mCurMonthLunarTextPaint.setColor(0xFF489dff);
-            mSchemeTextPaint.setColor(0xFF489dff);
-            mSchemeLunarTextPaint.setColor(0xFF489dff);
-            mOtherMonthLunarTextPaint.setColor(0xFF489dff);
-            mOtherMonthTextPaint.setColor(0xFF489dff);
+            mCurMonthTextPaint.setColor(0xff333333);
+            mCurMonthLunarTextPaint.setColor(0xffCFCFCF);
+            mSchemeTextPaint.setColor(0xff333333);
+            mSchemeLunarTextPaint.setColor(0xffCFCFCF);
+            mOtherMonthLunarTextPaint.setColor(0xFFe1e1e1);
+            mOtherMonthTextPaint.setColor(0xFFe1e1e1);
         } else {
             mCurMonthTextPaint.setColor(0xff333333);
             mCurMonthLunarTextPaint.setColor(0xffCFCFCF);
             mSchemeTextPaint.setColor(0xff333333);
             mSchemeLunarTextPaint.setColor(0xffCFCFCF);
-
             mOtherMonthTextPaint.setColor(0xFFe1e1e1);
             mOtherMonthLunarTextPaint.setColor(0xFFe1e1e1);
         }

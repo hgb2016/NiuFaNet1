@@ -8,6 +8,8 @@ import android.view.View;
 
 import com.dream.NiuFaNet.Bean.BusBean.LoginBus;
 import com.dream.NiuFaNet.Bean.BusBean.RefreshCalBean;
+import com.dream.NiuFaNet.Bean.BusBean.RefreshContactBean;
+import com.dream.NiuFaNet.Bean.BusBean.RefreshMyToolsBean;
 import com.dream.NiuFaNet.Bean.BusBean.RefreshProBean;
 import com.dream.NiuFaNet.Bean.LoginBean;
 import com.dream.NiuFaNet.R;
@@ -127,5 +129,15 @@ public class CommonAction {
         LoginBus loginBus = new LoginBus();
         loginBus.setEventStr(Const.refresh);
         EventBus.getDefault().post(loginBus);
+    }
+    public static void refreshContact(){
+        RefreshContactBean busBean=new RefreshContactBean();
+        busBean.setEventStr(Const.refresh);
+        EventBus.getDefault().post(busBean);
+    }
+    public static void refreshMyTools(){
+        RefreshMyToolsBean busBean=new RefreshMyToolsBean();
+        busBean.setEventStr(Const.refresh);
+        EventBus.getDefault().post(busBean);
     }
 }

@@ -14,6 +14,7 @@ public class NewCalResultBean {
     private String message;
     private String scheduleId;
 
+
     public String getScheduleId() {
         return scheduleId;
     }

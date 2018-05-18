@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:paddingLeft="20dp"
-    android:paddingTop="@dimen/dimen_left"
     android:background="@color/white"
-    android:paddingBottom="@dimen/dimen_left"
-    android:layout_marginTop="12dp"
-    android:layout_height="wrap_content">
+    android:layout_height="60dp">
 
     <LinearLayout
+        android:layout_marginLeft="@dimen/icon_size_20dp"
+        android:layout_centerVertical="true"
         android:layout_width="wrap_content"
         android:orientation="vertical"
         android:layout_height="wrap_content">
@@ -21,6 +19,7 @@
             android:layout_height="wrap_content" />
         <TextView
             android:id="@+id/phone_tv"
+            android:textColor="@color/textcolor_cc"
             android:layout_width="wrap_content"
             android:text="18277750576"
             android:layout_marginTop="10dp"
@@ -33,11 +32,18 @@
         android:paddingBottom="6dp"
         android:paddingTop="6dp"
         android:paddingLeft="@dimen/dimen_left"
-        android:textColor="@color/white"
+        android:textColor="@color/textcolor_blue2"
         android:paddingRight="@dimen/dimen_left"
-        android:background="@drawable/shape_addfrends"
+        android:background="@drawable/shape_blue"
         android:layout_centerVertical="true"
-        android:layout_marginRight="15dp"
+        android:layout_marginRight="40dp"
         android:layout_alignParentRight="true"
         android:layout_height="wrap_content" />
+    <View
+        android:layout_alignParentBottom="true"
+        android:background="@color/gray"
+        android:layout_marginRight="@dimen/icon_size_40dp"
+        android:layout_marginLeft="@dimen/icon_size_20dp"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
 </RelativeLayout>

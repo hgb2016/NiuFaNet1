@@ -184,6 +184,7 @@ public class LoginActivity extends BaseActivityRelay implements ThirdLoginContra
             CommonAction.saveUserData(dataBean.getBody());
             JPushInterface.setAlias(mContext, 0, CommonAction.getUserId());
             CommonAction.refreshLogined();
+            CommonAction.refreshCal();
             finish();
         } else {
             ToastUtils.Toast_short(dataBean.getMessage());

@@ -132,7 +132,6 @@ public class InputGetActivity extends BaseActivity implements RemindWordContract
 
     @Override
     public void initView() {
-
         DaggerNFComponent.builder()
                 .appComponent(MyApplication.getInstance().getAppComponent())
                 .build()

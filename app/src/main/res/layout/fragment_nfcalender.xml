@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/root_lay"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:ignore="RtlHardcoded,HardcodedText,RtlSymmetry,SmallSp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -22,9 +24,11 @@
             android:layout_marginLeft="20dp"
             android:text="日程"
             android:textColor="@color/black"
-            android:textSize="24sp" />
+            android:textSize="30sp"
+            android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/tudo_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -32,49 +36,20 @@
             android:layout_toRightOf="@+id/calender_tv"
             android:text="待办"
             android:textColor="@color/black"
-            android:textSize="@dimen/text_size_15sp" />
+            android:textSize="@dimen/text_size_15sp"
+            android:visibility="gone" />
     </RelativeLayout>
 
-    <RelativeLayout
+    <View
         android:layout_width="match_parent"
-        android:layout_height="@dimen/title_height"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginBottom="43dp"
+        android:layout_height="1dp"
+        android:background="@color/gray" />
+
+    <RelativeLayout
+        android:id="@+id/curentdate_relay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:visibility="gone">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_gravity="center_horizontal"
-            android:text="日程"
-            android:textColor="@color/main_botblack"
-            android:textSize="@dimen/title_textsize" />
-
-        <ImageView
-            android:id="@+id/timeout_iv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="16dp"
-            android:src="@drawable/message_c" />
-
-        <ImageView
-            android:id="@+id/myfreands_iv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="29dp"
-            android:layout_toLeftOf="@+id/timeout_iv"
-            android:src="@drawable/friends_c" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/curent_datetv"
@@ -87,69 +62,217 @@
             android:textColor="@color/black"
             android:textSize="14sp" />
 
-        <ImageView
-            android:id="@+id/today_iv"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="20dp"
             android:layout_marginTop="6dp"
-            android:layout_toRightOf="@+id/curent_datetv"
-            android:src="@mipmap/icon_today" />
+            android:layout_toRightOf="@+id/curent_datetv">
+
+            <ImageView
+                android:id="@+id/today_iv"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="@dimen/icon_size_20dp"
+                android:src="@mipmap/icon_today" />
+        </LinearLayout>
     </RelativeLayout>
+
     <RelativeLayout
+        android:id="@+id/calendar_relay"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    <com.haibin.calendarview.CalendarLayout
-        android:id="@+id/calendarLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#fff"
-        android:orientation="vertical"
-        app:calendar_content_view_id="@+id/work_rv"
-       >
 
-    <com.haibin.calendarview.CalendarView
-        android:id="@+id/calendarView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#fff"
-        android:layout_marginLeft="12dp"
-        android:layout_marginRight="12dp"
-        app:current_month_lunar_text_color="#CFCFCF"
-        app:current_month_text_color="#333333"
-        app:max_year="2020"
-        app:min_year="2004"
-        app:month_view="com.dream.NiuFaNet.custom.CustomMonthView"
-        app:month_view_show_mode="mode_fix"
-        app:other_month_lunar_text_color="#e1e1e1"
-        app:other_month_text_color="#e1e1e1"
-        app:scheme_text="假"
-        app:scheme_text_color="#333"
-        app:scheme_theme_color="#128c4b"
-        app:selected_text_color="#fff"
-        app:selected_theme_color="#046cea"
-        app:week_background="#fff"
-        app:week_text_color="@color/black"
-        app:week_view="com.dream.NiuFaNet.custom.CustomWeekView"
-        app:year_view_day_text_color="#333333"
-        app:year_view_day_text_size="9sp"
-        app:year_view_month_text_color="#ff0000"
-        app:year_view_month_text_size="20sp"
-        app:year_view_scheme_color="#f17706" />
-
-        <com.dream.NiuFaNet.CustomView.CalenderRvUtils.CalendarRecyclerView
-            android:id="@+id/work_rv"
+        <RelativeLayout
+            android:id="@+id/complete_relay"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"></com.dream.NiuFaNet.CustomView.CalenderRvUtils.CalendarRecyclerView>
-    </com.haibin.calendarview.CalendarLayout>
+            android:layout_height="40dp"
+            android:gravity="center_vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/up_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:drawablePadding="8dp"
+                android:drawableRight="@mipmap/down"
+                android:gravity="center"
+                android:text="未完成"
+                android:textColor="@color/black"
+                android:textSize="13sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_alignParentBottom="true"
+                android:background="@color/gray" />
+
+
+        </RelativeLayout>
+
+        <com.dream.NiuFaNet.CustomView.MyListView
+            android:id="@+id/todo_lv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/complete_relay"
+            android:layout_marginTop="15dp"
+            android:divider="@color/white"
+            android:dividerHeight="10dp"
+            android:visibility="gone" />
+
+        <com.haibin.calendarview.CalendarLayout
+            android:id="@+id/calendarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#fff"
+            android:orientation="vertical"
+            android:visibility="visible"
+            app:calendar_content_view_id="@+id/scrollView">
+
+            <com.haibin.calendarview.CalendarView
+                android:id="@+id/calendarView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:background="#fff"
+                app:calendar_height="50dp"
+                app:current_month_lunar_text_color="#CFCFCF"
+                app:current_month_text_color="@color/red_delete"
+                app:day_text_size="15sp"
+                app:max_year="2020"
+                app:min_year="2004"
+
+                app:month_view="com.dream.NiuFaNet.custom.CustomMonthView"
+                app:month_view_show_mode="mode_fix"
+                app:other_month_lunar_text_color="#e1e1e1"
+                app:other_month_text_color="#e1e1e1"
+                app:scheme_text_color="#333"
+                app:scheme_theme_color="#128c4b"
+                app:selected_lunar_text_color="@color/white"
+                app:selected_text_color="#fff"
+                app:selected_theme_color="#046cea"
+                app:week_background="#fff"
+                app:week_text_color="@color/black"
+                app:week_view="com.dream.NiuFaNet.custom.CustomWeekView"
+                app:year_view_day_text_color="#333333"
+                app:year_view_day_text_size="9sp"
+                app:year_view_month_text_color="#ff0000"
+                app:year_view_month_text_size="16sp"
+                app:year_view_scheme_color="#f17706" />
+
+            <ScrollView
+                android:id="@+id/scrollView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:fillViewport="true">
+
+                <LinearLayout
+                    android:id="@+id/work_lay"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="36dp"
+                        android:gravity="center_vertical">
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_alignParentTop="true"
+                            android:background="@color/gray" />
+
+                        <TextView
+                            android:id="@+id/date_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="20dp"
+                            android:text="今日"
+                            android:textColor="@color/black" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="10dp"
+                            android:background="#f4ffd9"
+                            android:visibility="gone">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/dp_4"
+                                android:layout_marginRight="@dimen/dp_4"
+                                android:padding="3dp"
+                                android:text="查看2个逾期待办"
+                                android:textColor="#ff5a5a"
+                                android:textSize="@dimen/text_size_12sp" />
+                        </LinearLayout>
+
+                    </RelativeLayout>
+
+                    <com.dream.NiuFaNet.CustomView.MyListView
+                        android:id="@+id/work_lv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:divider="@null"></com.dream.NiuFaNet.CustomView.MyListView>
+
+                    <ImageView
+                        android:id="@+id/no_caltv"
+                        android:layout_width="match_parent"
+                        android:layout_height="136dp"
+                        android:src="@drawable/calender_1"
+                        android:visibility="gone" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/icon_size_20dp"
+                        android:layout_marginBottom="@dimen/icon_size_20dp"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+                        <View
+                            android:layout_width="60dp"
+                            android:layout_height="1dp"
+                            android:background="@color/gray_1" />
+                        <TextView
+                            android:layout_marginLeft="10dp"
+                            android:id="@+id/tip_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="早上好！"
+                            android:textColor="#d6d6d6"
+                            android:textSize="15sp"
+                            android:visibility="visible" />
+                        <View
+                            android:layout_marginLeft="10dp"
+                            android:layout_width="60dp"
+                            android:layout_height="1dp"
+                            android:background="@color/gray_1" />
+                    </LinearLayout>
+                </LinearLayout>
+
+            </ScrollView>
+        </com.haibin.calendarview.CalendarLayout>
+
         <ImageView
+            android:id="@+id/add_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
             android:layout_marginBottom="40dp"
             android:layout_marginRight="30dp"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
-            android:src="@mipmap/icon_add"
-            android:layout_width="35dp"
-            android:layout_height="35dp" />
+            android:src="@mipmap/icon_add" />
     </RelativeLayout>
+
 </LinearLayout>

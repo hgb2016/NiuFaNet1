@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:gravity="center"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="56dp">
+        <RelativeLayout
+            android:id="@+id/friendname_relay"
+            android:layout_centerHorizontal="true"
+            android:layout_width="45dp"
+            android:layout_height="wrap_content">
+        <ImageView
+            android:layout_centerInParent="true"
+            android:id="@+id/friendname_iv"
+            android:src="@mipmap/icon_user"
+            android:layout_width="36dp"
+            android:layout_height="36dp" />
+            <ImageView
+                android:id="@+id/delete_iv"
+                android:layout_alignParentRight="true"
+                android:src="@mipmap/icon_dele"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+        <TextView
+           android:layout_marginTop="@dimen/layout_margin_4dp"
+            android:layout_below="@+id/friendname_relay"
+            android:layout_centerInParent="true"
+            android:textSize="@dimen/text_size_12sp"
+            android:textColor="@color/black"
+            android:text="郭总"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+</LinearLayout>

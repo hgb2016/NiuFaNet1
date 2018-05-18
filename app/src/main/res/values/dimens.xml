@@ -30,4 +30,6 @@
     <dimen name="margin_headicon">8dp</dimen>
     <dimen name="dimen_left">12dp</dimen>
     <dimen name="dimen50dp">50dp</dimen>
+    <dimen name="margin_right25dp">25dp</dimen>
+    <dimen name="dimen65dp">65dp</dimen>
 </resources>

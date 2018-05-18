@@ -15,6 +15,7 @@ import com.dream.NiuFaNet.Other.MyApplication;
 import com.dream.NiuFaNet.Presenter.FeedBackPresenter;
 import com.dream.NiuFaNet.R;
 import com.dream.NiuFaNet.Utils.ResourcesUtils;
+import com.dream.NiuFaNet.Utils.SpUtils;
 import com.dream.NiuFaNet.Utils.ToastUtils;
 import com.dream.NiuFaNet.Utils.XuniKeyWord;
 
@@ -35,7 +36,8 @@ public class FeedBackActivity extends CommonActivity implements FeedBackContract
     EditText content_edt;
     @Inject
     FeedBackPresenter feedBackPresenter;
-
+    @Bind(R.id.phone_edt)
+    EditText phone_edt;
     @Override
     public int getLayoutId() {
         return R.layout.activity_feedback;
@@ -54,6 +56,10 @@ public class FeedBackActivity extends CommonActivity implements FeedBackContract
 
     @Override
     public void initDatas() {
+        String userPhone = (String) SpUtils.getParam(Const.userPhone, "");
+        if (!userPhone.isEmpty()){
+            phone_edt.setText(userPhone);
+        }
 
     }
 
@@ -61,14 +67,15 @@ public class FeedBackActivity extends CommonActivity implements FeedBackContract
     public void eventListener() {
 
     }
-    @OnClick({R.id.back_relay,R.id.submit_tv})
+    @OnClick({R.id.back_relay,R.id.submit_btn})
     public void onClick(View view){
         switch (view.getId()){
             case R.id.back_relay:
                 finish();
                 break;
-            case R.id.submit_tv:
+            case R.id.submit_btn:
                 String s = content_edt.getText().toString();
+                String phone=phone_edt.getText().toString().trim();
                 if (s.isEmpty()){
                     ToastUtils.Toast_short("请输入要反馈的的意见");
                 }else {
@@ -78,7 +85,16 @@ public class FeedBackActivity extends CommonActivity implements FeedBackContract
                     if (!userId.isEmpty()){
                         map.put("userId", userId);
                     }
-                    feedBackPresenter.toFeedBack(map);
+                    if (phone.isEmpty()) {
+                        ToastUtils.Toast_short("手机号不能为空");
+                    }else if (phone.matches("^[1][34578]\\d{9}")){
+                        feedBackPresenter.toFeedBack(map);
+                        mLoadingDialog.show();
+                        map.put("mobilePhone", phone);
+                    }else {
+                        ToastUtils.Toast_short("请输入正确的手机号");
+                    }
+
                 }
                 break;
         }
@@ -89,8 +105,10 @@ public class FeedBackActivity extends CommonActivity implements FeedBackContract
     public void showData(CommonBean dataBean) {
         String error = dataBean.getError();
         if (error.equals(Const.success)){
-            ToastUtils.Toast_short("您的意见已提交");
+
             content_edt.setText("");
+            mLoadingDialog.dismiss();
+            ToastUtils.showToast(mActivity,"您的意见已提交",R.mipmap.checkmark);
         }
     }
 
@@ -101,6 +119,6 @@ public class FeedBackActivity extends CommonActivity implements FeedBackContract
 
     @Override
     public void complete() {
-
+        mLoadingDialog.dismiss();
     }
 }

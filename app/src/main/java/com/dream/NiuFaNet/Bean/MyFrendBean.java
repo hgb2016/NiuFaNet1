@@ -54,6 +54,24 @@ public class MyFrendBean implements Serializable{
         private String friendName;
         private String headUrl;
         private boolean isSelect;
+        private String friendRemark;
+        private String showName;
+
+        public String getFriendRemark() {
+            return friendRemark;
+        }
+
+        public void setFriendRemark(String friendRemark) {
+            this.friendRemark = friendRemark;
+        }
+
+        public String getShowName() {
+            return showName;
+        }
+
+        public void setShowName(String showName) {
+            this.showName = showName;
+        }
 
         public String getHeadUrl() {
             return headUrl;

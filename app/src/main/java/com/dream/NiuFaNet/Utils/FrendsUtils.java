@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.dream.NiuFaNet.Bean.Contact;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,8 +20,9 @@ public class FrendsUtils {
     // 查询所有联系人的姓名，电话，邮箱
 
     public static List<Contact> loadContacts(Activity activity) throws Exception {
+        Log.i("wwj","来到这了");
 
-        Uri uri = Uri.parse("content://com.android.contacts/contacts");
+        Uri uri = Uri.parse("content://com.android.contacts/raw_contacts");
 
         ContentResolver resolver = activity.getContentResolver();
 
@@ -37,7 +39,7 @@ public class FrendsUtils {
             contact.setId(String.valueOf(contractID));
             sb.append(contractID);
 
-            uri = Uri.parse("content://com.android.contacts/contacts/"
+            uri = Uri.parse("content://com.android.contacts/raw_contacts/"
                     + contractID + "/data");
 
             Cursor cursor1 = resolver.query(uri, new String[] { "mimetype",
@@ -47,7 +49,7 @@ public class FrendsUtils {
 
                 String data1 = cursor1.getString(cursor1
                         .getColumnIndex("data1"));
-
+                contact.setEmail("");
                 String mimeType = cursor1.getString(cursor1
                         .getColumnIndex("mimetype"));
 
@@ -58,16 +60,19 @@ public class FrendsUtils {
                 } else if ("vnd.android.cursor.item/email_v2".equals(mimeType)) { // 邮箱
                     if (!TextUtils.isEmpty(data1)) {
                         contact.setEmail(data1);
+                    }else {
+                        contact.setEmail("");
                     }
-                    contacts.add(contact);
+                    //contacts.add(contact);
                     sb.append(",email=" + data1);
 
                 } else if ("vnd.android.cursor.item/phone_v2".equals(mimeType)) { // 手机
-                    contact.setPhoneNumber(data1.replaceAll("-", ""));
-                    sb.append(",phone=" + data1);
+                    contact.setPhoneNumber(data1.replaceAll("-", "").replace(" ",""));
+                    sb.append(",phone=" + data1.replaceAll("-", "").replace(" ",""));
                 }
 
             }
+            Log.i("wwj", new Gson().toJson(contact)+"联系人");
             contacts.add(contact);
             cursor1.close();
 

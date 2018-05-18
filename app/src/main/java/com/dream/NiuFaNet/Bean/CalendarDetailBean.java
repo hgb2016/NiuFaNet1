@@ -332,6 +332,15 @@ public class CalendarDetailBean implements Serializable{
             private boolean isDelete;
             private boolean isEmpty;
             private boolean isSouce;
+            private String rejectRemark;
+
+            public String getRejectRemark() {
+                return rejectRemark;
+            }
+
+            public void setRejectRemark(String rejectRemark) {
+                this.rejectRemark = rejectRemark;
+            }
 
             public boolean isSouce() {
                 return isSouce;

@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:focusable="true"
-              android:focusableInTouchMode="true"
-              android:orientation="vertical">
-
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
     <RelativeLayout
         android:id="@+id/title_relay"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/title_height">
+        android:layout_height="@dimen/title_height"
+        android:layout_marginTop="@dimen/icon_size_20dp">
 
         <RelativeLayout
             android:id="@+id/back_relay"
@@ -22,7 +22,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
-                android:src="@mipmap/back"/>
+                android:src="@mipmap/back" />
         </RelativeLayout>
 
         <TextView
@@ -32,110 +32,140 @@
             android:layout_centerInParent="true"
             android:layout_gravity="center_horizontal"
             android:gravity="center"
-            android:text="项目标题"
-            android:textColor="@color/main_botblack"
-            android:textSize="15sp"/>
+            android:text="导出"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/layout_padding_1dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/gray" />
     </RelativeLayout>
 
-
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen65dp"
+       >
         <TextView
-            android:id="@+id/tip_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginTop="20dp"
-            android:text="选择下载时间段"
-            android:textColor="#2b2b2b"
-            android:textSize="16sp"/>
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:text="开始时间"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
 
-        <RelativeLayout
-            android:id="@+id/foot_view"
+        <TextView
+            android:id="@+id/start_timetv"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/icon_size_20dp"
+            android:gravity="center"
+            android:text="2018-01-02"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+
+        <View
             android:layout_width="match_parent"
-            android:layout_height="8dp"
-            android:layout_marginTop="10dp"
-            android:background="@mipmap/img_shade_up"></RelativeLayout>
+            android:layout_height="@dimen/layout_padding_1dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/gray" />
+    </RelativeLayout>
 
-        <LinearLayout
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen65dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:text="结束时间"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/endtime_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/icon_size_20dp"
+            android:gravity="center"
+            android:text="2018-01-02"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+
+        <View
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen40"
-            android:layout_marginTop="10dp"
-            android:gravity="left">
+            android:layout_height="@dimen/layout_padding_1dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/gray" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen65dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="开始时间"
-                android:textColor="#404040"
-                android:layout_marginLeft="30dp"
-                android:textSize="15sp"/>
-
-            <TextView
-                android:id="@+id/start_timetv"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="35dp"
-                android:gravity="center"
-                android:text="2018-01-02"
-                android:textColor="#404040"
-                android:textSize="15sp"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen40"
-            android:gravity="left">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="结束时间"
-                android:textColor="#404040"
-                android:layout_marginLeft="30dp"
-                android:textSize="15sp"/>
-
-            <TextView
-                android:id="@+id/endtime_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="35dp"
-                android:gravity="center"
-                android:text="2018-01-30"
-                android:textColor="#404040"
-                android:textSize="15sp"/>
-        </LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:text="导出邮箱"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
 
         <EditText
             android:id="@+id/email_edt"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/icon_size_20dp"
+            android:gravity="center"
+            android:background="@null"
+            android:hint="输入邮箱地址"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+
+        <View
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/shape_inputkuang4"
-            android:hint="输入您的邮箱"
-            android:minLines="2"
-            android:paddingBottom="2dp"
-            android:paddingLeft="@dimen/padding15"
-            android:paddingRight="@dimen/padding15"
-            android:paddingTop="2dp"
-            android:textSize="15sp"/>
-
-
-    <TextView
-        android:id="@+id/tip_positive"
+            android:layout_height="@dimen/layout_padding_1dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/gray" />
+    </RelativeLayout>
+    <View
+        android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="导出"
-        android:textColor="#d65858"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="40dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:layout_marginLeft="50dp"
-        android:layout_marginRight="50dp"
-        android:background="@drawable/shape_feedback_stroke"
-        android:textSize="16sp"/>
+        android:layout_height="0dp"/>
+    <RelativeLayout
+        android:id="@+id/tip_positive"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="58dp">
+        <View
+            android:background="@drawable/shape_grident"
+            android:layout_alignParentTop="true"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/layout_margin_8dp"/>
+        <LinearLayout
+            android:layout_alignParentBottom="true"
+            android:layout_width="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_centerInParent="true"
+            android:layout_height="50dp">
+            <TextView
+                android:id="@+id/bot_tv"
+                android:layout_width="wrap_content"
+                android:text="确认并导出"
+                android:layout_marginLeft="10dp"
+                android:textSize="15sp"
+                android:textColor="@color/blue_title"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </RelativeLayout>
 </LinearLayout>

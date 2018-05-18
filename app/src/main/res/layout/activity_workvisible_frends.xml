@@ -1,110 +1,207 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:orientation="vertical"
-              android:background="@color/white"
-              android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/title_height">
+        android:layout_height="@dimen/title_height"
+        android:layout_marginTop="@dimen/icon_size_20dp">
+
         <RelativeLayout
             android:id="@+id/back_relay"
             android:layout_width="@dimen/title_height"
             android:layout_height="match_parent">
+
             <ImageView
                 android:layout_width="wrap_content"
-                android:src="@mipmap/icon_back"
-                android:layout_marginLeft="15dp"
+                android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_height="wrap_content" />
+                android:layout_marginLeft="15dp"
+                android:src="@mipmap/back" />
         </RelativeLayout>
+
         <TextView
             android:layout_width="wrap_content"
-            android:text="谁可以看我的工作"
-            android:textSize="16.5sp"
-            android:textColor="@color/fengexian6c"
+            android:layout_height="wrap_content"
             android:layout_centerInParent="true"
+            android:text="谁可以看我的工作"
+            android:textColor="@color/black"
+            android:textSize="16.5sp" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:background="@color/moren_f2"
+        android:layout_height="30dp">
+        <TextView
+            android:id="@+id/participant_numtv"
+            android:layout_width="wrap_content"
+            android:text="共2人"
+            android:textSize="15sp"
+            android:textColor="@color/color2a"
+            android:layout_marginLeft="15dp"
+            android:layout_centerVertical="true"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:textSize="@dimen/text_size_12sp"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/participant_numtv"
+            android:text="(温馨提示：左滑可删除人员)"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"
+        android:layout_height="31dp"
+        android:layout_marginBottom="10dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:layout_marginTop="12dp"
-        android:layout_marginBottom="10dp"
-        android:paddingRight="10dp"
-        android:paddingLeft="10dp"
-        android:visibility="gone"
         android:background="@drawable/shape_search"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:visibility="gone">
 
-        android:layout_height="31dp">
         <LinearLayout
             android:layout_width="match_parent"
-            android:orientation="horizontal"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
             <EditText
                 android:id="@+id/search_edt"
                 android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="8dp"
                 android:layout_weight="1"
                 android:background="@null"
-                android:hint="搜索"
-                android:textSize="13sp"
-                android:layout_marginLeft="8dp"
                 android:gravity="center"
-                android:layout_height="match_parent" />
+                android:hint="搜索"
+                android:textSize="13sp" />
+
             <ImageView
                 android:id="@+id/search_iv"
                 android:layout_width="wrap_content"
-                android:src="@mipmap/search"
-                android:layout_marginLeft="10dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_height="wrap_content" />
+                android:layout_marginLeft="10dp"
+                android:src="@mipmap/search" />
         </LinearLayout>
     </RelativeLayout>
+
     <View
         android:layout_width="match_parent"
-        android:background="@color/fengexiand9"
-        android:layout_height="1dp"></View>
+        android:layout_height="1dp"
+        android:background="@color/fengexiand9"></View>
+
     <LinearLayout
+        android:visibility="gone"
         android:id="@+id/addwoks_lay"
         android:layout_width="match_parent"
-        android:gravity="center_vertical"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical">
+
         <ImageView
             android:layout_width="25dp"
-            android:src="@mipmap/add"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:layout_height="wrap_content"/>
+            android:src="@mipmap/add" />
+
         <TextView
             android:layout_width="wrap_content"
-            android:text="添加人员"
-            android:textSize="15sp"
-            android:textColor="@color/color2a"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dimen_left"
-            android:layout_height="wrap_content"/>
+            android:text="添加人员"
+            android:textColor="@color/color2a"
+            android:textSize="15sp" />
     </LinearLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <com.scwang.smartrefresh.layout.SmartRefreshLayout
             android:id="@+id/frends_refresh"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/simfrend_rv"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+                android:layout_height="match_parent"/>
         </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
         <android.support.v7.widget.RecyclerView
+            android:visibility="gone"
             android:id="@+id/letter_rv"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:scrollbars="none"
             android:paddingRight="8dp"
-            android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
+            android:scrollbars="none"/>
+        <LinearLayout
+            android:visibility="gone"
+            android:gravity="center"
+            android:layout_above="@+id/bot_relay"
+            android:orientation="vertical"
+            android:id="@+id/empty_lay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ImageView
+                android:src="@mipmap/empty_private"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_marginTop="@dimen/icon_size_20dp"
+                android:text="暂未对任何人公开"
+                android:textColor="@color/textcolor_93"
+                android:textSize="14sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <RelativeLayout
+            android:id="@+id/bot_relay"
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="58dp"
+            android:layout_alignParentBottom="true">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:layout_alignParentTop="true"
+                android:background="@drawable/shape_grident" />
+            <LinearLayout
+                android:layout_alignParentBottom="true"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen50dp">
+                <TextView
+                    android:id="@+id/addwoks_tv"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:text="添加人员"
+                    android:textColor="@color/blue_title"
+                    android:textSize="15sp" />
+                <TextView
+                    android:visibility="gone"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:text="删除"
+                    android:textColor="@color/red_delete"
+                    android:textSize="15sp" />
+            </LinearLayout>
+        </RelativeLayout>
     </RelativeLayout>
 
 </LinearLayout>

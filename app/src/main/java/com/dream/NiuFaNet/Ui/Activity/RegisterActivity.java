@@ -28,6 +28,7 @@ import com.dream.NiuFaNet.Utils.CodeUtils;
 import com.dream.NiuFaNet.Utils.ResourcesUtils;
 import com.dream.NiuFaNet.Utils.ToastUtils;
 import com.dream.NiuFaNet.Utils.XuniKeyWord;
+import com.gyf.barlibrary.ImmersionBar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,9 +41,8 @@ import butterknife.OnClick;
 /**
  * Created by Administrator on 2017/8/4 0004.
  */
-public class RegisterActivity extends BaseActivity implements RegisterContract.View,CodeContract.View{
-    @Bind(R.id.uview)
-    UView uview;
+public class RegisterActivity extends CommonActivity implements RegisterContract.View,CodeContract.View{
+
     @Bind(R.id.yzcode_tv)
     TextView yzcode_tv;
     @Bind(R.id.phone_edt)
@@ -61,7 +61,7 @@ public class RegisterActivity extends BaseActivity implements RegisterContract.V
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_register;
+        return R.layout.activity_register1;
     }
 
     @Override
@@ -73,15 +73,12 @@ public class RegisterActivity extends BaseActivity implements RegisterContract.V
                 .inject(this);
         registerPresenter.attachView(this);
         codePresenter.attachView(this);
-        XuniKeyWord.initStateView(this).setBackgroundColor(ResourcesUtils.getColor(R.color.them_color1));
+
+       // XuniKeyWord.initStateView(this).setBackgroundColor(ResourcesUtils.getColor(R.color.them_color1));
 
     }
 
-    @Override
-    public void loadResum() {
-        CommonAction.setThem2(this,root_lay);
 
-    }
 
     @Override
     public void initDatas() {
@@ -92,15 +89,14 @@ public class RegisterActivity extends BaseActivity implements RegisterContract.V
     public void eventListener() {
 
     }
-    @OnClick({R.id.login_relay,R.id.yzcode_tv,R.id.register_tv,R.id.back_relay})
+    @OnClick({R.id.login_tv,R.id.yzcode_tv,R.id.register_tv,R.id.back_relay})
     public void onClick(View view){
         switch (view.getId()){
             case R.id.back_relay:
                 finish();
                 break;
-            case R.id.login_relay:
-                Intent intent = new Intent(mContext,LoginActivity.class);
-                startActivity(intent);
+            case R.id.login_tv:
+                finish();
                 break;
             case R.id.yzcode_tv:
                 String phoneNum = phone_edt.getText().toString();
@@ -187,5 +183,6 @@ public class RegisterActivity extends BaseActivity implements RegisterContract.V
     @Override
     protected void onDestroy() {
         super.onDestroy();
+
     }
 }

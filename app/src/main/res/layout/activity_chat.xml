@@ -60,7 +60,7 @@
                 android:id="@+id/chat_rv"
                 android:layout_width="match_parent"
                 android:overScrollMode="never"
-                android:layout_height="match_parent"></com.kevin.wraprecyclerview.WrapRecyclerView>
+                android:layout_height="match_parent"/>
             <RelativeLayout
                 android:id="@+id/right_voice_relay"
                 android:layout_width="37dp"
@@ -97,7 +97,7 @@
             android:horizontalSpacing="10dp"
             android:numColumns="2"
             android:verticalSpacing="10dp"
-            android:visibility="gone"></com.dream.NiuFaNet.CustomView.CustomeGridView>
+            android:visibility="gone"/>
 
         <RelativeLayout
             android:id="@+id/bot_lay"

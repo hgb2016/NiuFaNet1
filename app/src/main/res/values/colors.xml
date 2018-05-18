@@ -95,8 +95,19 @@
     <color name="blue_title">#0c7dff</color>
     <color name="gray">#f0f0f0</color>
     <color name="gray_1">#f8f8f8</color>
-    <color name="textcolor_1">#acacac</color>
+    <color name="gray_2">#f4f4f4</color>
+    <color name="textcolor_ac">#acacac</color>
     <color name="text_2">#919191</color>
     <color name="outdatecolor">#d6d6d6</color>
     <color name="textgray_94">#949494</color>
+    <color name="red_delete">#FF5A5A</color>
+    <color name="textcolor_cc">#cccccc</color>
+    <color name="gray_d7">#d7d7d7</color>
+    <color name="blue_dan">#69BCE7</color>
+    <color name="textcolor_93">#939393</color>
+    <color name="gray_93">#FF939393</color>
+    <color name="textcolor_blue2">#FF0C7DFF</color>
+    <color name="textcolor_bd">#FFBDBDBD</color>
+    <color name="yellow_1">#e4f858</color>
+    <color name="shadow">#cc222222</color>
 </resources>

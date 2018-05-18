@@ -162,4 +162,9 @@
 #日历
 -keepclasseswithmembers class * {
     public <init>(android.content.Context);
+ }
+#百度统计
+-keep class com.baidu.bottom.** { *; }
+-keep class com.baidu.kirin.** { *; }
+-keep class com.baidu.mobstat.** { *; }
 }

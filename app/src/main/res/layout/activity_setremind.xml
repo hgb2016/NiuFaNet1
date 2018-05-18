@@ -2,5 +2,102 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_height"
+        android:layout_marginTop="20dp">
 
+        <RelativeLayout
+            android:id="@+id/back_relay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_marginRight="@dimen/icon_size_20dp"
+                android:layout_marginLeft="15dp"
+                android:id="@+id/back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/back" />
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center_horizontal"
+            android:text="提醒"
+            android:textColor="@color/black"
+            android:textSize="17sp" />
+            <TextView
+                android:layout_alignParentRight="true"
+                android:id="@+id/sure_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="16dp"
+                android:text="确定"
+                android:textColor="@color/blue_title" />
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray" />
+    <LinearLayout
+        android:visibility="visible"
+        android:id="@+id/notime_lay"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/layout_margin_70dp">
+    <TextView
+        android:layout_marginLeft="30dp"
+        android:textSize="@dimen/sp_16"
+        android:textColor="@color/black"
+        android:text="不提醒"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+        <View
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="1px"/>
+        <ImageView
+            android:id="@+id/remind_iv1"
+            android:visibility="visible"
+            android:layout_marginRight="30dp"
+            android:src="@mipmap/emptycheck_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray" />
+    <com.dream.NiuFaNet.CustomView.MyListView
+        android:divider="@null"
+        android:id="@+id/remindtime_rv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </com.dream.NiuFaNet.CustomView.MyListView>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray" />
+    <LinearLayout
+        android:padding="10dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/remindtip_tv"
+            android:textColor="@color/textcolor_ac"
+            android:text="提醒时间不能早于当前时间(最多只能选3个)"
+            android:layout_marginLeft="30dp"
+            android:textSize="@dimen/text_size_12sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 </LinearLayout>

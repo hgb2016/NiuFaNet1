@@ -1,6 +1,7 @@
 package com.dream.NiuFaNet.Bean;
 
 import java.io.Serializable;
+import java.io.StreamTokenizer;
 
 /**
  * Created by Administrator on 2017/11/24 0024.
@@ -17,6 +18,24 @@ public class InputGetBean implements Serializable{
     private String beginDate;
     private String endDate;
     private String content;
+    private String isDrawTime;
+    //private boolean isDrawTime;
+
+  /*  public boolean isDrawTime() {
+        return isDrawTime;
+    }
+
+    public void setDrawTime(boolean drawTime) {
+        isDrawTime = drawTime;
+    }*/
+       public String getIsDrawTime() {
+        return isDrawTime;
+    }
+
+    public void setIsDrawTime(String isDrawTime) {
+        this.isDrawTime = isDrawTime;
+    }
+
 
     public String getBeginDate() {
         return beginDate;

@@ -35,8 +35,8 @@ public class ProgramDetailPresenter extends RxPresenter<ProgramDetailContract.Vi
 
 
     @Override
-    public void getProjectProgramDetail(String projectId) {
-        Subscription rxSubscription = itApi.getProjectDetail(projectId).subscribeOn(Schedulers.io())//放在异步中执行
+    public void getProjectProgramDetail(String projectId,String page,String userId) {
+        Subscription rxSubscription = itApi.getProjectDetail(projectId,page,userId).subscribeOn(Schedulers.io())//放在异步中执行
                 .observeOn(AndroidSchedulers.mainThread())//回到主线程
                 .subscribe(new Observer<ProgramDetailBean>() {
                     @Override

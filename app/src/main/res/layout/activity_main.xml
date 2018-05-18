@@ -40,7 +40,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:padding="20dp"></android.support.v7.widget.RecyclerView>
+                android:padding="20dp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -114,7 +114,7 @@
 
         <RelativeLayout
             android:layout_alignParentRight="true"
-            android:id="@+id/back_relay"
+            android:id="@+id/mine_relay"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/title_height"
             android:layout_marginRight="12dp"
@@ -128,24 +128,31 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:layout_marginRight="50dp"
             android:id="@+id/messagetip_relay"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="107dp"
+            android:layout_height="26dp"
             android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/back_relay"
-            android:background="@drawable/tips_c"
-            android:gravity="center"
-            android:visibility="gone">
-
+            android:layout_alignParentRight="true"
+            android:background="@drawable/message_shape"
+            android:visibility="visible">
+            <ImageView
+                android:id="@+id/message_iv"
+                android:layout_marginLeft="14dp"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/notice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
             <TextView
+                android:layout_centerVertical="true"
                 android:id="@+id/message_numtv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="35dp"
                 android:layout_marginTop="2dp"
-                android:text="您有2条新消息"
+                android:text="2条新消息"
                 android:textColor="@color/white"
-                android:textSize="11sp"/>
+                android:textSize="13sp"/>
         </RelativeLayout>
     </RelativeLayout>
     <View
@@ -194,41 +201,6 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/function_lay"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:id="@+id/function_img"
-                    android:layout_width="@dimen/boticon"
-                    android:layout_height="@dimen/boticon"
-                    android:layout_marginTop="5dp"
-                    android:src="@mipmap/icon_bar02"/>
-
-                <TextView
-                    android:id="@+id/function_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="3dp"
-                    android:text="工具"
-                    android:textColor="@color/main_textn"
-                    android:textSize="11sp"/>
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="40dp"
-            android:layout_weight="1"
-            android:orientation="horizontal">
-
-            <LinearLayout
                 android:id="@+id/schedule_lay"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -242,7 +214,7 @@
                     android:layout_width="@dimen/boticon"
                     android:layout_height="@dimen/boticon"
                     android:layout_marginTop="5dp"
-                    android:src="@mipmap/icon_bar03"/>
+                    android:src="@mipmap/icon_bar02"/>
 
                 <TextView
                     android:id="@+id/schedule_tv"
@@ -253,6 +225,15 @@
                     android:textColor="@color/main_textn"
                     android:textSize="11sp"/>
             </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
 
             <LinearLayout
                 android:id="@+id/mine_lay"
@@ -268,7 +249,7 @@
                     android:layout_width="@dimen/boticon"
                     android:layout_height="@dimen/boticon"
                     android:layout_marginTop="5dp"
-                    android:src="@mipmap/icon_bar04"/>
+                    android:src="@mipmap/icon_bar03"/>
 
                 <TextView
                     android:id="@+id/mine_tv"
@@ -276,6 +257,48 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="3dp"
                     android:text="项目"
+                    android:textColor="@color/main_textn"
+                    android:textSize="11sp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/contact_lay"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_centerInParent="true"
+                    android:id="@+id/contact_img"
+                    android:layout_width="@dimen/boticon"
+                    android:layout_height="@dimen/boticon"
+                    android:layout_marginTop="5dp"
+                    android:src="@mipmap/icon_bar04"/>
+                    <TextView
+                        android:visibility="gone"
+                        android:id="@+id/fridensnum_tv"
+                        android:layout_marginTop="3dp"
+                        android:textSize="@dimen/text_size_12sp"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_alignParentRight="true"
+                        android:background="@drawable/shape_circle_red"
+                        android:gravity="center"
+                        android:text="0"
+                        android:textColor="@color/white" />
+                </RelativeLayout>
+                <TextView
+                    android:id="@+id/contact_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:text="通讯录"
                     android:textColor="@color/main_textn"
                     android:textSize="11sp"/>
             </LinearLayout>

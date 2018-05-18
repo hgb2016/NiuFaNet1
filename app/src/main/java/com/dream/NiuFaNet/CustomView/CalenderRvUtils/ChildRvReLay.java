@@ -280,7 +280,7 @@ public class  ChildRvReLay extends RelativeLayout implements CalenderMainContrac
             holder.setText(R.id.starttime_tv,beStr);
             holder.setText(R.id.endtime_tv,endStr);
             Calendar calendar = Calendar.getInstance();
-            if (calendar.getTimeInMillis()>endD.getTime()){
+                if (calendar.getTimeInMillis()>endD.getTime()){
                 work_title.setTextColor(ResourcesUtils.getColor(R.color.color6c));
                 dot_iv.setImageResource(R.drawable.shape_circle_dot);
             }else {

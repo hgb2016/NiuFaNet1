@@ -15,8 +15,10 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.transition.Explode;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.LinearLayout;
 
+import com.baidu.mobstat.StatService;
 import com.dream.NiuFaNet.Contract.PermissionListener;
 import com.dream.NiuFaNet.R;
 import com.dream.NiuFaNet.Utils.Dialog.DialogUtils;
@@ -46,10 +48,11 @@ public abstract class CommonActivity extends AppCompatActivity {
         setContentView(getLayoutId());
         getSupportActionBar().hide();
         ButterKnife.bind(this);
+
         //初始化沉浸式
         if (isImmersionBarEnabled())
             initImmersionBar();
-//        XuniKeyWord.assistActivity(this);
+         //XuniKeyWord.assistActivity(this);
         this.savedInstanceState = savedInstanceState;
         this.mActivity = this;
         this.mContext = this;
@@ -67,7 +70,7 @@ public abstract class CommonActivity extends AppCompatActivity {
         ImmersionBar.with(this).destroy(); //必须调用该方法，防止内存泄漏
     }
     protected void initImmersionBar() {
-        mImmersionBar= ImmersionBar.with(this)
+        mImmersionBar= ImmersionBar.with(this).keyboardEnable(true).keyboardMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
                 .statusBarDarkFont(true, 0.2f) ;//原理：如果当前设备支持状态栏字体变色，会设置状态栏字体为黑色，如果当前设备不支持状态栏字体变色，会使当前状态栏加上透明度，否则不执行透明度
         mImmersionBar.init();
     }

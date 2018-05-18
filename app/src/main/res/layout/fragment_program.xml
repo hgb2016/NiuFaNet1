@@ -110,6 +110,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/moren_f2"
-            android:overScrollMode="never"></com.kevin.wraprecyclerview.WrapRecyclerView>
+            android:overScrollMode="never"/>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 </LinearLayout>

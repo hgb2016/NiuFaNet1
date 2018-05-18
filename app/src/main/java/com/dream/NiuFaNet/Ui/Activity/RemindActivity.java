@@ -1,7 +1,9 @@
 package com.dream.NiuFaNet.Ui.Activity;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.AlertDialog;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -9,9 +11,12 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Handler;
 import android.os.PowerManager;
 import android.os.Vibrator;
+import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -35,6 +40,9 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.Bind;
 
@@ -57,6 +65,9 @@ public class RemindActivity extends CommonActivity1 {
     private MediaPlayer mediaPlayer;
     private Vibrator vibrator;
     private boolean isVibrator = false;
+    private boolean isFront = false;
+    private Timer mTimer;
+    private TimerTask mTimerTask;
 
     @Override
     public int getLayoutId() {
@@ -100,8 +111,8 @@ public class RemindActivity extends CommonActivity1 {
             @Override
             public void onNoDoubleClick(View view) {
                 if (mediaPlayer != null) {
-                    mediaPlayer.stop();
-                    mediaPlayer.release();
+                        mediaPlayer.stop();
+                        mediaPlayer.release();
                     mediaPlayer = null;
                     if(isVibrator){
                         vibrator.cancel();
@@ -137,6 +148,7 @@ public class RemindActivity extends CommonActivity1 {
         super.onNewIntent(intent);
         PowerManager pm = (PowerManager) this.getSystemService(Context.POWER_SERVICE);
         if (!pm.isScreenOn()) {
+
             PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.ACQUIRE_CAUSES_WAKEUP |
                     PowerManager.SCREEN_BRIGHT_WAKE_LOCK, "bright");
             wl.acquire();
@@ -154,16 +166,96 @@ public class RemindActivity extends CommonActivity1 {
         } else {
             if (mediaPlayer.isPlaying())
                 mediaPlayer.stop();
-            mediaPlayer.reset();
+                mediaPlayer.reset();
         }try {
             mediaPlayer.setVolume(100f, 100f);
             mediaPlayer.setDataSource(context, ringtoneUri);
             mediaPlayer.setAudioStreamType(AudioManager.STREAM_ALARM);
-            mediaPlayer.setLooping(true);
+            mediaPlayer.setLooping(false);
             mediaPlayer.prepare();
             mediaPlayer.start();
+            //new Thread(TimerRunnable).start();
+            //----------定时器记录播放监听--------//
+            mTimer = new Timer();
+            mTimerTask = new TimerTask() {
+                @Override
+                public void run() {
+                    boolean isChanging = isForeground(RemindActivity.this);
+                    if(!isChanging) {
+                        if (mediaPlayer != null) {
+                            mediaPlayer.stop();
+                            mediaPlayer.release();
+                            mediaPlayer = null;
+                            if(isVibrator){
+                                vibrator.cancel();
+                                isVibrator = false;
+                            }
+                        }
+                        finish();
+
+                        return;
+                    }
+                }
+            };
+            mTimer.schedule(mTimerTask, 0, 10);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public void finish() {
+        super.finish();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        isFront = true;
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        isFront=false;
+    }
+
+    /**
+     *
+     * @param keyCode
+     * @param event
+     * @return
+     */
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        return super.onKeyDown(keyCode, event);
+
+    }
+    /**
+     * 判断某个界面是否在前台
+     */
+    public static boolean isForeground(Activity activity) {
+        return isForeground(activity, activity.getClass().getName());
+    }
+
+    /**
+     * 判断某个界面是否在前台
+     * @param context   Context
+     * @param className 界面的类名
+     * @return 是否在前台显示
+     */
+    public static boolean isForeground(Context context, String className) {
+        if (context == null || TextUtils.isEmpty(className))
+            return false;
+        ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningTaskInfo> list = am.getRunningTasks(1);
+        if (list != null && list.size() > 0) {
+            ComponentName cpn = list.get(0).topActivity;
+            if (className.equals(cpn.getClassName()))
+                return true;
+        }
+        return false;
+    }
+
+
 }

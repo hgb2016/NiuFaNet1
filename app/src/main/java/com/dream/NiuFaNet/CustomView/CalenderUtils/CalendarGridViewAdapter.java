@@ -66,6 +66,7 @@ public class CalendarGridViewAdapter extends BaseAdapter implements CalenderMain
 
     private Calendar calToday = Calendar.getInstance(); // 今日
     private ArrayList<MainCalendarBean> titles;
+
     private ArrayList<MainCalendarBean> getDates() {
 
         Calendar mCal = calStartDate;

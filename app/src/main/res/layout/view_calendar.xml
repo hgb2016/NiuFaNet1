@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_marginTop="@dimen/icon_size_40dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/icon_help04" />
+
+    <TextView
+        android:layout_width="211dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="34dp"
+        android:text="“帮我创建一个日程：明天下午4点
+  到7点和MIKE在星巴克见面”"
+        android:textColor="@color/black" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="提醒我明早去找当事人收集证据"
+        android:textColor="@color/black" />
+
+    <TextView
+        android:layout_width="210dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:text="“帮我创建一个待办：5月8日晚上7点参加法律机器人研讨会”"
+        android:textColor="@color/black" />
+
+</LinearLayout>

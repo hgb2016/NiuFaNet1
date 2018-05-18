@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:gravity="center_vertical"
+        android:padding="@dimen/dp_10"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_marginLeft="14dp"
+            android:src="@mipmap/program1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_marginLeft="4dp"
+            android:text="日程"
+            android:textColor="#FFBE12"
+            android:textSize="12sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <View
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="1dp"/>
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/invitetime_tv"
+            android:layout_marginRight="10dp"
+            android:textSize="12sp"
+            android:text="18:00"
+            android:textColor="@color/gray_d7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_marginTop="7dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/invitename_tv"
+            android:layout_marginLeft="24dp"
+            android:text="王佳佳 邀请你加入新项目"
+            android:textColor="@color/black"
+            android:textSize="13sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/invitecontent_tv"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:layout_marginLeft="24dp"
+            android:text="和华为法务部的刘总商谈合作事项"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/duringtime_tv"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:layout_marginLeft="24dp"
+            android:text="时间：02-20（周五） 9:00-10:30"
+            android:textColor="@color/textcolor_ac"
+            android:textSize="12sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_marginBottom="26dp"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/searchdetail_tv"
+            android:visibility="gone"
+            android:gravity="center"
+            android:background="@drawable/shape_accept"
+            android:layout_marginLeft="24dp"
+            android:text="查看详情"
+            android:textColor="@color/textcolor_ac"
+            android:textSize="14sp"
+            android:layout_width="100dp"
+            android:layout_height="26dp" />
+        <TextView
+            android:id="@+id/reject_tv"
+            android:gravity="center"
+            android:background="@drawable/shape_reject"
+            android:layout_marginLeft="24dp"
+            android:text="拒绝"
+            android:textColor="@color/red_delete"
+            android:textSize="14sp"
+            android:layout_width="100dp"
+            android:layout_height="26dp" />
+        <TextView
+            android:id="@+id/accept_tv"
+            android:gravity="center"
+            android:background="@drawable/shape_reject"
+            android:layout_marginLeft="18dp"
+            android:text="接受"
+            android:textColor="@color/red_delete"
+            android:textSize="14sp"
+            android:layout_width="100dp"
+            android:layout_height="26dp" />
+    </LinearLayout>
+</LinearLayout>

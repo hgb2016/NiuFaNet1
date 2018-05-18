@@ -3,10 +3,12 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:focusable="true"
+               android:background="@color/white"
               android:focusableInTouchMode="true"
               android:orientation="vertical">
 
     <RelativeLayout
+        android:layout_marginTop="@dimen/icon_size_20dp"
         android:id="@+id/title_relay"
         android:layout_width="match_parent"
         android:layout_height="@dimen/title_height"
@@ -15,11 +17,12 @@
         <RelativeLayout
             android:id="@+id/back_relay"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="45dp"
             android:layout_centerVertical="true"
             android:gravity="center">
 
             <ImageView
+                android:layout_marginRight="@dimen/icon_size_20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
@@ -32,10 +35,25 @@
             android:layout_centerInParent="true"
             android:layout_gravity="center_horizontal"
             android:text="我的好友"
-            android:textColor="@color/color6c"
+            android:textColor="@color/black"
             android:textSize="16.5sp"/>
+        <RelativeLayout
+            android:id="@+id/sure_relay"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true">
 
+            <TextView
+                android:id="@+id/more_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="16dp"
+                android:text="确定"
+                android:textColor="@color/blue_title" />
+        </RelativeLayout>
         <ImageView
+            android:visibility="gone"
             android:id="@+id/addfrends_iv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -43,6 +61,11 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="15dp"
             android:src="@mipmap/addfrend_c"/>
+        <View
+            android:layout_alignParentBottom="true"
+            android:background="@color/gray"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
     </RelativeLayout>
 
     <RelativeLayout
@@ -54,7 +77,6 @@
         android:background="@drawable/shape_search"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-
         android:visibility="gone">
 
         <LinearLayout
@@ -86,45 +108,66 @@
         android:orientation="vertical">
 
         <GridView
+            android:visibility="visible"
+            android:layout_marginTop="10dp"
             android:id="@+id/fixgrid_lay"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
             android:horizontalSpacing="5dp"
             android:numColumns="4"
-            android:paddingBottom="12dp"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:verticalSpacing="5dp"></GridView>
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="15dp"
+            android:verticalSpacing="5dp"/>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/users_rv"
+            android:visibility="visible"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
-
+            android:layout_height="wrap_content"/>
+        <LinearLayout
+            android:visibility="gone"
+            android:gravity="center"
+            android:layout_above="@+id/invite_relay"
+            android:orientation="vertical"
+            android:id="@+id/empty_lay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ImageView
+                android:src="@mipmap/empty_pic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:text="暂时没有好友可添加"
+                android:textColor="@color/textcolor_93"
+                android:textSize="17sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
     </LinearLayout>
     <RelativeLayout
         android:id="@+id/invite_relay"
         android:layout_width="match_parent"
-        android:visibility="gone"
-        android:layout_height="40dp">
+        android:visibility="visible"
+        android:layout_height="55dp">
+        <View
+            android:layout_alignParentTop="true"
+            android:background="@drawable/shape_grident"
+            android:layout_width="match_parent"
+            android:layout_height="10dp"/>
         <LinearLayout
+            android:layout_alignParentBottom="true"
             android:layout_width="wrap_content"
             android:gravity="center_vertical"
             android:layout_centerInParent="true"
-            android:layout_height="wrap_content">
-            <ImageView
-                android:id="@+id/jia_iv"
-                android:layout_width="wrap_content"
-                android:src="@mipmap/invite"
-                android:layout_height="wrap_content" />
+            android:layout_height="45dp">
             <TextView
                 android:id="@+id/bot_tv"
                 android:layout_width="wrap_content"
                 android:text="邀请微信好友"
                 android:layout_marginLeft="10dp"
                 android:textSize="15sp"
-                android:textColor="@color/color6c"
+                android:textColor="@color/blue_title"
                 android:layout_height="wrap_content" />
         </LinearLayout>
     </RelativeLayout>

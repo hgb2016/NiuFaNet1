@@ -3,8 +3,10 @@
     android:layout_width="match_parent"
     android:id="@+id/root_lay"
     android:orientation="vertical"
+    android:background="@color/white"
     android:layout_height="match_parent">
     <RelativeLayout
+        android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen45"
         android:background="@color/white">
@@ -18,16 +20,16 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/padding15"
-                android:src="@mipmap/icon_back" />
+                android:src="@mipmap/back" />
         </RelativeLayout>
 
-        <com.dream.NiuFaNet.CustomView.TitleTextview
+        <TextView
             android:id="@+id/title_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="重新设置密码"
-            android:textColor="@color/text_color"
+            android:textColor="@color/black"
             android:textSize="18sp" />
     </RelativeLayout>
     <LinearLayout
@@ -64,13 +66,13 @@
             android:textColor="#b0afaf"
             android:paddingLeft="15dp"
             android:layout_height="48.5dp" />
-        <com.dream.NiuFaNet.CustomView.ContentTextview
+        <TextView
             android:id="@+id/sure_tv"
             android:layout_width="match_parent"
             android:layout_marginTop="16.5dp"
             android:text="确认    "
             android:gravity="center"
-            android:background="#dd5c5c"
+            android:background="@drawable/shape_friendsdetail"
             android:textSize="15sp"
             android:textColor="@color/white"
             android:paddingLeft="15dp"

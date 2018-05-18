@@ -25,12 +25,24 @@ public class AboutusActivity extends CommonActivity {
 
     @Override
     public void initView() {
-
+        mLoadingDialog.show();
     }
 
     @Override
     public void initDatas() {
+
         aboutus_web.loadUrl(Const.aboutmeUrl);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(2000);
+                    mLoadingDialog.dismiss();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
 
     @Override

@@ -48,21 +48,14 @@
                 android:text="更多"
                 android:textColor="@color/blue_title" />
         </RelativeLayout>
-
-        <ImageView
-            android:id="@+id/share_iv"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="29dp"
-            android:src="@mipmap/share_cal"
-            android:visibility="gone" />
+        <View
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray" />
     </RelativeLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/gray" />
+
 
     <ScrollView
         android:id="@+id/detail_sv"
@@ -76,7 +69,19 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_marginTop="@dimen/layout_margin_5dp"
+                    android:layout_marginLeft="26dp"
+                    android:textColor="#dcdcdc"
+                    android:textSize="12sp"
+                    android:text="该日程欧阳于03:23 12:23 创建"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
@@ -106,7 +111,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="开始"
-                        android:textColor="@color/textcolor_1"
+                        android:textColor="@color/textcolor_ac"
                         android:textSize="@dimen/text_size_14sp" />
 
                     <TextView
@@ -156,7 +161,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="结束"
-                        android:textColor="@color/textcolor_1"
+                        android:textColor="@color/textcolor_ac"
                         android:textSize="@dimen/text_size_14sp" />
 
                     <TextView
@@ -194,6 +199,37 @@
                 <TextView
                     android:textColor="#949494"
                     android:text="提前30分钟提醒"
+                    android:layout_marginLeft="10dp"
+                    android:textSize="@dimen/text_size_15sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <View
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="1px"/>
+                <ImageView
+                    android:layout_marginRight="20dp"
+                    android:src="@mipmap/right_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen50dp">
+                <ImageView
+                    android:layout_marginLeft="30dp"
+                    android:src="@mipmap/icon_notify"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp" />
+                <TextView
+                    android:textColor="#949494"
+                    android:text="应用内.，短信"
                     android:layout_marginLeft="10dp"
                     android:textSize="@dimen/text_size_15sp"
                     android:layout_width="wrap_content"
@@ -272,11 +308,12 @@
                 android:gravity="center_vertical"
                 android:layout_width="match_parent"
                 android:layout_height="60dp">
+
                 <ImageView
-                    android:layout_marginLeft="30dp"
-                    android:src="@mipmap/icon_appendix"
                     android:layout_width="30dp"
-                    android:layout_height="30dp" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:src="@mipmap/icon_appendix" />
                 <ImageView
                     android:layout_marginLeft="10dp"
                     android:src="@drawable/vedio"
@@ -307,21 +344,62 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/gray" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:background="@color/gray" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen50dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="30dp"
+                    android:src="@mipmap/loacation2" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="地址"
+                    android:textColor="#949494"
+                    android:textSize="@dimen/text_size_15sp" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1px"
+                    android:layout_weight="1" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="20dp"
+                    android:src="@mipmap/right_button" />
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="100dp">
             <TextView
                 android:layout_marginTop="@dimen/layout_margin_5dp"
                 android:background="@null"
                 android:layout_marginLeft="30dp"
                 android:textSize="13sp"
-                android:hint="备注"
+                android:hint="备注:"
                 android:gravity="left"
                 android:textColor="@color/gray_1"
                 android:layout_width="match_parent"
                 android:layout_height="100dp" />
+            </LinearLayout>
         </LinearLayout>
 
     </ScrollView>
@@ -349,7 +427,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:text="邀请好友"
+                android:text="邀请微信好友"
                 android:textColor="@color/blue_title"
                 android:textSize="15sp" />
         </LinearLayout>

@@ -1,9 +1,11 @@
 package com.dream.NiuFaNet.Bean;
 
+import java.io.Serializable;
+
 /**
  * Created by Administrator on 2017/11/18 0018.
  */
-public class TimeTipBean {
+public class TimeTipBean implements Serializable{
     private boolean isSelect;
     private String timeStr;
     private int minute;

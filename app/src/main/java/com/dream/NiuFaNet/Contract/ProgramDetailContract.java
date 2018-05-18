@@ -24,7 +24,7 @@ public interface ProgramDetailContract {
 
     interface Presenter<T> extends BaseContract.BasePresenter<T> {
 
-        void getProjectProgramDetail(String projectId);
+        void getProjectProgramDetail(String projectId,String page,String userId);
         void edtProject(String data);
         void deleteProject(String projectId);
 

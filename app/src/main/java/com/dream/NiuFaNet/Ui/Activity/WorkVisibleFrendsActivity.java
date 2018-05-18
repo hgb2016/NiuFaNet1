@@ -49,6 +49,7 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -80,6 +81,10 @@ public class WorkVisibleFrendsActivity extends CommonActivity implements WorkVis
     LinearLayout mAddwoksLay;
     @Bind(R.id.back_relay)
     RelativeLayout back_relay;
+    @Bind(R.id.empty_lay)
+    LinearLayout empty_lay;
+    @Bind(R.id.participant_numtv)
+    TextView num_tv;
     private Map<String, WorkVisibleBean.DataBean> map = new HashMap<>();
 
     private String[] lArray = new String[]{"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R",
@@ -147,6 +152,7 @@ public class WorkVisibleFrendsActivity extends CommonActivity implements WorkVis
                 finish();
             }
         });
+
     }
 
     @Override
@@ -192,14 +198,24 @@ public class WorkVisibleFrendsActivity extends CommonActivity implements WorkVis
                 origList.addAll(data);
                 parseLetterData(data);
                 origListSize = data.size();
+                num_tv.setText("共"+origListSize+"人");
                 mFrendsRefresh.finishRefresh();
+                empty_lay.setVisibility(View.GONE);
+            }else {
+                empty_lay.setVisibility(View.VISIBLE);
             }
         }
     }
 
 
-    @OnClick(R.id.addwoks_lay)
+    @OnClick(R.id.addwoks_tv)
     public void onViewClicked() {
+      /*  Intent intent1=new Intent(mContext,MyFrendsActivity.class);
+        intent1.putExtra( Const.intentTag,"workVisible");
+        Bundle bundle=new Bundle();
+        bundle.putSerializable("peoplelist", (Serializable) mDataBeanList);
+        intent1.putExtra("people",bundle);
+        startActivityForResult(intent1,101);*/
         IntentUtils.toActivityWithTag(MyFrendsActivity.class, mActivity, "workVisible", 101);
     }
 
@@ -234,10 +250,9 @@ public class WorkVisibleFrendsActivity extends CommonActivity implements WorkVis
             }else {
                 holder.setImageResource(R.id.particepant_headiv,R.mipmap.niu);
             }
-
-            if (position==data.size()-1){
+           /* if (position==data.size()-1){
                 holder.getView(R.id.fegexian_line).setVisibility(View.GONE);
-            }
+            }*/
             holder.setOnClickListener(R.id.delete_tv, new NoDoubleClickListener() {
                 @Override
                 public void onNoDoubleClick(View view) {

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="76dp">
+        <ImageView
+            android:id="@+id/check_iv"
+            android:layout_marginLeft="@dimen/icon_size_16dp"
+            android:src="@mipmap/emptycheck_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:layout_marginLeft="@dimen/icon_size_16dp"
+            android:src="@mipmap/icon_user"
+            android:layout_width="36dp"
+            android:layout_height="36dp" />
+        <TextView
+            android:layout_marginLeft="14dp"
+            android:text="梅林"
+            android:textSize="@dimen/text_size_16sp"
+            android:textColor="@color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <View
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="1px"/>
+        <ImageView
+            android:layout_marginRight="27dp"
+            android:src="@mipmap/arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</LinearLayout>

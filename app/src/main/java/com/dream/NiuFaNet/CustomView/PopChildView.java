@@ -154,7 +154,7 @@ public class PopChildView extends LinearLayout implements MessageContract.View{
                             @Override
                             public void onRemove(CalInviteBean.DataBean dataBean, String status) {
                                 itemId = dataBean.getId();
-                                messagePresenter.replySchedule(dataBean.getId(), status,CommonAction.getUserId());
+                                messagePresenter.replySchedule(dataBean.getId(), status,CommonAction.getUserId(),"");
                             }
 
                             @Override
@@ -177,7 +177,7 @@ public class PopChildView extends LinearLayout implements MessageContract.View{
                             @Override
                             public void onRemove(CalInviteBean.DataBean dataBean, String status) {
                                 itemId = dataBean.getId();
-                                messagePresenter.replySchedule(dataBean.getId(), status,CommonAction.getUserId());
+                                messagePresenter.replySchedule(dataBean.getId(), status,CommonAction.getUserId(),"");
                             }
 
                             @Override

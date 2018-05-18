@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="70dp">
+        <ImageView
+            android:layout_marginLeft="20dp"
+            android:src="@mipmap/emptycheck_2"
+            android:layout_width="14dp"
+            android:layout_height="14dp" />
+        <ImageView
+            android:layout_marginLeft="20dp"
+            android:src="@mipmap/icon_user"
+            android:layout_width="36dp"
+            android:layout_height="36dp" />
+        <LinearLayout
+            android:layout_marginLeft="@dimen/icon_size_20dp"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="梅林"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:text="2018年1月12日 09:30"
+                    android:textColor="@color/textcolor_ac"
+                    android:textSize="@dimen/text_size_12sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </LinearLayout>
+        <TextView
+            android:layout_marginRight="20dp"
+            android:text="未答复"
+            android:textColor="#B0B0B0"
+            android:textSize="@dimen/text_size_14sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+</LinearLayout>

@@ -6,9 +6,10 @@
     android:layout_height="wrap_content">
 
     <TextView
+
         android:id="@+id/only_tv"
         android:layout_width="wrap_content"
         android:textSize="15sp"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:layout_height="wrap_content" />
 </LinearLayout>

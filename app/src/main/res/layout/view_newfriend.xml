@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:layout_height="80dp">
+    <ImageView
+        android:src="@mipmap/niu"
+        android:layout_marginLeft="@dimen/icon_size_20dp"
+        android:layout_centerVertical="true"
+        android:id="@+id/head_iv"
+        android:layout_width="36dp"
+        android:layout_height="36dp" />
+    <LinearLayout
+        android:layout_toRightOf="@id/head_iv"
+        android:layout_marginLeft="@dimen/icon_size_20dp"
+        android:layout_centerVertical="true"
+        android:layout_width="wrap_content"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/username_tv"
+            android:layout_width="wrap_content"
+            android:text="用户名"
+            android:textSize="15sp"
+            android:textColor="@color/black"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/requestinfo"
+            android:textColor="@color/textcolor_cc"
+            android:layout_width="wrap_content"
+            android:text="请求添加你为好友"
+            android:layout_marginTop="10dp"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <TextView
+        android:id="@+id/agree_tv"
+        android:layout_width="wrap_content"
+        android:text="添加"
+        android:paddingBottom="6dp"
+        android:paddingTop="6dp"
+        android:paddingLeft="@dimen/dimen_left"
+        android:textColor="@color/textcolor_blue2"
+        android:paddingRight="@dimen/dimen_left"
+        android:background="@drawable/shape_blue"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="40dp"
+        android:layout_alignParentRight="true"
+        android:layout_height="wrap_content" />
+    <View
+        android:layout_alignParentBottom="true"
+        android:background="@color/gray"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+</RelativeLayout>

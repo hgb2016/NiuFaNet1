@@ -11,20 +11,15 @@
 
     <LinearLayout
         android:id="@+id/change_lay"
-        android:layout_width="match_parent"
+        android:layout_width="60dp"
         android:gravity="center"
         android:layout_marginTop="15dp"
         android:layout_height="wrap_content">
-        <ImageView
-            android:layout_width="wrap_content"
-            android:src="@drawable/edit"
-            android:layout_height="wrap_content" />
         <TextView
             android:layout_width="wrap_content"
             android:text="编辑"
-            android:layout_marginLeft="30dp"
-            android:textColor="@color/text_color"
-            android:textSize="13sp"
+            android:textColor="@color/blue_title"
+            android:textSize="14sp"
             android:layout_height="wrap_content" />
     </LinearLayout>
     <RelativeLayout
@@ -34,20 +29,15 @@
         android:layout_height="1dp"></RelativeLayout>
     <LinearLayout
         android:id="@+id/copy_lay"
-        android:layout_width="match_parent"
+        android:layout_width="60dp"
         android:gravity="center"
         android:layout_marginTop="15dp"
         android:layout_height="wrap_content">
-        <ImageView
-            android:layout_width="wrap_content"
-            android:src="@drawable/copy"
-            android:layout_height="wrap_content" />
         <TextView
             android:layout_width="wrap_content"
             android:text="复制"
-            android:layout_marginLeft="30dp"
-            android:textSize="13sp"
-            android:textColor="@color/text_color"
+            android:textSize="14sp"
+            android:textColor="@color/blue_title"
             android:layout_height="wrap_content" />
     </LinearLayout>
     <RelativeLayout
@@ -57,21 +47,16 @@
         android:layout_height="1dp"></RelativeLayout>
     <LinearLayout
         android:id="@+id/delete_lay"
-        android:layout_width="match_parent"
+        android:layout_width="60dp"
         android:gravity="center"
         android:layout_marginTop="15dp"
         android:layout_marginBottom="15dp"
         android:layout_height="wrap_content">
-        <ImageView
-            android:layout_width="wrap_content"
-            android:src="@drawable/delete"
-            android:layout_height="wrap_content" />
         <TextView
             android:layout_width="wrap_content"
             android:text="删除"
-            android:layout_marginLeft="30dp"
-            android:textSize="13sp"
-            android:textColor="@color/text_color"
+            android:textSize="14sp"
+            android:textColor="@color/blue_title"
             android:layout_height="wrap_content" />
     </LinearLayout>
 </LinearLayout>

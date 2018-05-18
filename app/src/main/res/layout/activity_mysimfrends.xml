@@ -6,6 +6,7 @@
               android:layout_height="match_parent">
 
     <RelativeLayout
+        android:layout_marginTop="@dimen/icon_size_20dp"
         android:layout_width="match_parent"
         android:layout_height="@dimen/title_height">
         <RelativeLayout
@@ -14,7 +15,7 @@
             android:layout_height="match_parent">
             <ImageView
                 android:layout_width="wrap_content"
-                android:src="@mipmap/icon_back"
+                android:src="@mipmap/back"
                 android:layout_marginLeft="15dp"
                 android:layout_centerVertical="true"
                 android:layout_height="wrap_content" />
@@ -22,11 +23,41 @@
         <TextView
             android:layout_width="wrap_content"
             android:text="手机通讯录好友"
-            android:textSize="16.5sp"
-            android:textColor="@color/fengexian6c"
+            android:textSize="16sp"
+            android:textColor="@color/black"
             android:layout_centerInParent="true"
             android:layout_height="wrap_content" />
+        <View
+            android:layout_alignParentBottom="true"
+            android:background="@color/gray"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
     </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:gravity="center">
+
+        <LinearLayout
+            android:id="@+id/search_lay"
+            android:layout_width="320dp"
+            android:layout_height="30dp"
+            android:background="@drawable/edit_shape">
+
+            <TextView
+                android:gravity="center_vertical"
+                android:layout_width="320dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="10dp"
+                android:background="@null"
+                android:drawableLeft="@mipmap/icon_search"
+                android:editable="false"
+                android:hint="搜索好友"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_14sp" />
+        </LinearLayout>
+    </LinearLayout>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_marginLeft="15dp"
@@ -36,8 +67,7 @@
         android:paddingRight="10dp"
         android:paddingLeft="10dp"
         android:visibility="gone"
-        android:background="@drawable/shape_search"
-
+        android:background="@drawable/edit_shape"
         android:layout_height="31dp">
         <LinearLayout
             android:layout_width="match_parent"
@@ -72,7 +102,7 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/simfrend_rv"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+                android:layout_height="match_parent"/>
         </com.scwang.smartrefresh.layout.SmartRefreshLayout>
         <android.support.v7.widget.RecyclerView
             android:id="@+id/letter_rv"
@@ -80,8 +110,8 @@
             android:layout_alignParentRight="true"
             android:scrollbars="none"
             android:paddingRight="8dp"
-            android:layout_centerVertical="true"
-            android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
+
+            android:layout_height="wrap_content"/>
     </RelativeLayout>
 
 </LinearLayout>

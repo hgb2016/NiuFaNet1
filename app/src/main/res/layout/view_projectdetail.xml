@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@color/white"
+    android:layout_height="100dp">
+    <LinearLayout
+        android:layout_marginTop="@dimen/layout_padding_6dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:gravity="center_vertical"
+            android:layout_marginLeft="21dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_marginRight="@dimen/layout_margin_4dp"
+                android:layout_toLeftOf="@id/head_iv"
+                android:id="@+id/status_iv"
+                android:src="@mipmap/dot1"
+                android:layout_width="5dp"
+                android:layout_height="5dp" />
+         <ImageView
+            android:id="@+id/head_iv"
+            android:src="@mipmap/icon_user"
+            android:layout_width="18dp"
+            android:layout_height="18dp" />
+        </LinearLayout>
+        <TextView
+            android:id="@+id/username_tv"
+            android:layout_marginLeft="15dp"
+            android:textColor="#939393"
+            android:textSize="@dimen/sp_12"
+            android:text="梅林"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/time_tv"
+            android:layout_marginLeft="18dp"
+            android:textColor="#939393"
+            android:textSize="@dimen/sp_12"
+            android:text="2018-02-20 9:00-10:30"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <View
+            android:layout_marginTop="3dp"
+            android:background="#C4C3C3"
+            android:layout_marginLeft="39dp"
+            android:layout_width="0.5dp"
+            android:layout_height="match_parent"/>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_marginLeft="@dimen/layout_margin_22dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/title_tv"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:layout_marginRight="31dp"
+                android:layout_marginTop="@dimen/layout_margin_8dp"
+                android:text="通知李超和汪洋去盈科拜见刘大状，找小赵拿回上次遗漏的资料。"
+                android:textSize="@dimen/text_size_14sp"
+                android:textColor="@color/black"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <LinearLayout
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <TextView
+                    android:id="@+id/duringtime_tv"
+                    android:text="1.5小时"
+                    android:textColor="@color/blue_title"
+                    android:textSize="11sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <ImageView
+                    android:id="@+id/apendix_iv"
+                    android:layout_marginLeft="14dp"
+                    android:src="@mipmap/icon_appendix"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

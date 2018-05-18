@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -24,6 +25,7 @@ import com.dream.NiuFaNet.Utils.CodeUtils;
 import com.dream.NiuFaNet.Utils.Dialog.DialogUtils;
 import com.dream.NiuFaNet.Utils.ResourcesUtils;
 import com.dream.NiuFaNet.Utils.ToastUtils;
+import com.google.gson.Gson;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -161,10 +163,9 @@ public class FindPwdOrBindUserActivity extends CommonActivity implements CodeCon
 
     @Override
     public void showData(CommonBean dataBean) {
-
+        Log.i("phonebind",new Gson().toJson(dataBean));
         if (dataBean.getError().equals(Const.success)){
             ToastUtils.Toast_short("验证码已发送");
-
         }else {
             ToastUtils.Toast_short(dataBean.getMessage());
         }
@@ -200,6 +201,8 @@ public class FindPwdOrBindUserActivity extends CommonActivity implements CodeCon
         if (dataBean.getError().equals(Const.success)){
             DialogUtils.actionResultDialog(mActivity,"绑定成功!").show();
             CommonAction.saveUserData(dataBean.getBody());
+        }else {
+            ToastUtils.Toast_short(dataBean.getMessage());
         }
     }
 

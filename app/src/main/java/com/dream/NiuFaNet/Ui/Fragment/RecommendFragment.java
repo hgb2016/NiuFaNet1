@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.dream.NiuFaNet.Adapter.ChatMainRvAdapter;
 import com.dream.NiuFaNet.Base.BaseFragmentV4;
 import com.dream.NiuFaNet.Bean.BannerBean;
+import com.dream.NiuFaNet.Bean.MyToolsBean;
 import com.dream.NiuFaNet.Bean.RecomendBean;
 import com.dream.NiuFaNet.Component.DaggerNFComponent;
 import com.dream.NiuFaNet.Contract.MainContract;
@@ -158,6 +159,11 @@ public class RecommendFragment extends BaseFragmentV4  implements MainContract.V
 
     @Override
     public void showBannerData(BannerBean dataBean) {
+
+    }
+
+    @Override
+    public void showMyTools(MyToolsBean dataBean) {
 
     }
 

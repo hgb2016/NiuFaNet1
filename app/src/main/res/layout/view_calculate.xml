@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    android:orientation="vertical">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <ImageView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/icon_size_40dp"
+                android:src="@mipmap/icon_help01" />
+
+            <com.dream.NiuFaNet.CustomView.MyListView
+                android:id="@+id/calculate_lv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="34dp"
+                android:divider="#00ffffff"
+                android:dividerHeight="18dp">
+
+            </com.dream.NiuFaNet.CustomView.MyListView>
+        </LinearLayout>
+    </ScrollView>
+    <!-- <TextView
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_marginTop="34dp"
+         android:text="帮我算一下"
+         android:textColor="@color/black" />
+
+     <TextView
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_marginTop="18dp"
+         android:text="“违约金”"
+         android:textColor="@color/black" />
+
+     <TextView
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_marginTop="18dp"
+         android:text="“律师费”"
+         android:textColor="@color/black" />
+
+     <TextView
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_marginTop="18dp"
+         android:text="“诉讼费”"
+         android:textColor="@color/black" />
+
+     <TextView
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_marginTop="18dp"
+         android:text="投资股权比例"
+         android:textColor="@color/black" />
+
+     <TextView
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_marginTop="18dp"
+         android:text="交通赔偿金"
+         android:textColor="@color/black" />-->
+
+</LinearLayout>

@@ -7,7 +7,9 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bigkoo.pickerview.TimePickerView;
+import com.bigkoo.pickerview.builder.TimePickerBuilder;
+import com.bigkoo.pickerview.listener.OnTimeSelectListener;
+import com.bigkoo.pickerview.view.TimePickerView;
 import com.dream.NiuFaNet.Base.CommonActivity;
 import com.dream.NiuFaNet.Bean.CommonBean;
 import com.dream.NiuFaNet.Component.DaggerNFComponent;
@@ -49,18 +51,12 @@ public class DownScheduleActivity extends CommonActivity implements DownSchedule
     TextView mTitletv;
     @Bind(R.id.title_relay)
     RelativeLayout mTitleRelay;
-    @Bind(R.id.tip_title)
-    TextView mTipTitle;
-    @Bind(R.id.foot_view)
-    RelativeLayout mFootView;
     @Bind(R.id.start_timetv)
     TextView mStartTimetv;
     @Bind(R.id.endtime_tv)
     TextView mEndtimeTv;
     @Bind(R.id.email_edt)
     EditText mEmailEdt;
-    @Bind(R.id.tip_positive)
-    TextView mTipPositive;
 
     private TimePickerView dateDialog;
     private int tempTag;
@@ -78,7 +74,7 @@ public class DownScheduleActivity extends CommonActivity implements DownSchedule
                 .inject(this);
         mDownSchedulePresenter.attachView(this);
 
-        dateDialog = new TimePickerView.Builder(this, new TimePickerView.OnTimeSelectListener() {
+        dateDialog = new TimePickerBuilder(this, new OnTimeSelectListener() {
             @Override
             public void onTimeSelect(Date date, View v) {
                 long time = date.getTime();
@@ -93,12 +89,12 @@ public class DownScheduleActivity extends CommonActivity implements DownSchedule
                 }
             }
         }).setType(new boolean[]{true, true, true, true, true, false})
-                .setContentSize(16)//滚轮文字大小
+                .setContentTextSize(16)//滚轮文字大小
                 .setTitleSize(13)//标题文字大小
                 .setCancelText("取消")//取消按钮文字
                 .setLabel(" 年", "月", "日", "时", "分", "秒")
                 .isCyclic(true)//是否循环滚动
-                .setLineSpacingMultiplier(2.0f)
+                .setLineSpacingMultiplier(3.0f)
                 .build();
 
     }
@@ -134,7 +130,8 @@ public class DownScheduleActivity extends CommonActivity implements DownSchedule
 
     @Override
     public void showDownload(CommonBean dataBean) {
-        ToastUtils.Toast_short("导出成功");
+        ToastUtils.showToast(mContext,"导出成功",R.mipmap.checkmark);
+       // ToastUtils.Toast_short("导出成功");
         finish();
     }
 

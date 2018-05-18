@@ -10,6 +10,7 @@ import android.support.multidex.MultiDex;
 import android.telephony.TelephonyManager;
 
 import com.awen.photo.FrescoImageLoader;
+import com.baidu.mobstat.StatService;
 import com.dream.NiuFaNet.Component.AppComponent;
 import com.dream.NiuFaNet.Component.DaggerAppComponent;
 import com.dream.NiuFaNet.Module.AppModule;
@@ -105,7 +106,7 @@ public class MyApplication extends Application {
         MobSDK.init(this, "20f4091be79c7", "414be537e9515d5837e78590bd73bac8");
 //        ShareSDK.initSDK(this);
         SpeechUtility.createUtility(context, SpeechConstant.APPID + "=598a8250");
-
+        StatService.autoTrace(this,true,true);
         JPushInterface.setDebugMode(true);//如果时正式版就改成false
         JPushInterface.init(this);
 

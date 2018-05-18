@@ -115,8 +115,8 @@ public class MessagePresenter extends RxPresenter<MessageContract.View> implemen
     }
 
     @Override
-    public void replySchedule(String id, String status,String userId) {
-        Subscription rxSubscription = itApi.replySchedule(id,status,userId).subscribeOn(Schedulers.io())//放在异步中执行
+    public void replySchedule(String id, String status,String userId,String rejectRemark) {
+        Subscription rxSubscription = itApi.replySchedule(id,status,userId,rejectRemark).subscribeOn(Schedulers.io())//放在异步中执行
                 .observeOn(AndroidSchedulers.mainThread())//回到主线程
                 .subscribe(new Observer<CommonBean>() {
                     @Override

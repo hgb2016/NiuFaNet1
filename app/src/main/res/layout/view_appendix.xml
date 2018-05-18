@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="80dp">
+        <ImageView
+            android:layout_marginLeft="20dp"
+            android:src="@drawable/word"
+            android:layout_width="52dp"
+            android:layout_height="52dp" />
+        <LinearLayout
+            android:layout_marginLeft="@dimen/icon_size_20dp"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:text="IMG_20180102_32132.jpg"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:text="1.2MB 来自"
+                    android:textColor="@color/textcolor_ac"
+                    android:textSize="@dimen/text_size_12sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:text="梅林"
+                    android:layout_marginLeft="20dp"
+                    android:textColor="@color/blue_title"
+                    android:textSize="@dimen/text_size_12sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:text="1.2MB 来自"
+                    android:layout_marginLeft="20dp"
+                    android:textColor="@color/textcolor_ac"
+                    android:textSize="@dimen/text_size_12sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>

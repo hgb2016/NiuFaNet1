@@ -134,10 +134,7 @@ public class UserInfoActivity extends CommonActivity implements UserInfoContract
 
     @Override
     public void initDatas() {
-
         initUserData();
-
-
     }
 
     private void initUserData() {
@@ -308,8 +305,8 @@ public class UserInfoActivity extends CommonActivity implements UserInfoContract
                 }
                 break;
             case R.id.phone_relay:
-                Intent intent = new Intent(mContext,FindPwdOrBindUserActivity.class);
-                startActivityForResult(intent,911);
+                    Intent intent = new Intent(mContext,FindPwdOrBindUserActivity.class);
+                    startActivityForResult(intent,911);
                 break;
             case R.id.phone_bdrelay:
                 Intent intent1 = new Intent(mContext,FindPwdOrBindUserActivity.class);
@@ -372,9 +369,7 @@ public class UserInfoActivity extends CommonActivity implements UserInfoContract
             setUserInfo(company, companyh.trim(),Const.company);
             setUserInfo(duty, dutyh.trim(),Const.userDuty);
             setUserInfo(email, emailh.trim(),Const.userEmail);
-
             initUserData();
-
             edit_lay.setVisibility(View.GONE);
             username_edt.setVisibility(View.GONE);
             username_tv.setVisibility(View.VISIBLE);
@@ -383,7 +378,8 @@ public class UserInfoActivity extends CommonActivity implements UserInfoContract
             isEditor = false;
 
         }else {
-            ToastUtils.Toast_short(dataBean.getMessage());
+
+
         }
         loadingDialog.dismiss();
     }

@@ -90,6 +90,7 @@ public class FrendScheduleActivity extends CommonActivity implements CalenderMai
         RvUtils.setOption(week_rv, this);
         weekAdapter = new WeekAdapter(this, weekList, R.layout.rvitem_onlytext_week);
         week_rv.setAdapter(weekAdapter);
+        //
        /* if (CommonAction.getIsLogin()){
             toLogin();
         }*/
@@ -126,8 +127,6 @@ public class FrendScheduleActivity extends CommonActivity implements CalenderMai
         Calendar calendar = Calendar.getInstance();
         String nowStr = DateFormatUtil.getTime(calendar.getTime(), "yyyy年MM月");
         curent_datetv.setText(nowStr);
-
-
     }
 
     private Calendar currentCal = Calendar.getInstance();
@@ -163,6 +162,7 @@ public class FrendScheduleActivity extends CommonActivity implements CalenderMai
                 calendarView.moveCalendarView(true, c);
                 calendarView.setScroll(c);
                 currentCal = c;
+
             }
         });
     }
@@ -201,6 +201,7 @@ public class FrendScheduleActivity extends CommonActivity implements CalenderMai
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("yuedata",tempData);
                 intent.putExtras(bundle);
+
                 intent.putExtra("date",String.valueOf(currentCal.getTimeInMillis()));
                 startActivity(intent);
                 break;

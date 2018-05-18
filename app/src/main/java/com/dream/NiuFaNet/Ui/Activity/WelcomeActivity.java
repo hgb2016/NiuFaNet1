@@ -18,6 +18,7 @@ import com.dream.NiuFaNet.Base.BaseActivityRelay;
 import com.dream.NiuFaNet.Base.BaseActivityWG;
 import com.dream.NiuFaNet.Base.CommonActivity;
 import com.dream.NiuFaNet.Bean.BannerBean;
+import com.dream.NiuFaNet.Bean.MyToolsBean;
 import com.dream.NiuFaNet.Bean.RecomendBean;
 import com.dream.NiuFaNet.Bean.ShareBean;
 import com.dream.NiuFaNet.Component.DaggerNFComponent;
@@ -151,7 +152,7 @@ public class WelcomeActivity extends BaseActivityWG implements ShareContract.Vie
 
     @Override
     public void showError() {
-        ToastUtils.Toast_short(ResourcesUtils.getString(R.string.failconnect));
+        //ToastUtils.Toast_short(ResourcesUtils.getString(R.string.failconnect));
     }
 
     @Override
@@ -170,6 +171,11 @@ public class WelcomeActivity extends BaseActivityWG implements ShareContract.Vie
 
     @Override
     public void showBannerData(BannerBean dataBean) {
+
+    }
+
+    @Override
+    public void showMyTools(MyToolsBean dataBean) {
 
     }
 

@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.media.Image;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.view.ViewPager;
@@ -40,18 +41,23 @@ import com.dream.NiuFaNet.Base.RVBaseHolder;
 import com.dream.NiuFaNet.Bean.BannerBean;
 import com.dream.NiuFaNet.Bean.BusBean.LoginBus;
 import com.dream.NiuFaNet.Bean.BusBean.RefreshCalBean;
+import com.dream.NiuFaNet.Bean.BusBean.RefreshMyToolsBean;
 import com.dream.NiuFaNet.Bean.CalendarBean;
 import com.dream.NiuFaNet.Bean.CalenderedBean;
 import com.dream.NiuFaNet.Bean.MainFunctionBean;
+import com.dream.NiuFaNet.Bean.MyToolsBean;
 import com.dream.NiuFaNet.Bean.RecomendBean;
 import com.dream.NiuFaNet.Component.DaggerNFComponent;
 import com.dream.NiuFaNet.Contract.CalenderMainContract;
 import com.dream.NiuFaNet.Contract.MainContract;
 import com.dream.NiuFaNet.Contract.MainFunctionContract;
+import com.dream.NiuFaNet.Contract.MyToolsContract;
 import com.dream.NiuFaNet.Contract.PermissionListener;
 import com.dream.NiuFaNet.CustomView.CalenderItemView;
 import com.dream.NiuFaNet.CustomView.Emptyview_RvSchedule;
+import com.dream.NiuFaNet.CustomView.GuideView;
 import com.dream.NiuFaNet.CustomView.MyListView;
+import com.dream.NiuFaNet.CustomView.MyScrollView;
 import com.dream.NiuFaNet.Listener.NoDoubleClickListener;
 import com.dream.NiuFaNet.Other.CommonAction;
 import com.dream.NiuFaNet.Other.Const;
@@ -60,15 +66,17 @@ import com.dream.NiuFaNet.Presenter.CalenderMainPresenter;
 import com.dream.NiuFaNet.Presenter.MainFunctionPresenter;
 import com.dream.NiuFaNet.Presenter.MainPresenter;
 import com.dream.NiuFaNet.R;
+import com.dream.NiuFaNet.Ui.Activity.AddFriendsActivity;
 import com.dream.NiuFaNet.Ui.Activity.CalenderDetailActivity;
 import com.dream.NiuFaNet.Ui.Activity.CalenderDetailActivity1;
 import com.dream.NiuFaNet.Ui.Activity.FunctionActivity;
 import com.dream.NiuFaNet.Ui.Activity.MineActivity;
 import com.dream.NiuFaNet.Ui.Activity.NewCalenderActivity;
-import com.dream.NiuFaNet.Ui.Activity.NewCalenderActivity1;
+
 import com.dream.NiuFaNet.Ui.Activity.TestActivity;
 import com.dream.NiuFaNet.Ui.Activity.WebActivity;
 import com.dream.NiuFaNet.Ui.Service.SendAlarmBroadcast;
+import com.dream.NiuFaNet.Utils.CalculateTimeUtil;
 import com.dream.NiuFaNet.Utils.DateFormatUtil;
 import com.dream.NiuFaNet.Utils.DateUtils.ChinaDate;
 import com.dream.NiuFaNet.Utils.DateUtils.DateUtil;
@@ -78,6 +86,7 @@ import com.dream.NiuFaNet.Utils.Dialog.DialogUtils;
 import com.dream.NiuFaNet.Utils.GlideCircleTransform;
 import com.dream.NiuFaNet.Utils.GlideRoundTransform;
 import com.dream.NiuFaNet.Utils.IntentUtils;
+import com.dream.NiuFaNet.Utils.NetUtil;
 import com.dream.NiuFaNet.Utils.ResourcesUtils;
 import com.dream.NiuFaNet.Utils.RvUtils;
 import com.dream.NiuFaNet.Utils.SpUtils;
@@ -110,7 +119,7 @@ import butterknife.OnClick;
 /**
  * Created by Administrator on 2017/10/12 0012.
  */
-public class MainFragment extends BaseFragmentV4 implements MainContract.View, MainFunctionContract.View, CalenderMainContract.View {
+public class MainFragment extends BaseFragmentV4 implements MainContract.View, MainFunctionContract.View, CalenderMainContract.View , MyScrollView.OnScrollListener{
 
     @Bind(R.id.chat_rv)
     WrapRecyclerView chat_rv;
@@ -131,15 +140,32 @@ public class MainFragment extends BaseFragmentV4 implements MainContract.View, M
     @Bind(R.id.no_callay)
     Emptyview_RvSchedule no_callay;
     @Bind(R.id.no_caltv)
-    TextView no_caltv;
+    ImageView no_caltv;
     @Bind(R.id.day_tv1)
     TextView day_tv1;
+    @Bind(R.id.myscrollview)
+    MyScrollView myScrollView;
+    @Bind(R.id.add_schedule)
+    ImageView add_schedule;
     @Inject
     MainPresenter mainPresenter;
     @Inject
     MainFunctionPresenter mainFunctionPresenter;
     @Inject
     CalenderMainPresenter calenderMainPresenter;
+
+    @Bind(R.id.tv_topView)
+    LinearLayout mTopView;
+    /**
+     * 要悬浮在顶部的View的子View
+     */
+    @Bind(R.id.ll_tabTopView)
+    LinearLayout mTopTabViewLayout;
+    /**
+     * 跟随ScrollView的TabviewLayout
+     */
+    @Bind(R.id.ll_tabView)
+    RelativeLayout mTabViewLayout;
 
 
     private BannerAdapter bannerAdapter;
@@ -165,13 +191,16 @@ public class MainFragment extends BaseFragmentV4 implements MainContract.View, M
             super.handleMessage(msg);
         }
     };
-    private String[] titles={"律师费计算","诉讼费计算","合同模板","更多"};
+    private  MyToolsAdapter myToolsAdapter;
+    private List<MyToolsBean.DataBean> myTools=new ArrayList<>();
+    @Override
+    protected View loadViewLayout(LayoutInflater inflater, ViewGroup container) {
+        return inflater.inflate(R.layout.fragment_main, null);
+    }
     @Override
     public void initView() {
-
         DaggerNFComponent.builder()
                 .appComponent(MyApplication.getInstance().getAppComponent())
-//                .mainActivityModule(new MainActivityModule(this))
                 .build()
                 .inject(this);
         mainPresenter.attachView(this);
@@ -181,29 +210,21 @@ public class MainFragment extends BaseFragmentV4 implements MainContract.View, M
         RvUtils.setOptionnoLine(chat_rv, getActivity());
         chatAdapter = new ChatMainRvAdapter(getContext(), dataList, R.layout.rvitem_onlytext);
         chat_rv.setAdapter(chatAdapter);
-        //mainFunctionAdpter = new MainFunctionAdpter(getActivity(), functionList, R.layout.view_imgtext);
-        main_gv.setAdapter(new FunctionViewAdapter(getContext(),titles));
-        main_gv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                switch (i){
-                    case 3:
-                        startActivity(new Intent(getContext(), FunctionActivity.class));
-                        break;
-                }
-            }
-        });
+        myToolsAdapter = new MyToolsAdapter(getContext(), myTools, R.layout.view_imgtext);
+        main_gv.setAdapter(myToolsAdapter);
 //        RvUtils.setOption(clv_rv, getActivity());
 //        mainCalenderAdapter = new MainCalenderAdapter(getContext(), calendarList, R.layout.rvitem_maincalender);
 //        clv_rv.setAdapter(mainCalenderAdapter);
 
         workCalenderAdapter = new WorkCalenderAdapter(getContext(), worksList, R.layout.rvitem_maincalwork);
         maincalendar_rv.setAdapter(workCalenderAdapter);
-
+        //滑动监听
+        myScrollView.setOnScrollListener(this);
         if (!CommonAction.getIsLogin()){
             Calendar calendar = Calendar.getInstance();
             refreshIsfirst(calendar.getTime());
         }
+
 
     }
 
@@ -220,11 +241,11 @@ public class MainFragment extends BaseFragmentV4 implements MainContract.View, M
     }
 
 
-
+    //初始化数据
     @Override
     public void initDta() {
-        mainPresenter.getBannerDat("");
-        mainFunctionPresenter.getMianFunction("");
+        mainPresenter.getBannerDat("2");
+        //mainFunctionPresenter.getMianFunction("");
         String cacheData = (String) SpUtils.getParam(Const.mainCache, "");
         Log.e("tag", "cacheData=" + cacheData);
         if (!cacheData.isEmpty()) {
@@ -240,9 +261,21 @@ public class MainFragment extends BaseFragmentV4 implements MainContract.View, M
 
         Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), "fonts/fzlth.ttf");
         cmd_tv.setTypeface(tf);
+        //获取我的工具
+        getMyToolsData();
+        //设置我的日程数据
         setCalendarData();
+        //获取我的日程数据
         getCalendarData();
 
+    }
+
+    private void getMyToolsData() {
+        if (CommonAction.getIsLogin()){
+            mainPresenter.getMyTools(CommonAction.getUserId());
+        }else {
+            mainPresenter.getMyTools("");
+        }
     }
 
     private void getCalendarData() {
@@ -269,17 +302,13 @@ public class MainFragment extends BaseFragmentV4 implements MainContract.View, M
         }
     }
 
-    @Override
-    protected View loadViewLayout(LayoutInflater inflater, ViewGroup container) {
-        return inflater.inflate(R.layout.fragment_main, null);
-    }
+
 
     @Override
     public void showData(RecomendBean dataBean) {
 
         if (dataBean.getError().equals(Const.success)) {
             List<RecomendBean.BodyBean> bodyBeanList = dataBean.getBody();
-            Log.e("tag", "bodyBeanList.size()=" + bodyBeanList.size());
             if (bodyBeanList != null) {
                 dataList.clear();
                 dataList.addAll(bodyBeanList);
@@ -330,6 +359,23 @@ public class MainFragment extends BaseFragmentV4 implements MainContract.View, M
             }
         }
     }
+    //获取我的常用工具
+    @Override
+    public void showMyTools(MyToolsBean dataBean) {
+        if(dataBean.getError().equals(Const.success)){
+            List<MyToolsBean.DataBean> mytools = dataBean.getDataBean();
+            Log.i("myTools",new Gson().toJson(mytools));
+            if (mytools!= null){
+                myTools.clear();
+                myTools.addAll(mytools);
+                MyToolsBean.DataBean tool=new MyToolsBean.DataBean();
+                myTools.add(tool);
+                myToolsAdapter.notifyDataSetChanged();
+            }
+        }else {
+            ToastUtils.Toast_short(dataBean.getMessage());
+        }
+    }
 
     @Override
     public void showData(CalenderedBean dataBean) {
@@ -368,6 +414,8 @@ public class MainFragment extends BaseFragmentV4 implements MainContract.View, M
         }
     }
 
+
+
     public class GlideImageLoader extends ImageLoader {
         @Override
         public void displayImage(Context context, Object path, ImageView imageView) {
@@ -380,15 +428,15 @@ public class MainFragment extends BaseFragmentV4 implements MainContract.View, M
              */
 
             //Glide 加载图片简单用法
-            Glide.with(getContext()).load(path.toString()).transform(new GlideRoundTransform(context,10)).into(imageView);
-
+            Glide.with(getContext()).load(path.toString()).into(imageView);
+           // Glide.with(getContext()).load(R.drawable.banner).transform(new GlideRoundTransform(context,10)).into(imageView);
         }
 
     }
 
     @Override
     public void showError() {
-        ToastUtils.Toast_short(ResourcesUtils.getString(R.string.failconnect));
+       // ToastUtils.Toast_short(getActivity(),ResourcesUtils.getString(R.string.failconnect));
 
     }
 
@@ -403,15 +451,25 @@ public class MainFragment extends BaseFragmentV4 implements MainContract.View, M
             case R.id.add_schedule:
                 if (CommonAction.getIsLogin()){
                     long timeInMillis = tempCalendar.getTimeInMillis();
-                    Intent intent = new Intent(getContext(), NewCalenderActivity1.class);
+                    Intent intent = new Intent(getContext(), NewCalenderActivity.class);
                     intent.putExtra("date", String.valueOf(timeInMillis));
                     startActivity(intent);
+                    getActivity().overridePendingTransition(R.anim.activity_open,R.anim.exitanim);
                 }else {
                     DialogUtils.getLoginTip(getActivity()).show();
                 }
                 break;
             case R.id.no_caltv:
 //                IntentUtils.toActivity(MyTestActivity.class,getActivity());
+                if (CommonAction.getIsLogin()){
+                    long timeInMillis = tempCalendar.getTimeInMillis();
+                    Intent intent = new Intent(getContext(), NewCalenderActivity.class);
+                    intent.putExtra("date", String.valueOf(timeInMillis));
+                    startActivity(intent);
+                    getActivity().overridePendingTransition(R.anim.activity_open,R.anim.exitanim);
+                }else {
+                    DialogUtils.getLoginTip(getActivity()).show();
+                }
                 break;
         }
     }
@@ -419,12 +477,12 @@ public class MainFragment extends BaseFragmentV4 implements MainContract.View, M
     @Override
     public void showData(MainFunctionBean dataBean) {
         if (dataBean.getError().equals(Const.success)) {
-            List<MainFunctionBean.DataBean> data = dataBean.getData();
+           /* List<MainFunctionBean.DataBean> data = dataBean.getData();
             if (data != null) {
                 functionList.clear();
                 functionList.addAll(data);
                 mainFunctionAdpter.notifyDataSetChanged();
-            }
+            }*/
         }
     }
 
@@ -610,14 +668,12 @@ public class MainFragment extends BaseFragmentV4 implements MainContract.View, M
                 }
                 nday_tv.setTextColor(ResourcesUtils.getColor(R.color.black));
             }
-
             ImageView work_iv = holder.getView(R.id.work_iv);
             if (calendarBean.isWork()) {
                 work_iv.setVisibility(View.VISIBLE);
             }else {
                 work_iv.setVisibility(View.GONE);
             }
-
             LinearLayout select_lay = holder.getView(R.id.select_lay);
             if (calendarBean.isSelect()){
                 gDay_tv.setBackgroundResource(R.drawable.shape_selectcal2);
@@ -653,6 +709,14 @@ public class MainFragment extends BaseFragmentV4 implements MainContract.View, M
         worksList.clear();
         Date currentD = calendarList.get(position).getDate();
         String ymd = DateFormatUtil.getTime(currentD, Const.Y_M_D);
+        String nyr = DateFormatUtil.getTime(currentD, Const.NYR);
+        Calendar calendar = Calendar.getInstance();
+         String cud=DateFormatUtil.getTime(calendar.getTime(),Const.NYR);
+         if (nyr.equals(cud)) {
+             day_tv1.setText("今天");
+         }else {
+             day_tv1.setText(nyr);
+         }
         Date startDL = DateFormatUtil.getTime(ymd + Const.endTime, Const.YMD_HMS);
         long startTL = startDL.getTime();
         Date endDd = DateFormatUtil.getTime(ymd + Const.startTime, Const.YMD_HMS);
@@ -701,23 +765,33 @@ public class MainFragment extends BaseFragmentV4 implements MainContract.View, M
         public void convert(BaseViewHolder holder, final CalenderedBean.DataBean calendarBean, int position) {
             TextView work_title = holder.getView(R.id.title_tv);
             TextView endtime_tv = holder.getView(R.id.endtime_tv);
+            TextView begint_tv = holder.getView(R.id.begint_tv);
+
             ImageView dot_iv = holder.getView(R.id.dot_iv);
             work_title.setText(calendarBean.getTitle());
             String beginTime = calendarBean.getBeginTime();
             String endTime = calendarBean.getEndTime();
-            Log.i("myTag",beginTime+","+endTime);
-            holder.setText(R.id.begint_tv, beginTime.substring(11,beginTime.length()-3));
-            holder.setText(R.id.endtime_tv, beginTime.substring(11,endTime.length()-3));
             Date endDate = DateFormatUtil.getTime(endTime, Const.YMD_HMS);
+            Date beginDate = DateFormatUtil.getTime(beginTime, Const.YMD_HMS);
+            Log.i("myTag",beginTime+"");
+            int dayExpend = CalculateTimeUtil.getDayExpend(beginDate.getTime(), endDate.getTime());
+            if (dayExpend>=1){
+                /*dayexpend_tv.setVisibility(View.VISIBLE);
+                dayexpend_tv.setText("+"+dayExpend);*/
+                holder.setText(R.id.begint_tv, beginTime.substring(5,beginTime.length()-3)+"  —  ");
+                holder.setText(R.id.endtime_tv, endTime.substring(5,endTime.length()-3));
+            }else {
+              /*  dayexpend_tv.setVisibility(View.GONE);*/
+                holder.setText(R.id.begint_tv, beginTime.substring(11,beginTime.length()-3)+"  —  ");
+                holder.setText(R.id.endtime_tv, endTime.substring(11,endTime.length()-3));
+            }
             Calendar cal = Calendar.getInstance();
             if (cal.getTimeInMillis()>endDate.getTime()){
                 work_title.setTextColor(ResourcesUtils.getColor(R.color.outdatecolor));
                 dot_iv.setImageResource(R.drawable.shape_circle_dot);
-                endtime_tv.setTextColor(ResourcesUtils.getColor(R.color.outdatecolor));
-                endtime_tv.setText("截止");
             }else {
                 work_title.setTextColor(ResourcesUtils.getColor(R.color.black));
-                dot_iv.setImageResource(R.drawable.shape_circle_voice);
+                dot_iv.setImageResource(R.mipmap.dot1 );
             }
 
             holder.getConvertView().setOnClickListener(new NoDoubleClickListener() {
@@ -725,7 +799,7 @@ public class MainFragment extends BaseFragmentV4 implements MainContract.View, M
                 public void onNoDoubleClick(View view) {
                     String scheduleId = calendarBean.getScheduleId();
                     if (scheduleId!=null&&!scheduleId.isEmpty()){
-                        Intent intent = new Intent(getContext(), CalenderDetailActivity1.class);
+                        Intent intent = new Intent(getContext(), CalenderDetailActivity.class);
                         intent.putExtra(Const.scheduleId, scheduleId);
                         getActivity().startActivity(intent);
                     }
@@ -733,7 +807,42 @@ public class MainFragment extends BaseFragmentV4 implements MainContract.View, M
             });
         }
     }
+    public class MyToolsAdapter extends CommonAdapter<MyToolsBean.DataBean>{
 
+        public MyToolsAdapter(Context context, List<MyToolsBean.DataBean> mDatas, int itemLayoutId) {
+            super(context, mDatas, itemLayoutId);
+        }
+
+        @Override
+        public void convert(BaseViewHolder helper, MyToolsBean.DataBean dataBean, int position) {
+            ImageView img=helper.getView(R.id.img_iv);
+            TextView  content_tv=helper.getView(R.id.content_tv);
+            if (position==3){
+                img.setImageResource(R.mipmap.icon_more);
+                content_tv.setText("更多");
+                helper.getConvertView().setOnClickListener(new NoDoubleClickListener() {
+                    @Override
+                    public void onNoDoubleClick(View view) {
+                        startActivity(new Intent(getContext(),FunctionActivity.class));
+                    }
+                });
+            }else {
+                helper.setImageByUrl(R.id.img_iv,dataBean.getImgUrl(),false);
+                content_tv.setText(dataBean.getActionName());
+                final String url=dataBean.getLink();
+                helper.getConvertView().setOnClickListener(new NoDoubleClickListener() {
+                    @Override
+                    public void onNoDoubleClick(View view) {
+                        if (url != null && !url.isEmpty()) {
+                            Intent intent = new Intent(mContext, WebActivity.class);
+                            intent.putExtra(Const.webUrl, url);
+                            startActivity(intent);
+                        }
+                    }
+                });
+            }
+        }
+    }
     private Runnable runnable = new Runnable() {
         @Override
         public void run() {
@@ -777,6 +886,12 @@ public class MainFragment extends BaseFragmentV4 implements MainContract.View, M
        getCalendarData();
     }
     @Subscribe(threadMode = ThreadMode.MAIN)
+    public void eventMain2(RefreshMyToolsBean refreshMyToolsBean) {
+       if (refreshMyToolsBean.getEventStr().equals(Const.refresh)){
+           getMyToolsData();
+       }
+    }
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void eventMain1(LoginBus refreshCalBean) {
         if (refreshCalBean.getEventStr().equals(Const.refresh)){
             if (CommonAction.getIsLogin()){
@@ -791,4 +906,24 @@ public class MainFragment extends BaseFragmentV4 implements MainContract.View, M
             }
         }
     }
+    //滑动监听
+    @Override
+    public void onScroll(int scrollY) {
+        int mHeight = mTabViewLayout.getTop();
+        //判断滑动距离scrollY是否大于0，因为大于0的时候就是可以滑动了，此时mTabViewLayout.getTop()才能取到值。
+        if (scrollY > 0 && scrollY >= mHeight) {
+            if (mTopView.getParent() != mTopTabViewLayout) {
+                mTabViewLayout.removeView(mTopView);
+                mTopTabViewLayout.addView(mTopView);
+            }
+
+        } else {
+            if (mTopView.getParent() != mTabViewLayout) {
+                mTopTabViewLayout.removeView(mTopView);
+                mTabViewLayout.addView(mTopView);
+            }
+
+        }
+    }
+
 }

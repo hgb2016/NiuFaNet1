@@ -16,11 +16,13 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ProgressBar;
 
 import com.dream.NiuFaNet.Base.CommonActivity;
 import com.dream.NiuFaNet.Contract.PermissionListener;
@@ -28,6 +30,7 @@ import com.dream.NiuFaNet.Other.Const;
 import com.dream.NiuFaNet.Other.MyApplication;
 import com.dream.NiuFaNet.R;
 import com.dream.NiuFaNet.Utils.DownPicUtil;
+import com.dream.NiuFaNet.Utils.ImmUtils;
 import com.dream.NiuFaNet.Utils.ToastUtils;
 
 import java.io.FileNotFoundException;
@@ -43,9 +46,7 @@ public class WebActivity extends CommonActivity {
 
     @Bind(R.id.web_view)
     WebView web_view;
-    WebSettings webSettings;
-
-
+    WebSettings  webSettings;
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -61,8 +62,10 @@ public class WebActivity extends CommonActivity {
             // 最后通知图库更新
             getApplicationContext().sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://" + picFile)));
             ToastUtils.Toast_short("保存成功");
+
         }
     };
+    private InputMethodManager imm;
 
     @Override
     public int getLayoutId() {
@@ -71,26 +74,28 @@ public class WebActivity extends CommonActivity {
 
     @Override
     public void initView() {
-
+        imm=ImmUtils.getImm(mActivity);
     }
 
     @Override
     public void initDatas() {
-
+        mLoadingDialog.show();
         String weburl = getIntent().getStringExtra(Const.webUrl);
         Log.e("tag", "weburl=" + weburl);
         webSettings = web_view.getSettings();
         web_view.getSettings().setRenderPriority(WebSettings.RenderPriority.HIGH);
-        web_view.loadUrl(weburl);
 //        web_view.loadUrl("http://api.niufa.cn:9080/app/apiDownloadPic.do?url=21234.jpg");
         //设置不用系统浏览器打开,直接显示在当前Webview
-        web_view.setWebViewClient(new WebViewClient() {
+        web_view.loadUrl(weburl);
+        web_view.setWebViewClient(new WebViewClient(){
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 view.loadUrl(url);
-                return true;
+                return  true;
             }
         });
+        //web_view.setWebChromeClient(new WebChromeClient());
+       // web_view.setWebChromeClient(new WebChromeClient());
         //如果访问的页面中要与Javascript交互，则webview必须设置支持Javascript
         webSettings.setJavaScriptEnabled(true);
         web_view.addJavascriptInterface(new JsOperation(), "Android");//JS与java的交互
@@ -113,7 +118,17 @@ public class WebActivity extends CommonActivity {
         webSettings.setLoadsImagesAutomatically(true); //支持自动加载图片
         webSettings.setDefaultTextEncodingName("utf-8");//设置编码格式
 
-
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(2000);
+                    mLoadingDialog.dismiss();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
 
     @Override
@@ -180,6 +195,7 @@ public class WebActivity extends CommonActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.back_relay:
+                ImmUtils.hideImm(mActivity,imm);
                 if (web_view.canGoBack()) {
                     web_view.goBack();
                 } else {

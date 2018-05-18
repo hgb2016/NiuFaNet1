@@ -25,7 +25,7 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bigkoo.pickerview.TimePickerView;
+
 import com.dream.NiuFaNet.Base.BaseViewHolder;
 import com.dream.NiuFaNet.Base.CommonActivity;
 import com.dream.NiuFaNet.Base.CommonAdapter;
@@ -143,7 +143,7 @@ public class ProgramDetailActivity extends CommonActivity implements ProgramDeta
         Log.e("tag", "projectId=" + projectId);
         if (projectId != null) {
             mLoadingDialog.show();
-            detailPresenter.getProjectProgramDetail(projectId);
+            detailPresenter.getProjectProgramDetail(projectId,CommonAction.getUserId(),"1");
         } else {
             ToastUtils.Toast_short("数据异常");
             finish();
@@ -251,15 +251,12 @@ public class ProgramDetailActivity extends CommonActivity implements ProgramDeta
             }else {
                 helper.getView(R.id.att_iv).setVisibility(View.GONE);
             }
-
             ImageView dot_iv = helper.getView(R.id.dot_iv);
             TextView work_title = helper.getView(R.id.work_title);
-
             String beginTime = dataBean.getBeginTime();
             String endTime = dataBean.getEndTime();
             Date beginD = DateFormatUtil.getTime(beginTime, Const.YMD_HMS);
             Date endD = DateFormatUtil.getTime(endTime, Const.YMD_HMS);
-
             String durationTime = DateUtil.getTimeDimen_onlyHour(beginD.getTime(), endD.getTime());
 
             String beginS = DateFormatUtil.getTime(beginD, Const.Y_M_D);
@@ -429,11 +426,11 @@ public class ProgramDetailActivity extends CommonActivity implements ProgramDeta
         delete_lay.setOnClickListener(new NoDoubleClickListener() {
             @Override
             public void onNoDoubleClick(View view) {
-
+                morepop.dismiss();
                 DialogUtils.showDeleteDialog(mContext, new NoDoubleClickListener() {
                     @Override
                     public void onNoDoubleClick(View view) {
-                        morepop.dismiss();
+
                         detailPresenter.deleteProject(projectId);
                     }
                 });
@@ -445,7 +442,7 @@ public class ProgramDetailActivity extends CommonActivity implements ProgramDeta
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 123) {
-            detailPresenter.getProjectProgramDetail(projectId);
+            detailPresenter.getProjectProgramDetail(projectId,CommonAction.getUserId(),"1");
         }
     }
 

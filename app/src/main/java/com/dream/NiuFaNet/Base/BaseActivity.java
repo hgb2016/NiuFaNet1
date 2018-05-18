@@ -15,9 +15,11 @@ import android.view.Window;
 import android.widget.LinearLayout;
 
 
+import com.baidu.mobstat.StatService;
 import com.dream.NiuFaNet.Contract.PermissionListener;
 import com.dream.NiuFaNet.R;
 import com.dream.NiuFaNet.Utils.XuniKeyWord;
+import com.gyf.barlibrary.ImmersionBar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +31,7 @@ import butterknife.ButterKnife;
  * Created by Administrator on 2017/4/7/007.
  */
 public abstract class BaseActivity extends AppCompatActivity {
-
+    protected ImmersionBar mImmersionBar;
     public Bundle savedInstanceState;
     public Activity mActivity;
     public Context mContext;
@@ -46,6 +48,9 @@ public abstract class BaseActivity extends AppCompatActivity {
         setContentView(getLayoutId());
         getSupportActionBar().hide();
         ButterKnife.bind(this);
+        //初始化沉浸式
+        if (isImmersionBarEnabled())
+            initImmersionBar();
 //        XuniKeyWord.setShiPei(this,root_lay);
         this.savedInstanceState = savedInstanceState;
         this.mActivity = this;
@@ -56,17 +61,30 @@ public abstract class BaseActivity extends AppCompatActivity {
         initDatas();
         eventListener();
     }
-
+    /**
+     * 是否可以使用沉浸式
+     * Is immersion bar enabled boolean.
+     *
+     * @return the boolean
+     */
+    protected boolean isImmersionBarEnabled() {
+        return true;
+    }
     @Override
     protected void onResume() {
         super.onResume();
         loadResum();
     }
-
+    protected void initImmersionBar() {
+        mImmersionBar= ImmersionBar.with(this)
+                .statusBarDarkFont(true, 0.2f) ;//原理：如果当前设备支持状态栏字体变色，会设置状态栏字体为黑色，如果当前设备不支持状态栏字体变色，会使当前状态栏加上透明度，否则不执行透明度
+        mImmersionBar.init();
+    }
     @Override
     protected void onDestroy() {
         super.onDestroy();
         ButterKnife.unbind(this);
+        ImmersionBar.with(this).destroy(); //必须调用该方法，防止内存泄漏
     }
 
     public abstract int getLayoutId();

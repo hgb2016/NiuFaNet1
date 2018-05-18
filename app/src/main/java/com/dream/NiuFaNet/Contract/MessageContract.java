@@ -24,7 +24,7 @@ public interface MessageContract {
         void applyBeFrend(String userId);
         void getCalInviteList(String userId);
         void replyFrendsApply(String id,String status);
-        void replySchedule(String id,String status,String userId);
+        void replySchedule(String id,String status,String userId,String rejectRemark);
 
     }
 }

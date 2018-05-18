@@ -6,6 +6,7 @@
               android:layout_height="match_parent">
 
     <RelativeLayout
+        android:layout_marginTop="@dimen/icon_size_20dp"
         android:layout_width="match_parent"
         android:layout_height="@dimen/title_height">
 
@@ -19,7 +20,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:src="@mipmap/icon_back"/>
+                android:src="@mipmap/back"/>
         </RelativeLayout>
 
         <TextView
@@ -28,32 +29,120 @@
             android:layout_centerInParent="true"
             android:layout_marginTop="13sp"
             android:text="参与人"
-            android:textColor="@color/text_color"
+            android:textColor="@color/black"
             android:textSize="@dimen/title_textsize"/>
-        <ImageView
-            android:id="@+id/sure_iv"
+        <TextView
+            android:id="@+id/sure_tv"
             android:layout_width="wrap_content"
-            android:src="@mipmap/finish"
+            android:text="确定"
+            android:textColor="@color/blue_title"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="12dp"
             android:visibility="gone"
             android:layout_height="wrap_content"/>
+    <RelativeLayout
+        android:id="@+id/addcontact_relay"
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dimen45"
+       >
+        <ImageView
+            android:layout_marginRight="@dimen/icon_size_20dp"
+            android:layout_marginLeft="@dimen/icon_size_20dp"
+
+            android:layout_centerVertical="true"
+            android:src="@mipmap/contact_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
     </RelativeLayout>
+        <View
+            android:layout_alignParentBottom="true"
+            android:background="@color/gray"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/layout_padding_1dp"/>
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/createduser_iv"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginLeft="20dp"
+            android:src="@mipmap/icon_user" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/icon_size_20dp"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/createduser_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="郭总"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="创建人"
+                    android:textColor="@color/textcolor_ac"
+                    android:textSize="@dimen/text_size_12sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/createdtime_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2018年1月12日 09:30"
+                    android:textColor="@color/textcolor_ac"
+                    android:textSize="@dimen/text_size_12sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
 
     <RelativeLayout
+        android:visibility="visible"
         android:layout_width="match_parent"
         android:background="@color/moren_f2"
         android:layout_height="30dp">
         <TextView
             android:id="@+id/participant_numtv"
             android:layout_width="wrap_content"
-            android:text="共2人"
+            android:text="参与人"
             android:textSize="15sp"
             android:textColor="@color/color2a"
             android:layout_marginLeft="15dp"
             android:layout_centerVertical="true"
             android:layout_height="wrap_content"/>
+        <TextView
+            android:textSize="@dimen/text_size_12sp"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/participant_numtv"
+            android:text="(温馨提示：左滑可删除参与人)"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
     </RelativeLayout>
 
     <com.aitsuki.swipe.SwipeMenuRecyclerView
@@ -61,18 +150,27 @@
         android:layout_width="match_parent"
         android:layout_weight="1"
         android:background="@color/white"
-        android:layout_height="0dp"></com.aitsuki.swipe.SwipeMenuRecyclerView>
+        android:layout_height="0dp"/>
 
     <RelativeLayout
-        android:id="@+id/invite_relay"
+        android:visibility="gone"
+        android:background="@color/white"
+        android:id="@+id/sure_relay"
         android:layout_width="match_parent"
-        android:layout_height="48dp">
+        android:layout_height="58dp">
+        <View
+            android:background="@drawable/shape_grident"
+            android:layout_alignParentTop="true"
+            android:layout_width="match_parent"
+            android:layout_height="10dp"/>
         <LinearLayout
+            android:layout_alignParentBottom="true"
             android:layout_width="wrap_content"
             android:gravity="center_vertical"
             android:layout_centerInParent="true"
-            android:layout_height="wrap_content">
+            android:layout_height="48dp">
             <ImageView
+                android:visibility="gone"
                 android:id="@+id/jia_iv"
                 android:layout_width="wrap_content"
                 android:src="@mipmap/invite"
@@ -80,10 +178,10 @@
             <TextView
                 android:id="@+id/bot_tv"
                 android:layout_width="wrap_content"
-                android:text="添加参与人"
+                android:text="保  存"
                 android:layout_marginLeft="10dp"
                 android:textSize="15sp"
-                android:textColor="@color/color6c"
+                android:textColor="@color/blue_title"
                 android:layout_height="wrap_content" />
         </LinearLayout>
     </RelativeLayout>

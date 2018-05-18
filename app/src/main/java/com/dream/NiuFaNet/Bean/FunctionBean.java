@@ -83,7 +83,32 @@ public class FunctionBean {
             private String actionType;
             private String actionPic;
             private boolean  isEdited;
+            private boolean isSelected;
+            private String toolId;
+            private String question;
 
+            public String getQuestion() {
+                return question;
+            }
+
+            public void setQuestion(String question) {
+                this.question = question;
+            }
+
+            public String getToolId() {
+                return toolId;
+            }
+
+            public void setToolId(String toolId) {
+                this.toolId = toolId;
+            }
+            public boolean isSelected() {
+                return isSelected;
+            }
+
+            public void setSelected(boolean selected) {
+                isSelected = selected;
+            }
             public boolean isEdited() {
                 return isEdited;
             }
@@ -138,7 +163,31 @@ public class FunctionBean {
             private String actionType;
             private String actionPic;
             private boolean  isEdited;
+            private boolean isSelected;
+            private String toolId;
+            private String question;
 
+            public String getQuestion() {
+                return question;
+            }
+
+            public void setQuestion(String question) {
+                this.question = question;
+            }
+            public String getToolId() {
+                return toolId;
+            }
+
+            public void setToolId(String toolId) {
+                this.toolId = toolId;
+            }
+            public boolean isSelected() {
+                return isSelected;
+            }
+
+            public void setSelected(boolean selected) {
+                isSelected = selected;
+            }
             public boolean isEdited() {
                 return isEdited;
             }
@@ -192,7 +241,32 @@ public class FunctionBean {
             private String actionType;
             private String actionPic;
             private boolean  isEdited;
+            private boolean isSelected;
+            private String toolId;
+            private String question;
 
+            public String getQuestion() {
+                return question;
+            }
+
+            public void setQuestion(String question) {
+                this.question = question;
+            }
+            public String getToolId() {
+                return toolId;
+            }
+
+            public void setToolId(String toolId) {
+                this.toolId = toolId;
+            }
+
+            public boolean isSelected() {
+                return isSelected;
+            }
+
+            public void setSelected(boolean selected) {
+                isSelected = selected;
+            }
             public boolean isEdited() {
                 return isEdited;
             }

@@ -9,6 +9,8 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 
+import com.dream.NiuFaNet.R;
+
 import java.util.Random;
 
 /**
@@ -25,7 +27,7 @@ public class AudioAnimView extends View {
     //矩形间隔
     private int interval = 11;
     //矩形数量
-    private int count = 11;
+    private int count = 20;
 
     private Paint paint;
     public AudioAnimView(Context context) {
@@ -42,7 +44,7 @@ public class AudioAnimView extends View {
 
         paint = new Paint();
         paint.setAntiAlias(true);
-        paint.setColor(Color.WHITE);
+        paint.setColor(getResources().getColor(R.color.red_delete));
     }
 
     @Override

@@ -45,38 +45,43 @@ import com.dream.NiuFaNet.Bean.ApplyBeFrendBean;
 import com.dream.NiuFaNet.Bean.BusBean.DownloadBean;
 import com.dream.NiuFaNet.Bean.BusBean.MessageBus;
 import com.dream.NiuFaNet.Bean.BusBean.RefreshBean;
-import com.dream.NiuFaNet.Bean.BusBean.ReturnBean;
 import com.dream.NiuFaNet.Bean.CalInviteBean;
 import com.dream.NiuFaNet.Bean.ChatBean;
 import com.dream.NiuFaNet.Bean.CommonBean;
 import com.dream.NiuFaNet.Bean.InputGetBean;
 import com.dream.NiuFaNet.Bean.MessageLayBean;
+import com.dream.NiuFaNet.Bean.ShowCountBean;
 import com.dream.NiuFaNet.Bean.VersionBean;
 import com.dream.NiuFaNet.Bean.VoiceRvBean;
 import com.dream.NiuFaNet.Component.DaggerNFComponent;
 import com.dream.NiuFaNet.Contract.ChatContract;
 import com.dream.NiuFaNet.Contract.MessageContract;
+import com.dream.NiuFaNet.Contract.ShowNoticeCountContract;
 import com.dream.NiuFaNet.Contract.VersionUpdateContract;
 import com.dream.NiuFaNet.Contract.VoiceContentContract;
 import com.dream.NiuFaNet.CustomView.ApplyFrendView;
 import com.dream.NiuFaNet.CustomView.AudioAnimView;
 import com.dream.NiuFaNet.CustomView.MessageChildView1;
+import com.dream.NiuFaNet.Listener.NoDoubleClickListener;
 import com.dream.NiuFaNet.Listener.NoShortClickListener;
 import com.dream.NiuFaNet.Other.CommonAction;
 import com.dream.NiuFaNet.Other.Const;
 import com.dream.NiuFaNet.Other.MyApplication;
 import com.dream.NiuFaNet.Presenter.ChatPresenter;
 import com.dream.NiuFaNet.Presenter.MessagePresenter;
+import com.dream.NiuFaNet.Presenter.ShowNoticeCountPresenter;
 import com.dream.NiuFaNet.Presenter.VersionUpdatePresenter;
 import com.dream.NiuFaNet.Presenter.VoiceContentPresenter;
 import com.dream.NiuFaNet.R;
 import com.dream.NiuFaNet.Ui.Fragment.CalenderFragment;
+import com.dream.NiuFaNet.Ui.Fragment.ContactFragment;
 import com.dream.NiuFaNet.Ui.Fragment.FunctionFragment;
 import com.dream.NiuFaNet.Ui.Fragment.MainFragment;
-import com.dream.NiuFaNet.Ui.Fragment.MainFragment1;
 import com.dream.NiuFaNet.Ui.Fragment.ProgramFragment;
+import com.dream.NiuFaNet.Ui.Fragment.ProjectFragment;
 import com.dream.NiuFaNet.Ui.Service.SendAlarmBroadcast;
 import com.dream.NiuFaNet.Utils.AppManager;
+import com.dream.NiuFaNet.Utils.BlurBuilder;
 import com.dream.NiuFaNet.Utils.DensityUtil;
 import com.dream.NiuFaNet.Utils.Dialog.DialogUtils;
 import com.dream.NiuFaNet.Utils.GlideCircleTransform;
@@ -113,11 +118,11 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
+import butterknife.BindBool;
 import butterknife.OnClick;
 import cn.jpush.android.api.JPushInterface;
 
-public class MainActivity extends BaseActivityRelay implements VersionUpdateContract.View, MessageContract.View, VoiceContentContract.View,ChatContract.View{
+public class MainActivity extends BaseActivityRelay implements VersionUpdateContract.View, MessageContract.View, VoiceContentContract.View,ChatContract.View,ShowNoticeCountContract.View{
 
 
     @Bind(R.id.bot_lay)
@@ -126,8 +131,6 @@ public class MainActivity extends BaseActivityRelay implements VersionUpdateCont
     RelativeLayout bot_voice;
     @Bind(R.id.voice_iv)
     ImageView voice_iv;
-    @Bind(R.id.function_img)
-    ImageView function_img;
     @Bind(R.id.mine_img)
     ImageView mine_img;
     @Bind(R.id.main_img)
@@ -150,8 +153,6 @@ public class MainActivity extends BaseActivityRelay implements VersionUpdateCont
     TextView schedule_tv;
     @Bind(R.id.main_tv)
     TextView main_tv;
-    @Bind(R.id.function_tv)
-    TextView function_tv;
     @Bind(R.id.mine_tv)
     TextView mine_tv;
     @Bind(R.id.mine_iv)
@@ -168,12 +169,10 @@ public class MainActivity extends BaseActivityRelay implements VersionUpdateCont
     RecyclerView mVoiceContentRv;
     @Bind(R.id.close_iv)
     RelativeLayout mCloseIv;
-    @Bind(R.id.back_relay)
+    @Bind(R.id.mine_relay)
     RelativeLayout mBackRelay;
     @Bind(R.id.main_lay)
     LinearLayout mMainLay;
-    @Bind(R.id.function_lay)
-    LinearLayout mFunctionLay;
     @Bind(R.id.schedule_lay)
     LinearLayout mScheduleLay;
     @Bind(R.id.mine_lay)
@@ -184,12 +183,17 @@ public class MainActivity extends BaseActivityRelay implements VersionUpdateCont
     LinearLayout mInputLay;
     @Bind(R.id.textinput_relay)
     RelativeLayout mTextinputRelay;
-
+    @Bind(R.id.contact_img)
+    ImageView contact_img;
+    @Bind(R.id.contact_tv)
+    TextView contact_tv;
+    @Bind(R.id.fridensnum_tv)
+    TextView fridensnum_tv;
     private View statutView;
-    private Fragment recommendFra, scheduleFra, functionFra, progamFra;
+    private Fragment recommendFra, scheduleFra, progamFra, contactFra;;
     private FragmentManager mFragmentManager;
     private Fragment currentFragment;
-    private Bitmap functionnormal, functionselect, minenormal, mineselect, progselect, prognomal;
+    private Bitmap contactnormal, contactselect, minenormal, mineselect, progselect, prognomal;
     private Bitmap mainnormal, mainselect, schedulenormal, schedulselect;
 
 
@@ -208,7 +212,8 @@ public class MainActivity extends BaseActivityRelay implements VersionUpdateCont
     VoiceContentPresenter mVoiceContentPresenter;
     @Inject
     ChatPresenter chatPresenter;
-
+    @Inject
+    ShowNoticeCountPresenter showNoticeCountPresenter;
     private String szImei;
 
     // 用HashMap存储听写结果
@@ -241,6 +246,7 @@ public class MainActivity extends BaseActivityRelay implements VersionUpdateCont
         }
     };
 
+
     //首页布局
     @Override
     public int getLayoutId() {
@@ -265,12 +271,12 @@ public class MainActivity extends BaseActivityRelay implements VersionUpdateCont
         messagePresenter.attachView(this);
         mVoiceContentPresenter.attachView(this);
         chatPresenter.attachView(this);
-
+        showNoticeCountPresenter.attachView(this);
         EventBus.getDefault().register(this);
         mFragmentManager = this.getSupportFragmentManager();
         initBitmap();
         statutView = XuniKeyWord.initStateView(this);
-       // initmTat();
+        initmTat();
         SpUtils.savaUserInfo(Const.mainStatu, "1");
         permissionDialog = DialogUtils.showPermissionTip(mActivity);
         if (CommonAction.getIsLogin()) {
@@ -380,7 +386,7 @@ public class MainActivity extends BaseActivityRelay implements VersionUpdateCont
         } else {
             ViewGroup.LayoutParams layoutParams = mine_iv.getLayoutParams();
             layoutParams.width = DensityUtil.dip2px(35);
-            mine_iv.setImageResource(R.mipmap.icon_user);
+            mine_iv.setImageResource(R.mipmap.niu);
         }
     }
 
@@ -391,7 +397,7 @@ public class MainActivity extends BaseActivityRelay implements VersionUpdateCont
             messagePresenter.getCalInviteList(CommonAction.getUserId());
         }
         if (isFrend) {
-            messagePresenter.applyBeFrend(CommonAction.getUserId());
+           showNoticeCountPresenter.showNoticeCount(CommonAction.getUserId());
         }
     }
 
@@ -420,9 +426,9 @@ public class MainActivity extends BaseActivityRelay implements VersionUpdateCont
     }
 
     private void initBitmap() {
-
-        functionnormal = ImgUtil.readBitMap(this, R.mipmap.icon_bar04);
-        functionselect = ImgUtil.readBitMap(this, R.mipmap.icon_bar04_click);
+        //
+        contactnormal = ImgUtil.readBitMap(this, R.mipmap.icon_bar04);
+        contactselect = ImgUtil.readBitMap(this, R.mipmap.icon_bar04_click);
         minenormal = ImgUtil.readBitMap(this, R.mipmap.icon_bar03);
         mineselect = ImgUtil.readBitMap(this, R.mipmap.icon_bar03_click);
         mainnormal = ImgUtil.readBitMap(this, R.mipmap.icon_bar01);
@@ -461,8 +467,9 @@ public class MainActivity extends BaseActivityRelay implements VersionUpdateCont
         if (savedInstanceState != null) {
             recommendFra = mFragmentManager.findFragmentByTag("recommend");
             scheduleFra = mFragmentManager.findFragmentByTag("schedule");
-            functionFra = mFragmentManager.findFragmentByTag("function");
+           // functionFra = mFragmentManager.findFragmentByTag("function");
             progamFra = mFragmentManager.findFragmentByTag("program");
+            contactFra=mFragmentManager.findFragmentByTag("contact");
         } else {
             initFragment();
         }
@@ -474,8 +481,9 @@ public class MainActivity extends BaseActivityRelay implements VersionUpdateCont
     private void initFragment() {
         recommendFra = new MainFragment();
         scheduleFra = new CalenderFragment();
-        functionFra = new FunctionFragment();
-        progamFra = new ProgramFragment();
+        progamFra = new ProjectFragment();
+       //functionFra = new FunctionFragment();
+         contactFra=new ContactFragment();
 
     }
 
@@ -486,8 +494,8 @@ public class MainActivity extends BaseActivityRelay implements VersionUpdateCont
                 .show(recommendFra)
                 .add(R.id.main_fra, scheduleFra, "schedule")
                 .hide(scheduleFra)
-                .add(R.id.main_fra, functionFra, "function")
-                .hide(functionFra)
+                .add(R.id.main_fra, contactFra, "contact")
+                .hide(contactFra)
                 .add(R.id.main_fra, progamFra, "program")
                 .hide(progamFra)
                 .commit();
@@ -495,10 +503,10 @@ public class MainActivity extends BaseActivityRelay implements VersionUpdateCont
     }
 
     private void initbottomItem() {
-        function_img.setImageBitmap(functionnormal);
+        contact_img.setImageBitmap(contactnormal);
         main_tv.setTextColor(ResourcesUtils.getColor(R.color.main_textn));
         schedule_tv.setTextColor(ResourcesUtils.getColor(R.color.main_textn));
-        function_tv.setTextColor(ResourcesUtils.getColor(R.color.main_textn));
+        contact_tv.setTextColor(ResourcesUtils.getColor(R.color.main_textn));
         mine_tv.setTextColor(ResourcesUtils.getColor(R.color.main_textn));
         mine_img.setImageBitmap(minenormal);
         main_img.setImageBitmap(mainnormal);
@@ -528,13 +536,13 @@ public class MainActivity extends BaseActivityRelay implements VersionUpdateCont
                 }
 
                 break;
-            case "function":
-                if (currentFragment != functionFra) {
+            case "contact":
+                if (currentFragment != contactFra) {
                     mFragmentManager.beginTransaction()
-                            .show(functionFra)
+                            .show(contactFra)
                             .hide(currentFragment)
                             .commitAllowingStateLoss();
-                    currentFragment = functionFra;
+                    currentFragment = contactFra;
                 }
                 break;
             case "program":
@@ -553,7 +561,25 @@ public class MainActivity extends BaseActivityRelay implements VersionUpdateCont
     @Override
     public void eventListener() {
 
-        bot_voice.setOnTouchListener(new NoShortClickListener() {
+            bot_voice.setOnClickListener(new NoDoubleClickListener() {
+                @Override
+                public void onNoDoubleClick(View view) {
+                    if (CommonAction.getIsLogin()) {
+                    audio_lay.setVisibility(View.GONE);
+                    Log.e("tag","onShortClick");
+                    BlurBuilder.snapShotWithoutStatusBar(mActivity);
+                    IntentUtils.toActivityWithTag(VoiceActivity.class, mActivity, "main");
+                       // getActivity().overridePendingTransition(R.anim.activity_open,R.anim.exitanim);
+                    mActivity.overridePendingTransition(R.anim.activity_open,R.anim.exitanim);
+                    } else {
+                        DialogUtils.getLoginTip(mActivity).show();
+                    }
+                }
+            });
+
+
+
+    }/*  bot_voice.setOnTouchListener(new NoShortClickListener() {
             float temY = 0;
 
             @Override
@@ -586,7 +612,9 @@ public class MainActivity extends BaseActivityRelay implements VersionUpdateCont
                 String mainStatu = (String) SpUtils.getParam(Const.mainStatu, "1");
                 Log.e("tag","onShortClick");
                 if (mainStatu.equals("3") || mainStatu.equals("4")) {
-                    IntentUtils.toActivityWithTag(InputGetActivity.class, mActivity, "main");
+                    BlurBuilder.snapShotWithoutStatusBar(mActivity);
+                    IntentUtils.toActivityWithTag(VoiceActivity.class, mActivity, "main");
+                    mActivity.overridePendingTransition(android.view.animation.Animation.INFINITE, android.view.animation.Animation.INFINITE);
                 } else {
                     toChat("dial");
                 }
@@ -619,8 +647,7 @@ public class MainActivity extends BaseActivityRelay implements VersionUpdateCont
                     audiores_tv.setText("");
                 }
             }
-        });
-    }
+        });*/
 
     /**
      * 初始化参数开始听写
@@ -639,7 +666,7 @@ public class MainActivity extends BaseActivityRelay implements VersionUpdateCont
 //         3.开始听写
         audio_lay.setVisibility(View.VISIBLE);
         mIat.startListening(mRecoListener);
-//         听写监听器
+//      听写监听器
 
     }
 
@@ -757,41 +784,54 @@ public class MainActivity extends BaseActivityRelay implements VersionUpdateCont
 
 
     @SuppressLint("NewApi")
-    @OnClick({R.id.textinput_relay, R.id.voiceinput_relay, R.id.close_iv, R.id.function_lay, R.id.mine_lay, R.id.main_lay, R.id.schedule_lay, R.id.back_relay, R.id.messagetip_relay})
+    @OnClick({R.id.textinput_relay, R.id.voiceinput_relay, R.id.close_iv, R.id.contact_lay, R.id.mine_lay, R.id.main_lay, R.id.schedule_lay, R.id.mine_relay, R.id.messagetip_relay})
     public void onClick(View v) {
         String them = CommonAction.getThem();
         switch (v.getId()) {
-            case R.id.function_lay:
+            case R.id.contact_lay:
                 mImmersionBar.fitsSystemWindows(true).statusBarColor(R.color.white).init();
-                refreshFunction(them);
+
+                if (CommonAction.getIsLogin()) {
+                    refreshContact(them);
+                    mine_iv.setVisibility(View.GONE);
+                } else {
+                    DialogUtils.getLoginTip(mActivity).show();
+                }
                 break;
             case R.id.mine_lay:
                 mImmersionBar.fitsSystemWindows(true).statusBarColor(R.color.white).init();
+
 //                refreshMine(them);
                 if (CommonAction.getIsLogin()) {
+                    mine_iv.setVisibility(View.VISIBLE);
                     refreshProgram(them);
+                    CommonAction.refreshContact();
                 } else {
                     DialogUtils.getLoginTip(mActivity).show();
                 }
                 break;
             case R.id.main_lay:
                 refreshMain();
+                mine_iv.setVisibility(View.VISIBLE);
                 mImmersionBar.fitsSystemWindows(true).statusBarColor(R.color.white).init();
                 break;
             case R.id.schedule_lay:
                 mImmersionBar.fitsSystemWindows(true).statusBarColor(R.color.white).init();
+
                 if (CommonAction.getIsLogin()) {
                     reffreshSchedule();
+                    mine_iv.setVisibility(View.VISIBLE);
                 } else {
                     DialogUtils.getLoginTip(mActivity).show();
                 }
                 break;
-            case R.id.back_relay:
-                IntentUtils.toActivity(MineActivity.class, mActivity);
+            case R.id.mine_relay:
+                IntentUtils.toActivity(MineActivity1.class, mActivity);
                 break;
             case R.id.messagetip_relay://展示新消息
-                PopWindowUtil.backgroundAlpaha(mActivity, 0.5f);
-                dialog.showAsDropDown(title_relay, Gravity.CENTER, 0, 0);
+                /*PopWindowUtil.backgroundAlpaha(mActivity, 0.5f);
+                dialog.showAsDropDown(title_relay, Gravity.CENTER, 0, 0);*/
+                IntentUtils.toActivity(NewMessageActivity.class,mActivity);
                 break;
             case R.id.close_iv:
                 audio_lay.setVisibility(View.GONE);
@@ -850,10 +890,10 @@ public class MainActivity extends BaseActivityRelay implements VersionUpdateCont
         SpUtils.savaUserInfo(Const.mainStatu, "4");
     }
 
-    private void refreshFunction(String them) {
+    private void refreshContact(String them) {
         initbottomItem();
-        function_img.setImageBitmap(functionselect);
-        function_tv.setTextColor(ResourcesUtils.getColor(R.color.table_textcolor));
+        contact_img.setImageBitmap(contactselect);
+        contact_tv.setTextColor(ResourcesUtils.getColor(R.color.table_textcolor));
         if (them.equals(Const.Candy)) {
 //            audio_lay.setBackgroundColor(getResources().getColor(R.color.anm_candy));
             statutView.setBackgroundColor(getResources().getColor(R.color.main_botcandy));
@@ -861,7 +901,7 @@ public class MainActivity extends BaseActivityRelay implements VersionUpdateCont
 //            audio_lay.setBackgroundColor(getResources().getColor(R.color.anm_black));
             statutView.setBackgroundColor(getResources().getColor(R.color.main_botblack));
         }
-        startFragment("function");
+        startFragment("contact");
 
         SpUtils.savaUserInfo(Const.mainStatu, "2");
     }
@@ -913,7 +953,7 @@ public class MainActivity extends BaseActivityRelay implements VersionUpdateCont
     public void mainEvent(RefreshBean busBean) {
         String eventStr = busBean.getEventStr();
         if (eventStr.equals("1")) {
-            refreshFunction(CommonAction.getThem());
+            refreshContact(CommonAction.getThem());
         } else if (eventStr.equals("2")) {
 //            refreshMine(CommonAction.getThem());
             refreshProgram(CommonAction.getThem());
@@ -951,7 +991,7 @@ public class MainActivity extends BaseActivityRelay implements VersionUpdateCont
     public void mainEvent2(CalInviteBean.DataBean busBean) {
         itemId = busBean.getId();
         Log.e("tag", "itemId=" + itemId);
-        messagePresenter.replySchedule(busBean.getId(), busBean.getMethod(), CommonAction.getUserId());
+        messagePresenter.replySchedule(busBean.getId(), busBean.getMethod(), CommonAction.getUserId(),"");
     }
 
     //答复好友邀请
@@ -994,19 +1034,21 @@ public class MainActivity extends BaseActivityRelay implements VersionUpdateCont
                     final String localVersionName = packageInfo.versionName;
                     Log.e("tag", "localVersionName=" + localVersionName);
                     int localVersionCode = packageInfo.versionCode;
+
                     String[] currentNames = localVersionName.split("\\.");
                     String[] webNames = version.split("\\.");
-                    if (currentNames.length == webNames.length) {
-                        for (int j = 0; j < webNames.length; j++) {
-                            if (Integer.parseInt(webNames[j]) > Integer.parseInt(currentNames[j])) {//有更高版本的apk
-                                DialogUtils.getVersionDialog(version, url, this);
-                                break;
-                            }
-                        }
-                    } else {
-                        ToastUtils.Toast_short("服务器异常，暂不能检测更新！");
-                    }
+                    if (Integer.parseInt(webNames[0]) > Integer.parseInt(currentNames[0])) {//有更高版本的apk
+                        DialogUtils.getVersionDialog(version, url, this);
+                                Log.e("voice", Integer.parseInt(currentNames[0])+","+Integer.parseInt(webNames[0]));
+                    }else if (Integer.parseInt(webNames[1]) > Integer.parseInt(currentNames[1])) {//有更高版本的apk
+                        DialogUtils.getVersionDialog(version, url, this);
+                        Log.e("voice", Integer.parseInt(currentNames[1])+","+Integer.parseInt(webNames[1]));
+                    }else if (Integer.parseInt(webNames[2]) > Integer.parseInt(currentNames[2])) {//有更高版本的apk
+                        DialogUtils.getVersionDialog(version, url, this);
+                        Log.e("voice", Integer.parseInt(currentNames[2])+","+Integer.parseInt(webNames[2]));
+                    }else {
 
+                    }
                 } catch (PackageManager.NameNotFoundException e) {
                     e.printStackTrace();
                 }
@@ -1016,7 +1058,7 @@ public class MainActivity extends BaseActivityRelay implements VersionUpdateCont
 
     @Override
     public void showError() {
-        ToastUtils.Toast_short(ResourcesUtils.getString(R.string.failconnect));
+        //ToastUtils.Toast_short(ResourcesUtils.getString(R.string.failconnect));
         mLoadingDialog.dismiss();
     }
 
@@ -1032,7 +1074,7 @@ public class MainActivity extends BaseActivityRelay implements VersionUpdateCont
             List<ApplyBeFrendBean.DataBean> data = dataBean.getData();
             if (data != null) {
                 if (data.size() > 0) {
-                    messagetip_relay.setVisibility(View.VISIBLE);
+                   /* messagetip_relay.setVisibility(View.VISIBLE);
                     for (int i = 0; i < data.size(); i++) {
                         ApplyFrendView mView = new ApplyFrendView(mActivity);
                         mView.setData(data.get(i));
@@ -1042,9 +1084,13 @@ public class MainActivity extends BaseActivityRelay implements VersionUpdateCont
                         messageLayBean.setType("frends");
                         messageLays.add(messageLayBean);
                     }
-                    message_numtv.setText("您有" + messageLays.size() + "条消息");
+                    message_numtv.setText("您有" + messageLays.size() + "条消息");*/
+                   fridensnum_tv.setVisibility(View.VISIBLE);
+                   fridensnum_tv.setText(data.size());
+                   CommonAction.refreshContact();
                 } else {
-
+                    fridensnum_tv.setVisibility(View.GONE);
+                   // fridensnum_tv.setText(data.size());
                 }
             }
         } else {
@@ -1071,7 +1117,7 @@ public class MainActivity extends BaseActivityRelay implements VersionUpdateCont
                         messageLayBean.setType("schedule");
                         messageLays.add(messageLayBean);
                     }
-                    message_numtv.setText("您有" + messageLays.size() + "条消息");
+                    message_numtv.setText(messageLays.size() + "条新邀请");
                 }
             }
         }
@@ -1203,4 +1249,17 @@ public class MainActivity extends BaseActivityRelay implements VersionUpdateCont
         }
     }
 
+    @Override
+    public void showData(ShowCountBean dataBean) {
+        if (dataBean.getError().equals(Const.success)){
+            if (!dataBean.getShowCount().equals("0")){
+                fridensnum_tv.setVisibility(View.VISIBLE);
+                fridensnum_tv.setText(dataBean.getShowCount());
+                CommonAction.refreshContact();
+            }else {
+                fridensnum_tv.setVisibility(View.GONE);
+
+            }
+        }
+    }
 }

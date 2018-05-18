@@ -16,6 +16,9 @@
     <!--读取联系人权限，上传联系人需要用到此权限 -->
     <uses-permission android:name="android.permission.READ_CONTACTS"/>
 
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <!-- 添加必要的权限 -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
@@ -24,7 +27,9 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.VIBRATE"/>
-
+    <!--读写系统日历权限-->
+    <uses-permission android:name="android.permission.READ_CALENDAR" />
+    <uses-permission android:name="android.permission.WRITE_CALENDAR" />
     <!--极光推送所需权限-->
     <permission
         android:name="com.dream.NiuFaNet.permission.JPUSH_MESSAGE"
@@ -42,6 +47,21 @@
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS"/>
 
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <application
         android:allowBackup="true"
         android:supportsRtl="true"
@@ -191,6 +211,18 @@
                 <category android:name="com.dream.NiuFaNet"/>
             </intent-filter>
         </receiver>
+        <!-- since 1.8.0 option 可选项。用于同一设备中不同应用的JPush服务相互拉起的功能。 -->
+        <!-- 若不启用该功能可删除该组件，将不拉起其他应用也不能被其他应用拉起 -->
+        <service
+            android:name="cn.jpush.android.service.DaemonService"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="cn.jpush.android.intent.DaemonService"/>
+                <category android:name="com.dream.NiuFaNet"/>
+            </intent-filter>
+
+        </service>
         <!-- since 3.0.9 Required SDK 核心功能-->
         <provider
             android:authorities="com.dream.NiuFaNet.DataProvider"
@@ -213,6 +245,42 @@
             android:name="JPUSH_APPKEY"
             android:value="8ab808705affa310f7e38743"/> <!--  </>值来自开发者平台取得的AppKey-->
 
+
+        <!-- 您从百度网站获取的APP KEY，根据实际您的APP申请的APP_KEY进行修改 -->
+        <meta-data
+            android:name="BaiduMobAd_STAT_ID"
+            android:value="UuspwjyQnItmvYPkXQMhl4GsNe4WG7Iw" /> <!-- abcd1234 -->
+        <!-- 渠道商编号 -->
+        <meta-data
+            android:name="BaiduMobAd_CHANNEL"
+            android:value="Baidu Market" />
+
+        <!-- 是否开启错误日志统计，默认为false -->
+        <meta-data
+            android:name="BaiduMobAd_EXCEPTION_LOG"
+            android:value="true" />
+        <!-- 日志发送策略，可选值：APP_START、ONCE_A_DAY、SET_TIME_INTERVAL，默认为APP_START -->
+        <meta-data
+            android:name="BaiduMobAd_SEND_STRATEGY"
+            android:value="APP_START" />
+        <!-- 日志发送策略 为SET_TIME_INTERVAL时，需设定时间间隔(取消下行注释)。取值为1-24的整数，默认为1 -->
+        <!-- <meta-data android:name="BaiduMobAd_TIME_INTERVAL" android:value="2" /> -->
+        <!-- 日志仅在wifi网络下发送，默认为false -->
+        <meta-data
+            android:name="BaiduMobAd_ONLY_WIFI"
+            android:value="false" />
+        <!-- 是否获取基站位置信息 ,默认为true -->
+        <meta-data
+            android:name="BaiduMobAd_CELL_LOCATION"
+            android:value="true" />
+        <!-- 是否获取GPS位置信息，默认为true -->
+        <meta-data
+            android:name="BaiduMobAd_GPS_LOCATION"
+            android:value="true" />
+        <!-- 是否获取WIFI位置信息，默认为true -->
+        <meta-data
+            android:name="BaiduMobAd_WIFI_LOCATION"
+            android:value="true" />
         <activity
             android:name=".wxapi.WXEntryActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
@@ -263,10 +331,12 @@
             ></activity>
         <activity android:name=".Ui.Activity.TestActivity">
         </activity>
-        <activity android:name=".Ui.Activity.NewCalenderActivity">
+        <activity android:name=".Ui.Activity.SetRemindActivity">
         </activity>
-        <activity android:name=".Ui.Activity.NewCalenderActivity1">
+        <activity android:name=".Ui.Activity.NewCalenderActivity"  android:windowSoftInputMode="stateVisible|adjustResize">
+
         </activity>
+
         <activity android:name=".Ui.Activity.CalenderDetailActivity"
             android:windowSoftInputMode="adjustNothing"
             />
@@ -289,7 +359,10 @@
         </activity>
         <activity android:name=".Ui.Activity.AddFrendsActivity">
         </activity>
-
+        <activity android:name=".Ui.Activity.InputActivity">
+        </activity>
+        <activity android:name=".Ui.Activity.CalenderApendixActivity">
+        </activity>
         <service android:name=".Ui.Service.AlarmService"
             android:process="com.dream.NiuFaNet.serviceProcess"
             android:icon="@mipmap/logo"
@@ -304,6 +377,15 @@
             >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <receiver android:name=".Ui.Service.ContentReceiver"
+            >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.HOME" />
             </intent-filter>
         </receiver>
         <!--android:theme="@android:style/Theme.Wallpaper.NoTitleBar"-->
@@ -323,11 +405,60 @@
         </activity>
         <activity android:name=".Ui.Activity.ParticipantsActivity">
         </activity>
+        <activity android:name=".Ui.Activity.ParticipantsActivity1">
+        </activity>
         <activity android:name=".Ui.Activity.WorkVisibleFrendsActivity">
         </activity>
         <activity android:name=".Ui.Activity.DownScheduleActivity">
         </activity>
+        <activity android:name=".Ui.Activity.AddProjectActivity">
+        </activity>
+        <activity android:name=".Ui.Activity.CalenderLogActivity">
+        </activity>
+        <activity android:name=".Ui.Activity.EditCalenderActivity">
+        </activity>
+        <activity android:name=".Ui.Activity.AddFriendsActivity">
+        </activity>
+        <activity android:name=".Ui.Activity.UserInfoActivity1">
+        </activity>
+        <activity android:name=".Ui.Activity.MineActivity1">
+        </activity>
+        <activity android:name=".Ui.Activity.WhoCanSeeActivity">
+        </activity>
+        <activity android:name=".Ui.Activity.SettingActivity">
+        </activity>
+        <activity android:name=".Ui.Activity.LoginActivity1">
+        </activity>
+        <activity android:name=".Ui.Activity.FriendCalenderActivity">
+        </activity>
+        <activity android:name=".Ui.Activity.NewTodoActivity">
+        </activity>
+        <activity android:name=".Ui.Activity.ProjectDetailActivity">
+        </activity>
+        <activity android:name=".Ui.Activity.ClientsActivity">
+        </activity>
+        <activity android:name=".Ui.Activity.NewClientActivity">
+        </activity>
+        <activity android:name=".Ui.Activity.FriendDetailActivity">
+        </activity>
+        <activity android:name=".Ui.Activity.SearchFriendsActivity">
+        </activity>
+        <activity android:name=".Ui.Activity.NewFriendsActivity" >
+         </activity>
+        <activity android:name=".Ui.Activity.SearchNewFriendsActivity" >
+        </activity>
+        <activity android:name=".Ui.Activity.ContactusActivity" >
+        </activity>
+        <activity android:name=".Ui.Activity.SetRemindActivity1" >
+        </activity>
+        <activity android:name=".Ui.Activity.NewMessageActivity" >
+        </activity>
+        <activity android:name=".Ui.Activity.VoiceActivity" >
+        </activity>
+        <activity android:name=".Ui.Activity.SearchProjectActivity" >
+        </activity>
+        <activity android:name=".Ui.Activity.PopVoiceActivity" android:theme="@style/Theme_dialog">
+        </activity>
     </application>
-
 
 </manifest>

@@ -8,11 +8,13 @@ public class Const {
     public static final String LogTag = "LogTag";
     public static final int time = 3000;
 
-    public static final String API_BASE_URL = "http://api.niufa.cn:9080/";
+   public static final String API_BASE_URL = "http://api.niufa.cn:9081/";
 //    public static final String API_BASE_URL = "http://192.168.1.143:8080/niufa_chatbot/";
-    public static final String aboutmeUrl = "http://api.niufa.cn:9080/about.html";
-    public static final String shareUrl = "http://api.niufa.cn:9080/sharing.html";
+    public static final String aboutmeUrl = "http://api.niufa.cn:9081/about.html";
+    public static final String shareUrl = "http://api.niufa.cn:9081/sharing.html";
+    //public static final String API_BASE_URL="http://10.0.0.63:8080/niufa_chatbot/";
     public static final String app = "app/";
+    public static final String token = "Authorization:d3d3Lm5pdWZhLmNu";
     public static final int CAMERA = 23;
     public static final int PICTURE = 25;
     public static final int perSD = 66;
@@ -51,8 +53,11 @@ public class Const {
     public static final String Y_M_D = "yyyy-MM-dd";
     public static final String YMD_HM = "yyyy-MM-dd  HH:mm";
     public static final String YMD_HM2 = "yyyy.MM.dd HH:mm";
+    public static final String MD_HM3 = "MM.dd HH:mm";
     public static final String YMD_HMS = "yyyy-MM-dd HH:mm:ss";
     public static final String NYR = "yyyy年MM月dd日";
+    public static final String MR = "MM月dd日";
+    public static final String MD = "MM-dd";
     public static final String HM = "HH:mm";
     public static final String DD = "dd";
     public static final String HMS = "HH:mm:ss";
@@ -98,6 +103,24 @@ public class Const {
     public static final String company = "company";
     public static final String userDuty = "userDuty";
 
+    //新建日程返回码
+    public static final int EVENT = 100;
+    public static final int REMIND = 101;
+    public static final int REMINDTYPE = 102;
+    public static final int ADDRESS = 103;
+    public static final int NOTE = 104;
+
+    //修改个人信息
+    public static final int NAME = 110;
+    public static final int COMPANY = 111;
+    public static final int WORK = 112;
+    public static final int EMAIL = 113;
+    public static final int FATE = 114;
+    public static final int USERADDRESS = 115;
+
+    public static String CALANDER_URL = "content://com.android.calendar/calendars";
+    public static String CALANDER_EVENT_URL = "content://com.android.calendar/events";
+    public   static String CALANDER_REMIDER_URL = "content://com.android.calendar/reminders";
 
 
 }

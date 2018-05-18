@@ -2,13 +2,15 @@ package com.dream.NiuFaNet.Presenter;
 
 import android.util.Log;
 
+import com.dream.NiuFaNet.Bean.CommonBean1;
 import com.dream.NiuFaNet.Api.NFApi;
 import com.dream.NiuFaNet.Base.RxPresenter;
 import com.dream.NiuFaNet.Bean.CalendarDetailBean;
 import com.dream.NiuFaNet.Bean.CommonBean;
 import com.dream.NiuFaNet.Bean.NewCalResultBean;
 import com.dream.NiuFaNet.Contract.CalendarDetailContract;
-import com.dream.NiuFaNet.Contract.CodeContract;
+
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -128,6 +130,33 @@ public class CalendarDetailPresenter extends RxPresenter<CalendarDetailContract.
                     public void onNext(CommonBean dataBean) {
                         if (dataBean != null && mView != null) {
                             mView.deleteCalResult(dataBean);
+                        }
+                    }
+
+                    @Override
+                    public void onCompleted() {
+                        mView.complete();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                        Log.e(TAG, "onError: " + e);
+                        mView.showError();
+                    }
+                });
+        addSubscrebe(rxSubscription);
+    }
+
+    @Override
+    public void validateProjectShow(Map<String, String> map) {
+        Subscription rxSubscription = itApi.validateProjectShow(map).subscribeOn(Schedulers.io())//放在异步中执行
+                .observeOn(AndroidSchedulers.mainThread())//回到主线程
+                .subscribe(new Observer<CommonBean1>() {
+                    @Override
+                    public void onNext(CommonBean1 dataBean) {
+                        if (dataBean != null && mView != null) {
+                            mView.validateProjectShowResult(dataBean);
                         }
                     }
 

@@ -3,9 +3,11 @@
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:id="@+id/root_lay"
+    android:background="@color/white"
     android:layout_height="match_parent">
 
     <RelativeLayout
+        android:layout_marginTop="@dimen/icon_size_20dp"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen45"
         android:background="@color/white">
@@ -20,21 +22,22 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/padding15"
-                android:src="@mipmap/icon_back" />
+                android:src="@mipmap/back" />
         </RelativeLayout>
 
-        <com.dream.NiuFaNet.CustomView.TitleTextview
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="修改密码"
-            android:textColor="@color/text_color"
+            android:textColor="@color/black"
             android:textSize="18sp" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/gray" />
     </RelativeLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:background="@color/layou_mrbg"
-        android:layout_height="5dp"></RelativeLayout>
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -47,12 +50,12 @@
                 android:layout_marginTop="25dp"
                 android:gravity="center_vertical"
                 android:layout_height="@dimen/dimen45">
-                <com.dream.NiuFaNet.CustomView.ContentTextview
+                <TextView
                     android:layout_width="wrap_content"
                     android:text="输入原密码："
                     android:layout_marginLeft="@dimen/marginleft"
                     android:textSize="16sp"
-                    android:textColor="@color/text_color"
+                    android:textColor="@color/black"
                     android:layout_height="wrap_content" />
                 <EditText
                     android:id="@+id/oldpwd_edt"
@@ -72,7 +75,7 @@
                     android:text="输入新密码："
                     android:layout_marginLeft="@dimen/marginleft"
                     android:textSize="16sp"
-                    android:textColor="@color/text_color"
+                    android:textColor="@color/black"
                     android:layout_height="wrap_content" />
                 <EditText
                     android:id="@+id/newpwd_edt"
@@ -87,12 +90,12 @@
                 android:layout_marginTop="25dp"
                 android:gravity="center_vertical"
                 android:layout_height="@dimen/dimen45">
-                <com.dream.NiuFaNet.CustomView.ContentTextview
+                <TextView
                     android:layout_width="wrap_content"
                     android:text="确认新密码："
                     android:layout_marginLeft="@dimen/marginleft"
                     android:textSize="16sp"
-                    android:textColor="@color/text_color"
+                    android:textColor="@color/black"
                     android:layout_height="wrap_content" />
                 <EditText
                     android:id="@+id/againpwd_edt"
@@ -103,12 +106,12 @@
                     android:layout_height="match_parent" />
             </LinearLayout>
 
-            <com.dream.NiuFaNet.CustomView.ContentTextview
+            <TextView
                 android:id="@+id/submit_tv"
                 android:layout_width="95dp"
                 android:text="确认修改"
                 android:gravity="center"
-                android:background="@color/sure_btncolor"
+                android:background="@drawable/shape_friendsdetail"
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 android:layout_marginTop="50dp"

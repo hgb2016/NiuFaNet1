@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="50dp">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <TextView
+            android:id="@+id/project_name"
+            android:layout_centerVertical="true"
+            android:maxEms="15"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:layout_marginLeft="@dimen/icon_size_20dp"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:text=""
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/project_status"
+            android:layout_marginRight="10dp"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/arrow"
+            android:gravity="center"
+            android:textSize="12sp"
+            android:textColor="@color/white"
+            android:text="进行中"
+            android:background="@drawable/shape_projectstatus"
+            android:layout_width="60dp"
+            android:layout_height="20dp" />
+        <ImageView
+            android:layout_centerVertical="true"
+            android:id="@+id/arrow"
+            android:layout_marginRight="@dimen/margin_right25dp"
+            android:layout_alignParentRight="true"
+            android:src="@mipmap/arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+</LinearLayout>

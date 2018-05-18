@@ -3,17 +3,20 @@ package com.dream.NiuFaNet.Api;
 
 import com.dream.NiuFaNet.Bean.ApplyBeFrendBean;
 import com.dream.NiuFaNet.Bean.BannerBean;
-import com.dream.NiuFaNet.Bean.BaseBean;
 import com.dream.NiuFaNet.Bean.CalInviteBean;
 import com.dream.NiuFaNet.Bean.CalendarDetailBean;
 import com.dream.NiuFaNet.Bean.CalenderedBean;
 import com.dream.NiuFaNet.Bean.ChatBean;
 import com.dream.NiuFaNet.Bean.CommonBean;
+import com.dream.NiuFaNet.Bean.CommonBean1;
+import com.dream.NiuFaNet.Bean.FriendNoticeBean;
 import com.dream.NiuFaNet.Bean.FunctionBean;
+import com.dream.NiuFaNet.Bean.MyToolsBean;
 import com.dream.NiuFaNet.Bean.HeadPortraitBean;
 import com.dream.NiuFaNet.Bean.InputGetBean;
 import com.dream.NiuFaNet.Bean.LoginBean;
 import com.dream.NiuFaNet.Bean.MainFunctionBean;
+import com.dream.NiuFaNet.Bean.MarkDateBean;
 import com.dream.NiuFaNet.Bean.MyFrendBean;
 import com.dream.NiuFaNet.Bean.NewCalResultBean;
 import com.dream.NiuFaNet.Bean.NewProResultBean;
@@ -24,6 +27,8 @@ import com.dream.NiuFaNet.Bean.RegisterBean;
 import com.dream.NiuFaNet.Bean.RemindWordBean;
 import com.dream.NiuFaNet.Bean.SearchUserBean;
 import com.dream.NiuFaNet.Bean.ShareBean;
+import com.dream.NiuFaNet.Bean.ShowCountBean;
+import com.dream.NiuFaNet.Bean.UserInfoBean;
 import com.dream.NiuFaNet.Bean.VersionBean;
 import com.dream.NiuFaNet.Bean.VoiceRvBean;
 import com.dream.NiuFaNet.Bean.WorkVisibleBean;
@@ -38,12 +43,10 @@ import okhttp3.RequestBody;
 import retrofit2.http.Field;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
-import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
-import retrofit2.http.PartMap;
 import rx.Observable;
 
 /**
@@ -51,7 +54,7 @@ import rx.Observable;
  * Created by Administrator on 2017/4/7/007.
  */
 public interface NFApiService {
-
+  
     //首页推荐list
     @FormUrlEncoded
     @POST(Const.app+"apiQuestion.do")
@@ -125,7 +128,7 @@ public interface NFApiService {
     //功能
     @FormUrlEncoded
     @POST(Const.app+"apiAction.do")
-    Observable<FunctionBean> getFunctionData(@Field("userId") String userId);
+    Observable<FunctionBean> getFunctionData(@Field("type") String userId);
 
     //版本更新
     @FormUrlEncoded
@@ -143,43 +146,43 @@ public interface NFApiService {
     Observable<MainFunctionBean> getMainFunction(@Field("type") String type);
 
     //创建日程
-    @Headers({"Authorization:d3d3Lm5pdWZhLmNu"})
+    @Headers({Const.token})
     @Multipart
     @POST(Const.app+"createSchedule.do")
     Observable<NewCalResultBean> addCalender(@Part("data") RequestBody data, @Part MultipartBody.Part[] mFile);
 
     //获取日程列表
-    @Headers({"Authorization:d3d3Lm5pdWZhLmNu"})
+    @Headers({Const.token})
     @FormUrlEncoded
     @POST(Const.app+"searchScheduleByDay.do")
     Observable<CalenderedBean> getCalenders(@Field("userId") String userId, @Field("beginTime") String beginTime, @Field("endTime") String endTime);
 
     //查看日程
-    @Headers({"Authorization:d3d3Lm5pdWZhLmNu"})
+    @Headers({Const.token})
     @FormUrlEncoded
     @POST(Const.app+"searchSchedule.do")
     Observable<CalendarDetailBean> getCalendarDetail(@Field("userId") String userId,@Field("scheduleId") String scheduleId);
 
     //删除日程图片
-    @Headers({"Authorization:d3d3Lm5pdWZhLmNu"})
+    @Headers({Const.token})
     @FormUrlEncoded
     @POST(Const.app+"deletePic.do")
     Observable<CommonBean> deletePic(@Field("id") String picId);
 
     //删除日程
-    @Headers({"Authorization:d3d3Lm5pdWZhLmNu"})
+    @Headers({Const.token})
     @FormUrlEncoded
     @POST(Const.app+"deleteSchedule.do")
     Observable<CommonBean> deleteCalendar(@Field("scheduleId") String scheduleId);
 
     //修改日程
-    @Headers({"Authorization:d3d3Lm5pdWZhLmNu"})
+    @Headers({Const.token})
     @Multipart
     @POST(Const.app+"editSchedule.do")
     Observable<NewCalResultBean> edtCalender(@Part("data") RequestBody data, @Part MultipartBody.Part[] mFile);
 
     //提示语
-    @Headers({"Authorization:d3d3Lm5pdWZhLmNu"})
+    @Headers({Const.token})
     @FormUrlEncoded
     @POST(Const.app+"prompt.do")
     Observable<RemindWordBean> getRemindWord(@Field("id") String id);
@@ -190,122 +193,216 @@ public interface NFApiService {
     Observable<List<InputGetBean>> getInputWord(@Field("text") String text);
 
     //创建项目
-    @Headers({"Authorization:d3d3Lm5pdWZhLmNu"})
+    @Headers({Const.token})
     @FormUrlEncoded
     @POST(Const.app+"createProject.do")
     Observable<NewProResultBean> newProgram(@Field("data") String data);
 
     //项目列表
-    @Headers({"Authorization:d3d3Lm5pdWZhLmNu"})
+    @Headers({Const.token})
     @FormUrlEncoded
     @POST(Const.app+"searchProjectList.do")
     Observable<ProgramListBean> getProgramlist(@Field("userId") String userId,@FieldMap Map<String, String> map);
 
     //根据项目获取日程
-    @Headers({"Authorization:d3d3Lm5pdWZhLmNu"})
+    @Headers({Const.token})
     @FormUrlEncoded
     @POST(Const.app+"searchProjectSchedule.do")
     Observable<CommonBean> searchProjectSchedule(@Field("projectId") String projectId);
 
     //项目详情
-    @Headers({"Authorization:d3d3Lm5pdWZhLmNu"})
+    @Headers({Const.token})
     @FormUrlEncoded
     @POST(Const.app+"searchProject.do")
-    Observable<ProgramDetailBean> getProjectDetail(@Field("projectId") String projectId);
+    Observable<ProgramDetailBean> getProjectDetail(@Field("projectId") String projectId,@Field("userId") String userId ,@Field("page") String page);
 
     //编辑项目
-    @Headers({"Authorization:d3d3Lm5pdWZhLmNu"})
+    @Headers({Const.token})
     @FormUrlEncoded
     @POST(Const.app+"editProject.do")
     Observable<CommonBean> edtProject(@Field("data") String data);
 
     //删除项目
-    @Headers({"Authorization:d3d3Lm5pdWZhLmNu"})
+    @Headers({Const.token})
     @FormUrlEncoded
     @POST(Const.app+"deleteProject.do")
     Observable<CommonBean> deleteProject(@Field("projectId") String projectId);
 
     //搜索用户
-    @Headers({"Authorization:d3d3Lm5pdWZhLmNu"})
+    @Headers({Const.token})
     @FormUrlEncoded
     @POST(Const.app+"searchUsers.do")
     Observable<SearchUserBean> searchUser(@Field("keyWord") String keyWord);
 
     //我的好友列表
-    @Headers({"Authorization:d3d3Lm5pdWZhLmNu"})
+    @Headers({Const.token})
     @FormUrlEncoded
     @POST(Const.app+"searchFriends.do")
     Observable<MyFrendBean> getMyFrends(@Field("userId") String userId);
 
     //添加好友
-    @Headers({"Authorization:d3d3Lm5pdWZhLmNu"})
+    @Headers({Const.token})
     @FormUrlEncoded
-    @POST(Const.app+"addFriend.do")
+    @POST(Const.app+"inviteFriends.do")
     Observable<CommonBean> addFrend(@Field("userId") String userId,@Field("friendId") String friendId);
 
     //陌生人的添加好友请求
-    @Headers({"Authorization:d3d3Lm5pdWZhLmNu"})
+    @Headers({Const.token})
     @FormUrlEncoded
     @POST(Const.app+"addFriendNotice.do")
     Observable<ApplyBeFrendBean> applyBeFrend(@Field("userId") String userId);
 
     //答复好友申请
-    @Headers({"Authorization:d3d3Lm5pdWZhLmNu"})
+    @Headers({Const.token})
     @FormUrlEncoded
     @POST(Const.app+"replyAddFriend.do")
     Observable<CommonBean> answerApply(@Field("id") String id,@Field("status") String status);
 
     //日程邀请的通知
-    @Headers({"Authorization:d3d3Lm5pdWZhLmNu"})
+    @Headers({Const.token})
     @FormUrlEncoded
     @POST(Const.app+"scheduleNotice.do")
     Observable<CalInviteBean> getCalInviteList(@Field("userId") String userId);
 
     //答复日程邀请
-    @Headers({"Authorization:d3d3Lm5pdWZhLmNu"})
+    @Headers({Const.token})
     @FormUrlEncoded
     @POST(Const.app+"replySchedule.do")
-    Observable<CommonBean> replySchedule(@Field("scheduleId") String scheduleId,@Field("status") String status,@Field("userId") String userId);
+    Observable<CommonBean> replySchedule(@Field("scheduleId") String scheduleId,@Field("status") String status,@Field("userId") String userId,@Field("rejectRemark") String rejectRemark);
 
     //删除日程参与人
-    @Headers({"Authorization:d3d3Lm5pdWZhLmNu"})
+    @Headers({Const.token})
     @FormUrlEncoded
     @POST(Const.app+"deleteParticipant.do")
     Observable<CommonBean> deleteParticipant(@Field("scheduleId") String scheduleId,@Field("userId") String userId);
 
     //删除日程参与人
-    @Headers({"Authorization:d3d3Lm5pdWZhLmNu"})
+    @Headers({Const.token})
     @FormUrlEncoded
     @POST(Const.app+"sendMsg.do")
     Observable<CommonBean> sendMsg(@Field("mobile") String phoneNum,@Field("userId") String userId,@Field("userName") String userName);
 
     //添加工作可见的好友
-    @Headers({"Authorization:d3d3Lm5pdWZhLmNu"})
+    @Headers({Const.token})
     @FormUrlEncoded
     @POST(Const.app+"addWorkVisible.do")
     Observable<CommonBean> addWorkVisible(@Field("data") String data);
 
     //删除工作可见用户
-    @Headers({"Authorization:d3d3Lm5pdWZhLmNu"})
+    @Headers({Const.token})
     @FormUrlEncoded
     @POST(Const.app+"deleteWorkVisible.do")
     Observable<CommonBean> deleteWorkVisible(@Field("userId") String userId,@Field("user_id") String user_id);
 
     //查找工作可见用户
-    @Headers({"Authorization:d3d3Lm5pdWZhLmNu"})
+    @Headers({Const.token})
     @FormUrlEncoded
     @POST(Const.app+"workVisible.do")
     Observable<WorkVisibleBean> getWorkVisible(@Field("userId") String userId);
 
     //查找工作可见用户
-    @Headers({"Authorization:d3d3Lm5pdWZhLmNu"})
+    @Headers({Const.token})
     @POST(Const.app+"voicePrompt.do")
     Observable<VoiceRvBean> voicePrompt();
 
     //导出日程
-    @Headers({"Authorization:d3d3Lm5pdWZhLmNu"})
+    @Headers({Const.token})
     @FormUrlEncoded
     @POST(Const.app+"exportProjectSchedule.do")
     Observable<CommonBean> exportProjectSchedule(@FieldMap Map<String,String> map);
+
+    /**
+     *新接口
+     */
+
+    //获取标记日期
+    @Headers({Const.token})
+    @FormUrlEncoded
+    @POST(Const.app+"searchScheduleShowDate.do")
+    Observable<MarkDateBean> getMakeDate(@Field("userId") String userId,@Field("beginTime") String beginTime,@Field("endTime") String endTime);
+
+    //获取用户信息
+    @Headers({Const.token})
+    @FormUrlEncoded
+    @POST(Const.app+"selectUserById.do")
+    Observable<UserInfoBean> getUserInfo(@Field("user") String user);
+
+    //获取好友信息（通讯录）
+    @Headers({Const.token})
+    @FormUrlEncoded
+    @POST(Const.app+"searchFriendInfo.do")
+    Observable<UserInfoBean> searchFriendInfo(@Field("userId") String userId,@Field("friendId") String friendId);
+
+    //删除我的好友（通讯录）
+    @Headers({Const.token})
+    @FormUrlEncoded
+    @POST(Const.app+"deleteUserFriends.do")
+    Observable<CommonBean> deleteUserFriends(@Field("userId") String userId,@Field("friendId") String friendId);
+
+    //编辑好友备注
+    @Headers({Const.token})
+    @FormUrlEncoded
+    @POST(Const.app+"editFriendRemark.do")
+    Observable<CommonBean> editFriendRemark(@Field("userId") String userId,@Field("friendId") String friendId,@Field("friendRemark") String friendRemark);
+
+    //邀请好友
+    @Headers({Const.token})
+    @FormUrlEncoded
+    @POST(Const.app+"inviteFriends.do")
+    Observable<CommonBean> inviteFriends(@Field("userId") String userId,@Field("friendId") String friendId);
+
+    //获取我的好友邀请通知
+    @Headers({Const.token})
+    @FormUrlEncoded
+    @POST(Const.app+"searchFriendNotice.do")
+    Observable<FriendNoticeBean> searchFriendNotice(@Field("userId") String userId);
+
+    //接受好友邀请
+    @Headers({Const.token})
+    @FormUrlEncoded
+    @POST(Const.app+"receiveFriend.do")
+    Observable<CommonBean> receiveFriend(@Field("userId") String userId,@Field("friendId") String friendId);
+
+    //查询我的好友邀请未读数量
+    @Headers({Const.token})
+    @FormUrlEncoded
+    @POST(Const.app+"searchFriendNoticeShowCount.do")
+    Observable<ShowCountBean> searchFriendNoticeShowCount(@Field("userId") String userId);
+
+    //编辑日程提醒
+    @Headers({Const.token})
+    @FormUrlEncoded
+    @POST(Const.app+"editScheduleRemind.do")
+    Observable<CalendarDetailBean> editScheduleRemind(@Field("data") String data);
+
+    //编辑日程(局部)
+    @Headers({Const.token})
+    @FormUrlEncoded
+    @POST(Const.app+"editScheduleInfo.do")
+    Observable<CommonBean> editScheduleInfo(@Field("data") String data);
+
+    //获取我的常用工具
+    @Headers({Const.token})
+    @FormUrlEncoded
+    @POST(Const.app+"selectMyTools.do")
+    Observable<MyToolsBean> selectMyTools(@Field("userId") String userId);
+
+    //编辑我的常用工具
+    @Headers({Const.token})
+    @FormUrlEncoded
+    @POST(Const.app+"editMyTools.do")
+    Observable<CommonBean> editMyTools(@Field("data") String data);
+
+    //验证是否有项目的查看权限
+    @Headers({Const.token})
+    @FormUrlEncoded
+    @POST(Const.app+"validateProjectShow.do")
+    Observable<CommonBean1> validateProjectShow(@FieldMap Map<String,String> map);
+
+    //Android包上传
+    @Multipart
+    @POST(Const.app+"apiUploadApk.do")
+    Observable<CommonBean> uploadApk(@Part MultipartBody.Part fdImg_file, @Part("version") RequestBody version);
+
 
 }

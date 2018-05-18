@@ -150,6 +150,33 @@ public class ProgramDetailBean implements Serializable{
             private String createTime;
             private String address;
             private String fileCount;
+            private String hourNum;
+            private String createUserName;
+            private String headUrl;
+
+            public String getHourNum() {
+                return hourNum;
+            }
+
+            public void setHourNum(String hourNum) {
+                this.hourNum = hourNum;
+            }
+
+            public String getCreateUserName() {
+                return createUserName;
+            }
+
+            public void setCreateUserName(String createUserName) {
+                this.createUserName = createUserName;
+            }
+
+            public String getHeadUrl() {
+                return headUrl;
+            }
+
+            public void setHeadUrl(String headUrl) {
+                this.headUrl = headUrl;
+            }
 
             public String getFileCount() {
                 return fileCount;

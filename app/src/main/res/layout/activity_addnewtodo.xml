@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_height"
+        android:layout_marginTop="20dp">
+
+        <RelativeLayout
+            android:id="@+id/back_relay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:src="@mipmap/icon_cancel" />
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/back_relay"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
+            android:text="新建待办"
+            android:textColor="@color/black"
+            android:textSize="17sp" />
+
+        <RelativeLayout
+            android:id="@+id/save_relay"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true">
+
+            <ImageView
+                android:id="@+id/save_iv"
+                android:layout_centerInParent="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:src="@mipmap/detemine" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray" />
+
+    <ScrollView
+        android:scrollbars="none"
+        android:id="@+id/detail_sv"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <EditText
+                android:background="#FFEEFFC2"
+                android:id="@+id/event_tv"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:gravity="center"
+                android:text="通知李超和汪洋去打羽毛球"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+            <LinearLayout
+                android:background="#FFEEFFC2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/white"
+                    android:layout_width="match_parent"
+                    android:layout_height="65dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_marginLeft="@dimen/icon_size_20dp"
+                        android:gravity="center"
+                        android:layout_weight="1"
+                        android:text="截止时间"
+                        android:textColor="@color/textcolor_ac"
+                        android:textSize="@dimen/text_size_14sp"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content" /> 
+                    <TextView
+                        android:gravity="center"
+                        android:textSize="12sp"
+                        android:text="2月19日"
+                        android:textColor="#919191"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:layout_marginRight="20dp"
+                        android:gravity="center"
+                        android:text="19:00"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_size_22sp"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen50dp">
+                <TextView
+                    android:textColor="@color/black"
+                    android:text="参与人"
+                    android:layout_marginLeft="30dp"
+                    android:textSize="@dimen/text_size_15sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <View
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="1px"/>
+                <ImageView
+                    android:id="@+id/add_iv"
+                    android:layout_marginRight="30dp"
+                    android:src="@mipmap/contact_add"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp" />
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/gray" />
+            <LinearLayout
+                android:id="@+id/project_lay"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen50dp">
+                <TextView
+                    android:textColor="@color/black"
+                    android:text="项目"
+                    android:layout_marginLeft="30dp"
+                    android:textSize="@dimen/text_size_15sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <View
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="1px"/>
+                <TextView
+                    android:layout_marginRight="10dp"
+                    android:textColor="@color/blue_title"
+                    android:text="选择项目"
+                    android:layout_marginLeft="10dp"
+                    android:textSize="@dimen/text_size_14sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <ImageView
+                    android:layout_marginRight="30dp"
+                    android:src="@mipmap/arrow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/gray" />
+            <LinearLayout
+                android:id="@+id/remind_lay"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen50dp">
+                <TextView
+                    android:textColor="@color/black"
+                    android:text="提醒"
+                    android:layout_marginLeft="30dp"
+                    android:textSize="@dimen/text_size_15sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <View
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="1px"/>
+                <TextView
+                    android:id="@+id/remind_tv"
+                    android:textColor="@color/textgray_94"
+                    android:text="日程开始时提醒"
+                    android:layout_marginRight="10dp"
+                    android:textSize="@dimen/text_size_14sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <ImageView
+                    android:layout_marginRight="30dp"
+                    android:src="@mipmap/arrow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/gray" />
+            <LinearLayout
+                android:id="@+id/more_lay"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen50dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:text="更多"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_15sp" />
+                <View
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="1px"/>
+                <TextView
+                    android:textColor="#d7d7d7"
+                    android:text="地址,提醒方式，附件等"
+                    android:layout_marginRight="10dp"
+                    android:textSize="12sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <ImageView
+                    android:id="@+id/iv_more"
+                    android:layout_marginRight="30dp"
+                    android:src="@mipmap/up"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/address_lay"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen50dp">
+                <EditText
+                    android:background="@null"
+                    android:layout_marginLeft="@dimen/icon_size_40dp"
+                    android:id="@+id/address_tv"
+                    android:textColor="@color/textgray_94"
+                    android:text="地址"
+                    android:layout_marginRight="10dp"
+                    android:textSize="@dimen/text_size_14sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <View
+                android:layout_marginLeft="40dp"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/gray" />
+            <LinearLayout
+                android:id="@+id/remindtype_lay"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen50dp">
+                <TextView
+                    android:layout_marginLeft="@dimen/icon_size_40dp"
+                    android:id="@+id/remindtype_tv"
+                    android:textColor="@color/textgray_94"
+                    android:text="应用内"
+                    android:layout_marginRight="10dp"
+                    android:textSize="@dimen/text_size_14sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <View
+                android:layout_marginLeft="40dp"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/gray" />
+            <LinearLayout
+                android:id="@+id/apendix_lay"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen50dp">
+                <TextView
+                    android:layout_marginLeft="@dimen/icon_size_40dp"
+                    android:textColor="@color/textgray_94"
+                    android:text="添加附件"
+                    android:layout_marginRight="10dp"
+                    android:textSize="@dimen/text_size_14sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <ImageView
+                    android:id="@+id/addpicture"
+                    android:layout_marginRight="30dp"
+                    android:src="@mipmap/icon_addpicture"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <View
+                android:layout_marginLeft="40dp"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/gray" />
+            <LinearLayout
+                android:id="@+id/note_lay"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen50dp">
+                <EditText
+                    android:background="@null"
+                    android:layout_marginLeft="@dimen/icon_size_40dp"
+                    android:id="@+id/note_tv"
+                    android:textColor="@color/textgray_94"
+                    android:text="备注"
+                    android:layout_marginRight="10dp"
+                    android:textSize="@dimen/text_size_14sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
