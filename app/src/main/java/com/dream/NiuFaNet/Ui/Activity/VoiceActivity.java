@@ -31,7 +31,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.dream.NiuFaNet.Base.BaseViewHolder;
 import com.dream.NiuFaNet.Base.CommonActivity;
 import com.dream.NiuFaNet.Base.CommonAdapter;
@@ -89,22 +88,17 @@ import com.iflytek.cloud.SpeechSynthesizer;
 import com.iflytek.cloud.SynthesizerListener;
 import com.iflytek.cloud.ui.RecognizerDialog;
 import com.kevin.wraprecyclerview.WrapRecyclerView;
-
 import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
-
 import javax.inject.Inject;
-
 import butterknife.Bind;
 import butterknife.OnClick;
-
 /**
  * Created by hou on 2018/4/25.
  */
@@ -162,28 +156,28 @@ public class VoiceActivity extends CommonActivity implements VoiceContentContrac
     private String audioResultStr;
     private boolean isUp, isInit, isOver, isMove;
     private Dialog permissionDialog;
-    private String status = "1";
+    private String status = "2";
     private String szImei;
     private String tag;
     private SpeechSynthesizer mTts;// 语音合成
-    // 0 小燕 青年女声 中英文（普通话） xiaoyan
-    // 1 默认 小宇 青年男声 中英文（普通话） xiaoyu
-    // 2 凯瑟琳 青年女声 英文 catherine
-    // 3 亨利 青年男声 英文 henry
-    // 4 玛丽 青年女声 英文 vimary
-    // 5 小研 青年女声 中英文（普通话） vixy
-    // 6 小琪 青年女声 中英文（普通话） vixq xiaoqi
-    // 7 小峰 青年男声 中英文（普通话） vixf
-    // 8 小梅 青年女声 中英文（粤语） vixm xiaomei
-    // 9 小莉 青年女声 中英文（台湾普通话） vixl xiaolin
-    // 10 小蓉 青年女声 汉语（四川话） vixr xiaorong
-    // 11 小芸 青年女声 汉语（东北话） vixyun xiaoqian
-    // 12 小坤 青年男声 汉语（河南话） vixk xiaokun
-    // 13 小强 青年男声 汉语（湖南话） vixqa xiaoqiang
-    // 14 小莹 青年女声 汉语（陕西话） vixying
-    // 15 小新 童年男声 汉语（普通话） vixx xiaoxin
-    // 16 楠楠 童年女声 汉语（普通话） vinn nannan
-    // 17 老孙 老年男声 汉语（普通话）
+ /*    0 小燕 青年女声 中英文（普通话） xiaoyan
+     1 默认 小宇 青年男声 中英文（普通话） xiaoyu
+     2 凯瑟琳 青年女声 英文 catherine
+     3 亨利 青年男声 英文 henry
+     4 玛丽 青年女声 英文 vimary
+     5 小研 青年女声 中英文（普通话） vixy
+     6 小琪 青年女声 中英文（普通话） vixq xiaoqi
+     7 小峰 青年男声 中英文（普通话） vixf
+     8 小梅 青年女声 中英文（粤语） vixm xiaomei
+     9 小莉 青年女声 中英文（台湾普通话） vixl xiaolin
+     10 小蓉 青年女声 汉语（四川话） vixr xiaorong
+     11 小芸 青年女声 汉语（东北话） vixyun xiaoqian
+     12 小坤 青年男声 汉语（河南话） vixk xiaokun
+     13 小强 青年男声 汉语（湖南话） vixqa xiaoqiang
+     14 小莹 青年女声 汉语（陕西话） vixying
+     15 小新 童年男声 汉语（普通话） vixx xiaoxin
+     16 楠楠 童年女声 汉语（普通话） vinn nannan
+     17 老孙 老年男声 汉语（普通话）*/
     private String[] voiceName = {"xiaoyan", "xiaoyu", "catherine", "henry",
             "vimary", "vixy", "xiaoqi", "vixf", "xiaomei", "xiaolin",
             "xiaorong", "xiaoqian", "xiaokun", "xiaoqiang", "vixying",
@@ -246,6 +240,8 @@ public class VoiceActivity extends CommonActivity implements VoiceContentContrac
     private List<FunctionBean.BodyBean.FindBean> dataList1 = new ArrayList<>();
     private CalculateAdapter calculateAdapter;
     private FindAdapter findAdapter;
+    private boolean force = false;
+
 
     @Override
     public int getLayoutId() {
@@ -262,7 +258,6 @@ public class VoiceActivity extends CommonActivity implements VoiceContentContrac
         chatPresenter.attachView(this);
         mVoiceContentPresenter.attachView(this);
         functionPresenter.attachView(this);
-
         initmTat();
         permissionDialog = DialogUtils.showPermissionTip(mActivity);
         TelephonyManager TelephonyMgr = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
@@ -284,6 +279,7 @@ public class VoiceActivity extends CommonActivity implements VoiceContentContrac
         } else if (voiceType.equals(Const.vTyep_Off)) {
             right_voice.setImageResource(R.mipmap.horn_close);
         }
+
     }
 
     @Override
@@ -300,6 +296,7 @@ public class VoiceActivity extends CommonActivity implements VoiceContentContrac
             }
         }
         mVoiceContentPresenter.voicePrompt();
+        //获取推荐帮助语音
         getRecommendData();
 
     }
@@ -339,7 +336,7 @@ public class VoiceActivity extends CommonActivity implements VoiceContentContrac
                 }
             }
         });
-        status = "1";
+        status = "2";
         tip_tv.setVisibility(View.VISIBLE);
         voice_tv.setText("我说完了");
         //启动录音功能，6.0需要重新申请权限
@@ -347,6 +344,7 @@ public class VoiceActivity extends CommonActivity implements VoiceContentContrac
         isInit = false;
         isOver = false;
         isMove = false;
+        force = false;
         if (ContextCompat.checkSelfPermission(mContext, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
                 || ContextCompat.checkSelfPermission(mContext, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED)//权限未授予
         {
@@ -370,6 +368,7 @@ public class VoiceActivity extends CommonActivity implements VoiceContentContrac
                 break;
             case R.id.voice_lay:
                 if (status.equals("1")) {
+                    force = false;
                     tip_tv.setVisibility(View.VISIBLE);
                     voice_tv.setText("我说完了");
                     //启动录音功能，6.0需要重新申请权限
@@ -377,11 +376,9 @@ public class VoiceActivity extends CommonActivity implements VoiceContentContrac
                     isInit = false;
                     isOver = false;
                     isMove = false;
-
                     if (ContextCompat.checkSelfPermission(mContext, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
                             || ContextCompat.checkSelfPermission(mContext, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED)//权限未授予
                     {
-
                         ActivityCompat.requestPermissions(mActivity, new String[]{Manifest.permission.RECORD_AUDIO}, 250
                         );
                     } else//已授予权限
@@ -392,16 +389,13 @@ public class VoiceActivity extends CommonActivity implements VoiceContentContrac
                     }
                     status = "2";
                 } else if (status.equals("2")) {
+                    force = true;
                     voice_tv.setText("点我说话");
                     tip_tv.setVisibility(View.GONE);
-                    voice_lay.setVisibility(View.VISIBLE);
+                    // voice_lay.setVisibility(View.VISIBLE);
                     audiores_tv.setText("");
                     isUp = true;
-                    if (audioResultStr != null && isInit) {
-                        Message message = Message.obtain();
-                        message.what = 210;
-                        mHandler.sendMessage(message);
-                    }
+                    mIat.stopListening();
                     status = "1";
                 }
                 break;
@@ -487,9 +481,24 @@ public class VoiceActivity extends CommonActivity implements VoiceContentContrac
         mIat.setParameter(SpeechConstant.LANGUAGE, "zh_cn");
         //
         // 接受的语言是普通话
-        mIat.setParameter(SpeechConstant.ACCENT, "mandarin ");
+        mIat.setParameter(SpeechConstant.ACCENT, "mandarin");
+
         // 设置听写引擎（云端）
         mIat.setParameter(SpeechConstant.ENGINE_TYPE, SpeechConstant.TYPE_CLOUD);
+
+        /**
+         * 语音合成设置
+         */
+        mTts.setParameter(SpeechConstant.VOICE_NAME, voiceName[6]);// 设置发音人
+        mTts.setParameter(SpeechConstant.SPEED, "50");// 设置语速
+        mTts.setParameter(SpeechConstant.VOLUME, "80");// 设置音量，范围0~100
+        mTts.setParameter(SpeechConstant.ENGINE_TYPE, SpeechConstant.TYPE_CLOUD); // 设置云端
+        //合成方言 普通话
+        mTts.setParameter(SpeechConstant.ACCENT,"mandarin"); // 设置语言
+        // 合成语言中文
+        mTts.setParameter(SpeechConstant.LANGUAGE, "zh_cn");
+        mTts.setParameter(SpeechConstant.TEXT_ENCODING,"GB2312");
+
     }
 
     /**
@@ -525,10 +534,8 @@ public class VoiceActivity extends CommonActivity implements VoiceContentContrac
         // 关于解析Json的代码可参见MscDemo中JsonParser类；
         // isLast等于true时会话结束。
         public void onResult(RecognizerResult results, boolean isLast) {
-            if (!isLast && !isOver) {
-                printResult(results);
+            printResult(results);
 
-            }
         }
 
         // 会话发生错误回调接口
@@ -544,29 +551,22 @@ public class VoiceActivity extends CommonActivity implements VoiceContentContrac
             } else {
                 ToastUtils.Toast_short(mActivity, "操作失败，错误码：" + errorCode);
             }
-//            ToastUtils.Toast_short(mActivity, error.getPlainDescription(true));
-
-        }// 获取错误码描述}
+        }
 
         // 开始录音
         public void onBeginOfSpeech() {
             Log.e(TAG, "点我说话");
-//            ToastUtils.Toast_short(mActivity, "点我说话");
         }
 
         // 结束录音
         public void onEndOfSpeech() {
             Log.e(TAG, "说话结束");
-//            ToastUtils.Toast_short(mActivity, "说话结束");
             voice_tv.setText("点我说话");
             tip_tv.setVisibility(View.GONE);
             voice_lay.setVisibility(View.VISIBLE);
             audiores_tv.setText("");
             isUp = true;
-            if (audioResultStr != null && isInit) {
-                Message message = Message.obtain();
-                message.what = 210;
-                mHandler.sendMessage(message);
+            if (audioResultStr != null && !audioResultStr.isEmpty() && isInit) {
                 sendContent(audioResultStr);
                 chat_relay.setVisibility(View.VISIBLE);
                 main_lay.setVisibility(View.GONE);
@@ -575,14 +575,16 @@ public class VoiceActivity extends CommonActivity implements VoiceContentContrac
                 calendar_include.setVisibility(View.GONE);
                 search_include.setVisibility(View.GONE);
                 help_relay.setVisibility(View.VISIBLE);
-            }
+                force = false;
 
+            }
             status = "1";
 
         }
 
         // 扩展用接口
         public void onEvent(int eventType, int arg1, int arg2, Bundle obj) {
+
 
         }
 
@@ -617,10 +619,22 @@ public class VoiceActivity extends CommonActivity implements VoiceContentContrac
         for (String key : mIatResults.keySet()) {
             resultBuffer.append(mIatResults.get(key));
         }
-
         audioResultStr = resultBuffer.toString();
         audiores_tv.setText(audioResultStr);
-
+        if (force) {
+            if (audioResultStr != null && !audioResultStr.isEmpty()) {
+                sendContent(audioResultStr);
+            }
+            chat_relay.setVisibility(View.VISIBLE);
+            main_lay.setVisibility(View.GONE);
+            cancel_relay.setVisibility(View.GONE);
+            caculate_include.setVisibility(View.GONE);
+            calendar_include.setVisibility(View.GONE);
+            search_include.setVisibility(View.GONE);
+            help_relay.setVisibility(View.VISIBLE);
+            audiores_tv.setText("");
+            force = false;
+        }
         isInit = true;
 
     }
@@ -689,6 +703,7 @@ public class VoiceActivity extends CommonActivity implements VoiceContentContrac
                                 listData.add(bodyBean);
                                 chatRvAdapter.notifyDataSetChanged();
                                 chat_rv.smoothScrollToPosition(listData.size());*/
+
                                 //starSpeech("好的，已帮你创建日程。");
                                 intent = new Intent(mContext, NewCalenderActivity.class);
                                 intent.putExtra("scheduleData", (Serializable) scheduleData);
@@ -778,14 +793,12 @@ public class VoiceActivity extends CommonActivity implements VoiceContentContrac
 
         // 2.合成参数设置，详见《科大讯飞MSC API手册(Android)》SpeechSynthesizer 类
         Log.e(TAG, "mTts=" + mTts);
-        mTts.setParameter(SpeechConstant.VOICE_NAME, voiceName[6]);// 设置发音人
-        mTts.setParameter(SpeechConstant.SPEED, "50");// 设置语速
-        mTts.setParameter(SpeechConstant.VOLUME, "80");// 设置音量，范围0~100
-        mTts.setParameter(SpeechConstant.ENGINE_TYPE, SpeechConstant.TYPE_CLOUD); // 设置云端
+
         // 设置合成音频保存位置（可自定义保存位置），保存在“./sdcard/iflytek.pcm”
         // 保存在SD卡需要在AndroidManifest.xml添加写SD卡权限
         // 如果不需要保存合成音频，注释该行代码
-        mTts.setParameter(SpeechConstant.TTS_AUDIO_PATH, "./sdcard/iflytek.pcm");
+      //  mTts.setParameter(SpeechConstant.TTS_AUDIO_PATH, "./sdcard/iflytek.pcm");
+        // mTts.startSpeaking("科大讯飞，让世界聆听我们的声音", mSynListener);
         // 3.开始合成
         mTts.startSpeaking(content, mSynListener);
         // 合成监听器
@@ -804,8 +817,8 @@ public class VoiceActivity extends CommonActivity implements VoiceContentContrac
             dataList1.clear();
             dataList.addAll(calculateBeanList);
             dataList1.addAll(findBeans);
-            for (FunctionBean.BodyBean.LaborBean laborBean:laborBeans){
-                FunctionBean.BodyBean.FindBean findBean=new FunctionBean.BodyBean.FindBean();
+            for (FunctionBean.BodyBean.LaborBean laborBean : laborBeans) {
+                FunctionBean.BodyBean.FindBean findBean = new FunctionBean.BodyBean.FindBean();
                 findBean.setUrl(laborBean.getUrl());
                 findBean.setQuestion(laborBean.getQuestion());
                 dataList1.add(findBean);
@@ -974,7 +987,6 @@ public class VoiceActivity extends CommonActivity implements VoiceContentContrac
             bean.setAnswer(question);
             bean.setFdType("1");
             sendMSG(question, bean);
-
         }
     }
 

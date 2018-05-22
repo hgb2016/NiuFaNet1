@@ -18,6 +18,8 @@ import com.dream.NiuFaNet.Base.CommonAdapter;
 import com.dream.NiuFaNet.Bean.MyFrendBean;
 import com.dream.NiuFaNet.Bean.ProgramDetailBean;
 import com.dream.NiuFaNet.Component.DaggerNFComponent;
+import com.dream.NiuFaNet.CustomView.MyGridView;
+import com.dream.NiuFaNet.CustomView.MyListView;
 import com.dream.NiuFaNet.Listener.NoDoubleClickListener;
 import com.dream.NiuFaNet.Other.MyApplication;
 import com.dream.NiuFaNet.R;
@@ -25,6 +27,7 @@ import com.dream.NiuFaNet.Utils.CustomHelper;
 import com.dream.NiuFaNet.Utils.IntentUtils;
 import com.example.zhouwei.library.CustomPopWindow;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -49,6 +52,11 @@ public class NewClientActivity extends CommonActivity {
     EditText fax_edt;
     @Bind(R.id.iv_more)
     ImageView iv_more;
+    @Bind(R.id.contact_lv)
+    MyListView contact_lv;
+    @Bind(R.id.particepant_gv)
+    MyGridView particepant_gv;
+    private ContactAdapter contactAdapter;
     private CustomPopWindow mCustomPopWindow;
 
     @Override
@@ -60,11 +68,16 @@ public class NewClientActivity extends CommonActivity {
     public void initView() {
         DaggerNFComponent.builder()
                 .appComponent(MyApplication.getInstance().getAppComponent())
-//                .mainActivityModule(new MainActivityModule(this))
                 .build()
                 .inject(this);
-
+        ArrayList list=new ArrayList();
+        list.add("1");
+        list.add("1");
+        contactAdapter=new ContactAdapter(mContext,list,R.layout.view_clientcontact);
+        contact_lv.setAdapter(contactAdapter);
     }
+
+
     @OnClick({R.id.back_relay,R.id.more_lay,R.id.addcontact_iv,R.id.addvisible_iv,R.id.submit_relay})
     public void OnClick(View v){
         switch (v.getId()) {
@@ -78,7 +91,7 @@ public class NewClientActivity extends CommonActivity {
                 showcontact(v);
                 break;
             case R.id.addvisible_iv:
-                //跳转到通讯录
+                //跳转到我的好友列表
                 IntentUtils.toActivityWithTag(MyFrendsActivity.class, mActivity, "newclient", 155);
                 break;
             case R.id.submit_relay:
@@ -171,6 +184,20 @@ public class NewClientActivity extends CommonActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode==155&&resultCode==102&&data!=null) {
             List<MyFrendBean.DataBean> selectdata = (List<MyFrendBean.DataBean>) data.getExtras().getSerializable("selectdata");
+
+        }
+    }
+
+    public class ContactAdapter extends CommonAdapter{
+
+
+        public ContactAdapter(Context context, List mDatas, int itemLayoutId) {
+            super(context, mDatas, itemLayoutId);
+
+        }
+
+        @Override
+        public void convert(BaseViewHolder helper, Object item, int position) {
 
         }
     }

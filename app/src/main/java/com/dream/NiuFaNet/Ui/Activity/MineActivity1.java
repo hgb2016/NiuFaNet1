@@ -20,6 +20,7 @@ import com.dream.NiuFaNet.Presenter.VersionUpdatePresenter;
 import com.dream.NiuFaNet.R;
 import com.dream.NiuFaNet.Utils.Dialog.DialogUtils;
 import com.dream.NiuFaNet.Utils.GlideCircleTransform;
+import com.dream.NiuFaNet.Utils.ImmUtils;
 import com.dream.NiuFaNet.Utils.IntentUtils;
 import com.dream.NiuFaNet.Utils.SpUtils;
 
@@ -37,7 +38,7 @@ public class MineActivity1 extends CommonActivity implements VersionUpdateContra
     ImageView head_icon;
     @Bind(R.id.username_tv)
     TextView mUsernameTv;
-    //暂时展示电话号码
+    //暂时展示电话号
     @Bind(R.id.desc_tv)
     TextView phone_tv;
     @Bind(R.id.nologin_lay)
@@ -59,7 +60,7 @@ public class MineActivity1 extends CommonActivity implements VersionUpdateContra
     public void initView() {
         DaggerNFComponent.builder()
                 .appComponent(MyApplication.getInstance().getAppComponent())
-//                .mainActivityModule(new MainActivityModule(this))
+//                .mainActivityModule(new MainActivityMcodule(this))
                 .build()
                 .inject(this);
         versionUpdatePresenter.attachView(this);
@@ -135,7 +136,7 @@ public class MineActivity1 extends CommonActivity implements VersionUpdateContra
     public void eventListener() {
 
     }
-    @OnClick({R.id.back_relay,R.id.contact_lay,R.id.whocansee_lay,R.id.share_lay,R.id.feedback_lay,R.id.aboutus_lay,R.id.contactus_lay,R.id.setting_relay,R.id.myinfo_relay,R.id.register_tv,R.id.login_tv})
+    @OnClick({R.id.back_relay,R.id.client_lay,R.id.whocansee_lay,R.id.share_lay,R.id.feedback_lay,R.id.aboutus_lay,R.id.contactus_lay,R.id.setting_relay,R.id.myinfo_relay,R.id.register_tv,R.id.login_tv})
     public void OnClick(View v){
         switch (v.getId()){
             //我的个人信息
@@ -151,9 +152,10 @@ public class MineActivity1 extends CommonActivity implements VersionUpdateContra
             case R.id.back_relay:
                 finish();
                 break;
-            //通讯录
-            case R.id.contact_lay:
-
+            //我的客户
+            case R.id.client_lay:
+                IntentUtils.toActivityWithTag(ClientsActivity.class,mActivity,"client");
+               // startActivity(new Intent(mContext, ClientsActivity.class));
                 break;
             //谁可以看我的工作
             case R.id.whocansee_lay:

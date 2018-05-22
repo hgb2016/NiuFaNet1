@@ -905,6 +905,7 @@ public class NewCalenderActivity extends CommonActivity implements NewCalenderCo
                   if (endT2 != null) {
                       endtime_tv2.setText(endT2);
                   }
+                  duringtime_tv.setText(CalculateTimeUtil.getTimeExpend(startDate,this.endDate));
               }else {
 
               }

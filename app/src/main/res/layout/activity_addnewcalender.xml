@@ -478,7 +478,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="10dp"
-                        android:text="地址,提醒方式，附件等"
+                        android:text="地址，附件，备注等"
                         android:textColor="#d7d7d7"
                         android:textSize="12sp" />
 
@@ -554,7 +554,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/icon_size_40dp"
                         android:layout_marginRight="10dp"
-                        android:text="添加附加"
+                        android:text="添加附件"
                         android:textColor="@color/textgray_94"
                         android:textSize="@dimen/text_size_14sp" />
 

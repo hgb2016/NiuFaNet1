@@ -32,11 +32,13 @@
             android:textSize="16.5sp" />
     </RelativeLayout>
     <RelativeLayout
-        android:visibility="gone"
+        android:gravity="center"
+        android:visibility="visible"
         android:layout_width="match_parent"
         android:background="@color/moren_f2"
         android:layout_height="30dp">
         <TextView
+            android:visibility="gone"
             android:id="@+id/participant_numtv"
             android:layout_width="wrap_content"
             android:text="共2人"
@@ -49,7 +51,7 @@
             android:textSize="@dimen/text_size_12sp"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/participant_numtv"
-            android:text="(温馨提示：左滑可删除人员)"
+            android:text="温馨提示：左滑可删除人员"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </RelativeLayout>

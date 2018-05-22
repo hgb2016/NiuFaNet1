@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:paddingRight="@dimen/icon_size_20dp"
+        android:paddingLeft="@dimen/icon_size_20dp"
+        android:paddingBottom="15dp"
+        android:paddingTop="15dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:textColor="@color/black"
+            android:text="中国移动集团深圳分公司"
+            android:textSize="@dimen/text_size_15sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <LinearLayout
+            android:gravity="center_vertical"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:src="@mipmap/location"
+                android:layout_width="10dp"
+                android:layout_height="@dimen/layout_padding_12dp" />
+            <TextView
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:layout_marginLeft="5dp"
+                android:textSize="13sp"
+                android:text="尚美科技科技大厦"
+                android:textColor="@color/textcolor_ac"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </LinearLayout>
+    <View
+
+        android:layout_marginRight="@dimen/icon_size_20dp"
+        android:layout_marginLeft="@dimen/icon_size_20dp"
+        android:background="@color/gray_1"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/layout_padding_1dp"/>
+</LinearLayout>

@@ -296,7 +296,7 @@
                                     android:src="@mipmap/export" />
 
                                 <ImageView
-                                    android:id="@+id/add_schedule"
+                                    android:visibility="gone"
                                     android:layout_width="18dp"
                                     android:layout_height="18dp"
                                     android:layout_marginRight="24dp"
@@ -353,24 +353,22 @@
                     <LinearLayout
                         android:id="@+id/no_callay"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:gravity="center"
                         android:orientation="vertical"
                         android:visibility="gone">
-
                         <TextView
+                            android:visibility="gone"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="该项目目前没有日程"
                             android:textColor="#FFD7D7D7"
                             android:textSize="13sp" />
-
                         <ImageView
                             android:id="@+id/add_schedule1"
-                            android:layout_width="28dp"
-                            android:layout_height="28dp"
-                            android:layout_marginTop="30dp"
-                            android:src="@mipmap/contact_add" />
+                            android:layout_width="match_parent"
+                            android:layout_height="136dp"
+                            android:src="@drawable/calender_1" />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -382,7 +380,14 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:orientation="vertical"></LinearLayout>
-
+         <ImageView
+             android:id="@+id/add_schedule"
+             android:layout_marginLeft="295dp"
+             android:layout_marginBottom="80dp"
+             android:layout_gravity="bottom"
+             android:src="@mipmap/icon_add"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content" />
     </FrameLayout>
 
 </LinearLayout>

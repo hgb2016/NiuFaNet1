@@ -73,6 +73,8 @@
             android:background="@drawable/edit_shape">
 
             <EditText
+                android:imeOptions="actionSearch"
+                android:singleLine="true"
                 android:id="@+id/search_edt"
                 android:layout_weight="1"
                 android:layout_width="0dp"
@@ -90,7 +92,7 @@
             <ImageView
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:src="@mipmap/search"
+                android:src="@mipmap/icon_search"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             </RelativeLayout>
@@ -98,6 +100,7 @@
     </LinearLayout>
 
     <RelativeLayout
+        android:id="@+id/commonused_relay"
         android:layout_width="match_parent"
         android:layout_height="35dp"
         android:layout_marginTop="10dp">
@@ -129,6 +132,7 @@
         android:numColumns="4"/>
 
     <RelativeLayout
+        android:id="@+id/allclient_relay"
         android:layout_width="match_parent"
         android:layout_height="35dp"
         android:layout_marginTop="10dp">
@@ -160,6 +164,7 @@
             android:divider="@null" />
 
         <RelativeLayout
+            android:background="@color/white"
             android:id="@+id/sure_relay"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen50dp"

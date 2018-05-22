@@ -11,6 +11,7 @@ import com.dream.NiuFaNet.Ui.Activity.CalenderDetailActivity;
 import com.dream.NiuFaNet.Ui.Activity.CalenderDetailActivity1;
 import com.dream.NiuFaNet.Ui.Activity.ChangePwdActivity;
 import com.dream.NiuFaNet.Ui.Activity.ChatActivity;
+import com.dream.NiuFaNet.Ui.Activity.ClientsActivity;
 import com.dream.NiuFaNet.Ui.Activity.DownScheduleActivity;
 import com.dream.NiuFaNet.Ui.Activity.FeedBackActivity;
 import com.dream.NiuFaNet.Ui.Activity.FindPwdOrBindUserActivity;
@@ -139,4 +140,6 @@ public interface NFComponent {
     PopVoiceActivity inject(PopVoiceActivity activity);
 
     UploadApkActivity inject(UploadApkActivity activity);
+
+    ClientsActivity inject(ClientsActivity activity);
 }

@@ -80,6 +80,10 @@ public class NewProgramActivity extends CommonActivity implements NewProgramCont
     ImageView end_iv;
     @Bind(R.id.addpeople_iv)
     ImageView addpeople_iv;
+    @Bind(R.id.chooseclient_relay)
+    RelativeLayout chooseclient_relay;
+    @Bind(R.id.chooseclient_tv)
+    TextView chooseclient_tv;
 
     private PeoPleAdapter peoPlesAdapter;
     private List<ProgramDetailBean.DataBean.participantBean> participantBeanList = new ArrayList<>();
@@ -243,7 +247,8 @@ public class NewProgramActivity extends CommonActivity implements NewProgramCont
                 intent1.putExtra("people", bundle);
                 startActivityForResult(intent1, 101);
                 break;
-            case R.id.chooseclient_relay:
+
+            case R.id.chooseclient_relay://我的客户
                 ImmUtils.hideImm(mActivity, imm);
                 startActivity(new Intent(mContext, ClientsActivity.class));
                 break;
@@ -259,6 +264,7 @@ public class NewProgramActivity extends CommonActivity implements NewProgramCont
                 beizu_edt.setFocusableInTouchMode(true);
                 ImmUtils.showImm(mActivity, beizu_edt, imm);
                 break;
+
         }
 
     }

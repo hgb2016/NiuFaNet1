@@ -8,10 +8,10 @@ public class Const {
     public static final String LogTag = "LogTag";
     public static final int time = 3000;
 
-   public static final String API_BASE_URL = "http://api.niufa.cn:9081/";
+   public static final String API_BASE_URL = "http://api.niufa.cn:9080/";
 //    public static final String API_BASE_URL = "http://192.168.1.143:8080/niufa_chatbot/";
-    public static final String aboutmeUrl = "http://api.niufa.cn:9081/about.html";
-    public static final String shareUrl = "http://api.niufa.cn:9081/sharing.html";
+    public static final String aboutmeUrl = "http://api.niufa.cn:9080/about.html";
+    public static final String shareUrl = "http://api.niufa.cn:9080/sharing.html";
     //public static final String API_BASE_URL="http://10.0.0.63:8080/niufa_chatbot/";
     public static final String app = "app/";
     public static final String token = "Authorization:d3d3Lm5pdWZhLmNu";

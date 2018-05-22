@@ -153,6 +153,55 @@
 
     </LinearLayout>
     <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/time_lay"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="35dp">
+        <TextView
+            android:layout_marginLeft="@dimen/icon_size_20dp"
+            android:text="持续时长"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/onehour_tv"
+            android:paddingTop="@dimen/layout_margin_2dp"
+            android:paddingBottom="@dimen/layout_margin_2dp"
+            android:textSize="13sp"
+            android:background="@drawable/shape_search1"
+            android:layout_marginLeft="@dimen/icon_size_20dp"
+            android:text="1小时"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/twohour_tv"
+            android:paddingTop="@dimen/layout_margin_2dp"
+            android:paddingBottom="@dimen/layout_margin_2dp"
+            android:textSize="13sp"
+            android:background="@drawable/shape_search1"
+            android:layout_marginLeft="5dp"
+            android:text="2小时"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/fourhour_tv"
+            android:paddingTop="@dimen/layout_margin_2dp"
+            android:paddingBottom="@dimen/layout_margin_2dp"
+            android:textSize="13sp"
+            android:background="@drawable/shape_search1"
+            android:layout_marginLeft="5dp"
+            android:text="4小时"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <LinearLayout
         android:layout_marginTop="5dp"
         android:layout_marginBottom="10dp"
         android:id="@+id/timepicker"

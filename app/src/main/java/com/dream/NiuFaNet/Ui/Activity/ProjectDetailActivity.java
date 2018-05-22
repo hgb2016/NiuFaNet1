@@ -238,18 +238,18 @@ public class ProjectDetailActivity extends CommonActivity implements ProgramDeta
                             if (schedule.size()>0) {
                                 nocalay.setVisibility(View.GONE);
                                 cal_lay.setVisibility(View.VISIBLE);
-                                addschedule_iv.setVisibility(View.VISIBLE);
+                               // addschedule_iv.setVisibility(View.VISIBLE);
                                 downSchedule_iv.setVisibility(View.VISIBLE);
                                 calendar_lv.setAdapter(new ProjectAdapter(this, schedule, R.layout.view_projectdetail));
                             }else {
                                 nocalay.setVisibility(View.VISIBLE);
-                                addschedule_iv.setVisibility(View.GONE);
+                                //addschedule_iv.setVisibility(View.GONE);
                                 downSchedule_iv.setVisibility(View.GONE);
                                 cal_lay.setVisibility(View.GONE);
                             }
                         }else {
                             nocalay.setVisibility(View.VISIBLE);
-                            addschedule_iv.setVisibility(View.GONE);
+                          //  addschedule_iv.setVisibility(View.GONE);
                             downSchedule_iv.setVisibility(View.GONE);
                         }
 
@@ -318,6 +318,7 @@ public class ProjectDetailActivity extends CommonActivity implements ProgramDeta
                         intent.putExtra("projectId", projectId);
                         intent.putExtra("projectTitle", projectTitle);
                         startActivityForResult(intent, 123);
+                        this.overridePendingTransition(R.anim.activity_open,R.anim.exitanim);
                     }
                 } else {
                     DialogUtils.getLoginTip(mActivity).show();
@@ -332,6 +333,7 @@ public class ProjectDetailActivity extends CommonActivity implements ProgramDeta
                         intent.putExtra("projectId", projectId);
                         intent.putExtra("projectTitle", projectTitle);
                         startActivityForResult(intent, 123);
+                        this.overridePendingTransition(R.anim.activity_open,R.anim.exitanim);
                     }
                 } else {
                     DialogUtils.getLoginTip(mActivity).show();
@@ -348,6 +350,7 @@ public class ProjectDetailActivity extends CommonActivity implements ProgramDeta
                     intent.putExtra(Const.intentTag, projectId);
                     intent.putExtra("proName", projectTitle);
                     startActivity(intent);
+
                 }
                 break;
         }
