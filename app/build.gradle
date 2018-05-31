@@ -18,8 +18,8 @@ android {
         applicationId "com.dream.NiuFaNet"
         minSdkVersion 16
         targetSdkVersion 22
-        versionCode 22
-        versionName "2.0.2"
+        versionCode 23
+        versionName "2.0.3"
         multiDexEnabled true
     }
     buildTypes {

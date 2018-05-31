@@ -18,10 +18,10 @@
             android:gravity="center">
 
             <ImageView
-                android:layout_marginRight="15dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
                 android:src="@mipmap/back" />
         </RelativeLayout>
 
@@ -57,132 +57,185 @@
             android:background="@color/gray" />
     </RelativeLayout>
 
+
     <LinearLayout
-
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_alignParentTop="true"
-        android:gravity="center">
-
-        <LinearLayout
-            android:id="@+id/search_lay"
-            android:layout_width="320dp"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:layout_height="30dp"
-            android:background="@drawable/edit_shape">
-
-            <EditText
-                android:imeOptions="actionSearch"
-                android:singleLine="true"
-                android:id="@+id/search_edt"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="30dp"
-                android:layout_marginLeft="10dp"
-                android:background="@null"
-                android:drawablePadding="5dp"
-                android:hint="搜索企业名称"
-                android:textColor="@color/black"
-                android:textSize="@dimen/text_size_14sp" />
-            <RelativeLayout
-                android:id="@+id/search_relay"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-            <ImageView
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:src="@mipmap/icon_search"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            </RelativeLayout>
-        </LinearLayout>
-    </LinearLayout>
-
-    <RelativeLayout
-        android:id="@+id/commonused_relay"
-        android:layout_width="match_parent"
-        android:layout_height="35dp"
-        android:layout_marginTop="10dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/icon_size_20dp"
-            android:text="常用客户"
-            android:textColor="@color/gray_93"
-            android:textSize="@dimen/text_size_15sp" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_alignParentBottom="true"
-            android:background="@color/gray" />
-    </RelativeLayout>
-
-    <com.dream.NiuFaNet.CustomView.MyGridView
-        android:id="@+id/client_gv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/icon_size_20dp"
-        android:layout_marginLeft="@dimen/icon_size_20dp"
-        android:layout_marginRight="@dimen/icon_size_20dp"
-        android:layout_marginTop="20dp"
-        android:numColumns="4"/>
+        android:orientation="vertical">
 
-    <RelativeLayout
-        android:id="@+id/allclient_relay"
-        android:layout_width="match_parent"
-        android:layout_height="35dp"
-        android:layout_marginTop="10dp">
+        <LinearLayout
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/icon_size_20dp"
-            android:text="全部客户"
-            android:textColor="@color/gray_93"
-            android:textSize="@dimen/text_size_15sp" />
-
-        <View
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_alignParentBottom="true"
-            android:background="@color/gray" />
-    </RelativeLayout>
+            android:layout_height="50dp"
+            android:layout_alignParentTop="true"
+            android:gravity="center">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+            <LinearLayout
+                android:id="@+id/search_lay"
+                android:layout_width="320dp"
 
-        <com.dream.NiuFaNet.CustomView.MyListView
-            android:id="@+id/client_lv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:divider="@null" />
+                android:layout_height="30dp"
+                android:background="@drawable/edit_shape"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:id="@+id/search_relay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+
+                        android:src="@mipmap/icon_search" />
+                </RelativeLayout>
+
+                <EditText
+                    android:id="@+id/search_edt"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:drawablePadding="5dp"
+                    android:hint="搜索企业名称"
+                    android:imeOptions="actionSearch"
+                    android:singleLine="true"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_14sp" />
+
+
+            </LinearLayout>
+        </LinearLayout>
 
         <RelativeLayout
-            android:background="@color/white"
-            android:id="@+id/sure_relay"
+            android:visibility="gone"
+            android:id="@+id/commonused_relay"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen50dp"
-            android:layout_alignParentBottom="true"
-            android:orientation="horizontal">
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="10dp"
-                android:background="@drawable/shape_grident" />
+            android:layout_height="35dp"
+            android:layout_marginTop="10dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="@dimen/icon_size_20dp"
-                android:text="确定"
-                android:textColor="@color/blue_title" />
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/icon_size_20dp"
+                android:text="常用客户"
+                android:textColor="@color/gray_93"
+                android:textSize="@dimen/text_size_15sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_alignParentBottom="true"
+                android:background="@color/gray" />
         </RelativeLayout>
-    </RelativeLayout>
+
+        <com.dream.NiuFaNet.CustomView.MyGridView
+            android:visibility="gone"
+            android:id="@+id/client_gv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/icon_size_20dp"
+            android:layout_marginLeft="@dimen/icon_size_20dp"
+            android:layout_marginRight="@dimen/icon_size_20dp"
+            android:layout_marginTop="20dp"
+            android:numColumns="4" />
+
+        <RelativeLayout
+            android:visibility="gone"
+            android:id="@+id/allclient_relay"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/icon_size_20dp"
+                android:text="全部客户"
+                android:textColor="@color/gray_93"
+                android:textSize="@dimen/text_size_15sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_alignParentBottom="true"
+                android:background="@color/gray" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/empty_lay"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:src="@mipmap/empty_client"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/textcolor_ac"
+                    android:text="一个客户都没有？马上去添加"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <com.scwang.smartrefresh.layout.SmartRefreshLayout
+                android:layout_above="@id/sure_relay"
+                android:id="@+id/refresh_lay"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fillViewport="true">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <com.dream.NiuFaNet.CustomView.MyListView
+                            android:id="@+id/client_lv"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:divider="@null" />
+                    </LinearLayout>
+                </ScrollView>
+            </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+            <RelativeLayout
+                android:id="@+id/sure_relay"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen50dp"
+                android:layout_alignParentBottom="true"
+                android:background="@color/white"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+                    android:background="@drawable/shape_grident" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/icon_size_20dp"
+                    android:text="确定"
+                    android:textColor="@color/blue_title" />
+            </RelativeLayout>
+        </RelativeLayout>
+    </LinearLayout>
+
 </LinearLayout>

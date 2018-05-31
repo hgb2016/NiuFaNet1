@@ -7,6 +7,7 @@ import com.dream.NiuFaNet.Base.RxPresenter;
 import com.dream.NiuFaNet.Bean.BaseBean;
 import com.dream.NiuFaNet.Bean.CommonBean;
 import com.dream.NiuFaNet.Bean.ProgramListBean;
+import com.dream.NiuFaNet.Bean.ProjectClientListBean;
 import com.dream.NiuFaNet.Contract.CodeContract;
 import com.dream.NiuFaNet.Contract.ProgramContract;
 
@@ -44,6 +45,34 @@ public class ProgramPresenter extends RxPresenter<ProgramContract.View> implemen
                     public void onNext(ProgramListBean dataBean) {
                         if (dataBean != null && mView != null) {
                             mView.showData(dataBean);
+                        }
+                    }
+
+                    @Override
+                    public void onCompleted() {
+                        mView.complete();
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                        Log.e(TAG, "onError: " + e);
+                        mView.showError();
+                    }
+                });
+        addSubscrebe(rxSubscription);
+    }
+
+    @Override
+    public void getProjectList(Map<String, String> map) {
+        Subscription rxSubscription = itApi.searchProjectClientList(map).subscribeOn(Schedulers.io())//放在异步中执行
+                .observeOn(AndroidSchedulers.mainThread())//回到主线程
+                .subscribe(new Observer<ProjectClientListBean>() {
+                    @Override
+                    public void onNext(ProjectClientListBean dataBean) {
+                        if (dataBean != null && mView != null) {
+                            mView.showProjectClientList(dataBean);
                         }
                     }
 

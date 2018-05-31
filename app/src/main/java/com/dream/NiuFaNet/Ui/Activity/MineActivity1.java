@@ -154,7 +154,12 @@ public class MineActivity1 extends CommonActivity implements VersionUpdateContra
                 break;
             //我的客户
             case R.id.client_lay:
-                IntentUtils.toActivityWithTag(ClientsActivity.class,mActivity,"client");
+                if (CommonAction.getIsLogin()){
+                    IntentUtils.toActivityWithTag(ClientsActivity.class,mActivity,"client");
+                }else {
+                    loginDialog.show();
+                }
+
                // startActivity(new Intent(mContext, ClientsActivity.class));
                 break;
             //谁可以看我的工作

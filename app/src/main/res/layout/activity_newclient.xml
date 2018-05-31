@@ -18,11 +18,11 @@
             android:gravity="center">
 
             <ImageView
-                android:layout_marginRight="@dimen/padding15"
                 android:id="@+id/close_iv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
+                android:layout_marginRight="@dimen/padding15"
                 android:src="@mipmap/icon_cancel" />
         </RelativeLayout>
 
@@ -79,12 +79,14 @@
                 <EditText
                     android:id="@+id/clientname_edt"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginLeft="@dimen/icon_size_20dp"
+                    android:layout_marginRight="@dimen/icon_size_20dp"
                     android:background="@null"
                     android:ellipsize="end"
+                    android:hint="客户名称"
                     android:maxLines="2"
-                    android:text="中国移动集团深圳分公司"
+                    android:text=""
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_size_16sp" />
             </LinearLayout>
@@ -131,12 +133,13 @@
                 android:background="@color/gray" />
 
             <LinearLayout
+                android:id="@+id/clientinfo_lay"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
                 <RelativeLayout
-                    android:id="@+id/address_relay"
+                    android:id="@+id/web_relay"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dimen50dp">
 
@@ -154,14 +157,14 @@
                     <EditText
                         android:id="@+id/web_edt"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="80dp"
                         android:layout_marginRight="30dp"
                         android:background="@null"
                         android:ellipsize="end"
-                        android:gravity="right"
+                        android:gravity="right|center_vertical"
                         android:hint="请输入网址"
                         android:maxLines="1"
                         android:textColor="@color/black"
@@ -192,16 +195,16 @@
                     <EditText
                         android:id="@+id/address_edt"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="80dp"
                         android:layout_marginRight="30dp"
                         android:background="@null"
                         android:ellipsize="end"
-                        android:gravity="right"
-                        android:hint="地址"
-                        android:maxLines="1"
+                        android:gravity="right|center_vertical"
+                        android:hint="请输入地址"
+                        android:maxLines="2"
                         android:textColor="@color/black"
                         android:textSize="@dimen/text_size_14sp" />
 
@@ -231,15 +234,16 @@
                     <EditText
                         android:id="@+id/phone_edt"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="80dp"
                         android:layout_marginRight="30dp"
                         android:background="@null"
                         android:ellipsize="end"
-                        android:gravity="right"
+                        android:gravity="right|center_vertical"
                         android:hint="请输入电话号码"
+                        android:inputType="number"
                         android:maxLines="1"
                         android:textColor="@color/black"
                         android:textSize="@dimen/text_size_14sp" />
@@ -269,14 +273,14 @@
                     <EditText
                         android:id="@+id/fax_edt"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="80dp"
                         android:layout_marginRight="30dp"
                         android:background="@null"
                         android:ellipsize="end"
-                        android:gravity="right"
+                        android:gravity="right|center_vertical"
                         android:hint="请输入传真"
                         android:maxLines="1"
                         android:textColor="@color/black"
@@ -288,20 +292,53 @@
                         android:layout_alignParentBottom="true"
                         android:background="@color/gray" />
                 </RelativeLayout>
+
+                <LinearLayout
+                    android:id="@+id/clientremark_lay"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/clientremark_edt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="34dp"
+                        android:layout_marginRight="@dimen/icon_size_20dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@null"
+                        android:hint="添加客户描述"
+                        android:textColor="@color/textcolor_93"
+                        android:textColorHint="@color/gray_d7"
+                        android:textSize="14sp" />
+                </LinearLayout>
             </LinearLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen50dp">
 
-                <TextView
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="20dp"
-                    android:text="联系人信息"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/text_size_15sp" />
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:text="联系人"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_size_15sp" />
+                    <TextView
+                        android:visibility="gone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="(点击可修改联系人信息）"
+                        android:textColor="@color/textcolor_ac"
+                        android:textSize="13sp" />
+                </LinearLayout>
 
                 <ImageView
                     android:id="@+id/addcontact_iv"
@@ -318,13 +355,15 @@
                     android:layout_alignParentBottom="true"
                     android:background="@color/gray" />
             </RelativeLayout>
+
             <com.dream.NiuFaNet.CustomView.MyListView
                 android:id="@+id/contact_lv"
-                android:divider="@null"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:divider="@null">
 
             </com.dream.NiuFaNet.CustomView.MyListView>
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen50dp">
@@ -358,12 +397,12 @@
                 android:id="@+id/particepant_gv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
+                android:layout_marginBottom="@dimen/icon_size_20dp"
                 android:layout_marginLeft="24dp"
                 android:layout_marginRight="@dimen/icon_size_20dp"
                 android:layout_marginTop="15dp"
                 android:horizontalSpacing="5dp"
-                android:numColumns="4"
+                android:numColumns="5"
                 android:verticalSpacing="5dp" />
         </LinearLayout>
     </ScrollView>

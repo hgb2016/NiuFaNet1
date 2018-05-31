@@ -20,10 +20,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <ImageView
+                android:id="@+id/delete_iv"
                 android:src="@mipmap/icon_dele"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <TextView
+                android:id="@+id/name_duty_tv"
                 android:layout_marginLeft="14dp"
                 android:textColor="@color/blue_title"
                 android:text="张小姐-法务"
@@ -33,20 +35,36 @@
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="1dp"/>
-            <TextView
-                android:textColor="@color/blue_title"
-                android:text="13421332323"
+            <ImageView
+                android:id="@+id/edit_iv"
+                android:layout_alignParentRight="true"
+                android:src="@mipmap/pen"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>
         <RelativeLayout
+            android:id="@+id/phone_relay"
             android:layout_marginTop="17dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
-                android:layout_alignParentRight="true"
+                android:layout_marginLeft="28dp"
+                android:id="@+id/phone_tv"
                 android:textColor="@color/blue_title"
-                android:text="1323424@qq.com"
+                android:text="134939393993"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/email_relay"
+            android:layout_marginTop="17dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_marginLeft="28dp"
+                android:id="@+id/email_tv"
+                android:textColor="@color/blue_title"
+                android:text=""
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </RelativeLayout>

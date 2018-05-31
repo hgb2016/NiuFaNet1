@@ -19,6 +19,7 @@ import com.dream.NiuFaNet.Base.CommonActivity;
 import com.dream.NiuFaNet.Base.CommonAdapter;
 import com.dream.NiuFaNet.Bean.MyFrendBean;
 import com.dream.NiuFaNet.Bean.ProgramListBean;
+import com.dream.NiuFaNet.Bean.ProjectClientListBean;
 import com.dream.NiuFaNet.Component.DaggerNFComponent;
 import com.dream.NiuFaNet.Contract.ProgramContract;
 import com.dream.NiuFaNet.CustomView.MyListView;
@@ -204,6 +205,11 @@ public class AddProjectActivity extends CommonActivity implements ProgramContrac
                 }
             }
         }
+    }
+
+    @Override
+    public void showProjectClientList(ProjectClientListBean dataBean) {
+
     }
 
     public class ProjectAdapter extends CommonAdapter<ProgramListBean.DataBean>{

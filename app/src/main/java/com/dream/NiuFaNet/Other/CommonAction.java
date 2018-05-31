@@ -8,6 +8,7 @@ import android.view.View;
 
 import com.dream.NiuFaNet.Bean.BusBean.LoginBus;
 import com.dream.NiuFaNet.Bean.BusBean.RefreshCalBean;
+import com.dream.NiuFaNet.Bean.BusBean.RefreshClientsBean;
 import com.dream.NiuFaNet.Bean.BusBean.RefreshContactBean;
 import com.dream.NiuFaNet.Bean.BusBean.RefreshMyToolsBean;
 import com.dream.NiuFaNet.Bean.BusBean.RefreshProBean;
@@ -140,4 +141,10 @@ public class CommonAction {
         busBean.setEventStr(Const.refresh);
         EventBus.getDefault().post(busBean);
     }
+    public static void refreshClients(){
+        RefreshClientsBean refreshClientsBean=new RefreshClientsBean();
+        refreshClientsBean.setEventStr(Const.refresh);
+        EventBus.getDefault().post(refreshClientsBean);
+    }
+
 }

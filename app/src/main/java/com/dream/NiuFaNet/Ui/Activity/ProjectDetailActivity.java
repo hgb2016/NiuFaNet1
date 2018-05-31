@@ -26,10 +26,12 @@ import com.dream.NiuFaNet.Base.CommonActivity;
 import com.dream.NiuFaNet.Base.CommonAdapter;
 import com.dream.NiuFaNet.Base.RVBaseAdapter;
 import com.dream.NiuFaNet.Base.RVBaseHolder;
+import com.dream.NiuFaNet.Bean.ClientDescBean;
 import com.dream.NiuFaNet.Bean.CommonBean;
 import com.dream.NiuFaNet.Bean.ProgramDetailBean;
 import com.dream.NiuFaNet.Component.DaggerNFComponent;
 import com.dream.NiuFaNet.Contract.ProgramDetailContract;
+import com.dream.NiuFaNet.Contract.SearchClientDescContract;
 import com.dream.NiuFaNet.CustomView.MyGridView;
 import com.dream.NiuFaNet.CustomView.MyListView;
 import com.dream.NiuFaNet.CustomView.MyScrollView;
@@ -38,6 +40,7 @@ import com.dream.NiuFaNet.Other.CommonAction;
 import com.dream.NiuFaNet.Other.Const;
 import com.dream.NiuFaNet.Other.MyApplication;
 import com.dream.NiuFaNet.Presenter.ProgramDetailPresenter;
+import com.dream.NiuFaNet.Presenter.SearchClientDescPresenter;
 import com.dream.NiuFaNet.R;
 import com.dream.NiuFaNet.Utils.CalculateTimeUtil;
 import com.dream.NiuFaNet.Utils.DateFormatUtil;
@@ -46,6 +49,7 @@ import com.dream.NiuFaNet.Utils.DensityUtil;
 import com.dream.NiuFaNet.Utils.Dialog.DialogUtils;
 import com.dream.NiuFaNet.Utils.ImmUtils;
 import com.dream.NiuFaNet.Utils.MapUtils;
+import com.dream.NiuFaNet.Utils.PopUtils;
 import com.dream.NiuFaNet.Utils.PopWindowUtil;
 import com.dream.NiuFaNet.Utils.ResourcesUtils;
 import com.dream.NiuFaNet.Utils.RvUtils;
@@ -74,7 +78,7 @@ import butterknife.OnClick;
 /**
  * Created by Administrator on 2017/12/4 0004.
  */
-public class ProjectDetailActivity extends CommonActivity implements ProgramDetailContract.View, MyScrollView.OnScrollListener {
+public class ProjectDetailActivity extends CommonActivity implements ProgramDetailContract.View, MyScrollView.OnScrollListener ,SearchClientDescContract.View{
 
     @Inject
     ProgramDetailPresenter detailPresenter;
@@ -123,9 +127,19 @@ public class ProjectDetailActivity extends CommonActivity implements ProgramDeta
     ImageView addschedule_iv;
     @Bind(R.id.downSchedule_iv)
     ImageView downSchedule_iv;
+    @Bind(R.id.client_lay)
+    LinearLayout client_relay;
+    @Bind(R.id.client_tv)
+    TextView client_tv;
+    @Bind({R.id.case_relay})
+    RelativeLayout case_relay;
+    @Bind(R.id.case_tv)
+    TextView case_tv;
     private int page= 1;
     private boolean isLoadMore;
     private  List<ProgramDetailBean.DataBean.scheduleBean> schedule=new ArrayList<>();
+    @Inject
+    SearchClientDescPresenter searchClientDescPresenter;
     @Override
     public int getLayoutId() {
         return R.layout.activity_projectdetail;
@@ -138,6 +152,7 @@ public class ProjectDetailActivity extends CommonActivity implements ProgramDeta
                 .build()
                 .inject(this);
         detailPresenter.attachView(this);
+        searchClientDescPresenter.attachView(this);
         imm = ImmUtils.getImm(mActivity);
         initTopPopwindow();
         participantAdapter = new ParticipantAdapter(this, participantList, R.layout.gvitem_timg_btext);
@@ -150,7 +165,6 @@ public class ProjectDetailActivity extends CommonActivity implements ProgramDeta
     @Override
     public void initDatas() {
         projectId = getIntent().getStringExtra(Const.intentTag);
-        Log.e("tag", "projectId=" + projectId);
         if (projectId != null) {
             mLoadingDialog.show();
             detailPresenter.getProjectProgramDetail(projectId,CommonAction.getUserId(),String.valueOf(page));
@@ -219,13 +233,29 @@ public class ProjectDetailActivity extends CommonActivity implements ProgramDeta
                         } else {
                             desc_tv.setVisibility(View.GONE);
                         }
+                        String caseNo = data.getCaseNo();
+                        if (caseNo!=null&&!caseNo.isEmpty()){
+                            case_relay.setVisibility(View.VISIBLE);
+                            case_tv.setText(caseNo);
+                        }else {
+                            case_relay.setVisibility(View.GONE);
+                        }
+                        if (!data.getClientId().equals("0")){
+                            client_relay.setVisibility(View.VISIBLE);
+                            client_tv.setText(data.getClientName());
+                        }else {
+                            client_relay.setVisibility(View.GONE);
+                        }
                         if (status != null && !status.isEmpty()) {
-                            if (status.equals("1")) {
+                            if (status.equals("2")) {
                                 project_status.setBackgroundResource(R.drawable.shape_projectstatus1);
                                 project_status.setText("已完成");
                             } else if (status.equals("0")) {
                                 project_status.setBackgroundResource(R.drawable.shape_projectstatus);
                                 project_status.setText("进行中");
+                            }else if (status.equals("1")){
+                                project_status.setBackgroundResource(R.drawable.shape_projectstatus);
+                                project_status.setText("洽谈中");
                             }
                         }
                         if (page==1){
@@ -303,7 +333,7 @@ public class ProjectDetailActivity extends CommonActivity implements ProgramDeta
         mLoadingDialog.dismiss();
     }
 
-    @OnClick({R.id.back_relay, R.id.add_schedule, R.id.add_schedule1, R.id.more_relay, R.id.downSchedule_iv})
+    @OnClick({R.id.back_relay, R.id.add_schedule, R.id.add_schedule1, R.id.more_relay, R.id.downSchedule_iv,R.id.desc_tv,R.id.client_lay})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.back_relay:
@@ -353,6 +383,15 @@ public class ProjectDetailActivity extends CommonActivity implements ProgramDeta
 
                 }
                 break;
+            case R.id.desc_tv:
+                String desc=desc_tv.getText().toString().trim();
+                if (!TextUtils.isEmpty(desc)){
+                    PopUtils.showDetailPop(view,desc,mContext);
+                }
+                break;
+            case R.id.client_lay:
+                searchClientDescPresenter.searchClientDesc(CommonAction.getUserId(),tempData.getClientId());
+                break;
         }
 
     }
@@ -376,6 +415,36 @@ public class ProjectDetailActivity extends CommonActivity implements ProgramDeta
             }
 
         }
+    }
+    //判断是否有查看客户的权限
+    @Override
+    public void showData(ClientDescBean dataBean) {
+        if (dataBean.getError().equals(Const.success)){
+            String isshow=dataBean.getIsShow();
+            if (isshow.equals("Y")){
+                Intent intent=new Intent();
+                intent.putExtra("clientId",tempData.getClientId());
+                intent.setClass(mContext,ClientDetailActivity.class);
+                startActivity(intent);
+            }else {
+                ToastUtils.Toast_short("您没有查看此客户的权限！");
+            }
+        }
+    }
+
+    @Override
+    public void showDeleteResult(CommonBean commonBean) {
+
+    }
+
+    @Override
+    public void showAddContactResult(CommonBean commonBean) {
+
+    }
+
+    @Override
+    public void showDeleMyClientContactResult(CommonBean commonBean) {
+
     }
 
     //项目日程列表
@@ -527,7 +596,6 @@ public class ProjectDetailActivity extends CommonActivity implements ProgramDeta
                 DialogUtils.showDeleteDialog(mContext, new NoDoubleClickListener() {
                     @Override
                     public void onNoDoubleClick(View view) {
-
                         detailPresenter.deleteProject(projectId);
                     }
                 });

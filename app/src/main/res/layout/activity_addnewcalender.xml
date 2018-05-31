@@ -143,7 +143,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/layout_margin_5dp"
-                                android:text="9:00"
+                                android:text="--:--"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/text_size_22sp" />
 
@@ -152,7 +152,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/layout_margin_5dp"
-                                android:text="2月19日(周五)"
+                                android:text="--月--日(--)"
                                 android:textColor="@color/text_2"
                                 android:textSize="@dimen/sp_12" />
                         </LinearLayout>
@@ -173,7 +173,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerInParent="true"
-                                android:text="1.5小时"
+                                android:text=""
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/sp_12" />
                         </RelativeLayout>
@@ -197,7 +197,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/layout_margin_5dp"
-                                android:text="19:00"
+                                android:text="--:--"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/text_size_22sp" />
 
@@ -206,7 +206,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/layout_margin_5dp"
-                                android:text="2月19日(周五)"
+                                android:text="--月--日(--)"
                                 android:textColor="@color/text_2"
                                 android:textSize="@dimen/sp_12" />
                         </LinearLayout>

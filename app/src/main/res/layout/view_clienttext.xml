@@ -1,49 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
     <LinearLayout
-        android:paddingRight="@dimen/icon_size_20dp"
-        android:paddingLeft="@dimen/icon_size_20dp"
-        android:paddingBottom="15dp"
-        android:paddingTop="15dp"
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:ellipsize="end"
-            android:maxLines="2"
-            android:textColor="@color/black"
-            android:text="中国移动集团深圳分公司"
-            android:textSize="@dimen/text_size_15sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="15dp"
+        android:paddingLeft="@dimen/icon_size_20dp"
+        android:paddingRight="@dimen/icon_size_20dp"
+        android:paddingTop="15dp">
+
         <LinearLayout
-            android:gravity="center_vertical"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <ImageView
-                android:src="@mipmap/location"
-                android:layout_width="10dp"
-                android:layout_height="@dimen/layout_padding_12dp" />
+            android:layout_marginRight="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
             <TextView
+                android:id="@+id/clientname_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:maxLines="2"
-                android:layout_marginLeft="5dp"
-                android:textSize="13sp"
-                android:text="尚美科技科技大厦"
-                android:textColor="@color/textcolor_ac"
+                android:text=""
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_15sp" />
+
+            <LinearLayout
+
+                android:id="@+id/address_lay"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="10dp"
+                    android:layout_height="@dimen/layout_padding_12dp"
+                    android:src="@mipmap/location" />
+
+                <TextView
+                    android:id="@+id/address_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="10dp"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:text=""
+                    android:textColor="@color/textcolor_ac"
+                    android:textSize="13sp" />
+            </LinearLayout>
+        </LinearLayout>
+        <View
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"/>
+        <LinearLayout
+            android:id="@+id/check_lay"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/check_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/padding20"
+                android:src="@mipmap/emptycheck_2" />
         </LinearLayout>
     </LinearLayout>
-    <View
 
-        android:layout_marginRight="@dimen/icon_size_20dp"
-        android:layout_marginLeft="@dimen/icon_size_20dp"
-        android:background="@color/gray_1"
+    <View
         android:layout_width="match_parent"
-        android:layout_height="@dimen/layout_padding_1dp"/>
+        android:layout_height="@dimen/layout_padding_1dp"
+        android:layout_marginLeft="@dimen/icon_size_20dp"
+        android:layout_marginRight="@dimen/icon_size_20dp"
+        android:background="@color/gray_1" />
 </LinearLayout>

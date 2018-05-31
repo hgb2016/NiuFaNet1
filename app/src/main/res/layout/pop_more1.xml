@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:background="@drawable/more_shape"
+        android:layout_marginRight="10dp"
+        android:orientation="vertical"
+        android:layout_width="100dp"
+        android:layout_height="88dp">
+        <TextView
+            android:id="@+id/editclient_tv"
+            android:gravity="center"
+            android:textSize="@dimen/text_size_14sp"
+            android:text="编辑"
+            android:textColor="@color/blue_title"
+            android:layout_width="match_parent"
+            android:layout_height="44dp" />
+        <TextView
+            android:id="@+id/deleteclient_tv"
+            android:gravity="center"
+            android:textSize="@dimen/text_size_14sp"
+            android:text="删除"
+            android:textColor="@color/red_delete"
+            android:layout_width="match_parent"
+            android:layout_height="44dp" />
+    </LinearLayout>
+</LinearLayout>

@@ -49,11 +49,18 @@
             android:gravity="center_vertical"
             android:paddingRight="15dp">
 
-            <ImageView
-                android:id="@+id/prostatu_iv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/ing"/>
+            <TextView
+                android:id="@+id/prostatu_tv"
+                android:layout_marginRight="10dp"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/arrow"
+                android:gravity="center"
+                android:textSize="12sp"
+                android:textColor="@color/white"
+                android:text="进行中"
+                android:background="@drawable/shape_projectstatus"
+                android:layout_width="60dp"
+                android:layout_height="20dp" />
 
             <ImageView
                 android:id="@+id/spand_iv"

@@ -8,12 +8,11 @@
 
 
     <RelativeLayout
-        android:layout_marginTop="44dp"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/title_height">
+        android:layout_height="@dimen/title_height"
+        android:layout_marginTop="44dp">
 
         <TextView
-            android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -22,7 +21,8 @@
             android:layout_marginLeft="20dp"
             android:text="项目"
             android:textColor="@color/black"
-            android:textSize="30sp" />
+            android:textSize="30sp"
+            android:textStyle="bold" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -35,30 +35,85 @@
             android:layout_alignParentBottom="true"
             android:background="@color/gray" />
 
-        <TextView
-            android:layout_marginLeft="@dimen/icon_size_24dp"
-            android:id="@+id/sort_tv"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_centerVertical="true"
-            android:drawablePadding="@dimen/layout_margin_5dp"
-            android:drawableRight="@mipmap/down"
-            android:gravity="center"
-            android:text="更新时间"
-            android:textColor="@color/black" />
+            android:layout_toLeftOf="@id/search_relay">
+
+            <LinearLayout
+                android:id="@+id/paixu_lay"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/sort_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+
+                    android:gravity="center"
+                    android:text="排序"
+                    android:textColor="@color/black" />
+
+                <ImageView
+                    android:id="@+id/sort_iv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:src="@mipmap/down" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/gray_1" />
+
+            <LinearLayout
+                android:id="@+id/shaixuan_lay"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/sort1_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="筛选"
+                    android:textColor="@color/black" />
+
+                <ImageView
+                    android:id="@+id/sort1_iv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:src="@mipmap/down" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/gray_1" />
+        </LinearLayout>
 
         <RelativeLayout
             android:id="@+id/search_relay"
-            android:layout_alignParentRight="true"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true">
+
             <ImageView
-                android:layout_marginLeft="33dp"
-                android:layout_centerInParent="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="33dp"
                 android:src="@mipmap/icon_search" />
         </RelativeLayout>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
@@ -66,41 +121,76 @@
             android:background="@color/gray" />
     </RelativeLayout>
 
+    <LinearLayout
+        android:id="@+id/sort_lay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <com.dream.NiuFaNet.CustomView.MyListView
+            android:id="@+id/sort_lv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@color/gray_1"
+            android:dividerHeight="@dimen/layout_padding_1dp" />
+    </LinearLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <com.scwang.smartrefresh.layout.SmartRefreshLayout
             android:id="@+id/smart_refreshlay"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-          <!--  <com.dream.NiuFaNet.group.GroupRecyclerView
-                android:id="@+id/project_rv"
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:overScrollMode="never"
-                app:group_background="@color/white"
-                app:group_center="false"
-                app:group_has_header="false"
-                app:group_height="42dp"
-                app:group_padding_left="20dp"
-                app:group_padding_right="16dp"
-                app:group_text_color="#FFA1A1A1"
-                app:group_text_size="20sp" />-->
-            <com.kevin.wraprecyclerview.WrapRecyclerView
-                android:id="@+id/project_rv"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/moren_f2"
-                android:overScrollMode="never"/>
+                android:orientation="vertical">
+
+                <com.dream.NiuFaNet.group.GroupRecyclerView
+                    android:id="@+id/project_grv"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:overScrollMode="never"
+                    android:visibility="gone"
+                    app:group_background="#f6f6f6"
+                    app:group_center="false"
+                    app:group_has_header="false"
+                    app:group_height="42dp"
+                    app:group_padding_left="20dp"
+                    app:group_padding_right="16dp"
+                    app:group_text_color="#FFA1A1A1"
+                    app:group_text_size="@dimen/text_size_18sp" />
+
+                <com.kevin.wraprecyclerview.WrapRecyclerView
+
+                    android:id="@+id/project_rv"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/moren_f2"
+                    android:overScrollMode="never" />
+
+            </LinearLayout>
         </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+        <View
+            android:id="@+id/bg_v"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/bg_d933"
+            android:visibility="gone" />
+
         <ImageView
             android:id="@+id/add_program"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
             android:layout_marginBottom="40dp"
             android:layout_marginRight="30dp"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
-            android:src="@mipmap/icon_add"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:src="@mipmap/icon_add" />
     </RelativeLayout>
 </LinearLayout>

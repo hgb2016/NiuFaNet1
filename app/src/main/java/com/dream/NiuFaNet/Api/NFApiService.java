@@ -7,6 +7,8 @@ import com.dream.NiuFaNet.Bean.CalInviteBean;
 import com.dream.NiuFaNet.Bean.CalendarDetailBean;
 import com.dream.NiuFaNet.Bean.CalenderedBean;
 import com.dream.NiuFaNet.Bean.ChatBean;
+import com.dream.NiuFaNet.Bean.ClientDataBean;
+import com.dream.NiuFaNet.Bean.ClientDescBean;
 import com.dream.NiuFaNet.Bean.CommonBean;
 import com.dream.NiuFaNet.Bean.CommonBean1;
 import com.dream.NiuFaNet.Bean.FriendNoticeBean;
@@ -22,6 +24,7 @@ import com.dream.NiuFaNet.Bean.NewCalResultBean;
 import com.dream.NiuFaNet.Bean.NewProResultBean;
 import com.dream.NiuFaNet.Bean.ProgramDetailBean;
 import com.dream.NiuFaNet.Bean.ProgramListBean;
+import com.dream.NiuFaNet.Bean.ProjectClientListBean;
 import com.dream.NiuFaNet.Bean.RecomendBean;
 import com.dream.NiuFaNet.Bean.RegisterBean;
 import com.dream.NiuFaNet.Bean.RemindWordBean;
@@ -33,6 +36,7 @@ import com.dream.NiuFaNet.Bean.VersionBean;
 import com.dream.NiuFaNet.Bean.VoiceRvBean;
 import com.dream.NiuFaNet.Bean.WorkVisibleBean;
 import com.dream.NiuFaNet.Other.Const;
+import com.dream.NiuFaNet.Ui.Fragment.ProjectFragment;
 
 import java.io.File;
 import java.util.List;
@@ -404,5 +408,59 @@ public interface NFApiService {
     @POST(Const.app+"apiUploadApk.do")
     Observable<CommonBean> uploadApk(@Part MultipartBody.Part fdImg_file, @Part("version") RequestBody version);
 
+    //创建客户
+    @Headers({Const.token})
+    @FormUrlEncoded
+    @POST(Const.app+"addMyClient.do")
+    Observable<CommonBean> addMyClient(@Field("data") String data);
 
+    //获取我的用户集合
+    @Headers({Const.token})
+    @FormUrlEncoded
+    @POST(Const.app+"searchMyClients.do")
+    Observable<ClientDataBean> searchMyClients(@Field("userId") String userId,@FieldMap Map<String,String> map);
+
+
+    //根据客户编号查看客户详情
+    @Headers({Const.token})
+    @FormUrlEncoded
+    @POST(Const.app+"searchMyClientDesc.do")
+    Observable<ClientDescBean> searchMyClientDesc(@Field("userId") String userId, @Field("clientId") String clientId);
+
+    //删除客户信息
+    @Headers({Const.token})
+    @FormUrlEncoded
+    @POST(Const.app+"deleMyClient.do")
+    Observable<CommonBean> deleMyClient(@Field("userId") String userId,@Field("clientId") String clientId);
+
+    //删除客户下的联系人
+    @Headers({Const.token})
+    @FormUrlEncoded
+    @POST(Const.app+"deleMyClientContact.do")
+    Observable<CommonBean> deleMyClientContact(@Field("userId") String userId,@Field("clientId") String clientId,@Field("id") String id);
+
+    //删除客户下的谁可见
+    @Headers({Const.token})
+    @FormUrlEncoded
+    @POST(Const.app+"deleMyClientUser.do")
+    Observable<CommonBean> deleMyClientUser(@Field("userId") String userId,@Field("clientId") String clientId,@Field("id") String id);
+
+
+    //修改或新增常用联系人
+    @Headers({Const.token})
+    @FormUrlEncoded
+    @POST(Const.app+"addClientContact.do")
+    Observable<CommonBean> addClientContact(@Field("data") String data);
+
+    //新增谁可见
+    @Headers({Const.token})
+    @FormUrlEncoded
+    @POST(Const.app+"addClientShowUser.do")
+    Observable<CommonBean> addClientShowUser(@Field("data") String data);
+
+    //按客户排序查询项目
+    @Headers({Const.token})
+    @FormUrlEncoded
+    @POST(Const.app+"searchProjectClientList.do")
+    Observable<ProjectClientListBean> searchProjectClientList(@FieldMap Map<String,String> map);
 }

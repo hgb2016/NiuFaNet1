@@ -20,6 +20,7 @@ import com.dream.NiuFaNet.Base.RVBaseAdapter;
 import com.dream.NiuFaNet.Base.RVBaseHolder;
 import com.dream.NiuFaNet.Bean.BusBean.RefreshBean;
 import com.dream.NiuFaNet.Bean.CalendarDetailBean;
+import com.dream.NiuFaNet.Bean.ClientDescBean;
 import com.dream.NiuFaNet.Bean.MyFrendBean;
 import com.dream.NiuFaNet.Bean.ProgramDetailBean;
 import com.dream.NiuFaNet.Component.DaggerNFComponent;
@@ -175,6 +176,8 @@ public class MyFrendsActivity extends CommonActivity implements MyFrendsContract
                 if (people!=null){
                     List<CalendarDetailBean.DataBean.participantBean> participantBeanList=new ArrayList<>();
                     List<ProgramDetailBean.DataBean.participantBean> participantBeanList1=new ArrayList<>();
+                    List<MyFrendBean.DataBean> usetlist=new ArrayList<>();
+                    List<ClientDescBean.DataBean.UserBean> clientusetlist=new ArrayList<>();
                     if (tag!=null){
                         if (tag.equals("newpro")){
                             participantBeanList1  = (List<ProgramDetailBean.DataBean.participantBean>) people.getSerializable("peoplelist");
@@ -185,7 +188,7 @@ public class MyFrendsActivity extends CommonActivity implements MyFrendsContract
                                     }
                                 }
                             }
-                        }else {
+                        }else if (tag.equals("newcal")||tag.equals("caldetail")){
                             participantBeanList  = (List<CalendarDetailBean.DataBean.participantBean>) people.getSerializable("peoplelist");
                             for (int i=0;i<participantBeanList.size();i++){
                                 for (int j=0;j<dataList.size();j++){
@@ -205,6 +208,24 @@ public class MyFrendsActivity extends CommonActivity implements MyFrendsContract
                                 }
                             }*/
                             Log.e("tag","去重结果="+new Gson().toJson(dataList));
+                        }else if (tag.equals("newclient")){
+                            usetlist=(List<MyFrendBean.DataBean>) people.getSerializable("peoplelist");
+                            for (int i=0;i<usetlist.size();i++){
+                                for (int j=0;j<dataList.size();j++){
+                                    if (dataList.get(j).getFriendId().equals(usetlist.get(i).getFriendId())){
+                                        dataList.remove(j);
+                                    }
+                                }
+                            }
+                        }else if (tag.equals("whocansee")){
+                            clientusetlist=(List<ClientDescBean.DataBean.UserBean>) people.getSerializable("peoplelist");
+                            for (int i=0;i<clientusetlist.size();i++){
+                                for (int j=0;j<dataList.size();j++){
+                                    if (dataList.get(j).getFriendId().equals(clientusetlist.get(i).getUserId())){
+                                        dataList.remove(j);
+                                    }
+                                }
+                            }
                         }
                     }
                 }

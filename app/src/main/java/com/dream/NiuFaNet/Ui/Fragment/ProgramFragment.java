@@ -28,6 +28,7 @@ import com.dream.NiuFaNet.Bean.BusBean.RefreshProBean;
 import com.dream.NiuFaNet.Bean.CalendarDetailBean;
 import com.dream.NiuFaNet.Bean.CommonBean;
 import com.dream.NiuFaNet.Bean.ProgramListBean;
+import com.dream.NiuFaNet.Bean.ProjectClientListBean;
 import com.dream.NiuFaNet.Component.DaggerNFComponent;
 import com.dream.NiuFaNet.Contract.ProCalContract;
 import com.dream.NiuFaNet.Contract.ProgramContract;
@@ -259,6 +260,11 @@ public class ProgramFragment extends BaseFragmentV4 implements ProgramContract.V
             }
             programAdapter.notifyDataSetChanged();
         }
+    }
+
+    @Override
+    public void showProjectClientList(ProjectClientListBean dataBean) {
+
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

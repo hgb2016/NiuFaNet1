@@ -437,6 +437,8 @@
         </activity>
         <activity android:name=".Ui.Activity.ClientsActivity">
         </activity>
+        <activity android:name=".Ui.Activity.ClientDetailActivity">
+        </activity>
         <activity android:name=".Ui.Activity.NewClientActivity">
         </activity>
         <activity android:name=".Ui.Activity.FriendDetailActivity">
@@ -456,6 +458,8 @@
         <activity android:name=".Ui.Activity.VoiceActivity" >
         </activity>
         <activity android:name=".Ui.Activity.SearchProjectActivity" >
+        </activity>
+        <activity android:name=".Ui.Activity.WhoCanSeeClientActivity" >
         </activity>
         <activity android:name=".Ui.Activity.PopVoiceActivity" android:theme="@style/Theme_dialog">
         </activity>

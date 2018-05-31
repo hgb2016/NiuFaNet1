@@ -77,7 +77,7 @@
             android:ellipsize="end"
             android:maxLength="20"
             android:maxLines="2"
-            android:text="中移动股权结构调整方案研讨"
+            android:text=""
             android:textColor="@color/black"
             android:textSize="16sp" />
 
@@ -135,8 +135,39 @@
                         android:layout_height="0.5dp"
                         android:background="@color/gray" />
 
+                    <RelativeLayout
+                        android:visibility="gone"
+                        android:id="@+id/case_relay"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dimen50dp">
+
+                        <ImageView
+                            android:id="@+id/case_iv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="37dp"
+                            android:src="@mipmap/number" />
+                        <TextView
+                            android:id="@+id/case_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="18dp"
+                            android:layout_toRightOf="@id/case_iv"
+                            android:text=""
+                            android:textColor="#949494"
+                            android:textSize="@dimen/text_size_15sp" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.5dp"
+                            android:layout_alignParentBottom="true"
+                            android:background="@color/gray" />
+                    </RelativeLayout>
+
                     <LinearLayout
-                        android:id="@+id/project_relay"
+                        android:id="@+id/client_lay"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/dimen50dp"
                         android:gravity="center_vertical"
@@ -147,14 +178,14 @@
                             android:layout_width="30dp"
                             android:layout_height="30dp"
                             android:layout_marginLeft="30dp"
-                            android:src="@mipmap/icon_project" />
+                            android:src="@mipmap/icon_client" />
 
                         <TextView
-                            android:id="@+id/project_tv"
+                            android:id="@+id/client_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
-                            android:text="中国移动集团深圳分公司"
+                            android:text=""
                             android:textColor="#949494"
                             android:textSize="@dimen/text_size_15sp" />
 
@@ -251,6 +282,7 @@
                         android:id="@+id/ll_tabView"
                         android:layout_width="match_parent"
                         android:layout_height="50dp">
+
                         <LinearLayout
                             android:id="@+id/tv_topView"
                             android:layout_width="match_parent"
@@ -258,11 +290,13 @@
                             android:layout_alignParentBottom="true"
                             android:background="@color/white"
                             android:orientation="vertical">
+
                             <View
                                 android:layout_width="match_parent"
                                 android:layout_height="5dp"
                                 android:layout_alignParentTop="true"
                                 android:background="@drawable/shape_grident" />
+
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="40dp"
@@ -296,12 +330,13 @@
                                     android:src="@mipmap/export" />
 
                                 <ImageView
-                                    android:visibility="gone"
                                     android:layout_width="18dp"
                                     android:layout_height="18dp"
                                     android:layout_marginRight="24dp"
-                                    android:src="@mipmap/contact_add" />
+                                    android:src="@mipmap/contact_add"
+                                    android:visibility="gone" />
                             </LinearLayout>
+
                             <View
                                 android:layout_width="match_parent"
                                 android:layout_height="4dp"
@@ -357,13 +392,15 @@
                         android:gravity="center"
                         android:orientation="vertical"
                         android:visibility="gone">
+
                         <TextView
-                            android:visibility="gone"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="该项目目前没有日程"
                             android:textColor="#FFD7D7D7"
-                            android:textSize="13sp" />
+                            android:textSize="13sp"
+                            android:visibility="gone" />
+
                         <ImageView
                             android:id="@+id/add_schedule1"
                             android:layout_width="match_parent"
@@ -380,14 +417,15 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:orientation="vertical"></LinearLayout>
-         <ImageView
-             android:id="@+id/add_schedule"
-             android:layout_marginLeft="295dp"
-             android:layout_marginBottom="80dp"
-             android:layout_gravity="bottom"
-             android:src="@mipmap/icon_add"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content" />
+
+        <ImageView
+            android:id="@+id/add_schedule"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:layout_marginBottom="80dp"
+            android:layout_marginRight="30dp"
+            android:src="@mipmap/icon_add" />
     </FrameLayout>
 
 </LinearLayout>

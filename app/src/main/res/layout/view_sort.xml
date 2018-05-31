@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen50dp">
+
+        <TextView
+
+            android:id="@+id/sort_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/icon_size_40dp"
+            android:text="进行中"
+            android:textColor="@color/black" />
+
+        <ImageView
+            android:id="@+id/check_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/icon_size_20dp"
+            android:src="@mipmap/icon_blueyes" />
+    </RelativeLayout>
+</LinearLayout>

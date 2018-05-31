@@ -58,6 +58,15 @@ public class ProgramListBean {
         private String caseNo;
         private boolean isSelect;
         private boolean isExpand;
+        private String clientName;
+
+        public String getClientName() {
+            return clientName;
+        }
+
+        public void setClientName(String clientName) {
+            this.clientName = clientName;
+        }
 
         public boolean isExpand() {
             return isExpand;

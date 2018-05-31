@@ -27,6 +27,7 @@ import com.dream.NiuFaNet.Base.RVBaseHolder;
 import com.dream.NiuFaNet.Bean.CommonBean;
 import com.dream.NiuFaNet.Bean.Contact;
 import com.dream.NiuFaNet.Bean.ProgramListBean;
+import com.dream.NiuFaNet.Bean.ProjectClientListBean;
 import com.dream.NiuFaNet.Bean.SearchUserBean;
 import com.dream.NiuFaNet.Component.DaggerNFComponent;
 import com.dream.NiuFaNet.Contract.ProgramContract;
@@ -131,8 +132,6 @@ public class SearchProjectActivity extends CommonActivity  implements ProgramCon
         smart_refreshlay.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-//                Map<String,String> map = new HashMap<String, String>();
-//                map.put("page",String.valueOf(1));
                 isLoadMore = false;
                 pageNum = 1;
                 Map<String, String> map = MapUtils.getMapInstance();
@@ -218,6 +217,12 @@ public class SearchProjectActivity extends CommonActivity  implements ProgramCon
             programAdapter.notifyDataSetChanged();
         }
     }
+
+    @Override
+    public void showProjectClientList(ProjectClientListBean dataBean) {
+
+    }
+
     //展开列表
     public class ProgramAdapter extends BaseQuickAdapter<ProgramListBean.DataBean, BaseViewHolder> {
 
@@ -235,13 +240,18 @@ public class SearchProjectActivity extends CommonActivity  implements ProgramCon
             TextView prostatu_tv = holder.getView(R.id.prostatu_tv);
             final ImageView spand_iv = holder.getView(R.id.spand_iv);
             LinearLayout right_lay = holder.getView(R.id.right_lay);
-            if (baseBean.getStatus().equals("1")) {
+            if (baseBean.getStatus().equals("2")) {
                 prostatu_tv.setText("已完成");
                 prostatu_tv.setBackgroundResource(R.drawable.shape_projectstatus1);
                 prostatu_iv.setImageResource(R.mipmap.end);
                 proname_tv.setTextColor(ResourcesUtils.getColor(R.color.color6c));
-            }else {
+            }else if (baseBean.getStatus().equals("0")){
                 prostatu_tv.setText("进行中");
+                prostatu_tv.setBackgroundResource(R.drawable.shape_projectstatus);
+                prostatu_iv.setImageResource(R.mipmap.ing);
+                proname_tv.setTextColor(ResourcesUtils.getColor(R.color.black));
+            }else if (baseBean.getStatus().equals("1")){
+                prostatu_tv.setText("洽谈中");
                 prostatu_tv.setBackgroundResource(R.drawable.shape_projectstatus);
                 prostatu_iv.setImageResource(R.mipmap.ing);
                 proname_tv.setTextColor(ResourcesUtils.getColor(R.color.black));
@@ -260,11 +270,9 @@ public class SearchProjectActivity extends CommonActivity  implements ProgramCon
 
             if (baseBean.isExpand()){
                 spand_lay.setVisibility(View.VISIBLE);
-//                spand_iv.startAnimation(AnimaCommonUtil.getNiRotate());
                 spand_iv.setImageResource(R.mipmap.up_black);
             }else {
                 spand_lay.setVisibility(View.GONE);
-//                spand_iv.startAnimation(AnimaCommonUtil.getShunRotate());
                 spand_iv.setImageResource(R.mipmap.down_black);
             }
             holder.itemView.setOnClickListener(new NoDoubleClickListener() {
@@ -281,11 +289,9 @@ public class SearchProjectActivity extends CommonActivity  implements ProgramCon
                 public void onNoDoubleClick(View view) {
                     if (!baseBean.isExpand()){
                         spand_lay.setVisibility(View.VISIBLE);
-//                        spand_iv.startAnimation(AnimaCommonUtil.getNiRotate());
                         baseBean.setExpand(true);
                     }else {
                         spand_lay.setVisibility(View.GONE);
-//                        spand_iv.startAnimation(AnimaCommonUtil.getShunRotate());
                         baseBean.setExpand(false);
                     }
                     notifyDataSetChanged();

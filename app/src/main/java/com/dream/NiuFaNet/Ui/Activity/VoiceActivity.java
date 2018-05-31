@@ -703,7 +703,7 @@ public class VoiceActivity extends CommonActivity implements VoiceContentContrac
                                 listData.add(bodyBean);
                                 chatRvAdapter.notifyDataSetChanged();
                                 chat_rv.smoothScrollToPosition(listData.size());*/
-
+                                Log.i("myTag",new Gson().toJson(scheduleData)+"------");
                                 //starSpeech("好的，已帮你创建日程。");
                                 intent = new Intent(mContext, NewCalenderActivity.class);
                                 intent.putExtra("scheduleData", (Serializable) scheduleData);

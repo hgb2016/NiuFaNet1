@@ -73,7 +73,7 @@ public class NewProgramActivity extends CommonActivity implements NewProgramCont
     @Bind(R.id.particepant_gv)
     GridView particepant_gv;
     @Bind(R.id.statu_relay)
-    LinearLayout statu_relay;
+    RelativeLayout statu_relay;
     @Bind(R.id.doing_iv)
     ImageView doing_iv;
     @Bind(R.id.end_iv)
@@ -84,7 +84,14 @@ public class NewProgramActivity extends CommonActivity implements NewProgramCont
     RelativeLayout chooseclient_relay;
     @Bind(R.id.chooseclient_tv)
     TextView chooseclient_tv;
-
+    @Bind(R.id.talking_lay)
+    LinearLayout talking_lay;
+    @Bind(R.id.doing_lay)
+    LinearLayout doing_lay;
+    @Bind(R.id.end_lay)
+    LinearLayout end_lay;
+    @Bind(R.id.talking_iv)
+    ImageView talking_iv;
     private PeoPleAdapter peoPlesAdapter;
     private List<ProgramDetailBean.DataBean.participantBean> participantBeanList = new ArrayList<>();
     private List<ProgramDetailBean.DataBean.participantBean> dataParcipant = new ArrayList<>();
@@ -94,6 +101,7 @@ public class NewProgramActivity extends CommonActivity implements NewProgramCont
     @Inject
     NewProgramPresenter programPresenter;
     private InputMethodManager imm;
+    private String clientId="0";
 
     @Override
     public int getLayoutId() {
@@ -149,22 +157,36 @@ public class NewProgramActivity extends CommonActivity implements NewProgramCont
             dataParcipant.addAll(participant);
             peoPlesAdapter.notifyDataSetChanged();
         }
-
+        if (!origData.getClientId().equals("0")){
+            chooseclient_tv.setText(origData.getClientName());
+            clientId=origData.getClientId();
+        }else {
+            clientId="0";
+        }
         String status = origData.getStatus();
         if (status != null && !status.isEmpty()) {
-            statu_relay.setVisibility(View.VISIBLE);
+            end_lay.setVisibility(View.VISIBLE);
             tempStatus = status;
             if (status.equals("0")) {
                 doing_iv.setImageResource(R.mipmap.check_green);
+                talking_iv.setImageResource(R.mipmap.icon_checkempty);
                 end_iv.setImageResource(R.mipmap.icon_checkempty);
             } else if (status.equals("1")) {
                 doing_iv.setImageResource(R.mipmap.icon_checkempty);
+                talking_iv.setImageResource(R.mipmap.check_green);
+                end_iv.setImageResource(R.mipmap.icon_checkempty);
+            }else if (status.equals("2")){
+                doing_iv.setImageResource(R.mipmap.icon_checkempty);
+                talking_iv.setImageResource(R.mipmap.icon_checkempty);
                 end_iv.setImageResource(R.mipmap.check_green);
             } else {
                 statu_relay.setVisibility(View.GONE);
             }
         } else {
-            statu_relay.setVisibility(View.GONE);
+           statu_relay.setVisibility(View.VISIBLE);
+           doing_lay.setVisibility(View.VISIBLE);
+           talking_lay.setVisibility(View.VISIBLE);
+           end_lay.setVisibility(View.GONE);
         }
 
         for (int i = 0; i < participantBeanList.size(); i++) {
@@ -188,7 +210,7 @@ public class NewProgramActivity extends CommonActivity implements NewProgramCont
 
     }
 
-    @OnClick({R.id.close_iv, R.id.submit_iv, R.id.addpeople_iv, R.id.doing_lay, R.id.end_lay, R.id.chooseclient_relay, R.id.title_relay, R.id.beizu_lay})
+    @OnClick({R.id.talking_lay,R.id.close_iv, R.id.submit_iv, R.id.addpeople_iv, R.id.doing_lay, R.id.end_lay, R.id.chooseclient_relay, R.id.title_relay, R.id.beizu_lay})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.close_iv:
@@ -209,6 +231,11 @@ public class NewProgramActivity extends CommonActivity implements NewProgramCont
                 origData.setDescription(remark);
                 origData.setUserId(CommonAction.getUserId());
                 origData.setStatus(tempStatus);
+                if (!clientId.equals("0")){
+                    origData.setClientId(clientId);
+                }else {
+                    origData.setClientId("0");
+                }
                 if (title.isEmpty()) {
                     ToastUtils.Toast_short(mActivity,"请输入标题");
                 } else {
@@ -229,11 +256,19 @@ public class NewProgramActivity extends CommonActivity implements NewProgramCont
             case R.id.doing_lay:
                 doing_iv.setImageResource(R.mipmap.check_green);
                 end_iv.setImageResource(R.mipmap.icon_checkempty);
+                talking_iv.setImageResource(R.mipmap.icon_checkempty);
                 tempStatus = "0";
                 break;
             case R.id.end_lay:
                 doing_iv.setImageResource(R.mipmap.icon_checkempty);
                 end_iv.setImageResource(R.mipmap.check_green);
+                talking_iv.setImageResource(R.mipmap.icon_checkempty);
+                tempStatus = "2";
+                break;
+            case R.id.talking_lay:
+                doing_iv.setImageResource(R.mipmap.icon_checkempty);
+                end_iv.setImageResource(R.mipmap.icon_checkempty);
+                talking_iv.setImageResource(R.mipmap.check_green);
                 tempStatus = "1";
                 break;
             case R.id.addpeople_iv:
@@ -250,7 +285,9 @@ public class NewProgramActivity extends CommonActivity implements NewProgramCont
 
             case R.id.chooseclient_relay://我的客户
                 ImmUtils.hideImm(mActivity, imm);
-                startActivity(new Intent(mContext, ClientsActivity.class));
+                Intent intent=new Intent(mContext,ClientsActivity.class);
+                intent.putExtra("clientname",chooseclient_tv.getText().toString().trim());
+                startActivityForResult(intent,200);
                 break;
             case R.id.title_relay:
                 title_tv.requestFocus();
@@ -373,5 +410,13 @@ public class NewProgramActivity extends CommonActivity implements NewProgramCont
                 peoPlesAdapter.notifyDataSetChanged();
             }
         }
+
+        if (requestCode==200 &&resultCode==201&&data!=null){
+            String clientName = data.getStringExtra("clientName");
+            chooseclient_tv.setText(clientName);
+            clientId=data.getStringExtra("clientId");
+
+        }
     }
+
 }

@@ -267,7 +267,7 @@ public class FriendDetailActivity extends CommonActivity implements SearchFriend
         }
     }
 
-    //
+
     //填写备注弹框
     private void showinputnote(View v) {
         View contentView = LayoutInflater.from(this).inflate(R.layout.pop_inputenote, null);
@@ -338,7 +338,6 @@ public class FriendDetailActivity extends CommonActivity implements SearchFriend
 
                         break;
                 }
-                //Toast.makeText(HomeActivity.this,showContent,Toast.LENGTH_SHORT).show();
             }
         };
         contentView.findViewById(R.id.setnote_tv).setOnClickListener(listener);

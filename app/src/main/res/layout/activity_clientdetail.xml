@@ -13,45 +13,42 @@
         <RelativeLayout
             android:id="@+id/back_relay"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="45dp"
             android:layout_centerVertical="true"
             android:gravity="center">
 
             <ImageView
-                android:layout_marginRight="@dimen/padding15"
                 android:id="@+id/close_iv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
+                android:layout_marginRight="@dimen/icon_size_20dp"
                 android:src="@mipmap/back" />
         </RelativeLayout>
 
         <TextView
             android:id="@+id/calendar_title_tv"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/back_relay"
+            android:layout_height="@dimen/dimen45"
             android:layout_centerHorizontal="true"
-            android:layout_gravity="center_horizontal"
-            android:text="新建客户"
+            android:gravity="center"
+            android:text="客户详情"
             android:textColor="@color/black"
             android:textSize="16sp" />
 
         <RelativeLayout
-            android:id="@+id/submit_relay"
+            android:id="@+id/more_relay"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true">
 
             <TextView
-                android:text="编辑"
-                android:textColor="@color/blue_title"
-                android:id="@+id/submit_iv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-               android:layout_marginRight="25dp"
-               />
+                android:layout_marginRight="25dp"
+                android:text="更多"
+                android:textColor="@color/blue_title" />
         </RelativeLayout>
 
         <View
@@ -65,38 +62,87 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true">
-
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-
             <LinearLayout
+                android:visibility="gone"
+                android:layout_marginTop="@dimen/layout_margin_5dp"
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="65dp"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:lines="1"
+                    android:id="@+id/createdtime_tv"
+                    android:layout_marginLeft="26dp"
+                    android:textColor="#dcdcdc"
+                    android:textSize="12sp"
+                    android:text=""
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:background="@color/white"
-                android:gravity="center">
+                android:gravity="center"
+                >
 
-                <EditText
-                    android:id="@+id/clientname_edt"
+                <TextView
+                    android:layout_marginRight="@dimen/padding20"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="@dimen/layout_margin_5dp"
+                    android:paddingTop="@dimen/layout_margin_5dp"
+                    android:id="@+id/clientname_tv"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
                     android:layout_marginLeft="@dimen/icon_size_20dp"
                     android:background="@null"
                     android:ellipsize="end"
-                    android:maxLines="2"
-                    android:text="中国移动集团深圳分公司"
+                    android:lines="2"
+                    android:text=""
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_size_16sp" />
+                <View
+                    android:visibility="gone"
+                    android:layout_gravity="bottom"
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/gray" />
             </LinearLayout>
-
+            <LinearLayout
+                android:id="@+id/clientremark_lay"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/clientremark_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/icon_size_20dp"
+                android:layout_marginLeft="23dp"
+                android:layout_marginRight="23dp"
+                android:ellipsize="end"
+                android:maxLines="3"
+                android:text=""
+                android:textColor="#FFBDBDBD"
+                android:textSize="12sp" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/gray" />
+            </LinearLayout>
             <LinearLayout
                 android:id="@+id/more_lay"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen50dp"
                 android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -127,167 +173,161 @@
                     android:src="@mipmap/up" />
             </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="@color/gray" />
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
                 <RelativeLayout
+                    android:id="@+id/web_relay"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen50dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginRight="10dp"
+                        android:src="@mipmap/link" />
+
+                    <TextView
+                        android:id="@+id/web_tv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="70dp"
+                        android:layout_marginRight="30dp"
+                        android:background="@null"
+                        android:ellipsize="end"
+                        android:gravity="left"
+                        android:maxLines="1"
+                        android:text=""
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_size_14sp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        android:background="@color/gray" />
+                </RelativeLayout>
+
+                <RelativeLayout
                     android:id="@+id/address_relay"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dimen50dp">
 
-                    <TextView
+                    <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_marginLeft="30dp"
+                        android:layout_marginLeft="21dp"
                         android:layout_marginRight="10dp"
-                        android:background="@null"
-                        android:hint="网址"
-                        android:textColor="@color/textgray_94"
-                        android:textSize="@dimen/text_size_14sp" />
+                        android:src="@mipmap/location2" />
 
-                    <EditText
-                        android:id="@+id/web_edt"
+                    <TextView
+                        android:id="@+id/address_tv"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginLeft="80dp"
+                        android:layout_marginLeft="70dp"
                         android:layout_marginRight="30dp"
                         android:background="@null"
                         android:ellipsize="end"
-                        android:gravity="right"
-                        android:hint="请输入网址"
+                        android:gravity="left"
                         android:maxLines="1"
+                        android:text=""
                         android:textColor="@color/black"
                         android:textSize="@dimen/text_size_14sp" />
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/layout_padding_1dp"
+                        android:layout_height="1px"
                         android:layout_alignParentBottom="true"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
                         android:background="@color/gray" />
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:id="@+id/phone_relay"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dimen50dp">
 
-                    <TextView
+                    <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="30dp"
                         android:layout_marginRight="10dp"
-                        android:background="@null"
-                        android:hint="地址"
-                        android:textColor="@color/textgray_94"
-                        android:textSize="@dimen/text_size_14sp" />
+                        android:src="@mipmap/iphone_red" />
 
-                    <EditText
-                        android:id="@+id/address_edt"
+                    <TextView
+                        android:id="@+id/phone_tv"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginLeft="80dp"
+                        android:layout_marginLeft="70dp"
                         android:layout_marginRight="30dp"
                         android:background="@null"
                         android:ellipsize="end"
-                        android:gravity="right"
-                        android:hint="地址"
+                        android:gravity="left"
                         android:maxLines="1"
-                        android:textColor="@color/black"
+                        android:text=""
+                        android:textColor="@color/blue_title"
                         android:textSize="@dimen/text_size_14sp" />
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/layout_padding_1dp"
+                        android:layout_height="1px"
                         android:layout_alignParentBottom="true"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
                         android:background="@color/gray" />
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:id="@+id/fax_relay"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dimen50dp">
 
-                    <TextView
-
+                    <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="30dp"
                         android:layout_marginRight="10dp"
-                        android:background="@null"
-                        android:hint="电话"
-                        android:textColor="@color/textgray_94"
-                        android:textSize="@dimen/text_size_14sp" />
-
-                    <EditText
-                        android:id="@+id/phone_edt"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="80dp"
-                        android:layout_marginRight="30dp"
-                        android:background="@null"
-                        android:ellipsize="end"
-                        android:gravity="right"
-                        android:hint="请输入电话号码"
-                        android:maxLines="1"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/text_size_14sp" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/layout_padding_1dp"
-                        android:layout_alignParentBottom="true"
-                        android:background="@color/gray" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dimen50dp">
+                        android:src="@mipmap/printing" />
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="30dp"
-                        android:layout_marginRight="10dp"
-                        android:background="@null"
-                        android:hint="传真"
-                        android:textColor="@color/textgray_94"
-                        android:textSize="@dimen/text_size_14sp" />
-
-                    <EditText
-                        android:id="@+id/fax_edt"
+                        android:id="@+id/fax_tv"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginLeft="80dp"
+                        android:layout_marginLeft="70dp"
                         android:layout_marginRight="30dp"
                         android:background="@null"
+
                         android:ellipsize="end"
-                        android:gravity="right"
-                        android:hint="请输入传真"
+                        android:gravity="left"
                         android:maxLines="1"
+                        android:text=""
                         android:textColor="@color/black"
                         android:textSize="@dimen/text_size_14sp" />
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/layout_padding_1dp"
+                        android:layout_height="1px"
                         android:layout_alignParentBottom="true"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
                         android:background="@color/gray" />
                 </RelativeLayout>
             </LinearLayout>
@@ -295,16 +335,25 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen50dp">
-
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_centerVertical="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
                     android:layout_marginLeft="20dp"
-                    android:text="联系人信息"
+                    android:text="联系人"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_size_15sp" />
-
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="(长按删除联系人）"
+                        android:textColor="@color/textcolor_ac"
+                        android:textSize="13sp" />
+                </LinearLayout>
                 <ImageView
                     android:id="@+id/addcontact_iv"
                     android:layout_width="wrap_content"
@@ -320,16 +369,25 @@
                     android:layout_alignParentBottom="true"
                     android:background="@color/gray" />
             </RelativeLayout>
+
             <com.dream.NiuFaNet.CustomView.MyListView
                 android:id="@+id/contact_lv"
-                android:divider="@null"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:divider="@null">
 
             </com.dream.NiuFaNet.CustomView.MyListView>
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen50dp">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/layout_padding_1dp"
+                    android:layout_alignParentTop="true"
+                    android:background="@color/gray"
+                    android:visibility="gone" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -362,10 +420,11 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_marginLeft="24dp"
+                android:layout_marginBottom="@dimen/icon_size_20dp"
                 android:layout_marginRight="@dimen/icon_size_20dp"
                 android:layout_marginTop="15dp"
                 android:horizontalSpacing="5dp"
-                android:numColumns="4"
+                android:numColumns="5"
                 android:verticalSpacing="5dp" />
         </LinearLayout>
     </ScrollView>

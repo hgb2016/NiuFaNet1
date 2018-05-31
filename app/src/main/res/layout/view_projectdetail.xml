@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:background="@color/white"
-    android:layout_height="100dp">
+    android:layout_height="wrap_content">
     <LinearLayout
         android:layout_marginTop="@dimen/layout_padding_6dp"
         android:orientation="horizontal"
@@ -46,13 +46,14 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="0dp"
+        android:layout_weight="1">
         <View
             android:layout_marginTop="3dp"
             android:background="#C4C3C3"
             android:layout_marginLeft="39dp"
             android:layout_width="0.5dp"
-            android:layout_height="match_parent"/>
+            android:layout_height="70dp"/>
         <LinearLayout
             android:orientation="vertical"
             android:layout_marginLeft="@dimen/layout_margin_22dp"
@@ -90,4 +91,24 @@
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
+    <RelativeLayout
+        android:visibility="gone"
+        android:id="@+id/more_relay"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/icon_size_40dp">
+        <View
+            android:layout_marginRight="@dimen/icon_size_20dp"
+            android:layout_marginLeft="60dp"
+            android:background="@color/gray_1"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
+        <TextView
+            android:layout_centerVertical="true"
+            android:textColor="@color/blue_title"
+            android:layout_marginRight="@dimen/icon_size_20dp"
+            android:layout_alignParentRight="true"
+            android:text="更多>>"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
 </LinearLayout>

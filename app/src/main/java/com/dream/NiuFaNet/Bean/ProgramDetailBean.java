@@ -59,6 +59,25 @@ public class ProgramDetailBean implements Serializable{
         private String caseNo;
         private String projectId;
         private String status;
+        private String clientId;
+        private String clientName;
+
+        public String getClientName() {
+            return clientName;
+        }
+
+        public void setClientName(String clientName) {
+            this.clientName = clientName;
+        }
+
+        public String getClientId() {
+            return clientId;
+        }
+
+        public void setClientId(String clientId) {
+            this.clientId = clientId;
+        }
+
         private List<scheduleBean> schedule;
 
         public String getUserName() {

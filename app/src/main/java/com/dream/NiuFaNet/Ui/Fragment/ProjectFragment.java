@@ -6,6 +6,7 @@ import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -23,9 +25,11 @@ import com.dream.NiuFaNet.Bean.BusBean.LoginBus;
 import com.dream.NiuFaNet.Bean.BusBean.RefreshProBean;
 import com.dream.NiuFaNet.Bean.CalenderedBean;
 import com.dream.NiuFaNet.Bean.ProgramListBean;
+import com.dream.NiuFaNet.Bean.ProjectClientListBean;
 import com.dream.NiuFaNet.Component.DaggerNFComponent;
 import com.dream.NiuFaNet.Contract.ProgramContract;
 import com.dream.NiuFaNet.CustomView.Emptyview_Pro;
+import com.dream.NiuFaNet.CustomView.MyListView;
 import com.dream.NiuFaNet.Listener.NoDoubleClickListener;
 import com.dream.NiuFaNet.Other.CommonAction;
 import com.dream.NiuFaNet.Other.Const;
@@ -43,6 +47,7 @@ import com.dream.NiuFaNet.Utils.DateFormatUtil;
 import com.dream.NiuFaNet.Utils.DateUtils.DateUtil;
 import com.dream.NiuFaNet.Utils.DensityUtil;
 import com.dream.NiuFaNet.Utils.Dialog.DialogUtils;
+import com.dream.NiuFaNet.Utils.HiddenAnimUtils;
 import com.dream.NiuFaNet.Utils.IntentUtils;
 import com.dream.NiuFaNet.Utils.MapUtils;
 import com.dream.NiuFaNet.Utils.PopWindowUtil;
@@ -53,6 +58,7 @@ import com.dream.NiuFaNet.Utils.ToastUtils;
 import com.dream.NiuFaNet.group.GroupItemDecoration;
 import com.dream.NiuFaNet.group.GroupRecyclerAdapter;
 import com.dream.NiuFaNet.group.GroupRecyclerView;
+import com.google.gson.Gson;
 import com.kevin.wraprecyclerview.WrapRecyclerView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -82,7 +88,9 @@ import butterknife.OnClick;
 
 public class ProjectFragment extends BaseFragmentV4 implements ProgramContract.View {
     @Bind(R.id.project_rv)
-    WrapRecyclerView  project_rv;
+    WrapRecyclerView project_rv;
+    @Bind(R.id.project_grv)
+    GroupRecyclerView project_grv;
     private ProjectAdapter projectadapter;
     @Inject
     ProgramPresenter programPresenter;
@@ -90,39 +98,55 @@ public class ProjectFragment extends BaseFragmentV4 implements ProgramContract.V
     SmartRefreshLayout smart_refreshlay;
     @Bind(R.id.sort_tv)
     TextView sort_tv;
+    @Bind(R.id.sort1_tv)
+    TextView sort1_tv;
+    @Bind(R.id.sort_iv)
+    ImageView sort_iv;
+    @Bind(R.id.sort1_iv)
+    ImageView sort1_iv;
+    @Bind(R.id.sort_lay)
+    LinearLayout sort_lay;
+    @Bind(R.id.sort_lv)
+    MyListView sort_lv;
+    @Bind({R.id.bg_v})
+    View bg_v;
     private List<ProgramListBean.DataBean> dataList = new ArrayList<>();
     private PopupWindow morepop;
     private ProgramAdapter programAdapter;
+    private List<SortBean> sortList = new ArrayList<>();
+    private List<SortBean> sortList1 = new ArrayList<>();
+    private List<ProjectClientListBean.DataBean> projectList = new ArrayList<>();
+    private SortAdapter sortAdater;
+    private SortAdapter1 sortAdater1;
+    private boolean isSelectClient;
 
     @Override
     public void initView() {
-        //
         DaggerNFComponent.builder()
                 .appComponent(MyApplication.getInstance().getAppComponent())
                 .build()
                 .inject(this);
         programPresenter.attachView(this);
-        initTopPopwindow();
-        /*EventBus.getDefault().register(this);
-        mLoadingDialog = DialogUtils.initLoadingDialog(getActivity());
-*/
-    /*          //模拟数据
-        project_rv.setLayoutManager(new LinearLayoutManager(getContext()));
-        GroupItemDecoration<String, List> itemDecoration = new GroupItemDecoration<>();
-        project_rv.addItemDecoration(itemDecoration);*/
+        //模拟数据
+        project_grv.setLayoutManager(new LinearLayoutManager(getContext()));
+        GroupItemDecoration<String,List<ProjectClientListBean.DataBean>> itemDecoration = new GroupItemDecoration<>();
+        project_grv.addItemDecoration(itemDecoration);
         RvUtils.setOptionnoLine(project_rv, getActivity());
         View view = new View(getContext());
         ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, DensityUtil.dip2px(1));
         view.setLayoutParams(params);
         project_rv.addHeaderView(view);
-        programAdapter = new ProgramAdapter(R.layout.rvitem_program,dataList);
+        programAdapter = new ProgramAdapter(R.layout.rvitem_program, dataList);
         programAdapter.setEmptyView(new Emptyview_Pro(getContext()));
         project_rv.setAdapter(programAdapter);
-        initTopPopwindow();
+        sortAdater = new SortAdapter(getContext(), sortList, R.layout.view_sort);
+        sortAdater1 = new SortAdapter1(getContext(), sortList1, R.layout.view_sort);
+        initSortData();
         EventBus.getDefault().register(this);
         mLoadingDialog = DialogUtils.initLoadingDialog(getActivity());
 
     }
+
 
     @Override
     public void onDestroy() {
@@ -137,7 +161,12 @@ public class ProjectFragment extends BaseFragmentV4 implements ProgramContract.V
 
     private int pageNum = 2;
     private boolean isLoadMore;
-    private String sortField = "createTime";
+    private String sortField = "t.updateTime";
+    String status = "";
+
+    /**
+     * 刷新和分页加载监听
+     */
     @Override
     public void initEvents() {
         smart_refreshlay.setEnableRefresh(true);
@@ -145,66 +174,131 @@ public class ProjectFragment extends BaseFragmentV4 implements ProgramContract.V
         smart_refreshlay.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-//                Map<String,String> map = new HashMap<String, String>();
-//                map.put("page",String.valueOf(1));
                 isLoadMore = false;
-                Map<String, String> map = MapUtils.getMapInstance();
-                map.put("sortField",sortField);
-                programPresenter.getProgramList(CommonAction.getUserId(),map);
-                pageNum = 2;
-
+                if (isSelectClient) {
+                    projectList.clear();
+                    pageNum=2;
+                    Map<String, String> mapInstance = MapUtils.getMapInstance();
+                    mapInstance.put("status", status);
+                    mapInstance.put("page", "1");
+                    mapInstance.put("userId", CommonAction.getUserId());
+                    programPresenter.getProjectList(mapInstance);
+                } else {
+                    dataList.clear();
+                    pageNum=2;
+                    Map<String, String> map = MapUtils.getMapInstance();
+                    map.put("sortField", sortField);
+                    map.put("status", status);
+                    map.put("page", "1");
+                    programPresenter.getProgramList(CommonAction.getUserId(), map);
+                }
             }
         });
         smart_refreshlay.setOnLoadmoreListener(new OnLoadmoreListener() {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
                 isLoadMore = true;
-                Map<String,String> map = new HashMap<String, String>();
-                map.put("page",String.valueOf(pageNum));
-                map.put("sortField",sortField);
-                programPresenter.getProgramList(CommonAction.getUserId(),map);
-                pageNum++;
+                if (isSelectClient) {
+                    Map<String, String> mapInstance = MapUtils.getMapInstance();
+                    mapInstance.put("page", String.valueOf(pageNum));
+                    mapInstance.put("status", status);
+                    mapInstance.put("userId", CommonAction.getUserId());
+                    programPresenter.getProjectList(mapInstance);
+                    pageNum++;
+                }else {
+                    Map<String, String> map = new HashMap<String, String>();
+                    map.put("page", String.valueOf(pageNum));
+                    map.put("sortField", sortField);
+                    map.put("status", status);
+                    programPresenter.getProgramList(CommonAction.getUserId(), map);
+                    pageNum++;
+                }
 
             }
         });
     }
-    //
-    @OnClick({R.id.add_program, R.id.sort_tv,R.id.search_relay})
+
+    @OnClick({R.id.add_program, R.id.paixu_lay, R.id.search_relay, R.id.shaixuan_lay, R.id.bg_v})
     public void onClick(View view) {
         switch (view.getId()) {
             //添加项目
             case R.id.add_program:
                 IntentUtils.toActivity(NewProgramActivity.class, getActivity());
-                getActivity().overridePendingTransition(R.anim.activity_open,R.anim.exitanim);
+                getActivity().overridePendingTransition(R.anim.activity_open, R.anim.exitanim);
                 break;
-            //分类排序
-            case R.id.sort_tv:
-                morepop.showAsDropDown(view);
+            //排序
+            case R.id.paixu_lay:
+                //morepop.showAsDropDown(view);
+                bgIsVisible();
+                sort_tv.setTextColor(getResources().getColor(R.color.blue_title));
+                sort1_tv.setTextColor(getResources().getColor(R.color.black));
+                sort_iv.setImageResource(R.mipmap.down_blue);
+                sort1_iv.setImageResource(R.mipmap.down);
+                sort_lv.setAdapter(sortAdater);
+                sortAdater.notifyDataSetChanged();
+                HiddenAnimUtils.newInstance(getContext(), sort_lay, sort_iv, sortList.size() * 50).toggle();
                 break;
             //搜索项目
             case R.id.search_relay:
                 startActivity(new Intent(getContext(), SearchProjectActivity.class));
                 break;
+            //筛选
+            case R.id.shaixuan_lay:
+                bgIsVisible();
+                sort1_iv.setImageResource(R.mipmap.down_blue);
+                sort_iv.setImageResource(R.mipmap.down);
+                sort1_tv.setTextColor(getResources().getColor(R.color.blue_title));
+                sort_tv.setTextColor(getResources().getColor(R.color.black));
+                sort_lv.setAdapter(sortAdater1);
+                sortAdater1.notifyDataSetChanged();
+                HiddenAnimUtils.newInstance(getContext(), sort_lay, sort1_iv, sortList1.size() * 50).toggle();
+                break;
+            case R.id.bg_v:
+                sort_lay.setVisibility(View.GONE);
+                bg_v.setVisibility(View.GONE);
+                break;
         }
     }
+
+    private void bgIsVisible() {
+        if (View.VISIBLE == sort_lay.getVisibility()) {
+            //布局半透明
+            bg_v.setVisibility(View.GONE);
+        } else {
+            bg_v.setVisibility(View.VISIBLE);
+        }
+    }
+
     @Override
     public void initDta() {
         Map<String, String> map = MapUtils.getMapInstance();
-        map.put("sortField",sortField);
+        map.put("sortField", sortField);
+        map.put("status", status);
         //加载数据
         loadData(map);
     }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void event(RefreshProBean proBean) {
         if (proBean.getEventStr().equals(Const.refresh)) {
-            Map<String, String> map = MapUtils.getMapInstance();
-            loadData(map);
+            if (isSelectClient){
+                Map<String, String> mapInstance = MapUtils.getMapInstance();
+                mapInstance.put("page", "1");
+                mapInstance.put("status", status);
+                mapInstance.put("userId", CommonAction.getUserId());
+                programPresenter.getProjectList(mapInstance);
+            }else {
+                Map<String, String> map = MapUtils.getMapInstance();
+                map.put("sortField", sortField);
+                map.put("status", status);
+                loadData(map);
+            }
         }
     }
 
     private void loadData(Map<String, String> map) {
         isLoadMore = false;
-        programPresenter.getProgramList(CommonAction.getUserId(),map);
+        programPresenter.getProgramList(CommonAction.getUserId(), map);
         pageNum = 2;
     }
 
@@ -225,72 +319,83 @@ public class ProjectFragment extends BaseFragmentV4 implements ProgramContract.V
         mLoadingDialog.dismiss();
     }
 
+    /**
+     * 项目列表
+     * @param dataBean
+     */
     @Override
     public void showData(ProgramListBean dataBean) {
         smart_refreshlay.finishRefresh();
         smart_refreshlay.finishLoadmore();
+        project_rv.setVisibility(View.VISIBLE);
+        project_grv.setVisibility(View.GONE);
         if (dataBean.getError().equals(Const.success)) {
             List<ProgramListBean.DataBean> data = dataBean.getData();
-            if (!isLoadMore){
-                dataList.clear();
-            }
-            if (data != null&&data.size()>0) {
+            if (data != null && data.size() > 0) {
                 dataList.addAll(data);
+               // Log.i("myTag",new Gson().toJson(dataList));
                 dataList.get(0).setExpand(true);
             }
             programAdapter.notifyDataSetChanged();
         }
     }
-    private void initTopPopwindow() {
-        View moreview = LayoutInflater.from(getContext()).inflate(R.layout.dialog_more1, null);
-        LinearLayout change_lay = (LinearLayout) moreview.findViewById(R.id.share_lay);
-        LinearLayout copy_lay = (LinearLayout) moreview.findViewById(R.id.function_lay);
-        LinearLayout delete_lay = (LinearLayout) moreview.findViewById(R.id.mine_lay);
-        morepop = PopWindowUtil.getPopupWindow(getActivity(), moreview, R.style.top2botAnimation, ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT);
-        //名称
-        change_lay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getProgramList_paixu("name");
-                sort_tv.setText("名称");
-            }
-        });
-        //更新时间
-        copy_lay.setOnClickListener(new NoDoubleClickListener() {
-            @Override
-            public void onNoDoubleClick(View view) {
-                getProgramList_paixu("updateTime");
-                sort_tv.setText("更新时间");
 
-
+    /**
+     * 获取按客户排序的项目列表
+     *
+     * @param dataBean
+     */
+    @Override
+    public void showProjectClientList(ProjectClientListBean dataBean) {
+        //Log.i("myTag", new Gson().toJson(dataBean) + "---");
+        smart_refreshlay.finishRefresh();
+        smart_refreshlay.finishLoadmore();
+        mLoadingDialog.dismiss();
+        if (dataBean.getError().equals(Const.success)) {
+            List<ProjectClientListBean.DataBean> data = dataBean.getData();
+            if (data != null && data.size() > 0) {
+                project_rv.setVisibility(View.GONE);
+                project_grv.setVisibility(View.VISIBLE);
+              /*  if (projectList.size()>0){
+                    project_grv.smoothScrollToPosition(projectList.size()-1);
+                }*/
+                projectList.addAll(data);
+                projectadapter = new ProjectAdapter(getContext(), projectList);
+                project_grv.setAdapter(projectadapter);
+                project_grv.notifyDataSetChanged();
             }
-        });
-        //最新待办
-        delete_lay.setOnClickListener(new NoDoubleClickListener() {
-            @Override
-            public void onNoDoubleClick(View view) {
-                getProgramList_paixu("createTime");
-                sort_tv.setText("最新待办");
-            }
-        });
+        }
     }
+
+
+
     //排序方式
-    private void getProgramList_paixu(String type) {
-        morepop.dismiss();
+
+    /**
+     *
+     * @param type   按类型排序
+     * @param status 按条件筛选
+     */
+    private void getProgramList_paixu(String type, String status) {
+        //  morepop.dismiss();
         mLoadingDialog.show();
         Map<String, String> mapInstance = MapUtils.getMapInstance();
-        mapInstance.put("sortField",type);
+        mapInstance.put("sortField", type);
+        mapInstance.put("status", status);
         sortField = type;
         loadData(mapInstance);
     }
-    //展开列表
+
+    /**
+     * 展开列表
+     */
     public class ProgramAdapter extends BaseQuickAdapter<ProgramListBean.DataBean, com.chad.library.adapter.base.BaseViewHolder> {
 
 
         public ProgramAdapter(@LayoutRes int layoutResId, @Nullable List<ProgramListBean.DataBean> data) {
             super(layoutResId, data);
         }
+
         @Override
         protected void convert(com.chad.library.adapter.base.BaseViewHolder holder, final ProgramListBean.DataBean baseBean) {
             TextView proname_tv = holder.getView(R.id.proname_tv);
@@ -301,13 +406,18 @@ public class ProjectFragment extends BaseFragmentV4 implements ProgramContract.V
             TextView prostatu_tv = holder.getView(R.id.prostatu_tv);
             final ImageView spand_iv = holder.getView(R.id.spand_iv);
             LinearLayout right_lay = holder.getView(R.id.right_lay);
-            if (baseBean.getStatus().equals("1")) {
+            if (baseBean.getStatus().equals("2")) {
                 prostatu_tv.setText("已完成");
                 prostatu_tv.setBackgroundResource(R.drawable.shape_projectstatus1);
                 prostatu_iv.setImageResource(R.mipmap.end);
                 proname_tv.setTextColor(ResourcesUtils.getColor(R.color.color6c));
-            }else {
+            } else if (baseBean.getStatus().equals("0")) {
                 prostatu_tv.setText("进行中");
+                prostatu_tv.setBackgroundResource(R.drawable.shape_projectstatus);
+                prostatu_iv.setImageResource(R.mipmap.ing);
+                proname_tv.setTextColor(ResourcesUtils.getColor(R.color.black));
+            } else if (baseBean.getStatus().equals("1")) {
+                prostatu_tv.setText("洽谈中");
                 prostatu_tv.setBackgroundResource(R.drawable.shape_projectstatus);
                 prostatu_iv.setImageResource(R.mipmap.ing);
                 proname_tv.setTextColor(ResourcesUtils.getColor(R.color.black));
@@ -320,17 +430,17 @@ public class ProjectFragment extends BaseFragmentV4 implements ProgramContract.V
                 holder.getView(R.id.foot_view).setVisibility(View.GONE);
             }
 
-            ProCalAdapter proCalAdapter = new ProCalAdapter(getContext(), schedule, R.layout.view_projectdetail);
+            ProCalAdapter proCalAdapter = new ProCalAdapter(getContext(), schedule, baseBean.getId(),R.layout.view_projectdetail);
             procal_rv.setAdapter(proCalAdapter);
             final LinearLayout spand_lay = holder.getView(R.id.spand_lay);
 
-            if (baseBean.isExpand()){
+            if (baseBean.isExpand()) {
                 spand_lay.setVisibility(View.VISIBLE);
-//                spand_iv.startAnimation(AnimaCommonUtil.getNiRotate());
+//              spand_iv.startAnimation(AnimaCommonUtil.getNiRotate());
                 spand_iv.setImageResource(R.mipmap.up_black);
-            }else {
+            } else {
                 spand_lay.setVisibility(View.GONE);
-//                spand_iv.startAnimation(AnimaCommonUtil.getShunRotate());
+//              spand_iv.startAnimation(AnimaCommonUtil.getShunRotate());
                 spand_iv.setImageResource(R.mipmap.down_black);
             }
             holder.itemView.setOnClickListener(new NoDoubleClickListener() {
@@ -345,13 +455,13 @@ public class ProjectFragment extends BaseFragmentV4 implements ProgramContract.V
             right_lay.setOnClickListener(new NoDoubleClickListener() {
                 @Override
                 public void onNoDoubleClick(View view) {
-                    if (!baseBean.isExpand()){
+                    if (!baseBean.isExpand()) {
                         spand_lay.setVisibility(View.VISIBLE);
-//                        spand_iv.startAnimation(AnimaCommonUtil.getNiRotate());
+//                      spand_iv.startAnimation(AnimaCommonUtil.getNiRotate());
                         baseBean.setExpand(true);
-                    }else {
+                    } else {
                         spand_lay.setVisibility(View.GONE);
-//                        spand_iv.startAnimation(AnimaCommonUtil.getShunRotate());
+//                      spand_iv.startAnimation(AnimaCommonUtil.getShunRotate());
                         baseBean.setExpand(false);
                     }
                     notifyDataSetChanged();
@@ -360,10 +470,15 @@ public class ProjectFragment extends BaseFragmentV4 implements ProgramContract.V
         }
     }
 
+    /**
+     * 展开的子列表适配器
+     */
     public class ProCalAdapter extends CommonAdapter<ProgramListBean.DataBean.ScheduleBean> {
+        private String projectId;
 
-        public ProCalAdapter(Context context, List<ProgramListBean.DataBean.ScheduleBean> data, int layoutId) {
+        public ProCalAdapter(Context context, List<ProgramListBean.DataBean.ScheduleBean> data, String id, int layoutId) {
             super(context, data, layoutId);
+            projectId=id;
         }
 
         @Override
@@ -373,10 +488,16 @@ public class ProjectFragment extends BaseFragmentV4 implements ProgramContract.V
             TextView username_tv = holder.getView(R.id.username_tv);
             TextView time_tv = holder.getView(R.id.time_tv);
             TextView title_tv = holder.getView(R.id.title_tv);
-            TextView duringtime_tv = holder.getView(R.id.duringtime_tv);
-            if (Integer.parseInt(dataBean.getFileCount())<1){
-                apendix_iv.setVisibility(View.GONE);
+            RelativeLayout more_relay=holder.getView(R.id.more_relay);
+            if (position==2){
+                more_relay.setVisibility(View.VISIBLE);
             }else {
+                more_relay.setVisibility(View.GONE);
+            }
+            TextView duringtime_tv = holder.getView(R.id.duringtime_tv);
+            if (Integer.parseInt(dataBean.getFileCount()) < 1) {
+                apendix_iv.setVisibility(View.GONE);
+            } else {
                 apendix_iv.setVisibility(View.VISIBLE);
             }
             Date endD = DateFormatUtil.getTime(dataBean.getEndTime(), Const.YMD_HMS);
@@ -389,8 +510,8 @@ public class ProjectFragment extends BaseFragmentV4 implements ProgramContract.V
                 status_iv.setImageResource(R.mipmap.dot1);
             }
             username_tv.setText(dataBean.getCreateUserName());
-            holder.setImageByUrl(R.id.head_iv,dataBean.getHeadUrl(),true);
-            duringtime_tv.setText(dataBean.getHourNum()+"小时");
+            holder.setImageByUrl(R.id.head_iv, dataBean.getHeadUrl(), true);
+            duringtime_tv.setText(dataBean.getHourNum() + "小时");
 
             Date beDa = DateFormatUtil.getTime(dataBean.getBeginTime(), Const.YMD_HMS);
             String beStr = DateFormatUtil.getTime(beDa, Const.HM);
@@ -400,10 +521,10 @@ public class ProjectFragment extends BaseFragmentV4 implements ProgramContract.V
             int dayExpend = CalculateTimeUtil.getDayExpend(beDa.getTime(), enDa.getTime());
             String endStr = DateFormatUtil.getTime(enDa, Const.HM);
             String endStr1 = DateFormatUtil.getTime(enDa, Const.YMD_HM);
-            if (dayExpend>=1){
-                time_tv.setText(beStr1+" — "+endStr1);
-            }else {
-                time_tv.setText(beYMD+"  "+beStr+" — "+endStr);
+            if (dayExpend >= 1) {
+                time_tv.setText(beStr1 + " — " + endStr1);
+            } else {
+                time_tv.setText(beYMD + "  " + beStr + " — " + endStr);
             }
             title_tv.setText(dataBean.getTitle());
             holder.getConvertView().setOnClickListener(new NoDoubleClickListener() {
@@ -414,6 +535,14 @@ public class ProjectFragment extends BaseFragmentV4 implements ProgramContract.V
                         Intent intent = new Intent(mContext, CalenderDetailActivity.class);
                         intent.putExtra(Const.scheduleId, scheduleId);
                         startActivity(intent);
+                    }
+                }
+            });
+            holder.setOnClickListener(R.id.more_relay, new NoDoubleClickListener() {
+                @Override
+                public void onNoDoubleClick(View view) {
+                    if (projectId != null) {
+                        IntentUtils.toActivityWithTag(ProjectDetailActivity.class, getActivity(),projectId, 006);
                     }
                 }
             });
@@ -452,34 +581,44 @@ public class ProjectFragment extends BaseFragmentV4 implements ProgramContract.V
         }
 
     }
-    //分组列表
-    public class ProjectAdapter extends GroupRecyclerAdapter<String,List<ProgramListBean.DataBean>> {
+
+    /**
+     * 分组列表 只有当按客户排序时 才会调用此适配器
+     */
+    public class ProjectAdapter extends GroupRecyclerAdapter<String, List<ProjectClientListBean.DataBean>> {
 
 
-        public ProjectAdapter(Context context, String s , List<ProgramListBean.DataBean> dataList) {
+        public ProjectAdapter(Context context, List<ProjectClientListBean.DataBean> dataList) {
             super(context);
             LinkedHashMap map = new LinkedHashMap<>();
             List<String> titles = new ArrayList<>();
-            map.put(s,dataList);
-            titles.add(s);
-            resetGroups(map,titles);
+            for (int i = 0; i < dataList.size(); i++) {
+                titles.add(dataList.get(i).getClientName());
+                map.put(dataList.get(i).getClientName(), dataList.get(i).getProjectList());
+            }
+            resetGroups(map, titles);
+
+
         }
 
         @Override
         protected RecyclerView.ViewHolder onCreateDefaultViewHolder(ViewGroup parent, int type) {
-           return new ProjectAdapter.ProjectViewHolder(mInflater.inflate(R.layout.view_project, parent, false));
+            return new ProjectAdapter.ProjectViewHolder(mInflater.inflate(R.layout.view_project, parent, false));
         }
 
         @Override
         protected void onBindViewHolder(RecyclerView.ViewHolder holder, Object item, int position) {
-            final ProgramListBean.DataBean dataBean= (ProgramListBean.DataBean) item;
-            ProjectViewHolder h= (ProjectViewHolder) holder;
+            final ProjectClientListBean.DataBean.ProjectBean dataBean = (ProjectClientListBean.DataBean.ProjectBean) item;
+            ProjectViewHolder h = (ProjectViewHolder) holder;
             h.project_name.setText(dataBean.getName());
-            if (dataBean.getStatus().equals("1")){
+            if (dataBean.getStatus().equals("2")) {
                 h.project_status.setText("已完成");
                 h.project_status.setBackgroundResource(R.drawable.shape_projectstatus1);
-            }else {
+            } else if (dataBean.getStatus().equals("0")) {
                 h.project_status.setText("进行中");
+                h.project_status.setBackgroundResource(R.drawable.shape_projectstatus);
+            } else if (dataBean.getStatus().equals("1")) {
+                h.project_status.setText("洽谈中");
                 h.project_status.setBackgroundResource(R.drawable.shape_projectstatus);
             }
             h.itemView.setOnClickListener(new NoDoubleClickListener() {
@@ -491,20 +630,277 @@ public class ProjectFragment extends BaseFragmentV4 implements ProgramContract.V
                 }
             });
         }
+
         private class ProjectViewHolder extends RecyclerView.ViewHolder {
-            private TextView project_name,project_status;
+            private TextView project_name, project_status;
+
             private ProjectViewHolder(View itemView) {
                 super(itemView);
-                project_name= (TextView) itemView.findViewById(R.id.project_name);
-                project_status= (TextView) itemView.findViewById(R.id.project_status);
+                project_name = (TextView) itemView.findViewById(R.id.project_name);
+                project_status = (TextView) itemView.findViewById(R.id.project_status);
             }
         }
     }
+
+    /**
+     * 登录后刷新项目列表数据
+     * @param refreshCalBean
+     */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void eventMain1(LoginBus refreshCalBean) {
         if (refreshCalBean.getEventStr().equals(Const.refresh)) {
             Map<String, String> map = MapUtils.getMapInstance();
             loadData(map);
         }
+    }
+
+    /**
+     * 排序适配器
+     */
+    public class SortAdapter extends CommonAdapter<SortBean> {
+
+        public SortAdapter(Context context, List mDatas, int itemLayoutId) {
+            super(context, mDatas, itemLayoutId);
+        }
+
+        @Override
+        public void convert(BaseViewHolder helper, final SortBean item, int position) {
+            ImageView check_iv = helper.getView(R.id.check_iv);
+            final TextView sortTv = helper.getView(R.id.sort_tv);
+            sortTv.setText(item.getSortName());
+            if (item.isSelect()) {
+                check_iv.setVisibility(View.VISIBLE);
+                sortTv.setTextColor(getResources().getColor(R.color.blue_title));
+
+            } else {
+                check_iv.setVisibility(View.GONE);
+                sortTv.setTextColor(getResources().getColor(R.color.black));
+            }
+            helper.getConvertView().setOnClickListener(new NoDoubleClickListener() {
+                @Override
+                public void onNoDoubleClick(View view) {
+                    if (item.isSelect()) {
+                        item.setSelect(false);
+                    } else {
+                        int count = 0;
+                        for (int i = 0; i < mDatas.size(); i++) {
+                            if (mDatas.get(i).isSelect()) {
+                                count++;
+                            }
+                        }
+                        if (count > 1) {
+                            item.setSelect(false);
+
+                        } else {
+                            for (int i = 0; i < mDatas.size(); i++) {
+                                mDatas.get(i).setSelect(false);
+
+                            }
+                            item.setSelect(true);
+                        }
+                    }
+                    notifyDataSetChanged();
+                    for (SortBean sortBean : sortList) {
+                        if (sortBean.isSelect()) {
+                            sortField = sortBean.getSortField();
+                        }
+                    }
+                    for (SortBean sortBean : sortList1) {
+                        if (sortBean.isSelect()) {
+                            status = sortBean.getStatus();
+                        }
+                    }
+                    sort_tv.setText(item.getSortName());
+                    if (item.getSortName().equals("客户")) {
+                        pageNum=2;
+                        isSelectClient = true;
+                        projectList.clear();
+                        mLoadingDialog.show();
+                        Map<String, String> mapInstance = MapUtils.getMapInstance();
+                        mapInstance.put("status", status);
+                        mapInstance.put("userId", CommonAction.getUserId());
+                        programPresenter.getProjectList(mapInstance);
+                        sort_lay.setVisibility(View.GONE);
+                        bg_v.setVisibility(View.GONE);
+                    } else {
+                        pageNum=2;
+                        isSelectClient = false;
+                        dataList.clear();
+                        getProgramList_paixu(sortField, status);
+                        sort_lay.setVisibility(View.GONE);
+                        bg_v.setVisibility(View.GONE);
+                    }
+
+                }
+            });
+
+        }
+    }
+
+    /**
+     * 筛选适配器
+     */
+    public class SortAdapter1 extends CommonAdapter<SortBean> {
+
+        public SortAdapter1(Context context, List mDatas, int itemLayoutId) {
+            super(context, mDatas, itemLayoutId);
+        }
+
+        @Override
+        public void convert(BaseViewHolder helper, final SortBean item, int position) {
+            ImageView check_iv = helper.getView(R.id.check_iv);
+            final TextView sort_tv = helper.getView(R.id.sort_tv);
+            sort_tv.setText(item.getSortName());
+            if (item.isSelect()) {
+                check_iv.setVisibility(View.VISIBLE);
+                sort_tv.setTextColor(getResources().getColor(R.color.blue_title));
+
+            } else {
+                check_iv.setVisibility(View.GONE);
+                sort_tv.setTextColor(getResources().getColor(R.color.black));
+            }
+
+            helper.getConvertView().setOnClickListener(new NoDoubleClickListener() {
+                @Override
+                public void onNoDoubleClick(View view) {
+                    if (item.isSelect()) {
+                        item.setSelect(false);
+                    } else {
+                        int count = 0;
+                        for (int i = 0; i < mDatas.size(); i++) {
+                            if (mDatas.get(i).isSelect()) {
+                                count++;
+                            }
+                        }
+                        if (count > 1) {
+                            item.setSelect(false);
+
+                        } else {
+                            for (int i = 0; i < mDatas.size(); i++) {
+                                mDatas.get(i).setSelect(false);
+
+                            }
+                            item.setSelect(true);
+                        }
+                    }
+                    notifyDataSetChanged();
+                    for (SortBean sortBean : sortList) {
+                        if (sortBean.isSelect()) {
+                            sortField = sortBean.getSortField();
+                        }
+                    }
+                    for (SortBean sortBean : sortList1) {
+                        if (sortBean.isSelect()) {
+                            status = sortBean.getStatus();
+                        }
+                    }
+                    if (isSelectClient) {
+                        pageNum=2;
+                        projectList.clear();
+                        mLoadingDialog.show();
+                        Map<String, String> mapInstance = MapUtils.getMapInstance();
+                        mapInstance.put("status", status);
+                        mapInstance.put("userId", CommonAction.getUserId());
+                        programPresenter.getProjectList(mapInstance);
+                        sort_lay.setVisibility(View.GONE);
+                        bg_v.setVisibility(View.GONE);
+                    } else {
+                        pageNum=2;
+                        dataList.clear();
+                        getProgramList_paixu(sortField, status);
+                        sort_lay.setVisibility(View.GONE);
+                        bg_v.setVisibility(View.GONE);
+                    }
+                    sort1_tv.setText(item.getSortName());
+                }
+            });
+
+        }
+    }
+
+    /**
+     * 筛选和排序的Bean类
+     */
+    public class SortBean {
+        private String sortName;
+        private boolean select;
+        private String sortField;
+        private String status;
+
+        public String getStatus() {
+            return status;
+        }
+
+        public void setStatus(String status) {
+            this.status = status;
+        }
+
+        public String getSortName() {
+            return sortName;
+        }
+
+        public void setSortName(String sortName) {
+            this.sortName = sortName;
+        }
+
+        public boolean isSelect() {
+            return select;
+        }
+
+        public void setSelect(boolean select) {
+            this.select = select;
+        }
+
+        public String getSortField() {
+            return sortField;
+        }
+
+        public void setSortField(String sortField) {
+            this.sortField = sortField;
+        }
+    }
+
+    /**
+     * 初始化排序和筛选内容数据
+     */
+    private void initSortData() {
+        SortBean sort7 = new SortBean();
+        sort7.setSelect(false);
+        sort7.setSortName("所有");
+        sort7.setStatus("");
+        sortList1.add(sort7);
+        SortBean sort1 = new SortBean();
+        sort1.setSelect(false);
+        sort1.setSortName("进行中");
+        sort1.setStatus("0");
+        sortList1.add(sort1);
+        SortBean sort2 = new SortBean();
+        sort2.setSelect(false);
+        sort2.setSortName("洽谈中");
+        sort2.setStatus("1");
+        sortList1.add(sort2);
+        SortBean sort3 = new SortBean();
+        sort3.setSelect(false);
+        sort3.setSortName("已完成");
+        sort3.setStatus("2");
+        sortList1.add(sort3);
+
+        SortBean sort4 = new SortBean();
+        sort4.setSelect(false);
+        sort4.setSortName("名称");
+        sort4.setSortField("t.name");
+        sortList.add(sort4);
+        SortBean sort5 = new SortBean();
+        sort5.setSelect(false);
+        sort5.setSortName("时间");
+        sort5.setSortField("t.updateTime");
+        sortList.add(sort5);
+        SortBean sort6 = new SortBean();
+        sort6.setSelect(false);
+        sort6.setSortName("客户");
+        sort6.setSortField("c.clientName");
+        sortList.add(sort6);
+
+
     }
 }

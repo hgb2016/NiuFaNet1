@@ -7,6 +7,8 @@ import com.dream.NiuFaNet.Bean.CalInviteBean;
 import com.dream.NiuFaNet.Bean.CalendarDetailBean;
 import com.dream.NiuFaNet.Bean.CalenderedBean;
 import com.dream.NiuFaNet.Bean.ChatBean;
+import com.dream.NiuFaNet.Bean.ClientDataBean;
+import com.dream.NiuFaNet.Bean.ClientDescBean;
 import com.dream.NiuFaNet.Bean.CommonBean;
 import com.dream.NiuFaNet.Bean.CommonBean1;
 import com.dream.NiuFaNet.Bean.FriendNoticeBean;
@@ -22,6 +24,7 @@ import com.dream.NiuFaNet.Bean.NewCalResultBean;
 import com.dream.NiuFaNet.Bean.NewProResultBean;
 import com.dream.NiuFaNet.Bean.ProgramDetailBean;
 import com.dream.NiuFaNet.Bean.ProgramListBean;
+import com.dream.NiuFaNet.Bean.ProjectClientListBean;
 import com.dream.NiuFaNet.Bean.RecomendBean;
 import com.dream.NiuFaNet.Bean.RegisterBean;
 import com.dream.NiuFaNet.Bean.RemindWordBean;
@@ -281,5 +284,34 @@ public class NFApi {
     }
     public Observable<CommonBean> uploadApk(MultipartBody.Part fdImg_file, RequestBody version) {
         return service.uploadApk(fdImg_file,version);
+    }
+    public Observable<CommonBean> addMyClient(String data) {
+        return service.addMyClient(data);
+    }
+
+    public Observable<ClientDataBean> searchMyClients(String userId,@FieldMap Map<String,String> map) {
+        return service.searchMyClients(userId,map);
+    }
+
+    public Observable<ClientDescBean> searchClientDesc(String userId,String clientId) {
+        return service.searchMyClientDesc(userId,clientId);
+    }
+    public Observable<CommonBean> deleMyClient(String userId,String clientId) {
+        return service.deleMyClient(userId,clientId);
+    }
+    public Observable<CommonBean> deleMyClientContact(String userId,String clientId,String id) {
+        return service.deleMyClientContact(userId,clientId,id);
+    }
+    public Observable<CommonBean> deleMyClientUser(String userId,String clientId,String id) {
+        return service.deleMyClientUser(userId,clientId,id);
+    }
+    public Observable<CommonBean> addClientContact(String data) {
+        return service.addClientContact(data);
+    }
+    public Observable<CommonBean> addClientShowUser(String data) {
+        return service.addClientShowUser(data);
+    }
+    public Observable<ProjectClientListBean> searchProjectClientList(@FieldMap Map<String,String> map) {
+        return service.searchProjectClientList(map);
     }
 }

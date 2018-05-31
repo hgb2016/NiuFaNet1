@@ -44,6 +44,7 @@ import com.dream.NiuFaNet.Bean.InputGetBean;
 import com.dream.NiuFaNet.Bean.MyFrendBean;
 import com.dream.NiuFaNet.Bean.NewCalResultBean;
 import com.dream.NiuFaNet.Bean.ProgramListBean;
+import com.dream.NiuFaNet.Bean.ProjectClientListBean;
 import com.dream.NiuFaNet.Bean.TimeTipBean;
 import com.dream.NiuFaNet.Component.DaggerNFComponent;
 import com.dream.NiuFaNet.Contract.CalendarDetailContract;
@@ -237,7 +238,6 @@ public class NewCalenderActivity extends CommonActivity implements NewCalenderCo
         filesAdapter = new FilesAdapter(this, fileBeanList, R.layout.gvitem_imgclose);
         peples_gv.setAdapter(peoPlesAdapter);
         mfile_gv.setAdapter(filesAdapter);
-
         dateDialog = new TimePickerBuilder(this, new OnTimeSelectListener() {
             @Override
             public void onTimeSelect(Date date, View v) {
@@ -907,7 +907,25 @@ public class NewCalenderActivity extends CommonActivity implements NewCalenderCo
                   }
                   duringtime_tv.setText(CalculateTimeUtil.getTimeExpend(startDate,this.endDate));
               }else {
-
+                  Calendar starCal = Calendar.getInstance();
+                  long startTime = starCal.getTimeInMillis();
+                  startDate = startTime;
+                  String dateStr = DateFormatUtil.getTime(startTime, "MM月dd日");
+                  String dateStr1 = DateFormatUtil.getTime(startTime, "HH:mm");
+                  Calendar calendar = Calendar.getInstance();
+                  calendar.setTime(new Date(startTime));
+                  String weekDay = Week.getWeekDay(calendar.get(Calendar.DAY_OF_WEEK));
+                  startime_tv1.setText(dateStr + "(周" + weekDay+")");
+                  startime_tv2.setText(dateStr1);
+                  calendar.add(Calendar.HOUR_OF_DAY, 1);
+                  Date endD = calendar.getTime();
+                  endDate = endD.getTime();
+                  String dateStr2 = DateFormatUtil.getTime(endD, "MM月dd日");
+                  String dateStr3 = DateFormatUtil.getTime(endD, "HH:mm");
+                  String weekDay1 = Week.getWeekDay(calendar.get(Calendar.DAY_OF_WEEK));
+                  endtime_tv1.setText(dateStr2 + "(周" + weekDay1+")");
+                  endtime_tv2.setText(dateStr3);
+                  duringtime_tv.setText(CalculateTimeUtil.getTimeExpend(startDate,endDate));
               }
 
             }
@@ -1099,6 +1117,11 @@ public class NewCalenderActivity extends CommonActivity implements NewCalenderCo
                 projectList.addAll(data);
             }
         }
+    }
+
+    @Override
+    public void showProjectClientList(ProjectClientListBean dataBean) {
+
     }
 
     @Override
