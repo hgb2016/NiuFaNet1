@@ -93,6 +93,7 @@ public class SearchProjectActivity extends CommonActivity  implements ProgramCon
     private String keyWord="";
     private InputMethodManager imm;
 
+
     @Override
     public int getLayoutId() {
         return R.layout.activity_searchproject;
@@ -264,7 +265,7 @@ public class SearchProjectActivity extends CommonActivity  implements ProgramCon
                 holder.getView(R.id.foot_view).setVisibility(View.GONE);
             }
 
-            ProCalAdapter proCalAdapter = new ProCalAdapter(mContext, schedule, R.layout.view_projectdetail);
+            ProCalAdapter proCalAdapter = new ProCalAdapter(mContext, schedule, R.layout.view_projectdetail,baseBean.getId());
             procal_rv.setAdapter(proCalAdapter);
             final LinearLayout spand_lay = holder.getView(R.id.spand_lay);
 
@@ -301,9 +302,10 @@ public class SearchProjectActivity extends CommonActivity  implements ProgramCon
     }
 
     public class ProCalAdapter extends CommonAdapter<ProgramListBean.DataBean.ScheduleBean> {
-
-        public ProCalAdapter(Context context, List<ProgramListBean.DataBean.ScheduleBean> data, int layoutId) {
+        private String projectId;
+        public ProCalAdapter(Context context, List<ProgramListBean.DataBean.ScheduleBean> data, int layoutId, String id) {
             super(context, data, layoutId);
+            projectId=id;
         }
 
         @Override
@@ -314,6 +316,12 @@ public class SearchProjectActivity extends CommonActivity  implements ProgramCon
             TextView time_tv = holder.getView(R.id.time_tv);
             TextView title_tv = holder.getView(R.id.title_tv);
             TextView duringtime_tv = holder.getView(R.id.duringtime_tv);
+            RelativeLayout more_relay=holder.getView(R.id.more_relay);
+            if (position==2){
+                more_relay.setVisibility(View.VISIBLE);
+            }else {
+                more_relay.setVisibility(View.GONE);
+            }
             if (Integer.parseInt(dataBean.getFileCount())<1){
                 apendix_iv.setVisibility(View.GONE);
             }else {
@@ -353,6 +361,14 @@ public class SearchProjectActivity extends CommonActivity  implements ProgramCon
                         Intent intent = new Intent(mContext, CalenderDetailActivity.class);
                         intent.putExtra(Const.scheduleId, scheduleId);
                         startActivity(intent);
+                    }
+                }
+            });
+            holder.setOnClickListener(R.id.more_relay, new NoDoubleClickListener() {
+                @Override
+                public void onNoDoubleClick(View view) {
+                    if (projectId != null) {
+                        IntentUtils.toActivityWithTag(ProjectDetailActivity.class, mActivity,projectId, 006);
                     }
                 }
             });

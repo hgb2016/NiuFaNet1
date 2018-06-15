@@ -133,7 +133,7 @@ public class CustomMonthView extends MonthView {
         }
 
         if (hasScheme) {
-           // canvas.drawCircle(x + mItemWidth - mPadding - mCircleRadius / 2, y + mPadding + mCircleRadius, mCircleRadius, mSchemeBasicPaint);
+             //canvas.drawCircle(x + mItemWidth - mPadding - mCircleRadius / 2, y + mPadding + mCircleRadius, mCircleRadius, mSchemeBasicPaint);
 
            // mTextPaint.setColor(calendar.getSchemeColor());
            // canvas.drawText(calendar.getScheme(), x + mItemWidth - mPadding - mCircleRadius, y + mPadding + mSchemeBaseLine, mTextPaint);
@@ -189,4 +189,6 @@ public class CustomMonthView extends MonthView {
         final float scale = context.getResources().getDisplayMetrics().density;
         return (int) (dpValue * scale + 0.5f);
     }
+
+
 }

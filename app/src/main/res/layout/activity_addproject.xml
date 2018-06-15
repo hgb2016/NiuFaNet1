@@ -62,6 +62,8 @@
         android:gravity="center">
 
         <RelativeLayout
+            android:focusableInTouchMode="true"
+            android:focusable="true"
             android:id="@+id/search_lay"
             android:layout_width="320dp"
             android:layout_height="30dp"

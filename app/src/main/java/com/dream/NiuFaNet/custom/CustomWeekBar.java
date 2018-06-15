@@ -25,7 +25,8 @@ public class CustomWeekBar extends WeekBar {
     }
 
     @Override
-    protected void onDateSelected(Calendar calendar, boolean isClick) {
+    protected void onDateSelected(Calendar calendar, int weekStart, boolean isClick) {
+        super.onDateSelected(calendar, weekStart, isClick);
         getChildAt(mPreSelectedIndex).setSelected(false);
         getChildAt(calendar.getWeek()).setSelected(true);
         mPreSelectedIndex = calendar.getWeek();

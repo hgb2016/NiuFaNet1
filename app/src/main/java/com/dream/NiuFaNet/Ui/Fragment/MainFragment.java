@@ -5,9 +5,12 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.media.Image;
+import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.view.ViewPager;
@@ -27,6 +30,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.target.Target;
 import com.dream.NiuFaNet.Adapter.BannerAdapter;
 import com.dream.NiuFaNet.Adapter.ChatMainRvAdapter;
 import com.dream.NiuFaNet.Adapter.FunctionViewAdapter;
@@ -103,6 +108,8 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.io.File;
+import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -193,6 +200,7 @@ public class MainFragment extends BaseFragmentV4 implements MainContract.View, M
     };
     private  MyToolsAdapter myToolsAdapter;
     private List<MyToolsBean.DataBean> myTools=new ArrayList<>();
+    private Bitmap localbanner;
     @Override
     protected View loadViewLayout(LayoutInflater inflater, ViewGroup container) {
         return inflater.inflate(R.layout.fragment_main, null);
@@ -224,7 +232,6 @@ public class MainFragment extends BaseFragmentV4 implements MainContract.View, M
             Calendar calendar = Calendar.getInstance();
             refreshIsfirst(calendar.getTime());
         }
-
 
     }
 
@@ -261,16 +268,75 @@ public class MainFragment extends BaseFragmentV4 implements MainContract.View, M
 
         Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), "fonts/fzlth.ttf");
         cmd_tv.setTypeface(tf);
+
         //获取我的工具
         getMyToolsData();
         //设置我的日程数据
         setCalendarData();
         //获取我的日程数据
         getCalendarData();
+        //获取缓存图片
+        getCacheBanner();
 
     }
 
+    private void getCacheBanner() {
+        String bannerData = (String) SpUtils.getParam(Const.Banner, "");
+        if (bannerData!=null&&!bannerData.isEmpty()){
+            Type listType = new TypeToken<List<BannerBean.DataBean>>() {
+            }.getType();
+            Gson gson = new Gson();
+            List<BannerBean.DataBean> data=new ArrayList<>();
+             data=gson.fromJson(bannerData,listType);
+            List<String> imgUrls = new ArrayList<>();
+            for (int i = 0; i < data.size(); i++) {
+                imgUrls.add(data.get(i).getImgUrl());
+                final String link = data.get(i).getLink();
+                banner.setOnBannerListener(new OnBannerListener() {
+                    @Override
+                    public void OnBannerClick(int position) {
+                        Log.e("tag","link="+link);
+                        IntentUtils.toActivityWithUrl(WebActivity.class,getActivity(),link, ResourcesUtils.getString(R.string.app_name));
+                    }
+                });
+            }
+            banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
+            banner.setImages(imgUrls);
+            banner.setDelayTime(Const.time);
+            banner.setImageLoader(new GlideImageLoader());
+            banner.start();
+
+            /*    ImageView bannerIv1 = new ImageView(getActivity());
+                bannerIvs.add(bannerIv1);
+                for (int i = 0; i < data.size(); i++) {
+                    ImageView bannerIv = new ImageView(getActivity());
+                    bannerIvs.add(bannerIv);
+                }
+                if (data.size()>0){
+                    bannerAdapter = new BannerAdapter(bannerIvs,dataList);
+                    main_bannervp.setAdapter(bannerAdapter);
+                }*/
+            mHandler.post(runnable);
+        }
+    }
+
     private void getMyToolsData() {
+        //获取缓存工具数据
+        String cacheData = (String) SpUtils.getParam(Const.MyTools, "");
+        Type listType = new TypeToken<List<MyToolsBean.DataBean>>() {
+        }.getType();
+        Gson gson = new Gson();
+        List<MyToolsBean.DataBean> mytools = gson.fromJson(cacheData,listType);
+        if (cacheData!=null&&!cacheData.isEmpty()){
+            if (mytools!= null){
+                myTools.clear();
+                myTools.addAll(mytools);
+                MyToolsBean.DataBean tool=new MyToolsBean.DataBean();
+                myTools.add(tool);
+                myToolsAdapter.notifyDataSetChanged();
+            }
+
+        }
         if (CommonAction.getIsLogin()){
             mainPresenter.getMyTools(CommonAction.getUserId());
         }else {
@@ -324,8 +390,7 @@ public class MainFragment extends BaseFragmentV4 implements MainContract.View, M
     public void showBannerData(BannerBean dataBean) {
         if (dataBean.getError().equals(Const.success)) {
             List<BannerBean.DataBean> data = dataBean.getData();
-
-
+            SpUtils.setParam(Const.Banner,new Gson().toJson(data)+"");
             if (data != null) {
                 List<String> imgUrls = new ArrayList<>();
                 for (int i = 0; i < data.size(); i++) {
@@ -365,6 +430,7 @@ public class MainFragment extends BaseFragmentV4 implements MainContract.View, M
         if(dataBean.getError().equals(Const.success)){
             List<MyToolsBean.DataBean> mytools = dataBean.getDataBean();
             Log.i("myTools",new Gson().toJson(mytools));
+            SpUtils.setParam(Const.MyTools,new Gson().toJson(mytools)+"");
             if (mytools!= null){
                 myTools.clear();
                 myTools.addAll(mytools);
@@ -414,7 +480,38 @@ public class MainFragment extends BaseFragmentV4 implements MainContract.View, M
         }
     }
 
+    private class getImageCacheAsyncTask extends AsyncTask<String, Void, File> {
+        private final Context context;
 
+        public getImageCacheAsyncTask(Context context) {
+            this.context = context;
+        }
+
+        @Override
+        protected File doInBackground(String... params) {
+            String imgUrl =  params[0];
+            try {
+                return Glide.with(context)
+                        .load(imgUrl)
+                        .downloadOnly(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
+                        .get();
+            } catch (Exception ex) {
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(File result) {
+            if (result == null) {
+                return;
+            }
+            //此path就是对应文件的缓存路径
+            String path = result.getPath();
+            Log.e("path", path);
+            Bitmap bmp= BitmapFactory.decodeFile(path);
+            localbanner=bmp;
+        }
+    }
 
     public class GlideImageLoader extends ImageLoader {
         @Override
@@ -428,15 +525,17 @@ public class MainFragment extends BaseFragmentV4 implements MainContract.View, M
              */
 
             //Glide 加载图片简单用法
-            Glide.with(getContext()).load(path.toString()).into(imageView);
+            Glide.with(getContext()).load(path.toString()).diskCacheStrategy(DiskCacheStrategy.ALL).crossFade().centerCrop().into(imageView);
            // Glide.with(getContext()).load(R.drawable.banner).transform(new GlideRoundTransform(context,10)).into(imageView);
+
         }
 
     }
 
     @Override
     public void showError() {
-       // ToastUtils.Toast_short(getActivity(),ResourcesUtils.getString(R.string.failconnect));
+
+        ToastUtils.Toast_short(getActivity(),ResourcesUtils.getString(R.string.failconnect));
 
     }
 

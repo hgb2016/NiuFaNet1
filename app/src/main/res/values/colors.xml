@@ -108,7 +108,8 @@
     <color name="gray_93">#FF939393</color>
     <color name="textcolor_blue2">#FF0C7DFF</color>
     <color name="textcolor_bd">#FFBDBDBD</color>
-    <color name="yellow_1">#e4f858</color>
+    <color name="yellow_1">#80e4f858</color>
     <color name="shadow">#cc222222</color>
     <color name="bg_d933">#D9333333</color>
+    <color name="textcolor_blue1">#6FB8FF</color>
 </resources>

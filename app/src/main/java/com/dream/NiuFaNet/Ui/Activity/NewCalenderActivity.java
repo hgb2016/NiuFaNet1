@@ -1144,6 +1144,7 @@ public class NewCalenderActivity extends CommonActivity implements NewCalenderCo
         if (dataBean.getError().equals(Const.success)) {
             setResult(123);
             CommonAction.refreshLogined();
+            CommonAction.refreshCal();
             finish();
         }
     }
@@ -1192,7 +1193,7 @@ public class NewCalenderActivity extends CommonActivity implements NewCalenderCo
                 public void onNoDoubleClick(View view) {
 
                     if (item.isSouce()){
-                        newCalenderPresenter.deleteParticipant(scheduleId,item.getUserId(),position);
+                        newCalenderPresenter.deleteParticipant(scheduleId,item.getUserId(),position,CommonAction.getUserId());
                     }else {
                         participantBeanList.remove(position);
                         notifyDataSetChanged();

@@ -5,6 +5,7 @@ import android.util.Log;
 import com.dream.NiuFaNet.Api.NFApi;
 import com.dream.NiuFaNet.Base.RxPresenter;
 import com.dream.NiuFaNet.Bean.BannerBean;
+import com.dream.NiuFaNet.Bean.EditCount;
 import com.dream.NiuFaNet.Bean.MyToolsBean;
 import com.dream.NiuFaNet.Bean.RecomendBean;
 import com.dream.NiuFaNet.Contract.MainContract;
@@ -123,4 +124,5 @@ public class MainPresenter extends RxPresenter<MainContract.View> implements Mai
                 });
         addSubscrebe(rxSubscription);
     }
+
 }

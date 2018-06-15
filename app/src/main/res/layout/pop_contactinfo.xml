@@ -73,18 +73,24 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dimen50dp">
-
+                    <LinearLayout
+                        android:layout_centerVertical="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
                         android:layout_marginLeft="30dp"
-                        android:layout_marginRight="10dp"
                         android:background="@null"
                         android:hint="姓名"
                         android:textColor="@color/textgray_94"
                         android:textSize="@dimen/text_size_14sp" />
-
+                        <TextView
+                            android:textColor="@color/red_delete"
+                            android:text="*"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
                     <EditText
                         android:id="@+id/name_edt"
                         android:layout_width="match_parent"
@@ -117,16 +123,24 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/dimen50dp">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                        <LinearLayout
                             android:layout_centerVertical="true"
-                            android:layout_marginLeft="30dp"
-                            android:layout_marginRight="10dp"
-                            android:background="@null"
-                            android:hint="电话"
-                            android:textColor="@color/textgray_94"
-                            android:textSize="@dimen/text_size_14sp" />
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="30dp"
+                                android:background="@null"
+                                android:hint="电话"
+                                android:textColor="@color/textgray_94"
+                                android:textSize="@dimen/text_size_14sp" />
+                            <TextView
+                                android:textColor="@color/red_delete"
+                                android:text="*"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+                        </LinearLayout>
 
                         <EditText
                             android:id="@+id/phone_edt"

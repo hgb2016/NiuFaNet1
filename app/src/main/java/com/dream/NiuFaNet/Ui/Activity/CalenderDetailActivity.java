@@ -10,7 +10,9 @@ import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +34,8 @@ import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.TimePickerView;
 import com.bumptech.glide.Glide;
 import com.dream.NiuFaNet.Adapter.CalDetailParticipantAdapter;
+import com.dream.NiuFaNet.Bean.ApplyBeFrendBean;
+import com.dream.NiuFaNet.Bean.CalInviteBean;
 import com.dream.NiuFaNet.Bean.CommonBean1;
 import com.dream.NiuFaNet.Base.BaseViewHolder;
 import com.dream.NiuFaNet.Base.CommonActivity;
@@ -44,6 +48,7 @@ import com.dream.NiuFaNet.Bean.TimeTipBean;
 import com.dream.NiuFaNet.Component.DaggerNFComponent;
 import com.dream.NiuFaNet.Contract.CalendarDetailContract;
 import com.dream.NiuFaNet.Contract.EditScheduleInfoContract;
+import com.dream.NiuFaNet.Contract.MessageContract;
 import com.dream.NiuFaNet.Contract.ProgramDetailContract;
 import com.dream.NiuFaNet.CustomView.MyGridView;
 import com.dream.NiuFaNet.Listener.NoDoubleClickListener;
@@ -52,6 +57,7 @@ import com.dream.NiuFaNet.Other.Const;
 import com.dream.NiuFaNet.Other.MyApplication;
 import com.dream.NiuFaNet.Presenter.CalendarDetailPresenter;
 import com.dream.NiuFaNet.Presenter.EditScheduleInfoPresenter;
+import com.dream.NiuFaNet.Presenter.MessagePresenter;
 import com.dream.NiuFaNet.Presenter.ProgramDetailPresenter;
 import com.dream.NiuFaNet.R;
 import com.dream.NiuFaNet.Utils.BitmapUtils;
@@ -70,6 +76,7 @@ import com.dream.NiuFaNet.Utils.ResourcesUtils;
 import com.dream.NiuFaNet.Utils.SpUtils;
 import com.dream.NiuFaNet.Utils.SpannableStringUtil;
 import com.dream.NiuFaNet.Utils.ToastUtils;
+import com.example.zhouwei.library.CustomPopWindow;
 import com.google.gson.Gson;
 
 import java.io.File;
@@ -84,13 +91,15 @@ import java.util.Map;
 import javax.inject.Inject;
 
 import butterknife.Bind;
+import butterknife.BindInt;
 import butterknife.OnClick;
 import cn.sharesdk.wechat.friends.Wechat;
+import retrofit2.http.Field;
 
 /**
  * Created by Administrator on 2017/11/19 0019.
  */
-public class CalenderDetailActivity extends CommonActivity implements CalendarDetailContract.View,ProgramDetailContract.View,EditScheduleInfoContract.View {
+public class CalenderDetailActivity extends CommonActivity implements MessageContract.View,CalendarDetailContract.View,ProgramDetailContract.View,EditScheduleInfoContract.View {
 
 
     @Inject
@@ -99,6 +108,8 @@ public class CalenderDetailActivity extends CommonActivity implements CalendarDe
     ProgramDetailPresenter programDetailPresenter;
     @Inject
     EditScheduleInfoPresenter editScheduleInfoPresenter;
+    @Inject
+    MessagePresenter messagePresenter;
     @Bind(R.id.username_tv)
     TextView username_tv;
     @Bind(R.id.title_tv)
@@ -184,6 +195,24 @@ public class CalenderDetailActivity extends CommonActivity implements CalendarDe
     LinearLayout personal_lay;
     @Bind(R.id.duringtime_tv)
     TextView duringtime_tv;
+    @Bind(R.id.start_lay)
+    LinearLayout start_lay;
+    @Bind(R.id.end_lay)
+    LinearLayout end_lay;
+    @Bind(R.id.bot_relay1)
+    RelativeLayout bot_relay1;
+    @Bind(R.id.arrow1)
+    ImageView arrow1;
+    @Bind(R.id.arrow2)
+    ImageView arrow2;
+    @Bind(R.id.arrow3)
+    ImageView arrow3;
+    @Bind(R.id.arrow4)
+    ImageView arrow4;
+    @Bind(R.id.arrow5)
+    ImageView arrow5;
+    @Bind(R.id.arrow6)
+    ImageView arrow6;
     private boolean isRemind;
     private InputMethodManager imm;
     private TimePickerView dateDialog;
@@ -206,6 +235,9 @@ public class CalenderDetailActivity extends CommonActivity implements CalendarDe
     private CalendarDetailBean.DataBean tempData;
     private String beaginTime;
     private String testatus;
+    private CustomPopWindow mCustomPopWindow;
+    private String status;
+
     @Override
     public int getLayoutId() {
         return R.layout.activity_calenderdetail;
@@ -220,6 +252,7 @@ public class CalenderDetailActivity extends CommonActivity implements CalendarDe
         detailPresenter.attachView(this);
         programDetailPresenter.attachView(this);
         editScheduleInfoPresenter.attachView(this);
+        messagePresenter.attachView(this);
         initTopPopwindow();
 
         imm = ImmUtils.getImm(mActivity);
@@ -286,9 +319,13 @@ public class CalenderDetailActivity extends CommonActivity implements CalendarDe
             userId = CommonAction.getUserId();
         }
         reloadData();
-
         setView();
+        String inviteCal=getIntent().getStringExtra("inviteCal");
+        if (inviteCal!=null&&inviteCal.equals("inviteCal")){
+            showInviteCal();
+        }
     }
+
 
     private void setView() {
         if (!userId.equals(CommonAction.getUserId())){
@@ -307,9 +344,43 @@ public class CalenderDetailActivity extends CommonActivity implements CalendarDe
     @Override
     public void eventListener() {
     }
+    /**
+     * 日程邀请详情展示
+     *  如果是从新的日程邀请 跳入详情 则详情部分不可点击
+     */
+    private void showInviteCal(){
+        bot_relay1.setVisibility(View.VISIBLE);
+        more_relay.setVisibility(View.GONE);
+        invite_relay.setVisibility(View.GONE);
+        arrow1.setVisibility(View.GONE);
+        arrow2.setVisibility(View.GONE);
+        arrow3.setVisibility(View.GONE);
+        arrow4.setVisibility(View.GONE);
+        arrow5.setVisibility(View.GONE);
+        arrow6.setVisibility(View.GONE);
+        end_lay.setClickable(false);
+        start_lay.setClickable(false);
+        type_relay.setClickable(false);
+        title_tv.setClickable(false);
+        address_relay.setClickable(false);
+        beizu_tv.setClickable(false);
+        beizu_relay.setClickable(false);
+        beizu_edt.setClickable(false);
+        remind_relay.setClickable(false);
+        particepant_lay.setClickable(false);
+        project_relay.setClickable(false);
+        duration_tv.setClickable(false);
+        duration_endtv.setClickable(false);
+        particepant_gv.setOnTouchBlankPositionListener(new MyGridView.OnTouchBlankPositionListener() {
+            @Override
+            public boolean onTouchBlankPosition() {
 
+                return true;
+            }
+        });
 
-    @OnClick({R.id.end_lay,R.id.start_lay,R.id.type_relay,R.id.title_tv,R.id.address_relay,R.id.beizu_tv,R.id.remind_relay,R.id.back_relay,R.id.particepant_lay,R.id.more_tv,R.id.project_relay, R.id.invite_relay, R.id.edt_tv, R.id.duration_tv, R.id.duration_endtv, R.id.camara_lay, R.id.pic_lay})
+    }
+    @OnClick({R.id.accept_tv,R.id.reject_tv,R.id.end_lay,R.id.start_lay,R.id.type_relay,R.id.title_tv,R.id.address_relay,R.id.beizu_tv,R.id.remind_relay,R.id.back_relay,R.id.particepant_lay,R.id.more_tv,R.id.project_relay, R.id.invite_relay, R.id.edt_tv, R.id.duration_tv, R.id.duration_endtv, R.id.camara_lay, R.id.pic_lay})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.type_relay:
@@ -454,6 +525,17 @@ public class CalenderDetailActivity extends CommonActivity implements CalendarDe
 
                 }
                 break;
+            case R.id.accept_tv:
+                if (scheduleId!=null) {
+                    status="1";
+                    messagePresenter.replySchedule(scheduleId, "1", CommonAction.getUserId(), "");
+                }
+                break;
+            case R.id.reject_tv:
+                if (scheduleId!=null) {
+                    showInputReason(view,scheduleId);
+                }
+                break;
         }
     }
 
@@ -561,7 +643,7 @@ public class CalenderDetailActivity extends CommonActivity implements CalendarDe
                     @Override
                     public void onNoDoubleClick(View view) {
                         loadingDialog.show();
-                        detailPresenter.deleteCalendar(scheduleId);
+                        detailPresenter.deleteCalendar(scheduleId,CommonAction.getUserId());
                     }
                 });
             }
@@ -718,8 +800,8 @@ public class CalenderDetailActivity extends CommonActivity implements CalendarDe
                         if (remark !=null&&!remark.isEmpty()){
                             beizu_relay.setVisibility(View.VISIBLE);
                             line_beizu.setVisibility(View.VISIBLE);
-                             beizu_tv.setText("备注:"+remark);
-                            SpannableStringUtil.setTelUrl(mActivity,remark,beizu_tv);
+                             beizu_tv.setText("备注："+remark);
+                           // SpannableStringUtil.setTelUrl(mActivity,remark,beizu_tv);
                            // beizu_edt.setText(remark);
                         }else {
                             beizu_relay.setVisibility(View.GONE);
@@ -944,6 +1026,48 @@ public class CalenderDetailActivity extends CommonActivity implements CalendarDe
             CommonAction.refreshCal();
             ToastUtils.showToast(mActivity,"修改成功",R.mipmap.checkmark);
             reloadData();
+        }
+    }
+
+
+
+    @Override
+    public void showApplyFrendData(ApplyBeFrendBean dataBean) {
+
+    }
+
+    @Override
+    public void showCIData(CalInviteBean dataBean) {
+
+    }
+
+    @Override
+    public void showFrendsApply(CommonBean dataBean) {
+
+    }
+
+    /**
+     * 答复日程邀请
+     * @param dataBean
+     */
+    @Override
+    public void showReplySchedule(CommonBean dataBean) {
+        if (dataBean.getError().equals(Const.success)) {
+            if (status.equals("1")) {
+                ToastUtils.showToast(mActivity, "成功接受邀请", R.mipmap.checkmark);
+                CommonAction.refreshCal();
+                setResult(101);
+                finish();
+            }else if (status.equals("2")){
+                if (mCustomPopWindow!=null) {
+                    mCustomPopWindow.dissmiss();
+                }
+                ToastUtils.showToast1(mActivity, "已拒绝并通知了邀请人");
+                setResult(101);
+                finish();
+            }
+        } else {
+            ToastUtils.Toast_short(dataBean.getMessage());
         }
     }
 
@@ -1206,5 +1330,54 @@ public class CalenderDetailActivity extends CommonActivity implements CalendarDe
             startselect_v.setBackgroundColor(getResources().getColor(R.color.white));
         }
     }
+    //填写拒绝弹框
+    private void showInputReason(View v, final String id) {
+        View contentView = LayoutInflater.from(this).inflate(R.layout.pop_inputenote,null);
+        final EditText editText= (EditText) contentView.findViewById(R.id.note_edit);
+        TextView title_tv= (TextView) contentView.findViewById(R.id.title_tv);
+        title_tv.setText("拒绝理由");
+        editText.setHint("请填写拒绝理由(不得超过20个字)");
+        //处理popWindow 显示内容
+        View.OnClickListener listener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch (v.getId()){
+                    case R.id.cancel_tv:
+                        mCustomPopWindow.dissmiss();
+                        break;
+                    case R.id.sure_tv:
+                        String edit=editText.getText().toString().trim();
+                        if (!TextUtils.isEmpty(edit)) {
+                            if (edit.length()<20) {
+                                status="2";
+                                messagePresenter.replySchedule(id, "2", CommonAction.getUserId(), edit);
+                            }else {
+                                ToastUtils.Toast_short(mActivity,"字数不能超过20个字！");
+                            }
+                        }else {
+                            ToastUtils.Toast_short(mActivity,"理由不能为空");
+                        }
+                        break;
+                }
+                //Toast.makeText(HomeActivity.this,showContent,Toast.LENGTH_SHORT).show();
+            }
+        };
 
+        contentView.findViewById(R.id.cancel_tv).setOnClickListener(listener);
+        contentView.findViewById(R.id.sure_tv).setOnClickListener(listener);
+        // 获取编辑框焦点
+        editText.setFocusable(true);
+        //打开软键盘
+        InputMethodManager imm = (InputMethodManager)getApplication().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+        //创建并显示popWindow
+        mCustomPopWindow= new CustomPopWindow.PopupWindowBuilder(this)
+                .setView(contentView)
+                .setBgDarkAlpha(0.7f)
+                .setAnimationStyle(R.anim.pickerview_slide_in_bottom)
+                .size(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)//显示大小
+                .enableBackgroundDark(true)
+                .create()
+                .showAtLocation(v, Gravity.BOTTOM,0,0);
+    }
 }

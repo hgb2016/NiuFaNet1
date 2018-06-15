@@ -106,7 +106,8 @@ public class MyApplication extends Application {
         MobSDK.init(this, "20f4091be79c7", "414be537e9515d5837e78590bd73bac8");
 //        ShareSDK.initSDK(this);
         SpeechUtility.createUtility(context, SpeechConstant.APPID + "=598a8250");
-        StatService.autoTrace(this,true,true);
+        //百度统计服务开启
+        //StatService.autoTrace(this,true,true);
         JPushInterface.setDebugMode(true);//如果时正式版就改成false
         JPushInterface.init(this);
 

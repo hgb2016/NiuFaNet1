@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -23,6 +24,7 @@ import com.dream.NiuFaNet.Base.RVBaseHolder;
 import com.dream.NiuFaNet.Bean.BusBean.RefreshContactBean;
 import com.dream.NiuFaNet.Bean.BusBean.RefreshProBean;
 import com.dream.NiuFaNet.Bean.Contact;
+import com.dream.NiuFaNet.Bean.EditCount;
 import com.dream.NiuFaNet.Bean.MyFrendBean;
 import com.dream.NiuFaNet.Bean.ShowCountBean;
 import com.dream.NiuFaNet.Bean.SimFrendsBean;
@@ -94,7 +96,6 @@ public class ContactFragment extends BaseFragmentV4 implements MyFrendsContract.
     TextView noticecount_tv;
     @Bind(R.id.empty_lay)
     LinearLayout empty_lay;
-
     private List<SimFrendsBean1> frendsList = new ArrayList<>();
     private List<String> letterList = new ArrayList<>();
     private String[] lArray = new String[]{"#","A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
@@ -210,6 +211,11 @@ public class ContactFragment extends BaseFragmentV4 implements MyFrendsContract.
         }
     }
 
+    @Override
+    public void showEditCount(EditCount editCount) {
+
+    }
+
 
     private class LetterAdapter extends RVBaseAdapter<String> {
 
@@ -219,7 +225,7 @@ public class ContactFragment extends BaseFragmentV4 implements MyFrendsContract.
 
         @Override
         public void onBind(RVBaseHolder holder, final String cityBean, int position) {
-            TextView only_tv = holder.getView(R.id.only_tv);
+            final TextView only_tv = holder.getView(R.id.only_tv);
             only_tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10);
             only_tv.setTextColor(ResourcesUtils.getColor(R.color.black));
             only_tv.setText(cityBean);
@@ -228,8 +234,10 @@ public class ContactFragment extends BaseFragmentV4 implements MyFrendsContract.
                 public void onNoDoubleClick(View view) {
                     for (int j = 0; j < letterList.size(); j++) {
                         if (cityBean.equals(letterList.get(j))) {
-//                            cars_rv.smoothScrollToPosition(j);
-                            RvUtils.MoveToPosition((LinearLayoutManager) mSimfrendRv.getLayoutManager(), j);
+//                          cars_rv.smoothScrollToPosition(j);
+                            if (frendsList.size()>6) {
+                                RvUtils.MoveToPosition((LinearLayoutManager) mSimfrendRv.getLayoutManager(), j);
+                            }
                         }
                     }
                 }

@@ -29,7 +29,7 @@ public class CalendarDetailPresenter extends RxPresenter<CalendarDetailContract.
 
     private NFApi itApi;
 
-    private static final String TAG = "CodePresenter";
+    private static final String TAG = "CalendarDetailPresenter";
 
     @Inject
     public CalendarDetailPresenter(NFApi bookApi) {
@@ -122,8 +122,8 @@ public class CalendarDetailPresenter extends RxPresenter<CalendarDetailContract.
     }
 
     @Override
-    public void deleteCalendar(String scheduleId) {
-        Subscription rxSubscription = itApi.deleteCalendar(scheduleId).subscribeOn(Schedulers.io())//放在异步中执行
+    public void deleteCalendar(String scheduleId,String inviteUserId) {
+        Subscription rxSubscription = itApi.deleteCalendar(scheduleId,inviteUserId).subscribeOn(Schedulers.io())//放在异步中执行
                 .observeOn(AndroidSchedulers.mainThread())//回到主线程
                 .subscribe(new Observer<CommonBean>() {
                     @Override

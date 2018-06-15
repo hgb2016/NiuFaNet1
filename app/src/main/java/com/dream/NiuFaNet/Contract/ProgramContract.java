@@ -4,6 +4,7 @@ package com.dream.NiuFaNet.Contract;
 import com.dream.NiuFaNet.Base.BaseContract;
 import com.dream.NiuFaNet.Bean.BaseBean;
 import com.dream.NiuFaNet.Bean.CommonBean;
+import com.dream.NiuFaNet.Bean.EditCount;
 import com.dream.NiuFaNet.Bean.ProgramListBean;
 import com.dream.NiuFaNet.Bean.ProjectClientListBean;
 
@@ -19,10 +20,12 @@ public interface ProgramContract {
 
         void showData(ProgramListBean dataBean);
         void showProjectClientList(ProjectClientListBean dataBean);
+
     }
 
     interface Presenter<T> extends BaseContract.BasePresenter<T> {
         void getProgramList(String userId,Map<String, String> map);
         void getProjectList(Map<String, String> map);
+
     }
 }

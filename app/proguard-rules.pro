@@ -167,4 +167,4 @@
 -keep class com.baidu.bottom.** { *; }
 -keep class com.baidu.kirin.** { *; }
 -keep class com.baidu.mobstat.** { *; }
-}
+

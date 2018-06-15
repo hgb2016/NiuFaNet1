@@ -54,7 +54,6 @@ public class MyReceiver extends BroadcastReceiver {
             int notifactionId = bundle.getInt(JPushInterface.EXTRA_NOTIFICATION_ID);
             Log.d(TAG, "[MyReceiver] 接收到推送下来的通知的ID: " + notifactionId);
 			String dataStr = bundle.getString(JPushInterface.EXTRA_ALERT);
-
 			if (dataStr !=null){
 				Log.e("PSDATA","dataStr="+dataStr);
 				MessageBus messageBus = new MessageBus();

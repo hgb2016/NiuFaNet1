@@ -168,8 +168,10 @@
 
                     <LinearLayout
                         android:id="@+id/client_lay"
+                        android:paddingTop="12dp"
+                        android:paddingBottom="12dp"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/dimen50dp"
+                        android:layout_height="wrap_content"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
                         android:visibility="gone">
@@ -182,17 +184,15 @@
 
                         <TextView
                             android:id="@+id/client_tv"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:gravity="left"
+                            android:layout_marginRight="10dp"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
                             android:text=""
                             android:textColor="#949494"
                             android:textSize="@dimen/text_size_15sp" />
-
-                        <View
-                            android:layout_width="0dp"
-                            android:layout_height="1px"
-                            android:layout_weight="1" />
 
                         <ImageView
                             android:layout_width="wrap_content"

@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.dream.NiuFaNet.Api.NFApi;
 import com.dream.NiuFaNet.Base.RxPresenter;
+import com.dream.NiuFaNet.Bean.EditCount;
 import com.dream.NiuFaNet.Bean.ShowCountBean;
 import com.dream.NiuFaNet.Bean.UserInfoBean;
 import com.dream.NiuFaNet.Contract.SearchFriendInfoContract;
@@ -49,6 +50,33 @@ public class ShowNoticeCountPresenter extends RxPresenter<ShowNoticeCountContrac
                     }
 
                     @SuppressLint("LongLogTag")
+                    @Override
+                    public void onError(Throwable e) {
+
+                        Log.e(TAG, "onError: " + e);
+                        mView.showError();
+                    }
+                });
+        addSubscrebe(rxSubscription);
+    }
+    @Override
+    public void getEditCount(String userId) {
+        Subscription rxSubscription = itApi.searchProjectIsEditCount(userId).subscribeOn(Schedulers.io())//放在异步中执行
+                .observeOn(AndroidSchedulers.mainThread())//回到主线程
+                .subscribe(new Observer<EditCount>() {
+                    @Override
+                    public void onNext(EditCount dataBean) {
+                        if (dataBean != null && mView != null) {
+                            mView.showEditCount(dataBean);
+                        }
+                    }
+
+                    @Override
+                    public void onCompleted() {
+                        mView.complete();
+
+                    }
+
                     @Override
                     public void onError(Throwable e) {
 

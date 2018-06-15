@@ -24,6 +24,7 @@ import com.dream.NiuFaNet.Base.CommonAdapter;
 import com.dream.NiuFaNet.Bean.BusBean.LoginBus;
 import com.dream.NiuFaNet.Bean.BusBean.RefreshProBean;
 import com.dream.NiuFaNet.Bean.CalenderedBean;
+import com.dream.NiuFaNet.Bean.EditCount;
 import com.dream.NiuFaNet.Bean.ProgramListBean;
 import com.dream.NiuFaNet.Bean.ProjectClientListBean;
 import com.dream.NiuFaNet.Component.DaggerNFComponent;
@@ -38,6 +39,7 @@ import com.dream.NiuFaNet.Presenter.ProgramPresenter;
 import com.dream.NiuFaNet.R;
 import com.dream.NiuFaNet.Ui.Activity.CalenderDetailActivity;
 import com.dream.NiuFaNet.Ui.Activity.FriendCalenderActivity;
+import com.dream.NiuFaNet.Ui.Activity.MainActivity;
 import com.dream.NiuFaNet.Ui.Activity.NewProgramActivity;
 import com.dream.NiuFaNet.Ui.Activity.ProgramDetailActivity;
 import com.dream.NiuFaNet.Ui.Activity.ProjectDetailActivity;
@@ -282,12 +284,14 @@ public class ProjectFragment extends BaseFragmentV4 implements ProgramContract.V
     public void event(RefreshProBean proBean) {
         if (proBean.getEventStr().equals(Const.refresh)) {
             if (isSelectClient){
+                dataList.clear();
                 Map<String, String> mapInstance = MapUtils.getMapInstance();
                 mapInstance.put("page", "1");
                 mapInstance.put("status", status);
                 mapInstance.put("userId", CommonAction.getUserId());
                 programPresenter.getProjectList(mapInstance);
             }else {
+                dataList.clear();
                 Map<String, String> map = MapUtils.getMapInstance();
                 map.put("sortField", sortField);
                 map.put("status", status);
@@ -310,6 +314,7 @@ public class ProjectFragment extends BaseFragmentV4 implements ProgramContract.V
     @Override
     public void showError() {
         smart_refreshlay.finishRefresh();
+        mLoadingDialog.dismiss();
         ToastUtils.Toast_short(ResourcesUtils.getString(R.string.failconnect));
     }
 
@@ -368,9 +373,6 @@ public class ProjectFragment extends BaseFragmentV4 implements ProgramContract.V
     }
 
 
-
-    //排序方式
-
     /**
      *
      * @param type   按类型排序
@@ -379,6 +381,7 @@ public class ProjectFragment extends BaseFragmentV4 implements ProgramContract.V
     private void getProgramList_paixu(String type, String status) {
         //  morepop.dismiss();
         mLoadingDialog.show();
+
         Map<String, String> mapInstance = MapUtils.getMapInstance();
         mapInstance.put("sortField", type);
         mapInstance.put("status", status);
@@ -406,6 +409,17 @@ public class ProjectFragment extends BaseFragmentV4 implements ProgramContract.V
             TextView prostatu_tv = holder.getView(R.id.prostatu_tv);
             final ImageView spand_iv = holder.getView(R.id.spand_iv);
             LinearLayout right_lay = holder.getView(R.id.right_lay);
+            ImageView isSee_iv=holder.getView(R.id.isSee_iv);
+            Log.e("myTag",baseBean.getIsEdit()+"");
+            if(baseBean.getIsEdit()!=null&&!baseBean.getIsEdit().isEmpty()){
+                if (baseBean.getIsEdit().equals("1")) {
+                    isSee_iv.setVisibility(View.VISIBLE);
+                } else {
+                    isSee_iv.setVisibility(View.GONE);
+                }
+            }else {
+                isSee_iv.setVisibility(View.GONE);
+            }
             if (baseBean.getStatus().equals("2")) {
                 prostatu_tv.setText("已完成");
                 prostatu_tv.setBackgroundResource(R.drawable.shape_projectstatus1);
@@ -447,6 +461,8 @@ public class ProjectFragment extends BaseFragmentV4 implements ProgramContract.V
                 @Override
                 public void onNoDoubleClick(View view) {
                     if (baseBean.getId() != null) {
+                        baseBean.setIsEdit("2");
+                        notifyDataSetChanged();
                         IntentUtils.toActivityWithTag(ProjectDetailActivity.class, getActivity(), baseBean.getId(), 006);
                     }
                 }
@@ -649,6 +665,7 @@ public class ProjectFragment extends BaseFragmentV4 implements ProgramContract.V
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void eventMain1(LoginBus refreshCalBean) {
         if (refreshCalBean.getEventStr().equals(Const.refresh)) {
+            dataList.clear();
             Map<String, String> map = MapUtils.getMapInstance();
             loadData(map);
         }

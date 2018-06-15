@@ -39,6 +39,7 @@ import com.dream.NiuFaNet.Utils.GlideCircleTransform;
 import com.dream.NiuFaNet.Utils.IntentUtils;
 import com.dream.NiuFaNet.Utils.ResourcesUtils;
 import com.dream.NiuFaNet.Utils.RvUtils;
+import com.dream.NiuFaNet.Utils.ToastUtils;
 import com.dream.NiuFaNet.group.GroupItemDecoration;
 import com.dream.NiuFaNet.group.GroupRecyclerAdapter;
 import com.dream.NiuFaNet.group.GroupRecyclerView;
@@ -139,8 +140,6 @@ public class FriendCalenderActivity extends CommonActivity implements MarkDateCo
                 title_tv.setText(data.getFriendName()+"的日程");
                 username_tv.setText(data.getFriendName());
             }
-
-
             String headUrl = data.getHeadUrl();
             loginHead(headUrl);
             if (userId.equals(CommonAction.getUserId())){
@@ -200,7 +199,7 @@ public class FriendCalenderActivity extends CommonActivity implements MarkDateCo
     }
 
 
-    @OnClick({R.id.back_relay,R.id.invite_relay,R.id.head_iv})
+    @OnClick({R.id.back_relay,R.id.invite_relay,R.id.head_iv,R.id.today_iv})
     public  void OnClick(View view){
         switch (view.getId()){
             case R.id.back_relay:
@@ -226,6 +225,9 @@ public class FriendCalenderActivity extends CommonActivity implements MarkDateCo
                 Intent intent1=new Intent(mActivity,FriendDetailActivity.class);
                 intent1.putExtra("friendid",tempData.getFriendId());
                 startActivity(intent1);
+                break;
+            case R.id.today_iv:
+                mCalendarView.scrollToCurrent();
                 break;
         }
     }

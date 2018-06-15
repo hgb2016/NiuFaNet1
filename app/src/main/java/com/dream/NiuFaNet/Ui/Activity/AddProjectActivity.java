@@ -199,6 +199,9 @@ public class AddProjectActivity extends CommonActivity implements ProgramContrac
                         for (int i = 0; i < projectList.size(); i++) {
                             if (tag.equals(projectList.get(i).getName())) {
                                 projectList.get(i).setSelect(true);
+                                ProgramListBean.DataBean project=projectList.get(i);
+                                projectList.remove(i);
+                                projectList.add(0,project);
                             }
                         }
                     }

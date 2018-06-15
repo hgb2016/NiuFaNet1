@@ -40,6 +40,7 @@
     </RelativeLayout>
 
     <ScrollView
+        android:background="#f6f6f6"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -47,7 +48,7 @@
             android:id="@+id/message_lv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:divider="@color/gray"
-            android:dividerHeight="@dimen/layout_padding_1dp"/>
+            android:divider="@null"
+            />
     </ScrollView>
 </LinearLayout>

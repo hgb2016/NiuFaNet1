@@ -1,6 +1,7 @@
 package com.dream.NiuFaNet.Ui.Activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,8 +31,11 @@ import com.dream.NiuFaNet.Other.Const;
 import com.dream.NiuFaNet.Other.MyApplication;
 import com.dream.NiuFaNet.Presenter.MessagePresenter;
 import com.dream.NiuFaNet.R;
+import com.dream.NiuFaNet.Utils.CalculateTimeUtil;
 import com.dream.NiuFaNet.Utils.DateFormatUtil;
 import com.dream.NiuFaNet.Utils.DateUtils.Week;
+import com.dream.NiuFaNet.Utils.NetUtil;
+import com.dream.NiuFaNet.Utils.ResourcesUtils;
 import com.dream.NiuFaNet.Utils.ToastUtils;
 import com.example.zhouwei.library.CustomPopWindow;
 
@@ -162,28 +167,47 @@ public class NewMessageActivity extends CommonActivity implements MessageContrac
 
         @Override
         public void convert(BaseViewHolder helper, final CalInviteBean.DataBean item, int position) {
-            helper.setText(R.id.invitename_tv,item.getUserName()+" 邀请你加入新日程");
+            helper.setText(R.id.invitename_tv,item.getUserName()+" 邀请你加入日程");
             helper.setText(R.id.invitecontent_tv,item.getTitle());
+            helper.setImageByUrl(R.id.head_iv,item.getHeadUrl(),true);
+            TextView starttime_tv1=helper.getView(R.id.starttime_tv1);
+            TextView starttime_tv2=helper.getView(R.id.starttime_tv2);
+            TextView endtime_tv1=helper.getView(R.id.endtime_tv1);
+            TextView endtime_tv2=helper.getView(R.id.endtime_tv2);
+            TextView address_tv=helper.getView(R.id.address_tv);
+            TextView outofdate_tv=helper.getView(R.id.outofdate_tv);
+            LinearLayout address_lay=helper.getView(R.id.address_lay);
             //起始时间
             Date tempbd = DateFormatUtil.getTime(item.getBeginTime(), Const.YMD_HMS);
-            String startTime = DateFormatUtil.getTime(tempbd, Const.MD);
+            String startTime = DateFormatUtil.getTime(tempbd, Const.MR);
             String startTime1 = DateFormatUtil.getTime(tempbd, Const.HM);
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(tempbd);
             String weekDay = Week.getWeekDay(calendar.get(Calendar.DAY_OF_WEEK));
-
+            starttime_tv1.setText(startTime1);
+            starttime_tv2.setText(startTime+" (周"+weekDay+")");
             //结束时间
             Date tempnd = DateFormatUtil.getTime(item.getEndTime(), Const.YMD_HMS);
-            String endDateStr = DateFormatUtil.getTime(tempnd, Const.MD);
+            String endDateStr = DateFormatUtil.getTime(tempnd, Const.MR);
             String endDateStr1 = DateFormatUtil.getTime(tempnd, Const.HM);
             calendar.setTime(tempnd);
             String weekDay1 = Week.getWeekDay(calendar.get(Calendar.DAY_OF_WEEK));
-            if (startTime.equals(endDateStr)){
-                helper.setText(R.id.duringtime_tv,"时间："+startTime+" (周"+weekDay+") "+" "+startTime1+"-"+endDateStr1);
+            endtime_tv1.setText(endDateStr1);
+            endtime_tv2.setText(endDateStr+" (周"+weekDay1+")");
+            String address=item.getAddress();
+            if (address!= null&&!address.isEmpty()){
+                address_lay.setVisibility(View.VISIBLE);
+                address_tv.setText("地址："+item.getAddress());
             }else {
-                helper.setText(R.id.duringtime_tv,"时间："+startTime+" (周"+weekDay+") "+" "+startTime1+" - "+endDateStr+" (周"+weekDay1+") "+" "+endDateStr1);
+                address_lay.setVisibility(View.GONE);
             }
-            helper.setText(R.id.invitetime_tv,item.getBeginTime());
+            Calendar instance = Calendar.getInstance();
+            if (instance.getTimeInMillis()>tempbd.getTime()){
+                outofdate_tv.setVisibility(View.VISIBLE);
+            }else {
+                outofdate_tv.setVisibility(View.GONE);
+            }
+            helper.setText(R.id.duringtime_tv,CalculateTimeUtil.getTimeExpend(tempbd.getTime(),tempnd.getTime()));
             helper.setOnClickListener(R.id.reject_tv, new NoDoubleClickListener() {
                 @Override
                 public void onNoDoubleClick(View view) {
@@ -197,11 +221,31 @@ public class NewMessageActivity extends CommonActivity implements MessageContrac
                     messagePresenter.replySchedule(item.getId(), "1", CommonAction.getUserId(),"");
                 }
             });
-
-
+            helper.setOnClickListener(R.id.invitecontent_tv, new NoDoubleClickListener() {
+                @Override
+                public void onNoDoubleClick(View view) {
+                    String scheduleId = item.getId();
+                    if (scheduleId!=null&&!scheduleId.isEmpty()){
+                        Intent intent = new Intent(mContext, CalenderDetailActivity.class);
+                        intent.putExtra(Const.scheduleId, scheduleId);
+                        intent.putExtra("inviteCal","inviteCal");
+                        intent.putExtra(Const.userId, CommonAction.getUserId());
+                       startActivityForResult(intent,100);
+                    }
+                }
+            });
         }
     }
-    //填写备注弹框
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode==100&&resultCode==101){
+            messagePresenter.getCalInviteList(CommonAction.getUserId());
+        }
+    }
+
+    //填写拒绝弹框
     private void showInputReason(View v, final String id) {
         View contentView = LayoutInflater.from(this).inflate(R.layout.pop_inputenote,null);
         final EditText editText= (EditText) contentView.findViewById(R.id.note_edit);

@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
@@ -15,8 +15,9 @@
         android:paddingTop="15dp">
 
         <LinearLayout
+            android:layout_toLeftOf="@+id/check_lay"
             android:layout_marginRight="20dp"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <TextView
@@ -56,16 +57,14 @@
                     android:textSize="13sp" />
             </LinearLayout>
         </LinearLayout>
-        <View
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"/>
+
         <LinearLayout
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
             android:id="@+id/check_lay"
             android:layout_width="60dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:gravity="center">
-
             <ImageView
                 android:id="@+id/check_iv"
                 android:layout_width="wrap_content"
@@ -73,7 +72,7 @@
                 android:layout_marginLeft="@dimen/padding20"
                 android:src="@mipmap/emptycheck_2" />
         </LinearLayout>
-    </LinearLayout>
+    </RelativeLayout>
 
     <View
         android:layout_width="match_parent"

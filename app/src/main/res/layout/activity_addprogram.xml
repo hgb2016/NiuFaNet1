@@ -89,6 +89,7 @@
                     android:visibility="visible">
 
                     <TextView
+                        android:id="@+id/client"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
@@ -98,11 +99,14 @@
                         android:textSize="@dimen/text_size_15sp" />
 
                     <TextView
+                        android:layout_marginLeft="20dp"
+                        android:layout_toRightOf="@id/client"
                         android:maxLength="20"
                         android:ellipsize="end"
                         android:singleLine="true"
+                        android:gravity="right"
                         android:id="@+id/chooseclient_tv"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"

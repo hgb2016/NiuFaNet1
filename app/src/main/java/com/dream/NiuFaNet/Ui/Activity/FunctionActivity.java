@@ -42,14 +42,17 @@ import com.dream.NiuFaNet.R;
 import com.dream.NiuFaNet.Utils.DensityUtil;
 import com.dream.NiuFaNet.Utils.Dialog.DialogUtils;
 import com.dream.NiuFaNet.Utils.ResourcesUtils;
+import com.dream.NiuFaNet.Utils.SpUtils;
 import com.dream.NiuFaNet.Utils.ToastUtils;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.huxq17.handygridview.HandyGridView;
 import com.huxq17.handygridview.listener.IDrawer;
 import com.huxq17.handygridview.listener.OnItemCapturedListener;
 import com.huxq17.handygridview.scrollrunner.OnItemMovedListener;
 
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -138,6 +141,52 @@ public class FunctionActivity extends CommonActivity implements FunctionContract
     public void initDatas() {
         // Log.i("myTag","UserId"+CommonAction.getUserId());
         mLoadingDialog.show();
+        //获取缓存常用工具数据
+        String cacheData = (String) SpUtils.getParam(Const.MyTools, "");
+        Type listType = new TypeToken<List<MyToolsBean.DataBean>>() {
+        }.getType();
+        Gson gson = new Gson();
+
+        if (cacheData!=null&&!cacheData.isEmpty()){
+            List<MyToolsBean.DataBean> mytools = gson.fromJson(cacheData,listType);
+            if (mytools!= null){
+                recommandlist.clear();
+                recommandlist.addAll(mytools);
+                MyToolsBean.DataBean tool=new MyToolsBean.DataBean();
+                recommandlist.add(tool);
+                recommandAdapter.notifyDataSetChanged();
+            }
+
+        }
+        //获取缓存所有工具数据
+        String funtionData = (String) SpUtils.getParam("function", "");
+        Type type = new TypeToken<FunctionBean>() {
+        }.getType();
+        if (funtionData!=null&&!funtionData.isEmpty()){
+            FunctionBean functionBean = gson.fromJson(funtionData,type);
+            if (functionBean!= null){
+                List<FunctionBean.BodyBean.FindBean> findBeanList = functionBean.getBody().getFind();
+                List<FunctionBean.BodyBean.CalculateBean> calculateBeanList = functionBean.getBody().getCalculate();
+                List<FunctionBean.BodyBean.LaborBean> laborBeanList = functionBean.getBody().getLabor();
+
+                if (findBeanList != null) {
+                    findList.clear();
+                    findList.addAll(findBeanList);
+                    findAdapter.notifyDataSetChanged();
+                }
+                if (calculateBeanList != null) {
+                    calculateList.clear();
+                    calculateList.addAll(calculateBeanList);
+                    caculateAdapter.notifyDataSetChanged();
+                }
+                if (laborBeanList != null) {
+                    laborList.clear();
+                    laborList.addAll(laborBeanList);
+                    laborAdapter.notifyDataSetChanged();
+                }
+            }
+
+        }
         functionPresenter.getFunctionData("type");
         if (CommonAction.getIsLogin()) {
             myToolsPresenter.getMyTools(CommonAction.getUserId());
@@ -196,6 +245,7 @@ public class FunctionActivity extends CommonActivity implements FunctionContract
     public void showData(FunctionBean dataBean) {
         if (dataBean.getError().equals(Const.success)) {
             Log.i("myTag",new Gson().toJson(dataBean));
+            SpUtils.setParam("function",new Gson().toJson(dataBean));
             mLoadingDialog.dismiss();
             List<FunctionBean.BodyBean.FindBean> findBeanList = dataBean.getBody().getFind();
             List<FunctionBean.BodyBean.CalculateBean> calculateBeanList = dataBean.getBody().getCalculate();

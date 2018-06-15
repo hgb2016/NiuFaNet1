@@ -48,6 +48,7 @@ import com.dream.NiuFaNet.Bean.BusBean.RefreshBean;
 import com.dream.NiuFaNet.Bean.CalInviteBean;
 import com.dream.NiuFaNet.Bean.ChatBean;
 import com.dream.NiuFaNet.Bean.CommonBean;
+import com.dream.NiuFaNet.Bean.EditCount;
 import com.dream.NiuFaNet.Bean.InputGetBean;
 import com.dream.NiuFaNet.Bean.MessageLayBean;
 import com.dream.NiuFaNet.Bean.ShowCountBean;
@@ -139,7 +140,6 @@ public class MainActivity extends BaseActivityRelay implements VersionUpdateCont
     ImageView schedule_img;
     @Bind(R.id.voiceinput_relay)
     RelativeLayout voiceinput_relay;
-
     @Bind(R.id.audio_lay)
     RelativeLayout audio_lay;
     @Bind(R.id.audioview_left)
@@ -148,7 +148,6 @@ public class MainActivity extends BaseActivityRelay implements VersionUpdateCont
     AudioAnimView audioview_right;
     @Bind(R.id.audiores_tv)
     TextView audiores_tv;
-
     @Bind(R.id.schedule_tv)
     TextView schedule_tv;
     @Bind(R.id.main_tv)
@@ -189,6 +188,8 @@ public class MainActivity extends BaseActivityRelay implements VersionUpdateCont
     TextView contact_tv;
     @Bind(R.id.fridensnum_tv)
     TextView fridensnum_tv;
+    @Bind(R.id.projectnum_tv)
+    TextView projectnum_tv;
     private View statutView;
     private Fragment recommendFra, scheduleFra, progamFra, contactFra;;
     private FragmentManager mFragmentManager;
@@ -197,9 +198,9 @@ public class MainActivity extends BaseActivityRelay implements VersionUpdateCont
     private Bitmap mainnormal, mainselect, schedulenormal, schedulselect;
 
 
-    private SpeechRecognizer mIat;// 语音听写
+
     private String audioResultStr;
-    private boolean isUp, isInit, isOver,isMove,isCancle;
+
     private String TAG = "tag";
     private Dialog permissionDialog;
     private List<VoiceRvBean.BodyBean> voiceContentList = new ArrayList<>();
@@ -215,36 +216,6 @@ public class MainActivity extends BaseActivityRelay implements VersionUpdateCont
     @Inject
     ShowNoticeCountPresenter showNoticeCountPresenter;
     private String szImei;
-
-    // 用HashMap存储听写结果
-    private HashMap<String, String> mIatResults = new LinkedHashMap<String, String>();
-
-    private Handler mHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            switch (msg.what) {
-                case 210:
-                    if (isUp && !audioResultStr.isEmpty()&&!isCancle) {
-                        audio_lay.setVisibility(View.GONE);
-                        isOver = true;
-                        Log.e("tag", "audioResultStr=" + audioResultStr);
-                        mLoadingDialog.show();
-                        chatPresenter.getChatAnswer(CommonAction.getUserId(),audioResultStr,"app",szImei);
-                    }
-                    break;
-                case 211:
-                    if (isUp && !audioResultStr.isEmpty()&&!isCancle) {
-                        audio_lay.setVisibility(View.GONE);
-                        isOver = true;
-                        Log.e("tag", "audioResultStr=" + audioResultStr);
-                        mLoadingDialog.show();
-                        chatPresenter.getChatAnswer(CommonAction.getUserId(),audioResultStr,"app",szImei);
-                    }
-                    break;
-            }
-        }
-    };
 
 
     //首页布局
@@ -276,7 +247,6 @@ public class MainActivity extends BaseActivityRelay implements VersionUpdateCont
         mFragmentManager = this.getSupportFragmentManager();
         initBitmap();
         statutView = XuniKeyWord.initStateView(this);
-        initmTat();
         SpUtils.savaUserInfo(Const.mainStatu, "1");
         permissionDialog = DialogUtils.showPermissionTip(mActivity);
         if (CommonAction.getIsLogin()) {
@@ -284,21 +254,14 @@ public class MainActivity extends BaseActivityRelay implements VersionUpdateCont
             Log.e("tag", "userId=" + userId);
             JPushInterface.setAlias(mContext, 0, userId);
         }
-
         //您可以这样说的内容初始化
         mContentAdapter = new VoiceContentAdapter(this,voiceContentList,R.layout.rvitem_voicecontent);
         RvUtils.setOptionnoLine(mVoiceContentRv,this);
         mVoiceContentRv.setAdapter(mContentAdapter);
-
         TelephonyManager TelephonyMgr = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
         szImei = TelephonyMgr.getDeviceId();
-
         applyPermission();
-        //忽略电池优化
-//        isIgnoreBatteryOption(this);
         initMsgDialog();
-//        String sha1 = Sha1Utils.getSHA1(this);
-//        Log.e("tag","sha1="+sha1);
 
     }
 
@@ -317,20 +280,6 @@ public class MainActivity extends BaseActivityRelay implements VersionUpdateCont
             }
         });
         dialog.setContentView(messageDialog);
-    }
-
-    private void initmTat() {
-        // 语音听写1.创建SpeechRecognizer对象，第二个参数：本地听写时传InitListener
-        mIat = SpeechRecognizer.createRecognizer(this, mTtsInitListener);
-        // 2.设置听写参数，详见《科大讯飞MSC API手册(Android)》SpeechConstant类
-        // 语音识别应用领域（：iat，search，video，poi，music）
-        mIat.setParameter(SpeechConstant.DOMAIN, "iat");
-        // 接收语言中文
-        mIat.setParameter(SpeechConstant.LANGUAGE, "zh_cn");
-        // 接受的语言是普通话
-        mIat.setParameter(SpeechConstant.ACCENT, "mandarin ");
-        // 设置听写引擎（云端）
-        mIat.setParameter(SpeechConstant.ENGINE_TYPE, SpeechConstant.TYPE_CLOUD);
     }
 
     @TargetApi(Build.VERSION_CODES.M)
@@ -363,6 +312,7 @@ public class MainActivity extends BaseActivityRelay implements VersionUpdateCont
                     activity.startActivityForResult(intent, 110);
                 }
             } catch (Exception e) {
+
                 e.printStackTrace();
             }
         }
@@ -399,8 +349,15 @@ public class MainActivity extends BaseActivityRelay implements VersionUpdateCont
         if (isFrend) {
            showNoticeCountPresenter.showNoticeCount(CommonAction.getUserId());
         }
+        if (CommonAction.getIsLogin()) {
+            showNoticeCountPresenter.getEditCount(CommonAction.getUserId());
+        }
     }
-
+    public void getEditProjectCount(){
+        if (CommonAction.getIsLogin()) {
+            showNoticeCountPresenter.getEditCount(CommonAction.getUserId());
+        }
+    }
     private void toLogin() {
         String thirdType = (String) SpUtils.getParam(Const.thirdType, Const.bdUser);
         if (thirdType.equals("bduser")) {
@@ -426,7 +383,7 @@ public class MainActivity extends BaseActivityRelay implements VersionUpdateCont
     }
 
     private void initBitmap() {
-        //
+
         contactnormal = ImgUtil.readBitMap(this, R.mipmap.icon_bar04);
         contactselect = ImgUtil.readBitMap(this, R.mipmap.icon_bar04_click);
         minenormal = ImgUtil.readBitMap(this, R.mipmap.icon_bar03);
@@ -579,208 +536,8 @@ public class MainActivity extends BaseActivityRelay implements VersionUpdateCont
 
 
 
-    }/*  bot_voice.setOnTouchListener(new NoShortClickListener() {
-            float temY = 0;
-
-            @Override
-            public void onACTION_DOWN(float startY) {
-                //启动录音功能，6.0需要重新申请权限
-                Log.e("tag","onACTION_DOWN");
-                isUp = false;
-                isInit = false;
-                isOver = false;
-                isMove = true;
-                isCancle = false;
-                if (ContextCompat.checkSelfPermission(mContext, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
-                        || ContextCompat.checkSelfPermission(mContext, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED)//权限未授予
-                {
-
-                    ActivityCompat.requestPermissions(mActivity, new String[]{Manifest.permission.RECORD_AUDIO}, 250
-                    );
-                } else//已授予权限
-                {
-                    mIatResults.clear();
-                    audiores_tv.setText("");
-                    temY = startY;
-                    starWrite();
-                }
-            }
-
-            @Override
-            public void onShortClick() {
-                audio_lay.setVisibility(View.GONE);
-                String mainStatu = (String) SpUtils.getParam(Const.mainStatu, "1");
-                Log.e("tag","onShortClick");
-                if (mainStatu.equals("3") || mainStatu.equals("4")) {
-                    BlurBuilder.snapShotWithoutStatusBar(mActivity);
-                    IntentUtils.toActivityWithTag(VoiceActivity.class, mActivity, "main");
-                    mActivity.overridePendingTransition(android.view.animation.Animation.INFINITE, android.view.animation.Animation.INFINITE);
-                } else {
-                    toChat("dial");
-                }
-            }
-
-            @Override
-            public void onACTION_UP() {
-                audio_lay.setVisibility(View.GONE);
-                audiores_tv.setText("");
-                isUp = true;
-                if (audioResultStr != null && isInit) {
-                    String mainStatu = (String) SpUtils.getParam(Const.mainStatu, "1");
-                    Message message = Message.obtain();
-                    if (mainStatu.equals("3") || mainStatu.equals("4")) {
-                        message.what = 211;
-                    } else {
-                        message.what = 210;
-                    }
-                    mHandler.sendMessage(message);
-                }
-            }
-
-            @Override
-            public void onACTION_MOVE(MotionEvent motionEvent) {
-                float move =motionEvent .getY() - temY;
-                Log.e("tag","move="+move);
-                if (Math.abs(move)>=100){
-                    isCancle = true;
-                    audio_lay.setVisibility(View.GONE);
-                    audiores_tv.setText("");
-                }
-            }
-        });*/
-
-    /**
-     * 初始化参数开始听写
-     *
-     * @Description:
-     */
-    private void starWrite() {
-
-//        mIat.setParameter(SpeechConstant.VAD_EOS,"10000");
-        /*iatDialog.setListener(mRecognizerDialogListener);
-        iatDialog.show();*/
-//        audioDialog.show();
-//        DialogUtils.setBespreadWindow(audioDialog, mActivity);
-
-//        ToastUtils.Toast_short(mActivity, "请说话…");
-//         3.开始听写
-        audio_lay.setVisibility(View.VISIBLE);
-        mIat.startListening(mRecoListener);
-//      听写监听器
-
     }
 
-    /**
-     * 语音听写监听
-     */
-    private RecognizerListener mRecoListener = new RecognizerListener() {
-        // 听写结果回调接口(返回Json格式结果，用户可参见附录12.1)；
-        // 一般情况下会通过onResults接口多次返回结果，完整的识别内容是多次结果的累加；
-        // 关于解析Json的代码可参见MscDemo中JsonParser类；
-        // isLast等于true时会话结束。
-        public void onResult(RecognizerResult results, boolean isLast) {
-            if (!isLast && !isOver) {
-                printResult(results);
-            }
-        }
-
-        // 会话发生错误回调接口
-        public void onError(SpeechError error) {
-            // 错误码：10118(您没有说话)，可能是录音机权限被禁，需要提示用户打开应用的录音权限。
-            int errorCode = error.getErrorCode();
-            if (errorCode == 10118) {
-//                ToastUtils.Toast_short(mActivity, "你好像没有说话哦");
-            } else if (errorCode == 20006) {//录音权限被拒绝
-                audio_lay.setVisibility(View.GONE);
-                Log.e("tag", "ErrorCode=" + errorCode);
-                permissionDialog.show();
-            } else {
-                ToastUtils.Toast_short(mActivity, "操作失败，错误码：" + errorCode);
-            }
-//            ToastUtils.Toast_short(mActivity, error.getPlainDescription(true));
-
-        }// 获取错误码描述}
-
-        // 开始录音
-        public void onBeginOfSpeech() {
-            Log.e(TAG, "开始说话");
-//            ToastUtils.Toast_short(mActivity, "开始说话");
-        }
-
-        // 结束录音
-        public void onEndOfSpeech() {
-            Log.e(TAG, "说话结束");
-//            ToastUtils.Toast_short(mActivity, "说话结束");
-
-        }
-
-        // 扩展用接口
-        public void onEvent(int eventType, int arg1, int arg2, Bundle obj) {
-
-        }
-
-        //音量
-        @Override
-        public void onVolumeChanged(int volume, byte[] data) {
-            if (volume > 0) {
-                if (audioview_left != null && audioview_right != null) {
-                    audioview_left.refreshView(volume);
-                    audioview_right.refreshView(volume);
-                }
-            }
-        }
-
-    };
-
-    private void printResult(RecognizerResult results) {
-        String text = JsonParser.parseIatResult(results.getResultString());
-        String sn = null;
-        // 读取json结果中的sn字段
-        try {
-            JSONObject resultJson = new JSONObject(results.getResultString());
-            sn = resultJson.optString("sn");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        mIatResults.put(sn, text);
-
-        StringBuffer resultBuffer = new StringBuffer();
-        for (String key : mIatResults.keySet()) {
-            resultBuffer.append(mIatResults.get(key));
-        }
-
-        audioResultStr = resultBuffer.toString();
-        audiores_tv.setText(audioResultStr);
-        Log.e("tag", "resultStr=" + resultBuffer.toString());
-        String mainStatu = (String) SpUtils.getParam(Const.mainStatu, "1");
-        Message message = Message.obtain();
-        if (mainStatu.equals("3") || mainStatu.equals("4")) {
-            message.what = 211;
-        } else {
-            message.what = 210;
-        }
-        mHandler.sendMessage(message);
-
-        isInit = true;
-
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-
-        if (requestCode == 250) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                starWrite();
-
-            } else {
-                // Permission Denied
-                ToastUtils.Toast_short("Permission Denied");
-            }
-            return;
-        }
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-    }
 
 
     @SuppressLint("NewApi")
@@ -790,8 +547,9 @@ public class MainActivity extends BaseActivityRelay implements VersionUpdateCont
         switch (v.getId()) {
             case R.id.contact_lay:
                 mImmersionBar.fitsSystemWindows(true).statusBarColor(R.color.white).init();
-
                 if (CommonAction.getIsLogin()) {
+                    CommonAction.refreshContact();
+                    getEditProjectCount();
                     refreshContact(them);
                     mine_iv.setVisibility(View.GONE);
                 } else {
@@ -800,26 +558,27 @@ public class MainActivity extends BaseActivityRelay implements VersionUpdateCont
                 break;
             case R.id.mine_lay:
                 mImmersionBar.fitsSystemWindows(true).statusBarColor(R.color.white).init();
-
 //                refreshMine(them);
                 if (CommonAction.getIsLogin()) {
                     mine_iv.setVisibility(View.VISIBLE);
                     refreshProgram(them);
-                    CommonAction.refreshContact();
                 } else {
                     DialogUtils.getLoginTip(mActivity).show();
                 }
                 break;
             case R.id.main_lay:
                 refreshMain();
+                getEditProjectCount();
+                CommonAction.refreshLogined();
                 mine_iv.setVisibility(View.VISIBLE);
                 mImmersionBar.fitsSystemWindows(true).statusBarColor(R.color.white).init();
                 break;
             case R.id.schedule_lay:
+                getEditProjectCount();
                 mImmersionBar.fitsSystemWindows(true).statusBarColor(R.color.white).init();
-
                 if (CommonAction.getIsLogin()) {
                     reffreshSchedule();
+                    CommonAction.refreshCal();
                     mine_iv.setVisibility(View.VISIBLE);
                 } else {
                     DialogUtils.getLoginTip(mActivity).show();
@@ -917,9 +676,6 @@ public class MainActivity extends BaseActivityRelay implements VersionUpdateCont
         super.onDestroy();
         EventBus.getDefault().unregister(this);
         SpUtils.savaUserInfo(Const.mainStatu, "1");
-        if (mIat!=null){
-            mIat.destroy();
-        }
         //记录页已打开过
         SpUtils.setParam(Const.is_first, true);
     }
@@ -955,7 +711,6 @@ public class MainActivity extends BaseActivityRelay implements VersionUpdateCont
         if (eventStr.equals("1")) {
             refreshContact(CommonAction.getThem());
         } else if (eventStr.equals("2")) {
-//            refreshMine(CommonAction.getThem());
             refreshProgram(CommonAction.getThem());
         }
     }
@@ -1262,4 +1017,19 @@ public class MainActivity extends BaseActivityRelay implements VersionUpdateCont
             }
         }
     }
+    @Override
+    public void showEditCount(EditCount editCount) {
+        if (editCount.getError().equals(Const.success)){
+            if (editCount.getIsEditCount()!=null&&!editCount.getIsEditCount().isEmpty()){
+                int i = Integer.parseInt(editCount.getIsEditCount());
+                if (i>0){
+                    projectnum_tv.setText(i+"");
+                    projectnum_tv.setVisibility(View.VISIBLE);
+                }else {
+                    projectnum_tv.setVisibility(View.GONE);
+                }
+            }
+        }
+    }
+
 }

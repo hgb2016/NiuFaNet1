@@ -152,7 +152,7 @@ public class WelcomeActivity extends BaseActivityWG implements ShareContract.Vie
 
     @Override
     public void showError() {
-        //ToastUtils.Toast_short(ResourcesUtils.getString(R.string.failconnect));
+        ToastUtils.Toast_short(ResourcesUtils.getString(R.string.failconnect));
     }
 
     @Override

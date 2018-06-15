@@ -6,7 +6,7 @@ import android.util.Log;
  * Created by efan on 2017/4/13.
  */
 
-public class Logger {
+public class    Logger {
 
     //设为false关闭日志
     private static final boolean LOG_ENABLE = true;

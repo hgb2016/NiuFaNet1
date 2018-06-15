@@ -172,20 +172,22 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <LinearLayout
-                android:visibility="gone"
+                android:visibility="visible"
                 android:id="@+id/empty_lay"
                 android:orientation="vertical"
                 android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
                 <ImageView
+                    android:id="@+id/noclient_iv"
                     android:src="@mipmap/empty_client"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
                 <TextView
+                    android:id="@+id/noclient_tv"
                     android:layout_marginTop="10dp"
                     android:textColor="@color/textcolor_ac"
-                    android:text="一个客户都没有？马上去添加"
+                    android:text=""
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>

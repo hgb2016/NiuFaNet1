@@ -11,6 +11,7 @@ import com.dream.NiuFaNet.Bean.ClientDataBean;
 import com.dream.NiuFaNet.Bean.ClientDescBean;
 import com.dream.NiuFaNet.Bean.CommonBean;
 import com.dream.NiuFaNet.Bean.CommonBean1;
+import com.dream.NiuFaNet.Bean.EditCount;
 import com.dream.NiuFaNet.Bean.FriendNoticeBean;
 import com.dream.NiuFaNet.Bean.FunctionBean;
 import com.dream.NiuFaNet.Bean.MyToolsBean;
@@ -164,8 +165,8 @@ public class NFApi {
     public Observable<CalendarDetailBean> getCalendarDetail(String userId,String scheduleId) {
         return service.getCalendarDetail(userId,scheduleId);
     }
-    public Observable<CommonBean> deleteCalendar(String scheduleId) {
-        return service.deleteCalendar(scheduleId);
+    public Observable<CommonBean> deleteCalendar(String scheduleId,String inviteUserId) {
+        return service.deleteCalendar(scheduleId,inviteUserId);
     }
 
     public Observable<CommonBean> deletePic(String picId) {
@@ -218,8 +219,8 @@ public class NFApi {
     public Observable<CommonBean> replySchedule(String id,String status,String userId,String rejectRemark) {
         return service.replySchedule(id,status,userId,rejectRemark);
     }
-    public Observable<CommonBean> deleteParticipant(String scheduleId,String userId) {
-        return service.deleteParticipant(scheduleId,userId);
+    public Observable<CommonBean> deleteParticipant(String scheduleId,String userId,String inviteUserId) {
+        return service.deleteParticipant(scheduleId,userId,inviteUserId);
     }
     public Observable<CommonBean> sendMsg( String phoneNum,String userId, String userName) {
         return service.sendMsg(phoneNum,userId,userName);
@@ -313,5 +314,8 @@ public class NFApi {
     }
     public Observable<ProjectClientListBean> searchProjectClientList(@FieldMap Map<String,String> map) {
         return service.searchProjectClientList(map);
+    }
+    public Observable<EditCount> searchProjectIsEditCount(String userId) {
+        return service.searchProjectIsEditCount(userId);
     }
 }

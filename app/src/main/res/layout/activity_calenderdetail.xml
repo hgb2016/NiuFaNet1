@@ -320,7 +320,7 @@
                     android:layout_width="0dp"
                     android:layout_height="1px"/>
                 <TextView
-                    android:layout_marginRight="10dp"
+                    android:layout_marginRight="20dp"
                     android:id="@+id/remind_tv"
                     android:textColor="#949494"
                     android:text=""
@@ -338,6 +338,7 @@
                     android:layout_marginRight="32dp"
                     android:layout_height="wrap_content" />
                 <ImageView
+                    android:id="@+id/arrow1"
                     android:layout_marginRight="20dp"
                     android:src="@mipmap/arrow"
                     android:layout_width="wrap_content"
@@ -371,6 +372,7 @@
                     android:layout_width="0dp"
                     android:layout_height="1px"/>
                 <ImageView
+                    android:id="@+id/arrow2"
                     android:layout_marginRight="20dp"
                     android:src="@mipmap/arrow"
                     android:layout_width="wrap_content"
@@ -413,6 +415,7 @@
                     android:layout_marginRight="32dp"
                     android:layout_height="wrap_content"/>
                 <ImageView
+                  android:id="@+id/arrow3"
                     android:layout_marginRight="20dp"
                     android:src="@mipmap/arrow"
                     android:layout_width="wrap_content"
@@ -428,7 +431,9 @@
                 android:orientation="horizontal"
                 android:gravity="center_vertical"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen50dp">
+                android:layout_height="wrap_content"
+                android:paddingTop="13dp"
+                android:paddingBottom="13dp">
                 <ImageView
                     android:layout_marginLeft="20dp"
                     android:src="@mipmap/icon_project"
@@ -438,15 +443,15 @@
                     android:id="@+id/project_tv"
                     android:textColor="#949494"
                     android:text=""
+                    android:gravity="left"
+                    android:layout_marginRight="10dp"
                     android:layout_marginLeft="10dp"
                     android:textSize="@dimen/text_size_15sp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-                <View
-                    android:layout_weight="1"
                     android:layout_width="0dp"
-                    android:layout_height="1px"/>
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content" />
                 <ImageView
+                    android:id="@+id/arrow4"
                     android:layout_marginRight="20dp"
                     android:src="@mipmap/arrow"
                     android:layout_width="wrap_content"
@@ -460,8 +465,10 @@
             <LinearLayout
                 android:visibility="gone"
                 android:id="@+id/address_relay"
+                android:paddingTop="13dp"
+                android:paddingBottom="13dp"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen50dp"
+                android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
@@ -472,11 +479,14 @@
                     android:src="@mipmap/loacation2" />
 
                 <TextView
+                    android:layout_marginRight="10dp"
                     android:id="@+id/address_tv"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:gravity="left"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:text="地址"
+                    android:text=""
                     android:textColor="#949494"
                     android:textSize="@dimen/text_size_15sp" />
                 <EditText
@@ -489,12 +499,9 @@
                     android:visibility="gone"
                     android:hint="请输入地址"
                     android:layout_height="wrap_content" />
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="1px"
-                    android:layout_weight="1" />
 
                 <ImageView
+                    android:id="@+id/arrow5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="20dp"
@@ -530,6 +537,7 @@
                     android:layout_marginRight="15dp"
                     android:layout_height="wrap_content"/>
                 <ImageView
+                    android:id="@+id/arrow6"
                     android:visibility="gone"
                     android:layout_marginRight="20dp"
                     android:src="@mipmap/arrow"
@@ -550,7 +558,7 @@
                     android:id="@+id/beizu_tv"
                     android:layout_marginTop="@dimen/layout_margin_5dp"
                     android:background="@null"
-                    android:layout_marginLeft="20dp"
+                    android:layout_marginLeft="25dp"
                     android:textSize="13sp"
                     android:hint="备注:"
                     android:gravity="left"
@@ -674,6 +682,47 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:text="邀请微信好友"
+                android:textColor="@color/blue_title"
+                android:textSize="15sp" />
+        </LinearLayout>
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/bot_relay1"
+        android:layout_width="match_parent"
+        android:layout_height="58dp"
+        android:visibility="gone">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:layout_alignParentTop="true"
+            android:background="@drawable/shape_grident" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerInParent="true"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/reject_tv"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="拒绝"
+                android:textColor="@color/red_delete"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/accept_tv"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="接受"
                 android:textColor="@color/blue_title"
                 android:textSize="15sp" />
         </LinearLayout>

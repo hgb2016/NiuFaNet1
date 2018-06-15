@@ -2,6 +2,13 @@ package com.dream.NiuFaNet.Ui.Activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.support.design.widget.Snackbar;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.TextPaint;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -31,6 +38,7 @@ import com.dream.NiuFaNet.Presenter.SearchMyClientsPresenter;
 import com.dream.NiuFaNet.R;
 import com.dream.NiuFaNet.Utils.IntentUtils;
 import com.dream.NiuFaNet.Utils.MapUtils;
+import com.dream.NiuFaNet.Utils.ResourcesUtils;
 import com.dream.NiuFaNet.Utils.ToastUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -72,6 +80,8 @@ public class ClientsActivity extends CommonActivity implements SearchMyClientsCo
     SmartRefreshLayout smart_refreshlay;
     @Bind(R.id.empty_lay)
     LinearLayout empty_lay;
+    @Bind(R.id.noclient_tv)
+    TextView noclient_tv;
     private ClientTipAdaper clientTipAdaper;
     private AllClientAdaper allClientAdaper;
     private ArrayList<ClientDataBean.DataBean> clients=new ArrayList<>();
@@ -119,6 +129,7 @@ public class ClientsActivity extends CommonActivity implements SearchMyClientsCo
                 sure_relay.setVisibility(View.GONE);
             }
         }
+
     }
 
     @Override
@@ -176,11 +187,28 @@ public class ClientsActivity extends CommonActivity implements SearchMyClientsCo
 
             }
         });
+        SpannableString spanText=new SpannableString("一个客户都没有？马上去添加");
+        spanText.setSpan(new ClickableSpan() {
+
+            @Override
+            public void updateDrawState(TextPaint ds) {
+                super.updateDrawState(ds);
+                ds.setColor(ResourcesUtils.getColor(R.color.blue_title)); //设置文件颜色
+                ds.setUnderlineText(true);      //设置下划线
+            }
+            @Override
+            public void onClick(View view) {
+                IntentUtils.toActivityWithTag(NewClientActivity.class, mActivity, "newclient",100);
+            }
+        }, spanText.length() - 5, spanText.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        noclient_tv.setHighlightColor(Color.TRANSPARENT); //设置点击后的颜色为透明，否则会一直出现高亮
+        noclient_tv.setText(spanText);
+        noclient_tv.setMovementMethod(LinkMovementMethod.getInstance());//开始响应点击事件
 
     }
 
     //点击事件
-    @OnClick({R.id.back_relay,R.id.addclient_iv,R.id.sure_relay})
+    @OnClick({R.id.back_relay,R.id.addclient_iv,R.id.sure_relay,R.id.noclient_iv,R.id.noclient_tv})
     public void OnClick(View v){
         switch (v.getId()) {
             case R.id.back_relay:
@@ -200,6 +228,12 @@ public class ClientsActivity extends CommonActivity implements SearchMyClientsCo
                 setResult(201,intent);
                 finish();
                 break;
+            case R.id.noclient_iv:
+                IntentUtils.toActivityWithTag(NewClientActivity.class, mActivity, "newclient",100);
+                break;
+            case R.id.noclient_tv:
+                IntentUtils.toActivityWithTag(NewClientActivity.class, mActivity, "newclient",100);
+                break;
         }
     }
 
@@ -210,30 +244,33 @@ public class ClientsActivity extends CommonActivity implements SearchMyClientsCo
         smart_refreshlay.finishLoadmore();
         if (dataBean.getError().equals(Const.success)){
             ArrayList<ClientDataBean.DataBean> data = dataBean.getData();
-            if (data!=null&&data.size()>0){
+            if (data!=null && data.size()>0){
                 clients.addAll(data);
-                String tag = getIntent().getStringExtra(Const.intentTag);
+                String tag = getIntent().getStringExtra("clientId");
                 if (tag!=null) {
                     for (int i = 0; i < clients.size(); i++) {
-                        if (tag.equals(clients.get(i).getClientName())) {
+                        if (tag.equals(clients.get(i).getClientId())) {
                             clients.get(i).setSelect(true);
+                            ClientDataBean.DataBean client=clients.get(i);
+                            clients.remove(clients.get(i));
+                            clients.add(0,client);
                         }
                     }
                 }
                 if (clients.size()>0){
                     empty_lay.setVisibility(View.GONE);
-                    client_lv.setVisibility(View.VISIBLE);
+                    smart_refreshlay.setVisibility(View.VISIBLE);
                 }else {
                     empty_lay.setVisibility(View.VISIBLE);
-                    client_lv.setVisibility(View.GONE);
+                    smart_refreshlay.setVisibility(View.GONE);
                 }
                 allClientAdaper.notifyDataSetChanged();
             }else {
                 if (clients.size()>0){
                     empty_lay.setVisibility(View.GONE);
-                    client_lv.setVisibility(View.VISIBLE);
+                    smart_refreshlay.setVisibility(View.VISIBLE);
                 }else {
-                    client_lv.setVisibility(View.GONE);
+                    smart_refreshlay.setVisibility(View.GONE);
                     empty_lay.setVisibility(View.VISIBLE);
                 }
             }
@@ -299,7 +336,8 @@ public class ClientsActivity extends CommonActivity implements SearchMyClientsCo
             LinearLayout address_lay=helper.getView(R.id.address_lay);
             helper.setText(R.id.clientname_tv,item.getClientName());
             helper.setText(R.id.address_tv,item.getClientAddress());
-            ImageView check_iv=helper.getView(R.id.check_iv);
+            LinearLayout check_lay=helper.getView(R.id.check_lay);
+            final ImageView check_iv=helper.getView(R.id.check_iv);
             if (tag!=null&&tag.equals("client")){
                 check_iv.setVisibility(View.GONE);
             }
@@ -316,14 +354,37 @@ public class ClientsActivity extends CommonActivity implements SearchMyClientsCo
             helper.getConvertView().setOnClickListener(new NoDoubleClickListener() {
                 @Override
                 public void onNoDoubleClick(View view) {
-                    Intent intent=new Intent();
-                    intent.putExtra("clientId",item.getClientId());
-                    intent.setClass(mContext,ClientDetailActivity.class);
-                    startActivity(intent);
+                    if (tag!=null&&tag.equals("client")){
+                        Intent intent=new Intent();
+                        intent.putExtra("clientId",item.getClientId());
+                        intent.setClass(mContext,ClientDetailActivity.class);
+                        startActivity(intent);
+                    }else {
+                        if (item.isSelect()){
+                            item.setSelect(false);
+                        }else {
+                            int count=0;
+                            for (int i=0;i<mDatas.size();i++){
+                                if (mDatas.get(i).isSelect()){
+                                    count++;
+                                }
+                            }
+                            if (count>1){
+                                item.setSelect(false);
+                            }else {
+                                for (int i=0;i<mDatas.size();i++){
+                                    mDatas.get(i).setSelect(false);
+                                }
+                                item.setSelect(true);
+                            }
+                        }
+                        notifyDataSetChanged();
+                    }
+
                 }
             });
             if (tag!=null&&tag.equals("client")){
-                check_iv.setVisibility(View.GONE);
+                check_lay.setVisibility(View.GONE);
             }else {
                /* helper.setOnClickListener(R.id.empty_view, new NoDoubleClickListener() {
                     @Override
@@ -350,30 +411,7 @@ public class ClientsActivity extends CommonActivity implements SearchMyClientsCo
                     }
                 });*/
             }
-            helper.setOnClickListener(R.id.check_lay, new NoDoubleClickListener() {
-                @Override
-                public void onNoDoubleClick(View view) {
-                    if (item.isSelect()){
-                        item.setSelect(false);
-                    }else {
-                        int count=0;
-                        for (int i=0;i<mDatas.size();i++){
-                            if (mDatas.get(i).isSelect()){
-                                count++;
-                            }
-                        }
-                        if (count>1){
-                            item.setSelect(false);
-                        }else {
-                            for (int i=0;i<mDatas.size();i++){
-                                mDatas.get(i).setSelect(false);
-                            }
-                            item.setSelect(true);
-                        }
-                    }
-                    notifyDataSetChanged();
-                }
-            });
+
         }
     }
 

@@ -80,7 +80,6 @@ public class CustomWeekView extends WeekView {
         mPointPaint.setTextAlign(Paint.Align.CENTER);
         mPointPaint.setColor(Color.RED);
 
-
         mCurrentDayPaint.setAntiAlias(true);
         mCurrentDayPaint.setStyle(Paint.Style.FILL);
         mCurrentDayPaint.setColor(getResources().getColor(R.color.yellow_1));
@@ -194,4 +193,5 @@ public class CustomWeekView extends WeekView {
         final float scale = context.getResources().getDisplayMetrics().density;
         return (int) (dpValue * scale + 0.5f);
     }
+
 }

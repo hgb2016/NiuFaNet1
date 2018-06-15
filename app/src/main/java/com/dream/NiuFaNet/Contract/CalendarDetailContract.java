@@ -31,7 +31,7 @@ public interface CalendarDetailContract {
         void getCalendarDetail(String userId,String scheduleId);
         void deletePic(String picId,int position);
         void edtCalender(RequestBody data, MultipartBody.Part[] mFile);
-        void deleteCalendar(String scheduleId);
+        void deleteCalendar(String scheduleId,String inviteUserId);
         void validateProjectShow(Map<String,String> map);
     }
 }

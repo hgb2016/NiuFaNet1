@@ -64,6 +64,15 @@ public class CalInviteBean {
         private String eventStr;
         private String method;
         private int position;
+        private String headUrl;
+
+        public String getHeadUrl() {
+            return headUrl;
+        }
+
+        public void setHeadUrl(String headUrl) {
+            this.headUrl = headUrl;
+        }
 
         public String getEventStr() {
             return eventStr;

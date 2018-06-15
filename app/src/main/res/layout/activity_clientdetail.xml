@@ -216,43 +216,7 @@
                         android:background="@color/gray" />
                 </RelativeLayout>
 
-                <RelativeLayout
-                    android:id="@+id/address_relay"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dimen50dp">
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="21dp"
-                        android:layout_marginRight="10dp"
-                        android:src="@mipmap/location2" />
-
-                    <TextView
-                        android:id="@+id/address_tv"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="70dp"
-                        android:layout_marginRight="30dp"
-                        android:background="@null"
-                        android:ellipsize="end"
-                        android:gravity="left"
-                        android:maxLines="1"
-                        android:text=""
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/text_size_14sp" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1px"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginLeft="16dp"
-                        android:layout_marginRight="16dp"
-                        android:background="@color/gray" />
-                </RelativeLayout>
 
                 <RelativeLayout
                     android:id="@+id/phone_relay"
@@ -331,7 +295,41 @@
                         android:background="@color/gray" />
                 </RelativeLayout>
             </LinearLayout>
+            <RelativeLayout
+                android:id="@+id/address_relay"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen50dp">
 
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="21dp"
+                    android:layout_marginRight="10dp"
+                    android:src="@mipmap/location2" />
+
+                <TextView
+                    android:id="@+id/address_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="70dp"
+                    android:layout_marginRight="30dp"
+                    android:background="@null"
+                    android:gravity="left"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_14sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:background="@color/gray" />
+            </RelativeLayout>
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen50dp">

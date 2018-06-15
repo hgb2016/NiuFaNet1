@@ -322,7 +322,10 @@ public class ParticipantsActivity extends CommonActivity implements CalendarDeta
             if (baseBean.getRejectRemark()!=null&&!baseBean.getRejectRemark().isEmpty()) {
                     reject_tv.setText(baseBean.getRejectRemark());
                     reject_tv.setVisibility(View.VISIBLE);
-            }  else {
+            }  else if (baseBean.getInviteUserName()!=null&&!baseBean.getInviteUserName().isEmpty()){
+                reject_tv.setVisibility(View.VISIBLE);
+                reject_tv.setText("由"+baseBean.getInviteUserName()+"邀请");
+            }else {
                 reject_tv.setVisibility(View.GONE);
             }
             String headUrl = baseBean.getHeadUrl();
@@ -340,7 +343,7 @@ public class ParticipantsActivity extends CommonActivity implements CalendarDeta
                             DialogUtils.showDeleteDialog(mContext, new NoDoubleClickListener() {
                                 @Override
                                 public void onNoDoubleClick(View view) {
-                                    newCalenderPresenter.deleteParticipant(scheduleId,baseBean.getUserId(),position);
+                                    newCalenderPresenter.deleteParticipant(scheduleId,baseBean.getUserId(),position,CommonAction.getUserId());
                                 }
                             });
                         }else {

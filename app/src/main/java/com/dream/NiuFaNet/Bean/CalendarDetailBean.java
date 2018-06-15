@@ -333,6 +333,15 @@ public class CalendarDetailBean implements Serializable{
             private boolean isEmpty;
             private boolean isSouce;
             private String rejectRemark;
+            private String inviteUserName;
+
+            public String getInviteUserName() {
+                return inviteUserName;
+            }
+
+            public void setInviteUserName(String inviteUserName) {
+                this.inviteUserName = inviteUserName;
+            }
 
             public String getRejectRemark() {
                 return rejectRemark;

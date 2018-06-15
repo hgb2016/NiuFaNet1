@@ -28,7 +28,6 @@ public interface NewCalenderContract {
     interface Presenter<T> extends BaseContract.BasePresenter<T> {
         void addCalender(RequestBody data, MultipartBody.Part[] mFilee);
         void getInputWord(String text);
-        void deleteParticipant(String scheduleId,String userId,int position);
-
+        void deleteParticipant(String scheduleId,String userId,int position,String inviteUserId);
     }
 }

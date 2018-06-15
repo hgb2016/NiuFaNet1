@@ -136,7 +136,7 @@ public class MineActivity1 extends CommonActivity implements VersionUpdateContra
     public void eventListener() {
 
     }
-    @OnClick({R.id.back_relay,R.id.client_lay,R.id.whocansee_lay,R.id.share_lay,R.id.feedback_lay,R.id.aboutus_lay,R.id.contactus_lay,R.id.setting_relay,R.id.myinfo_relay,R.id.register_tv,R.id.login_tv})
+    @OnClick({R.id.message_lay,R.id.back_relay,R.id.client_lay,R.id.whocansee_lay,R.id.share_lay,R.id.feedback_lay,R.id.aboutus_lay,R.id.contactus_lay,R.id.setting_relay,R.id.myinfo_relay,R.id.register_tv,R.id.login_tv})
     public void OnClick(View v){
         switch (v.getId()){
             //我的个人信息
@@ -151,6 +151,10 @@ public class MineActivity1 extends CommonActivity implements VersionUpdateContra
             //返回
             case R.id.back_relay:
                 finish();
+                break;
+            //消息
+            case R.id.message_lay:
+                startActivity(new Intent(mContext,MessageActivity.class));
                 break;
             //我的客户
             case R.id.client_lay:

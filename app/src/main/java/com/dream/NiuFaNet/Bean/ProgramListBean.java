@@ -59,6 +59,15 @@ public class ProgramListBean {
         private boolean isSelect;
         private boolean isExpand;
         private String clientName;
+        private String isEdit;
+
+        public String getIsEdit() {
+            return isEdit;
+        }
+
+        public void setIsEdit(String isEdit) {
+            this.isEdit = isEdit;
+        }
 
         public String getClientName() {
             return clientName;

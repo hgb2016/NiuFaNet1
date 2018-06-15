@@ -39,13 +39,16 @@
             android:background="@color/gray" />
     </RelativeLayout>
     <ScrollView
+
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <LinearLayout
+
             android:layout_width="match_parent"
             android:orientation="vertical"
             android:layout_height="match_parent">
             <LinearLayout
+
                 android:layout_width="match_parent"
                 android:layout_marginTop="25dp"
                 android:gravity="center_vertical"
@@ -60,10 +63,10 @@
                 <EditText
                     android:id="@+id/oldpwd_edt"
                     android:layout_width="match_parent"
-                    android:background="@null"
+                    android:background="@drawable/shape_search"
                     android:layout_marginRight="@dimen/marginleft"
                     android:inputType="textPassword"
-                    android:layout_height="match_parent" />
+                    android:layout_height="30dp" />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -80,10 +83,10 @@
                 <EditText
                     android:id="@+id/newpwd_edt"
                     android:layout_width="match_parent"
-                    android:background="@null"
+                    android:background="@drawable/shape_search"
                     android:layout_marginRight="@dimen/marginleft"
                     android:inputType="textPassword"
-                    android:layout_height="match_parent" />
+                    android:layout_height="30dp" />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -100,10 +103,10 @@
                 <EditText
                     android:id="@+id/againpwd_edt"
                     android:layout_width="match_parent"
-                    android:background="@null"
+                    android:background="@drawable/shape_search"
                     android:inputType="textPassword"
                     android:layout_marginRight="@dimen/marginleft"
-                    android:layout_height="match_parent" />
+                    android:layout_height="30dp" />
             </LinearLayout>
 
             <TextView

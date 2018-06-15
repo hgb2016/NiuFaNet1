@@ -287,6 +287,7 @@ public class NewProgramActivity extends CommonActivity implements NewProgramCont
                 ImmUtils.hideImm(mActivity, imm);
                 Intent intent=new Intent(mContext,ClientsActivity.class);
                 intent.putExtra("clientname",chooseclient_tv.getText().toString().trim());
+                intent.putExtra("clientId",clientId);
                 startActivityForResult(intent,200);
                 break;
             case R.id.title_relay:

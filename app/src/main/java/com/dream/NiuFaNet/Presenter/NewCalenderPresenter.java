@@ -92,8 +92,8 @@ public class NewCalenderPresenter extends RxPresenter<NewCalenderContract.View> 
     }
 
     @Override
-    public void deleteParticipant(String scheduleId, String userId, final int position) {
-        Subscription rxSubscription = itApi.deleteParticipant(scheduleId,userId).subscribeOn(Schedulers.io())//放在异步中执行
+    public void deleteParticipant(String scheduleId, String userId, final int position,String inviteUserId) {
+        Subscription rxSubscription = itApi.deleteParticipant(scheduleId,userId,inviteUserId).subscribeOn(Schedulers.io())//放在异步中执行
                 .observeOn(AndroidSchedulers.mainThread())//回到主线程
                 .subscribe(new Observer<CommonBean>() {
                     @Override

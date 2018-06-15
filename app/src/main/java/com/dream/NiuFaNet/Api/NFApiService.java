@@ -11,6 +11,7 @@ import com.dream.NiuFaNet.Bean.ClientDataBean;
 import com.dream.NiuFaNet.Bean.ClientDescBean;
 import com.dream.NiuFaNet.Bean.CommonBean;
 import com.dream.NiuFaNet.Bean.CommonBean1;
+import com.dream.NiuFaNet.Bean.EditCount;
 import com.dream.NiuFaNet.Bean.FriendNoticeBean;
 import com.dream.NiuFaNet.Bean.FunctionBean;
 import com.dream.NiuFaNet.Bean.MyToolsBean;
@@ -177,7 +178,7 @@ public interface NFApiService {
     @Headers({Const.token})
     @FormUrlEncoded
     @POST(Const.app+"deleteSchedule.do")
-    Observable<CommonBean> deleteCalendar(@Field("scheduleId") String scheduleId);
+    Observable<CommonBean> deleteCalendar(@Field("scheduleId") String scheduleId,@Field("inviteUserId") String inviteUserId);
 
     //修改日程
     @Headers({Const.token})
@@ -278,7 +279,7 @@ public interface NFApiService {
     @Headers({Const.token})
     @FormUrlEncoded
     @POST(Const.app+"deleteParticipant.do")
-    Observable<CommonBean> deleteParticipant(@Field("scheduleId") String scheduleId,@Field("userId") String userId);
+    Observable<CommonBean> deleteParticipant(@Field("scheduleId") String scheduleId,@Field("userId") String userId,@Field("inviteUserId") String inviteUserId);
 
     //删除日程参与人
     @Headers({Const.token})
@@ -463,4 +464,10 @@ public interface NFApiService {
     @FormUrlEncoded
     @POST(Const.app+"searchProjectClientList.do")
     Observable<ProjectClientListBean> searchProjectClientList(@FieldMap Map<String,String> map);
+
+    //用户所有下的更新项目
+    @Headers({Const.token})
+    @FormUrlEncoded
+    @POST(Const.app+"searchProjectIsEditCount.do")
+    Observable<EditCount> searchProjectIsEditCount(@Field("userId") String userId);
 }

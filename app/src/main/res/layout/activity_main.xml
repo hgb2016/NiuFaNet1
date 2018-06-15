@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:id="@+id/root_lay"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                tools:context=".Ui.Activity.MainActivity">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root_lay"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Ui.Activity.MainActivity">
 
     <FrameLayout
         android:id="@+id/main_fra"
@@ -16,10 +16,10 @@
     <RelativeLayout
         android:id="@+id/audio_lay"
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_above="@+id/bot_lay"
-        android:visibility="gone"
         android:background="@color/black_alpha"
-        android:layout_height="match_parent">
+        android:visibility="gone">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -33,14 +33,14 @@
                 android:layout_marginTop="25dp"
                 android:text="您可以这样说......"
                 android:textColor="@color/white"
-                android:textSize="19sp"/>
+                android:textSize="19sp" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/voiceContent_rv"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:padding="20dp"/>
+                android:padding="20dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -51,8 +51,7 @@
                 android:layout_marginRight="@dimen/dimen_left"
                 android:background="@drawable/shape_white2"
                 android:gravity="center_horizontal"
-                android:orientation="vertical"
-                >
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/audiores_tv"
@@ -60,7 +59,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:textColor="@color/white"
-                    android:textSize="15sp"/>
+                    android:textSize="15sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -73,20 +72,20 @@
                         android:id="@+id/audioview_left"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"/>
+                        android:layout_weight="1" />
 
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
-                        android:src="@mipmap/icon_audio"/>
+                        android:src="@mipmap/icon_audio" />
 
                     <com.dream.NiuFaNet.CustomView.AudioAnimView
                         android:id="@+id/audioview_right"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"/>
+                        android:layout_weight="1" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
@@ -102,21 +101,21 @@
                 android:layout_height="18dp"
                 android:layout_centerInParent="true"
                 android:layout_margin="@dimen/padding15"
-                android:src="@mipmap/icon_close_red"/>
+                android:src="@mipmap/icon_close_red" />
         </RelativeLayout>
     </RelativeLayout>
 
     <RelativeLayout
-        android:layout_marginTop="44dp"
         android:id="@+id/title_relay"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/title_height">
+        android:layout_height="@dimen/title_height"
+        android:layout_marginTop="44dp">
 
         <RelativeLayout
-            android:layout_alignParentRight="true"
             android:id="@+id/mine_relay"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/title_height"
+            android:layout_alignParentRight="true"
             android:layout_marginRight="12dp"
             android:gravity="center_vertical">
 
@@ -124,48 +123,52 @@
                 android:id="@+id/mine_iv"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:src="@mipmap/icon_user"/>
+                android:src="@mipmap/icon_user" />
         </RelativeLayout>
 
         <RelativeLayout
-            android:layout_marginRight="50dp"
             android:id="@+id/messagetip_relay"
             android:layout_width="107dp"
             android:layout_height="26dp"
-            android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="50dp"
             android:background="@drawable/message_shape"
             android:visibility="visible">
+
             <ImageView
                 android:id="@+id/message_iv"
-                android:layout_marginLeft="14dp"
-                android:layout_centerVertical="true"
-                android:src="@mipmap/notice"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <TextView
+                android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
+                android:layout_marginLeft="14dp"
+                android:src="@mipmap/notice" />
+
+            <TextView
                 android:id="@+id/message_numtv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:layout_marginLeft="35dp"
                 android:layout_marginTop="2dp"
                 android:text="2条新消息"
                 android:textColor="@color/white"
-                android:textSize="13sp"/>
+                android:textSize="13sp" />
         </RelativeLayout>
     </RelativeLayout>
+
     <View
-        android:layout_above="@+id/bot_lay"
-        android:background="#cccccc"
         android:layout_width="match_parent"
-        android:layout_height="1px"/>
+        android:layout_height="1px"
+        android:layout_above="@+id/bot_lay"
+        android:background="#cccccc" />
+
     <LinearLayout
         android:id="@+id/bot_lay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@color/white">
+        android:background="#E6FAFAFA">
 
         <LinearLayout
             android:layout_width="0dp"
@@ -188,7 +191,7 @@
                     android:layout_width="@dimen/boticon"
                     android:layout_height="@dimen/boticon"
                     android:layout_marginTop="5dp"
-                    android:src="@mipmap/icon_bar01_click"/>
+                    android:src="@mipmap/icon_bar01_click" />
 
                 <TextView
                     android:id="@+id/main_tv"
@@ -197,7 +200,7 @@
                     android:layout_marginTop="3dp"
                     android:text="首页"
                     android:textColor="@color/table_textcolor"
-                    android:textSize="11sp"/>
+                    android:textSize="11sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -214,7 +217,7 @@
                     android:layout_width="@dimen/boticon"
                     android:layout_height="@dimen/boticon"
                     android:layout_marginTop="5dp"
-                    android:src="@mipmap/icon_bar02"/>
+                    android:src="@mipmap/icon_bar02" />
 
                 <TextView
                     android:id="@+id/schedule_tv"
@@ -223,7 +226,7 @@
                     android:layout_marginTop="3dp"
                     android:text="日程"
                     android:textColor="@color/main_textn"
-                    android:textSize="11sp"/>
+                    android:textSize="11sp" />
             </LinearLayout>
 
         </LinearLayout>
@@ -244,13 +247,31 @@
                 android:gravity="center"
                 android:orientation="vertical">
 
-                <ImageView
-                    android:id="@+id/mine_img"
-                    android:layout_width="@dimen/boticon"
-                    android:layout_height="@dimen/boticon"
-                    android:layout_marginTop="5dp"
-                    android:src="@mipmap/icon_bar03"/>
+                <RelativeLayout
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content">
 
+                    <ImageView
+                        android:id="@+id/mine_img"
+                        android:layout_width="@dimen/boticon"
+                        android:layout_height="@dimen/boticon"
+                        android:layout_centerInParent="true"
+                        android:layout_marginTop="5dp"
+                        android:src="@mipmap/icon_bar03" />
+
+                    <TextView
+                        android:id="@+id/projectnum_tv"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="3dp"
+                        android:background="@drawable/shape_circle_red"
+                        android:gravity="center"
+                        android:text="0"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_size_12sp"
+                        android:visibility="gone" />
+                </RelativeLayout>
                 <TextView
                     android:id="@+id/mine_tv"
                     android:layout_width="wrap_content"
@@ -258,7 +279,7 @@
                     android:layout_marginTop="3dp"
                     android:text="项目"
                     android:textColor="@color/main_textn"
-                    android:textSize="11sp"/>
+                    android:textSize="11sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -273,26 +294,29 @@
                 <RelativeLayout
                     android:layout_width="40dp"
                     android:layout_height="wrap_content">
-                <ImageView
-                    android:layout_centerInParent="true"
-                    android:id="@+id/contact_img"
-                    android:layout_width="@dimen/boticon"
-                    android:layout_height="@dimen/boticon"
-                    android:layout_marginTop="5dp"
-                    android:src="@mipmap/icon_bar04"/>
+
+                    <ImageView
+                        android:id="@+id/contact_img"
+                        android:layout_width="@dimen/boticon"
+                        android:layout_height="@dimen/boticon"
+                        android:layout_centerInParent="true"
+                        android:layout_marginTop="5dp"
+                        android:src="@mipmap/icon_bar04" />
+
                     <TextView
-                        android:visibility="gone"
                         android:id="@+id/fridensnum_tv"
-                        android:layout_marginTop="3dp"
-                        android:textSize="@dimen/text_size_12sp"
                         android:layout_width="15dp"
                         android:layout_height="15dp"
                         android:layout_alignParentRight="true"
+                        android:layout_marginTop="3dp"
                         android:background="@drawable/shape_circle_red"
                         android:gravity="center"
                         android:text="0"
-                        android:textColor="@color/white" />
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_size_12sp"
+                        android:visibility="gone" />
                 </RelativeLayout>
+
                 <TextView
                     android:id="@+id/contact_tv"
                     android:layout_width="wrap_content"
@@ -300,7 +324,7 @@
                     android:layout_marginTop="3dp"
                     android:text="通讯录"
                     android:textColor="@color/main_textn"
-                    android:textSize="11sp"/>
+                    android:textSize="11sp" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
@@ -318,7 +342,7 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_centerInParent="true"
-            android:background="@drawable/icon_soarking"/>
+            android:background="@drawable/icon_soarking" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -343,7 +367,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:src="@drawable/dial"/>
+                android:src="@drawable/dial" />
 
             <RelativeLayout
                 android:layout_width="0dp"
@@ -363,7 +387,7 @@
                     android:gravity="center"
                     android:text="按住 说话"
                     android:textColor="@color/white"
-                    android:textSize="16sp"/>
+                    android:textSize="16sp" />
 
             </RelativeLayout>
 
@@ -386,7 +410,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:src="@mipmap/icon_pen"/>
+                android:src="@mipmap/icon_pen" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -399,7 +423,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:src="@mipmap/icon_audio"/>
+                android:src="@mipmap/icon_audio" />
         </RelativeLayout>
     </RelativeLayout>
 </RelativeLayout>

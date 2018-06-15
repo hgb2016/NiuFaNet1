@@ -133,7 +133,9 @@ public class CalenderFragment extends BaseFragmentV4 implements CalenderMainCont
     private List<CalenderedBean.DataBean> dataList = new ArrayList<>();
     private WorkAdapter workAdapter;
     private com.haibin.calendarview.Calendar calendar1;
-
+    private List<MarkDateBean.DataBean> markDateList=new ArrayList<>();
+    private List<MarkDateBean.DataBean> tempList=new ArrayList<>();
+    private ArrayList<com.haibin.calendarview.Calendar> schemes = new ArrayList<>();
     @Override
     public void initView() {
        DaggerNFComponent.builder()
@@ -153,8 +155,9 @@ public class CalenderFragment extends BaseFragmentV4 implements CalenderMainCont
                 markDatePresenter.toGetDateMark(CommonAction.getUserId(),begindate,enddate);
             }
         });
-        markDatePresenter.attachView(this);
 
+        markDatePresenter.attachView(this);
+        mCalendarView.setSchemeDate(schemes);
         ArrayList lists=new ArrayList();
         lists.add("1");
         lists.add("1");
@@ -218,9 +221,6 @@ public class CalenderFragment extends BaseFragmentV4 implements CalenderMainCont
         calendar.setYear(year);
         calendar.setMonth(month);
         calendar.setDay(day);
-        calendar.setScheme(text);
-        //calendar.setSchemeColor(color);//如果单独标记颜色、则会使用这个颜色
-        calendar.addScheme(new com.haibin.calendarview.Calendar.Scheme());
         return calendar;
     }
     @Override
@@ -296,15 +296,16 @@ public class CalenderFragment extends BaseFragmentV4 implements CalenderMainCont
 
     @Override
     public void showData(MarkDateBean dataBean) {
-        Log.i("tag",new Gson().toJson(dataBean));
+       // Log.i("tag","是否缓存"+mCalendarView.isDrawingCacheEnabled()+new Gson().toJson(dataBean));
         if (dataBean!=null) {
-            List<MarkDateBean.DataBean> list=dataBean.getData();
-            List<com.haibin.calendarview.Calendar> schemes = new ArrayList<>();
-            for (int i=0;i<list.size();i++){
-                String[] split = list.get(i).getShowDate().split("-");
-                schemes.add(getSchemeCalendar(Integer.parseInt(split[0]),Integer.parseInt(split[1]), Integer.parseInt(split[2]), 0xFFedc56d, ""));
+            markDateList.clear();
+            markDateList.addAll(dataBean.getData());
+            schemes.clear();
+            for (int i=0;i<markDateList.size();i++){
+                String[] split = markDateList.get(i).getShowDate().split("-");
+                schemes.add(getSchemeCalendar(Integer.parseInt(split[0]),Integer.parseInt(split[1]), Integer.parseInt(split[2]), 0xFFedc56d, String.valueOf(i)));
             }
-           mCalendarView.setSchemeDate(schemes);
+            mCalendarView.update();
         }
     }
 
@@ -521,10 +522,11 @@ public class CalenderFragment extends BaseFragmentV4 implements CalenderMainCont
     public void event(RefreshCalBean proBean) {
         if (proBean.getEventStr().equals(Const.refresh)) {
             //标记日期
-            if (CommonAction.getUserId()!=null&&!CommonAction.getUserId().isEmpty()) {
+            if (CommonAction.getIsLogin()) {
                 getCalendarData(calendar1);
-                String begindate = mCalendarView.getCurYear() + "-" + (mCalendarView.getCurMonth() - 1) + "-" + 30;
-                String enddate = mCalendarView.getCurYear() + "-" + (mCalendarView.getCurMonth() + 1) + "-" + 30;
+                com.haibin.calendarview.Calendar selectedCalendar = mCalendarView.getSelectedCalendar();
+                String begindate = selectedCalendar.getYear() + "-" + (selectedCalendar.getMonth() - 1) + "-" + 30;
+                String enddate = selectedCalendar.getYear() + "-" + (selectedCalendar.getMonth() + 1)+ "-" + 30;
                 markDatePresenter.toGetDateMark(CommonAction.getUserId(), begindate, enddate);
             }
         }

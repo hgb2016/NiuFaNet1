@@ -93,7 +93,7 @@ public class NewClientActivity extends CommonActivity implements NewClientContra
     @Inject
     NewClientPresenter newClientPresenter;
     private String clientid;
-
+    private int mHeight;
     @Override
     public int getLayoutId() {
         return R.layout.activity_newclient;
@@ -122,9 +122,15 @@ public class NewClientActivity extends CommonActivity implements NewClientContra
                 ImmUtils.hideImm(mActivity,imm);
                 finish();
                 break;
+                //展开还是收起
             case R.id.more_lay:
-                ImmUtils.hideImm(mActivity,imm);
-                HiddenAnimUtils.newInstance(mContext,clientinfo_lay,iv_more,250).toggle();
+                if (isupordown){
+                    clientinfo_lay.setVisibility(View.GONE);
+                }else {
+                    clientinfo_lay.setVisibility(View.VISIBLE);
+                }
+                isupordown=!isupordown;
+                //HiddenAnimUtils.newInstance(mContext,clientinfo_lay,iv_more,250).toggle();
                 break;
             case R.id.addcontact_iv:
                 ImmUtils.hideImm(mActivity,imm);
@@ -182,8 +188,10 @@ public class NewClientActivity extends CommonActivity implements NewClientContra
         String intentTag = getIntent().getStringExtra(Const.intentTag);
         if (intentTag != null) {
             if (intentTag.equals("newclient")) {
+                clientinfo_lay.setVisibility(View.GONE);
                 clientid="";
             }else if (intentTag.equals("edit")){
+                clientinfo_lay.setVisibility(View.VISIBLE);
                 ClientDescBean.DataBean oriData= (ClientDescBean.DataBean) getIntent().getSerializableExtra("data");
                 oriData.getClientRemark();
                 clientname_edt.setText(oriData.getClientName());
@@ -349,7 +357,6 @@ public class NewClientActivity extends CommonActivity implements NewClientContra
     public void showData(CommonBean dataBean) {
         if (dataBean.getError().equals(Const.success)) {
             ToastUtils.Toast_short("创建成功");
-            CommonAction.refreshClients();
             finish();
         }
     }
@@ -406,7 +413,10 @@ public class NewClientActivity extends CommonActivity implements NewClientContra
         }
     }
 
-    //联系人列表
+    /**
+     * 联系人列表适配器
+     *
+     */
     public class ContactAdapter extends CommonAdapter<ClientBean.ContactBean> {
 
 

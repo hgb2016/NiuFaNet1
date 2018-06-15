@@ -7,6 +7,7 @@ import com.dream.NiuFaNet.CustomView.MessageChildView;
 import com.dream.NiuFaNet.CustomView.PopChildView;
 import com.dream.NiuFaNet.Ui.Activity.AddFrendsActivity;
 import com.dream.NiuFaNet.Ui.Activity.AddProjectActivity;
+import com.dream.NiuFaNet.Ui.Activity.CalendarMessageActivity;
 import com.dream.NiuFaNet.Ui.Activity.CalenderDetailActivity;
 import com.dream.NiuFaNet.Ui.Activity.CalenderDetailActivity1;
 import com.dream.NiuFaNet.Ui.Activity.ChangePwdActivity;
@@ -25,6 +26,7 @@ import com.dream.NiuFaNet.Ui.Activity.InputGetActivity;
 import com.dream.NiuFaNet.Ui.Activity.LoginActivity;
 import com.dream.NiuFaNet.Ui.Activity.LoginActivity1;
 import com.dream.NiuFaNet.Ui.Activity.MainActivity;
+import com.dream.NiuFaNet.Ui.Activity.MessageActivity;
 import com.dream.NiuFaNet.Ui.Activity.MineActivity;
 import com.dream.NiuFaNet.Ui.Activity.MineActivity1;
 import com.dream.NiuFaNet.Ui.Activity.MyFrendsActivity;
@@ -148,4 +150,8 @@ public interface NFComponent {
     ClientDetailActivity inject(ClientDetailActivity activity);
 
     WhoCanSeeClientActivity inject(WhoCanSeeClientActivity activity);
+
+    MessageActivity inject(MessageActivity activity);
+
+    CalendarMessageActivity inject(CalendarMessageActivity activity);
 }
