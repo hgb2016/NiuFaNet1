@@ -467,6 +467,8 @@
         </activity>
         <activity android:name=".Ui.Activity.CalendarMessageActivity" >
         </activity>
+        <activity android:name=".Ui.Activity.VersionDescActivity" >
+        </activity>
     </application>
 
 </manifest>

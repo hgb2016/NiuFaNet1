@@ -11,6 +11,7 @@ import com.dream.NiuFaNet.Bean.ClientDataBean;
 import com.dream.NiuFaNet.Bean.ClientDescBean;
 import com.dream.NiuFaNet.Bean.CommonBean;
 import com.dream.NiuFaNet.Bean.CommonBean1;
+import com.dream.NiuFaNet.Bean.ConflictCalBean;
 import com.dream.NiuFaNet.Bean.EditCount;
 import com.dream.NiuFaNet.Bean.FriendNoticeBean;
 import com.dream.NiuFaNet.Bean.FunctionBean;
@@ -317,5 +318,11 @@ public class NFApi {
     }
     public Observable<EditCount> searchProjectIsEditCount(String userId) {
         return service.searchProjectIsEditCount(userId);
+    }
+    public Observable<CommonBean> exportMySchedule(Map<String, String> map) {
+        return service.exportMySchedule(map);
+    }
+    public Observable<ConflictCalBean> validateScheduleData(Map<String, String> map) {
+        return service.validateScheduleData(map);
     }
 }

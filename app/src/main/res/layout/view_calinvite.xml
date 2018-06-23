@@ -182,13 +182,37 @@
             android:layout_marginTop="14dp">
 
             <TextView
-                android:layout_marginRight="14dp"
                 android:id="@+id/address_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="14dp"
+                android:layout_marginRight="14dp"
                 android:text="地址：尚美科技大厦"
                 android:textColor="@color/black"
+                android:textSize="@dimen/text_size_12sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/warn_lay"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginTop="14dp"
+            android:background="#FFFFF2F2"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginLeft="30dp"
+                android:src="@drawable/warn" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="14dp"
+                android:layout_marginRight="14dp"
+                android:text="该日程与已有日程有冲突！"
+                android:textColor="@color/red_delete"
                 android:textSize="@dimen/text_size_12sp" />
         </LinearLayout>
 

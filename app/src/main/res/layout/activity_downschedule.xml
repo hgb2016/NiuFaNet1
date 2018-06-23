@@ -5,6 +5,7 @@
     android:focusable="true"
     android:focusableInTouchMode="true"
     android:orientation="vertical">
+
     <RelativeLayout
         android:id="@+id/title_relay"
         android:layout_width="match_parent"
@@ -32,7 +33,7 @@
             android:layout_centerInParent="true"
             android:layout_gravity="center_horizontal"
             android:gravity="center"
-            android:text="导出"
+            android:text="导出日程"
             android:textColor="@color/black"
             android:textSize="16sp" />
 
@@ -43,129 +44,175 @@
             android:background="@color/gray" />
     </RelativeLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen65dp"
-       >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="20dp"
-            android:text="开始时间"
-            android:textColor="@color/black"
-            android:textSize="15sp" />
-
-        <TextView
-            android:id="@+id/start_timetv"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/icon_size_20dp"
-            android:gravity="center"
-            android:text="2018-01-02"
-            android:textColor="@color/black"
-            android:textSize="15sp" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/layout_padding_1dp"
-            android:layout_alignParentBottom="true"
-            android:background="@color/gray" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen65dp">
+        android:layout_height="160dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="14dp"
+        android:background="@mipmap/effect"
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="20dp"
-            android:text="结束时间"
+            android:layout_marginLeft="22dp"
+            android:layout_marginTop="@dimen/layout_margin_28dp"
+            android:text="选择导出哪个时间段的日程"
             android:textColor="@color/black"
-            android:textSize="15sp" />
+            android:textSize="@dimen/text_size_16sp" />
 
-        <TextView
-            android:id="@+id/endtime_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/icon_size_20dp"
-            android:gravity="center"
-            android:text="2018-01-02"
-            android:textColor="@color/black"
-            android:textSize="15sp" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/layout_padding_1dp"
-            android:layout_alignParentBottom="true"
-            android:background="@color/gray" />
-    </RelativeLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen65dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="20dp"
-            android:text="导出邮箱"
-            android:textColor="@color/black"
-            android:textSize="15sp" />
-
-        <EditText
-            android:id="@+id/email_edt"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/icon_size_20dp"
-            android:gravity="center"
-            android:background="@null"
-            android:hint="输入邮箱地址"
-            android:textColor="@color/black"
-            android:textSize="15sp" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/layout_padding_1dp"
-            android:layout_alignParentBottom="true"
-            android:background="@color/gray" />
-    </RelativeLayout>
-    <View
-        android:layout_weight="1"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"/>
-    <RelativeLayout
-        android:id="@+id/tip_positive"
-        android:background="@color/white"
-        android:layout_width="match_parent"
-        android:layout_height="58dp">
-        <View
-            android:background="@drawable/shape_grident"
-            android:layout_alignParentTop="true"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/layout_margin_8dp"/>
         <LinearLayout
-            android:layout_alignParentBottom="true"
-            android:layout_width="wrap_content"
-            android:gravity="center_vertical"
-            android:layout_centerInParent="true"
-            android:layout_height="50dp">
-            <TextView
-                android:id="@+id/bot_tv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:text="确认并导出"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="开始"
+                    android:textColor="@color/textcolor_ac"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/start_timetv"
+                    android:layout_width="133dp"
+                    android:layout_height="34dp"
+                    android:layout_marginTop="9dp"
+                    android:background="@drawable/shape_date"
+                    android:gravity="center"
+                    android:text="2018年2月19日"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_14sp" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginLeft="10dp"
-                android:textSize="15sp"
-                android:textColor="@color/blue_title"
-                android:layout_height="wrap_content" />
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="5dp"
+                android:text="至" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="结束"
+                    android:textColor="@color/textcolor_ac"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/endtime_tv"
+                    android:layout_width="133dp"
+                    android:layout_height="34dp"
+                    android:layout_marginTop="9dp"
+                    android:background="@drawable/shape_date"
+                    android:gravity="center"
+                    android:text="2018年2月19日"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_14sp" />
+            </LinearLayout>
         </LinearLayout>
-    </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="14dp"
+        android:background="@mipmap/effect"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="22dp"
+            android:layout_marginTop="20dp"
+            android:text="导出的日程会发送到你指定的邮箱"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_16sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="@dimen/layout_padding_22dp"
+                android:layout_marginRight="14dp">
+
+                <EditText
+                    android:id="@+id/email_edt"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:hint="请输入邮箱"
+                    android:lines="1"
+                    android:text=""
+                    android:textColor="@color/textcolor_ac"
+                    android:textSize="16sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/gray_d7" />
+
+                <ImageView
+                    android:id="@+id/cancel_iv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:src="@mipmap/wrong" />
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/layout_padding_22dp"
+                android:layout_marginTop="11dp"
+                android:text="若未收到邮件，请确认是否被判为垃圾邮箱或被拦截"
+                android:textColor="@color/textcolor_ac"
+                android:textSize="10sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <Button
+
+        android:id="@+id/tip_positive"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/icon_size_40dp"
+        android:layout_marginLeft="@dimen/icon_size_40dp"
+        android:layout_marginRight="@dimen/icon_size_40dp"
+        android:layout_marginTop="@dimen/icon_size_20dp"
+        android:background="@drawable/shape_btn"
+        android:text="确认并导出"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_16sp" />
+
+
 </LinearLayout>

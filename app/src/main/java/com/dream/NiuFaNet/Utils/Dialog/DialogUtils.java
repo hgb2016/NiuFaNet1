@@ -93,7 +93,6 @@ public class DialogUtils {
             @Override
             public void onNoDoubleClick(View view) {
                 tipDialog.dismiss();
-
             }
         });
         wechat_lay.setOnClickListener(new NoDoubleClickListener() {
@@ -456,14 +455,16 @@ public class DialogUtils {
         return alertDialog;
     }
 
-    public static void getVersionDialog(String webVersionName, final String apkUrl, final Activity activity) {
+    public static void getVersionDialog(String webVersionName,String versionRemark, final String apkUrl, final Activity activity) {
         final Dialog dialog_tip = new Dialog(activity);
         View login = LayoutInflater.from(activity).inflate(R.layout.dialog_versionupdate, null);
         TextView tip_title = (TextView) login.findViewById(R.id.tip_title);
         TextView version_tv = (TextView) login.findViewById(R.id.version_tv);
+        TextView versionremark_tv = (TextView) login.findViewById(R.id.versionremark_tv);
         TextPaint tp = tip_title.getPaint();
         tp.setFakeBoldText(true);//加粗字体
         tip_title.setText("发现新版本");
+        versionremark_tv.setText(versionRemark.replace("\\n","\n"));
         version_tv.setText(webVersionName);
         TextView cancle = (TextView) login.findViewById(R.id.tip_nav);
         TextView sure = (TextView) login.findViewById(R.id.tip_positive);
@@ -475,10 +476,10 @@ public class DialogUtils {
         int displayWidth = dm.widthPixels;
         int displayHeight = dm.heightPixels;
         android.view.WindowManager.LayoutParams p = dialog_tip.getWindow().getAttributes(); //获取对话框当前的参数值
-        p.width = (int) (displayWidth * 0.75); //宽度设置为屏幕的0.75
-//        p.height = (int) (displayHeight * 0.45); //高度设置为屏幕的0.45
+        p.width = (int) (displayWidth * 0.85 );     //宽度设置为屏幕的0.75
+       // p.height = (int) (displayHeight * 0.45);  //高度设置为屏幕的0.45
         dialog_tip.setCanceledOnTouchOutside(false);// 设置点击屏幕Dialog不消失
-        dialog_tip.getWindow().setAttributes(p);  //设置生效
+        dialog_tip.getWindow().setAttributes(p);    //设置生效
 
       /*  // TODO: 2016/12/23  //去掉蓝线
         int dividerID=activity.getResources().getIdentifier("android:id/titleDivider", null, null);
@@ -525,6 +526,7 @@ public class DialogUtils {
 //                        registerReceiver(networkConnectChangedReceiver, filter);
 //                        SharePreferenceUtils.setParam(MainActivity.this,Const.apkUrl_fileName,apkUrl);
                             HttpUtils.downloadFile(apkUrl, FileUtil.DIR_APK, "法律机器人.apk",activity);
+
                         }
                     };
                     new Thread(runnable).start();

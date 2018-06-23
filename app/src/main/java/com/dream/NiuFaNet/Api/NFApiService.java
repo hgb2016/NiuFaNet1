@@ -11,6 +11,7 @@ import com.dream.NiuFaNet.Bean.ClientDataBean;
 import com.dream.NiuFaNet.Bean.ClientDescBean;
 import com.dream.NiuFaNet.Bean.CommonBean;
 import com.dream.NiuFaNet.Bean.CommonBean1;
+import com.dream.NiuFaNet.Bean.ConflictCalBean;
 import com.dream.NiuFaNet.Bean.EditCount;
 import com.dream.NiuFaNet.Bean.FriendNoticeBean;
 import com.dream.NiuFaNet.Bean.FunctionBean;
@@ -470,4 +471,17 @@ public interface NFApiService {
     @FormUrlEncoded
     @POST(Const.app+"searchProjectIsEditCount.do")
     Observable<EditCount> searchProjectIsEditCount(@Field("userId") String userId);
+
+
+    //导出我的日程
+    @Headers({Const.token})
+    @FormUrlEncoded
+    @POST(Const.app+"exportMySchedule.do")
+    Observable<CommonBean> exportMySchedule(@FieldMap Map<String,String> map);
+
+    //验证日程的时间是否有冲突
+    @Headers({Const.token})
+    @FormUrlEncoded
+    @POST(Const.app+"validateScheduleData.do")
+    Observable<ConflictCalBean> validateScheduleData(@FieldMap Map<String,String> map);
 }

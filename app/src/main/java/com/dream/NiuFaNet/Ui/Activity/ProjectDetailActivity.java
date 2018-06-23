@@ -379,6 +379,7 @@ public class ProjectDetailActivity extends CommonActivity implements ProgramDeta
                     Intent intent = new Intent(mActivity, DownScheduleActivity.class);
                     intent.putExtra(Const.intentTag, projectId);
                     intent.putExtra("proName", projectTitle);
+                    intent.putExtra("type","1");
                     startActivity(intent);
 
                 }

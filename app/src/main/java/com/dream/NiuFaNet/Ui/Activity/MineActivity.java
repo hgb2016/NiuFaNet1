@@ -237,6 +237,7 @@ public class MineActivity extends BaseActivity implements VersionUpdateContract.
         if (dataBean.getError().equals(Const.success)) {
             String url = dataBean.getUrl();
             String version = dataBean.getVersion();
+            String versionRemark=dataBean.getVersionRemark();
             Log.e("tag", "apkUrl=" + url);
             Log.e("tag", "version=" + version);
             if (url != null && !url.isEmpty() && version != null && !version.isEmpty()) {//对url和version进行判断
@@ -252,7 +253,7 @@ public class MineActivity extends BaseActivity implements VersionUpdateContract.
                         boolean isNew = false;
                         for (int j = 0; j < webNames.length; j++) {
                             if (Integer.parseInt(webNames[j]) > Integer.parseInt(currentNames[j])) {//有更高版本的apk
-                                DialogUtils.getVersionDialog(version, url, this);
+                                DialogUtils.getVersionDialog(version, url,versionRemark, this);
                                 isNew = true;
                                 break;
                             }

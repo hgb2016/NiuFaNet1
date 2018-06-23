@@ -48,6 +48,7 @@ import com.dream.NiuFaNet.Bean.BusBean.RefreshBean;
 import com.dream.NiuFaNet.Bean.CalInviteBean;
 import com.dream.NiuFaNet.Bean.ChatBean;
 import com.dream.NiuFaNet.Bean.CommonBean;
+import com.dream.NiuFaNet.Bean.ConflictCalBean;
 import com.dream.NiuFaNet.Bean.EditCount;
 import com.dream.NiuFaNet.Bean.InputGetBean;
 import com.dream.NiuFaNet.Bean.MessageLayBean;
@@ -123,7 +124,7 @@ import butterknife.BindBool;
 import butterknife.OnClick;
 import cn.jpush.android.api.JPushInterface;
 
-public class MainActivity extends BaseActivityRelay implements VersionUpdateContract.View, MessageContract.View, VoiceContentContract.View,ChatContract.View,ShowNoticeCountContract.View{
+public class MainActivity extends BaseActivityRelay implements VersionUpdateContract.View, MessageContract.View, VoiceContentContract.View, ChatContract.View, ShowNoticeCountContract.View {
 
 
     @Bind(R.id.bot_lay)
@@ -191,12 +192,12 @@ public class MainActivity extends BaseActivityRelay implements VersionUpdateCont
     @Bind(R.id.projectnum_tv)
     TextView projectnum_tv;
     private View statutView;
-    private Fragment recommendFra, scheduleFra, progamFra, contactFra;;
+    private Fragment recommendFra, scheduleFra, progamFra, contactFra;
+    ;
     private FragmentManager mFragmentManager;
     private Fragment currentFragment;
     private Bitmap contactnormal, contactselect, minenormal, mineselect, progselect, prognomal;
     private Bitmap mainnormal, mainselect, schedulenormal, schedulselect;
-
 
 
     private String audioResultStr;
@@ -235,7 +236,6 @@ public class MainActivity extends BaseActivityRelay implements VersionUpdateCont
 
         DaggerNFComponent.builder()
                 .appComponent(MyApplication.getInstance().getAppComponent())
-//                .mainActivityModule(new MainActivityModule(this))
                 .build()
                 .inject(this);
         versionUpdatePresenter.attachView(this);
@@ -255,8 +255,8 @@ public class MainActivity extends BaseActivityRelay implements VersionUpdateCont
             JPushInterface.setAlias(mContext, 0, userId);
         }
         //您可以这样说的内容初始化
-        mContentAdapter = new VoiceContentAdapter(this,voiceContentList,R.layout.rvitem_voicecontent);
-        RvUtils.setOptionnoLine(mVoiceContentRv,this);
+        mContentAdapter = new VoiceContentAdapter(this, voiceContentList, R.layout.rvitem_voicecontent);
+        RvUtils.setOptionnoLine(mVoiceContentRv, this);
         mVoiceContentRv.setAdapter(mContentAdapter);
         TelephonyManager TelephonyMgr = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
         szImei = TelephonyMgr.getDeviceId();
@@ -288,6 +288,7 @@ public class MainActivity extends BaseActivityRelay implements VersionUpdateCont
         PowerManager pm = (PowerManager) activity
                 .getSystemService(Context.POWER_SERVICE);
         if (pm.isIgnoringBatteryOptimizations(packageName)) {
+
             return true;
         } else {
             return false;
@@ -306,13 +307,12 @@ public class MainActivity extends BaseActivityRelay implements VersionUpdateCont
                 String packageName = activity.getPackageName();
                 PowerManager pm = (PowerManager) activity.getSystemService(Context.POWER_SERVICE);
                 if (!pm.isIgnoringBatteryOptimizations(packageName)) {
-// intent.setAction(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS);
+                // intent.setAction(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS);
                     intent.setAction(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS);
                     intent.setData(Uri.parse("package:" + packageName));
                     activity.startActivityForResult(intent, 110);
                 }
             } catch (Exception e) {
-
                 e.printStackTrace();
             }
         }
@@ -347,17 +347,19 @@ public class MainActivity extends BaseActivityRelay implements VersionUpdateCont
             messagePresenter.getCalInviteList(CommonAction.getUserId());
         }
         if (isFrend) {
-           showNoticeCountPresenter.showNoticeCount(CommonAction.getUserId());
+            showNoticeCountPresenter.showNoticeCount(CommonAction.getUserId());
         }
         if (CommonAction.getIsLogin()) {
             showNoticeCountPresenter.getEditCount(CommonAction.getUserId());
         }
     }
-    public void getEditProjectCount(){
+
+    public void getEditProjectCount() {
         if (CommonAction.getIsLogin()) {
             showNoticeCountPresenter.getEditCount(CommonAction.getUserId());
         }
     }
+
     private void toLogin() {
         String thirdType = (String) SpUtils.getParam(Const.thirdType, Const.bdUser);
         if (thirdType.equals("bduser")) {
@@ -390,9 +392,10 @@ public class MainActivity extends BaseActivityRelay implements VersionUpdateCont
         mineselect = ImgUtil.readBitMap(this, R.mipmap.icon_bar03_click);
         mainnormal = ImgUtil.readBitMap(this, R.mipmap.icon_bar01);
         mainselect = ImgUtil.readBitMap(this, R.mipmap.icon_bar01_click);
-        schedulenormal = ImgUtil.readBitMap(this,R.mipmap.icon_bar02);
+        schedulenormal = ImgUtil.readBitMap(this, R.mipmap.icon_bar02);
         schedulselect = ImgUtil.readBitMap(this, R.mipmap.icon_bar02_click);
     }
+
     @Override
     protected void onPause() {
         // 开放统计 移动数据统计分析
@@ -424,9 +427,9 @@ public class MainActivity extends BaseActivityRelay implements VersionUpdateCont
         if (savedInstanceState != null) {
             recommendFra = mFragmentManager.findFragmentByTag("recommend");
             scheduleFra = mFragmentManager.findFragmentByTag("schedule");
-           // functionFra = mFragmentManager.findFragmentByTag("function");
+            // functionFra = mFragmentManager.findFragmentByTag("function");
             progamFra = mFragmentManager.findFragmentByTag("program");
-            contactFra=mFragmentManager.findFragmentByTag("contact");
+            contactFra = mFragmentManager.findFragmentByTag("contact");
         } else {
             initFragment();
         }
@@ -439,8 +442,8 @@ public class MainActivity extends BaseActivityRelay implements VersionUpdateCont
         recommendFra = new MainFragment();
         scheduleFra = new CalenderFragment();
         progamFra = new ProjectFragment();
-       //functionFra = new FunctionFragment();
-         contactFra=new ContactFragment();
+        //functionFra = new FunctionFragment();
+        contactFra = new ContactFragment();
 
     }
 
@@ -518,26 +521,24 @@ public class MainActivity extends BaseActivityRelay implements VersionUpdateCont
     @Override
     public void eventListener() {
 
-            bot_voice.setOnClickListener(new NoDoubleClickListener() {
-                @Override
-                public void onNoDoubleClick(View view) {
-                    if (CommonAction.getIsLogin()) {
+        bot_voice.setOnClickListener(new NoDoubleClickListener() {
+            @Override
+            public void onNoDoubleClick(View view) {
+                if (CommonAction.getIsLogin()) {
                     audio_lay.setVisibility(View.GONE);
-                    Log.e("tag","onShortClick");
+                    Log.e("tag", "onShortClick");
                     BlurBuilder.snapShotWithoutStatusBar(mActivity);
                     IntentUtils.toActivityWithTag(VoiceActivity.class, mActivity, "main");
-                       // getActivity().overridePendingTransition(R.anim.activity_open,R.anim.exitanim);
-                    mActivity.overridePendingTransition(R.anim.activity_open,R.anim.exitanim);
-                    } else {
-                        DialogUtils.getLoginTip(mActivity).show();
-                    }
+                    // getActivity().overridePendingTransition(R.anim.activity_open,R.anim.exitanim);
+                    mActivity.overridePendingTransition(R.anim.activity_open, R.anim.exitanim);
+                } else {
+                    DialogUtils.getLoginTip(mActivity).show();
                 }
-            });
-
+            }
+        });
 
 
     }
-
 
 
     @SuppressLint("NewApi")
@@ -590,7 +591,7 @@ public class MainActivity extends BaseActivityRelay implements VersionUpdateCont
             case R.id.messagetip_relay://展示新消息
                 /*PopWindowUtil.backgroundAlpaha(mActivity, 0.5f);
                 dialog.showAsDropDown(title_relay, Gravity.CENTER, 0, 0);*/
-                IntentUtils.toActivity(NewMessageActivity.class,mActivity);
+                IntentUtils.toActivity(NewMessageActivity.class, mActivity);
                 break;
             case R.id.close_iv:
                 audio_lay.setVisibility(View.GONE);
@@ -746,7 +747,7 @@ public class MainActivity extends BaseActivityRelay implements VersionUpdateCont
     public void mainEvent2(CalInviteBean.DataBean busBean) {
         itemId = busBean.getId();
         Log.e("tag", "itemId=" + itemId);
-        messagePresenter.replySchedule(busBean.getId(), busBean.getMethod(), CommonAction.getUserId(),"");
+        messagePresenter.replySchedule(busBean.getId(), busBean.getMethod(), CommonAction.getUserId(), "");
     }
 
     //答复好友邀请
@@ -780,6 +781,7 @@ public class MainActivity extends BaseActivityRelay implements VersionUpdateCont
         if (dataBean.getError().equals(Const.success)) {
             String url = dataBean.getUrl();
             String version = dataBean.getVersion();
+            String versionRemark=dataBean.getVersionRemark();
             Log.e("tag", "apkUrl=" + url);
             Log.e("tag", "version=" + version);
             if (url != null && !url.isEmpty() && version != null && !version.isEmpty()) {//对url和version进行判断
@@ -793,15 +795,15 @@ public class MainActivity extends BaseActivityRelay implements VersionUpdateCont
                     String[] currentNames = localVersionName.split("\\.");
                     String[] webNames = version.split("\\.");
                     if (Integer.parseInt(webNames[0]) > Integer.parseInt(currentNames[0])) {//有更高版本的apk
-                        DialogUtils.getVersionDialog(version, url, this);
-                                Log.e("voice", Integer.parseInt(currentNames[0])+","+Integer.parseInt(webNames[0]));
-                    }else if (Integer.parseInt(webNames[1]) > Integer.parseInt(currentNames[1])) {//有更高版本的apk
-                        DialogUtils.getVersionDialog(version, url, this);
-                        Log.e("voice", Integer.parseInt(currentNames[1])+","+Integer.parseInt(webNames[1]));
-                    }else if (Integer.parseInt(webNames[2]) > Integer.parseInt(currentNames[2])) {//有更高版本的apk
-                        DialogUtils.getVersionDialog(version, url, this);
-                        Log.e("voice", Integer.parseInt(currentNames[2])+","+Integer.parseInt(webNames[2]));
-                    }else {
+                        DialogUtils.getVersionDialog(version,versionRemark, url, this);
+                        Log.e("voice", Integer.parseInt(currentNames[0]) + "," + Integer.parseInt(webNames[0]));
+                    } else if (Integer.parseInt(webNames[1]) > Integer.parseInt(currentNames[1])) {//有更高版本的apk
+                        DialogUtils.getVersionDialog(version,versionRemark ,url, this);
+                        Log.e("voice", Integer.parseInt(currentNames[1]) + "," + Integer.parseInt(webNames[1]));
+                    } else if (Integer.parseInt(webNames[2]) > Integer.parseInt(currentNames[2])) {//有更高版本的apk
+                        DialogUtils.getVersionDialog(version,versionRemark ,url, this);
+                        Log.e("voice", Integer.parseInt(currentNames[2]) + "," + Integer.parseInt(webNames[2]));
+                    } else {
 
                     }
                 } catch (PackageManager.NameNotFoundException e) {
@@ -840,12 +842,12 @@ public class MainActivity extends BaseActivityRelay implements VersionUpdateCont
                         messageLays.add(messageLayBean);
                     }
                     message_numtv.setText("您有" + messageLays.size() + "条消息");*/
-                   fridensnum_tv.setVisibility(View.VISIBLE);
-                   fridensnum_tv.setText(data.size());
-                   CommonAction.refreshContact();
+                    fridensnum_tv.setVisibility(View.VISIBLE);
+                    fridensnum_tv.setText(data.size());
+                    CommonAction.refreshContact();
                 } else {
                     fridensnum_tv.setVisibility(View.GONE);
-                   // fridensnum_tv.setText(data.size());
+                    // fridensnum_tv.setText(data.size());
                 }
             }
         } else {
@@ -930,6 +932,11 @@ public class MainActivity extends BaseActivityRelay implements VersionUpdateCont
         }
     }
 
+    @Override
+    public void showValidateResult(ConflictCalBean databean) {
+
+    }
+
     public void applyPermission() {
         IntentUtils.applyWakePermission(mActivity);
         IntentUtils.applyWakePermission1(mActivity);
@@ -952,7 +959,7 @@ public class MainActivity extends BaseActivityRelay implements VersionUpdateCont
     @Override
     public void showVoiceContentData(VoiceRvBean dataBean) {
         List<VoiceRvBean.BodyBean> body = dataBean.getBody();
-        if (body!=null&&body.size()>0){
+        if (body != null && body.size() > 0) {
             voiceContentList.clear();
             voiceContentList.addAll(body);
             mContentAdapter.notifyDataSetChanged();
@@ -962,13 +969,13 @@ public class MainActivity extends BaseActivityRelay implements VersionUpdateCont
     //录音完文字请求的回调
     @Override
     public void showData(ChatBean dataBean) {
-        if (dataBean.getError().equals(Const.success)){
+        if (dataBean.getError().equals(Const.success)) {
             ChatBean.BodyBean body = dataBean.getBody();
-            if (body!=null){
+            if (body != null) {
                 String type = body.getType();
-                if (type!=null){
+                if (type != null) {
                     Intent intent = null;
-                    switch (type){
+                    switch (type) {
                         case "1"://聊天
                             ChatBean.BodyBean bean = new ChatBean.BodyBean();
                             bean.setFdType("1");
@@ -988,7 +995,7 @@ public class MainActivity extends BaseActivityRelay implements VersionUpdateCont
                             break;
                         case "2"://日程
                             List<InputGetBean> scheduleData = body.getScheduleData();
-                            if (scheduleData!=null){
+                            if (scheduleData != null) {
                                 intent = new Intent(mContext, NewCalenderActivity.class);
                                 intent.putExtra("scheduleData", (Serializable) scheduleData);
                                 startActivity(intent);
@@ -1006,26 +1013,27 @@ public class MainActivity extends BaseActivityRelay implements VersionUpdateCont
 
     @Override
     public void showData(ShowCountBean dataBean) {
-        if (dataBean.getError().equals(Const.success)){
-            if (!dataBean.getShowCount().equals("0")){
+        if (dataBean.getError().equals(Const.success)) {
+            if (!dataBean.getShowCount().equals("0")) {
                 fridensnum_tv.setVisibility(View.VISIBLE);
                 fridensnum_tv.setText(dataBean.getShowCount());
                 CommonAction.refreshContact();
-            }else {
+            } else {
                 fridensnum_tv.setVisibility(View.GONE);
 
             }
         }
     }
+
     @Override
     public void showEditCount(EditCount editCount) {
-        if (editCount.getError().equals(Const.success)){
-            if (editCount.getIsEditCount()!=null&&!editCount.getIsEditCount().isEmpty()){
+        if (editCount.getError().equals(Const.success)) {
+            if (editCount.getIsEditCount() != null && !editCount.getIsEditCount().isEmpty()) {
                 int i = Integer.parseInt(editCount.getIsEditCount());
-                if (i>0){
-                    projectnum_tv.setText(i+"");
+                if (i > 0) {
+                    projectnum_tv.setText(i + "");
                     projectnum_tv.setVisibility(View.VISIBLE);
-                }else {
+                } else {
                     projectnum_tv.setVisibility(View.GONE);
                 }
             }

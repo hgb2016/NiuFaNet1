@@ -49,6 +49,7 @@ import com.dream.NiuFaNet.Ui.Activity.SetRemindActivity1;
 import com.dream.NiuFaNet.Ui.Activity.UploadApkActivity;
 import com.dream.NiuFaNet.Ui.Activity.UserInfoActivity;
 import com.dream.NiuFaNet.Ui.Activity.UserInfoActivity1;
+import com.dream.NiuFaNet.Ui.Activity.VersionDescActivity;
 import com.dream.NiuFaNet.Ui.Activity.VoiceActivity;
 import com.dream.NiuFaNet.Ui.Activity.WelcomeActivity;
 import com.dream.NiuFaNet.Ui.Activity.WhoCanSeeClientActivity;
@@ -106,52 +107,31 @@ public interface NFComponent {
     DownScheduleActivity inject(DownScheduleActivity activity);
 
     LoginActivity1 inject(LoginActivity1 activity);
-
     MineActivity1 inject(MineActivity1 activity);
-
     UserInfoActivity1 inject(UserInfoActivity1 activity);
-
     FriendCalenderActivity inject(FriendCalenderActivity activity);
-
     AddProjectActivity inject(AddProjectActivity activity);
-
     ProjectFragment inject(ProjectFragment fragment);
-
     ProjectDetailActivity inject(ProjectDetailActivity activity);
-
     NewClientActivity inject(NewClientActivity activity);
-
     ContactFragment inject(ContactFragment fragment);
-
     SearchNewFriendsActivity inject(SearchNewFriendsActivity activity);
-
     InputActivity inject(InputActivity activity);
-
     SearchFriendsActivity inject(SearchFriendsActivity activity);
-
     FriendDetailActivity inject(FriendDetailActivity activity);
-
     SetRemindActivity1 inject(SetRemindActivity1 activity1);
-
     NewFriendsActivity inject(NewFriendsActivity activity);
-
     NewMessageActivity inject(NewMessageActivity activity);
-
     VoiceActivity inject(VoiceActivity activity);
-
     SearchProjectActivity inject(SearchProjectActivity activity);
-
     PopVoiceActivity inject(PopVoiceActivity activity);
-
     UploadApkActivity inject(UploadApkActivity activity);
-
     ClientsActivity inject(ClientsActivity activity);
-
     ClientDetailActivity inject(ClientDetailActivity activity);
-
     WhoCanSeeClientActivity inject(WhoCanSeeClientActivity activity);
-
     MessageActivity inject(MessageActivity activity);
-
     CalendarMessageActivity inject(CalendarMessageActivity activity);
+    VersionDescActivity inject(VersionDescActivity activity);
+
+
 }

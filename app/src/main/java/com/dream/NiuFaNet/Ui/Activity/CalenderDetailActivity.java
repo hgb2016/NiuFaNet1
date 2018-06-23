@@ -42,6 +42,7 @@ import com.dream.NiuFaNet.Base.CommonActivity;
 import com.dream.NiuFaNet.Base.CommonAdapter;
 import com.dream.NiuFaNet.Bean.CalendarDetailBean;
 import com.dream.NiuFaNet.Bean.CommonBean;
+import com.dream.NiuFaNet.Bean.ConflictCalBean;
 import com.dream.NiuFaNet.Bean.NewCalResultBean;
 import com.dream.NiuFaNet.Bean.ProgramDetailBean;
 import com.dream.NiuFaNet.Bean.TimeTipBean;
@@ -51,6 +52,7 @@ import com.dream.NiuFaNet.Contract.EditScheduleInfoContract;
 import com.dream.NiuFaNet.Contract.MessageContract;
 import com.dream.NiuFaNet.Contract.ProgramDetailContract;
 import com.dream.NiuFaNet.CustomView.MyGridView;
+import com.dream.NiuFaNet.CustomView.MyListView;
 import com.dream.NiuFaNet.Listener.NoDoubleClickListener;
 import com.dream.NiuFaNet.Other.CommonAction;
 import com.dream.NiuFaNet.Other.Const;
@@ -99,7 +101,7 @@ import retrofit2.http.Field;
 /**
  * Created by Administrator on 2017/11/19 0019.
  */
-public class CalenderDetailActivity extends CommonActivity implements MessageContract.View,CalendarDetailContract.View,ProgramDetailContract.View,EditScheduleInfoContract.View {
+public class CalenderDetailActivity extends CommonActivity implements MessageContract.View, CalendarDetailContract.View, ProgramDetailContract.View, EditScheduleInfoContract.View {
 
 
     @Inject
@@ -213,13 +215,16 @@ public class CalenderDetailActivity extends CommonActivity implements MessageCon
     ImageView arrow5;
     @Bind(R.id.arrow6)
     ImageView arrow6;
+    @Bind(R.id.warn_lay)
+    LinearLayout warn_lay;
+    @Bind(R.id.conflict_lv)
+    MyListView conflict_lv;
     private boolean isRemind;
     private InputMethodManager imm;
     private TimePickerView dateDialog;
     private Dialog loadingDialog;
     private PicAdapter picAdapter;
     private CalDetailParticipantAdapter participantAdapter;
-
     private PopupWindow morepop;
     private int tempTag;
     private long startDate, endDate;
@@ -227,7 +232,7 @@ public class CalenderDetailActivity extends CommonActivity implements MessageCon
     private List<CalendarDetailBean.DataBean.participantBean> participantList = new ArrayList<>();
     private List<CalendarDetailBean.DataBean.participantBean> tempParts = new ArrayList<>();
 
-    private Map<String,CalendarDetailBean.DataBean.participantBean> map = new HashMap<>();
+    private Map<String, CalendarDetailBean.DataBean.participantBean> map = new HashMap<>();
     private boolean isEdit;
     private String scheduleId;
     private String userId;
@@ -237,7 +242,8 @@ public class CalenderDetailActivity extends CommonActivity implements MessageCon
     private String testatus;
     private CustomPopWindow mCustomPopWindow;
     private String status;
-
+    private ArrayList<ConflictCalBean.DataBean> conflictCalList=new ArrayList<>();
+    private ConflictAdapter conflictAdapter;
     @Override
     public int getLayoutId() {
         return R.layout.activity_calenderdetail;
@@ -254,7 +260,6 @@ public class CalenderDetailActivity extends CommonActivity implements MessageCon
         editScheduleInfoPresenter.attachView(this);
         messagePresenter.attachView(this);
         initTopPopwindow();
-
         imm = ImmUtils.getImm(mActivity);
         dateDialog = new TimePickerBuilder(this, new OnTimeSelectListener() {
             @Override
@@ -280,7 +285,7 @@ public class CalenderDetailActivity extends CommonActivity implements MessageCon
                             endDate = time;
                             break;
                     }
-                    duringtime_tv.setText(CalculateTimeUtil.getTimeExpend(startDate,endDate));
+                    duringtime_tv.setText(CalculateTimeUtil.getTimeExpend(startDate, endDate));
                 }
                 Log.e("tag", "dateStr=" + dateStr);
             }
@@ -292,21 +297,24 @@ public class CalenderDetailActivity extends CommonActivity implements MessageCon
                 .isCyclic(true)//是否循环滚动
                 .setLineSpacingMultiplier(2.0f)
                 .build();
+
         loadingDialog = DialogUtils.initLoadingDialog(this);
         picAdapter = new PicAdapter(mContext, picBeanList, R.layout.gvitem_imgclose);
         pic_gv.setAdapter(picAdapter);
-
-        participantAdapter = new CalDetailParticipantAdapter(this,participantList,R.layout.gvitem_timg_btext);
+        participantAdapter = new CalDetailParticipantAdapter(this, participantList, R.layout.gvitem_timg_btext);
         particepant_gv.setAdapter(participantAdapter);
         particepant_gv.setOnTouchBlankPositionListener(new MyGridView.OnTouchBlankPositionListener() {
             @Override
             public boolean onTouchBlankPosition() {
-                if (userId.equals(CommonAction.getUserId())){
+                if (userId.equals(CommonAction.getUserId())) {
                     toParticipants();
                 }
                 return true;
             }
         });
+        //有时间冲突的日程
+        conflictAdapter=new ConflictAdapter(mContext,conflictCalList,R.layout.view_conflict);
+        conflict_lv.setAdapter(conflictAdapter);
     }
 
     @Override
@@ -315,25 +323,25 @@ public class CalenderDetailActivity extends CommonActivity implements MessageCon
         userId = getIntent().getStringExtra(Const.userId);
         Log.e("tag", "userId=" + userId);
         Log.e("tag", "scheduleId=" + scheduleId);
-        if (userId==null){
+        if (userId == null) {
             userId = CommonAction.getUserId();
         }
         reloadData();
         setView();
-        String inviteCal=getIntent().getStringExtra("inviteCal");
-        if (inviteCal!=null&&inviteCal.equals("inviteCal")){
+        String inviteCal = getIntent().getStringExtra("inviteCal");
+        if (inviteCal != null && inviteCal.equals("inviteCal")) {
             showInviteCal();
         }
     }
 
 
     private void setView() {
-        if (!userId.equals(CommonAction.getUserId())){
+        if (!userId.equals(CommonAction.getUserId())) {
             more_tv.setVisibility(View.GONE);
             invite_relay.setVisibility(View.GONE);
             edt_tv.setVisibility(View.GONE);
             partsedt_tv.setVisibility(View.GONE);
-        }else {
+        } else {
             more_tv.setVisibility(View.VISIBLE);
             invite_relay.setVisibility(View.VISIBLE);
             edt_tv.setVisibility(View.GONE);
@@ -344,12 +352,19 @@ public class CalenderDetailActivity extends CommonActivity implements MessageCon
     @Override
     public void eventListener() {
     }
+
     /**
      * 日程邀请详情展示
-     *  如果是从新的日程邀请 跳入详情 则详情部分不可点击
+     * 如果是从新的日程邀请 跳入详情 则详情部分不可点击
      */
-    private void showInviteCal(){
+    private void showInviteCal() {
+        Map<String, String> params = MapUtils.getMapInstance();
+        params.put("userId",CommonAction.getUserId());
+        params.put("scheduleId",scheduleId);
+        params.put("status","1");
+        messagePresenter.validateSchedule(params);
         bot_relay1.setVisibility(View.VISIBLE);
+        warn_lay.setVisibility(View.VISIBLE);
         more_relay.setVisibility(View.GONE);
         invite_relay.setVisibility(View.GONE);
         arrow1.setVisibility(View.GONE);
@@ -380,7 +395,8 @@ public class CalenderDetailActivity extends CommonActivity implements MessageCon
         });
 
     }
-    @OnClick({R.id.accept_tv,R.id.reject_tv,R.id.end_lay,R.id.start_lay,R.id.type_relay,R.id.title_tv,R.id.address_relay,R.id.beizu_tv,R.id.remind_relay,R.id.back_relay,R.id.particepant_lay,R.id.more_tv,R.id.project_relay, R.id.invite_relay, R.id.edt_tv, R.id.duration_tv, R.id.duration_endtv, R.id.camara_lay, R.id.pic_lay})
+
+    @OnClick({R.id.accept_tv, R.id.reject_tv, R.id.end_lay, R.id.start_lay, R.id.type_relay, R.id.title_tv, R.id.address_relay, R.id.beizu_tv, R.id.remind_relay, R.id.back_relay, R.id.particepant_lay, R.id.more_tv, R.id.project_relay, R.id.invite_relay, R.id.edt_tv, R.id.duration_tv, R.id.duration_endtv, R.id.camara_lay, R.id.pic_lay})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.type_relay:
@@ -391,7 +407,7 @@ public class CalenderDetailActivity extends CommonActivity implements MessageCon
                         personal_iv.setImageResource(R.mipmap.icon_checkempty);
                         work_lay.setVisibility(View.VISIBLE);
                         personal_lay.setVisibility(View.GONE);
-                        CalendarDetailBean.DataBean dataBean=new CalendarDetailBean.DataBean();
+                        CalendarDetailBean.DataBean dataBean = new CalendarDetailBean.DataBean();
                         dataBean.setType("1");
                         dataBean.setScheduleId(scheduleId);
                         dataBean.setUserId(CommonAction.getUserId());
@@ -405,7 +421,7 @@ public class CalenderDetailActivity extends CommonActivity implements MessageCon
                         work_lay.setVisibility(View.GONE);
                         personal_lay.setVisibility(View.VISIBLE);
                         personal_iv.setImageResource(R.mipmap.check_green);
-                        CalendarDetailBean.DataBean dataBean=new CalendarDetailBean.DataBean();
+                        CalendarDetailBean.DataBean dataBean = new CalendarDetailBean.DataBean();
                         dataBean.setType("2");
                         dataBean.setScheduleId(scheduleId);
                         dataBean.setUserId(CommonAction.getUserId());
@@ -415,25 +431,25 @@ public class CalenderDetailActivity extends CommonActivity implements MessageCon
                 };
                 break;
             case R.id.title_tv:
-                Intent intent1=new Intent(mActivity,InputActivity.class);
-                intent1.putExtra("scheduleId",tempData.getScheduleId());
-                intent1.putExtra("input","event");
-                intent1.putExtra("result",tempData.getTitle());
-                startActivityForResult(intent1,555);
+                Intent intent1 = new Intent(mActivity, InputActivity.class);
+                intent1.putExtra("scheduleId", tempData.getScheduleId());
+                intent1.putExtra("input", "event");
+                intent1.putExtra("result", tempData.getTitle());
+                startActivityForResult(intent1, 555);
                 break;
             case R.id.address_relay:
-                Intent intent2=new Intent(mActivity,InputActivity.class);
-                intent2.putExtra("scheduleId",tempData.getScheduleId());
-                intent2.putExtra("input","address");
-                intent2.putExtra("result",tempData.getAddress());
-                startActivityForResult(intent2,555);
+                Intent intent2 = new Intent(mActivity, InputActivity.class);
+                intent2.putExtra("scheduleId", tempData.getScheduleId());
+                intent2.putExtra("input", "address");
+                intent2.putExtra("result", tempData.getAddress());
+                startActivityForResult(intent2, 555);
                 break;
             case R.id.beizu_tv:
-                Intent intent3=new Intent(mActivity,InputActivity.class);
-                intent3.putExtra("scheduleId",tempData.getScheduleId());
-                intent3.putExtra("input","note");
-                intent3.putExtra("result",tempData.getRemark());
-                startActivityForResult(intent3,555);
+                Intent intent3 = new Intent(mActivity, InputActivity.class);
+                intent3.putExtra("scheduleId", tempData.getScheduleId());
+                intent3.putExtra("input", "note");
+                intent3.putExtra("result", tempData.getRemark());
+                startActivityForResult(intent3, 555);
                 break;
             case R.id.back_relay:
                 finish();
@@ -443,7 +459,7 @@ public class CalenderDetailActivity extends CommonActivity implements MessageCon
                 String beginTime = tempData.getBeginTime();
                 Date starT1 = DateFormatUtil.getTime(beginTime, Const.YMD_HMS);
                 startDate.setTimeInMillis(starT1.getTime());
-                initCustomTimePicker(startDate,"1");
+                initCustomTimePicker(startDate, "1");
                 pvCustomTime.show();
                 break;
             case R.id.end_lay:
@@ -451,7 +467,7 @@ public class CalenderDetailActivity extends CommonActivity implements MessageCon
                 String endTime = tempData.getEndTime();
                 Date endT = DateFormatUtil.getTime(endTime, Const.YMD_HMS);
                 endDate.setTimeInMillis(endT.getTime());
-                initCustomTimePicker(endDate,"2");
+                initCustomTimePicker(endDate, "2");
                 pvCustomTime.show();
                 break;
             case R.id.more_tv:
@@ -466,12 +482,13 @@ public class CalenderDetailActivity extends CommonActivity implements MessageCon
             case R.id.remind_relay:
                 Intent intent = new Intent(mContext, SetRemindActivity1.class);
                 Bundle bundle = new Bundle();
-                intent.putExtra(Const.intentTag,"copy");
+                intent.putExtra(Const.intentTag, "copy");
                 bundle.putSerializable("data", (Serializable) tempData);
                 intent.putExtras(bundle);
-                startActivityForResult(intent,555);
+                startActivityForResult(intent, 555);
                 break;
             case R.id.edt_tv:
+
              /*   new RemindDialog(mActivity) {
                     @Override
                     public void selectResult(String result, List<TimeTipBean> tipBeanList) {
@@ -512,28 +529,28 @@ public class CalenderDetailActivity extends CommonActivity implements MessageCon
                 IntentUtils.toCamare(mActivity);
                 break;
             case R.id.particepant_lay:
-                if (userId.equals(CommonAction.getUserId())){
+                if (userId.equals(CommonAction.getUserId())) {
                     toParticipants();
                 }
                 break;
             case R.id.project_relay:
                 if (mProjectId != null) {
                     Map<String, String> map = MapUtils.getMap();
-                    map.put("userId",CommonAction.getUserId());
-                    map.put("projectId",mProjectId);
+                    map.put("userId", CommonAction.getUserId());
+                    map.put("projectId", mProjectId);
                     detailPresenter.validateProjectShow(map);
 
                 }
                 break;
             case R.id.accept_tv:
-                if (scheduleId!=null) {
-                    status="1";
+                if (scheduleId != null) {
+                    status = "1";
                     messagePresenter.replySchedule(scheduleId, "1", CommonAction.getUserId(), "");
                 }
                 break;
             case R.id.reject_tv:
-                if (scheduleId!=null) {
-                    showInputReason(view,scheduleId);
+                if (scheduleId != null) {
+                    showInputReason(view, scheduleId);
                 }
                 break;
         }
@@ -541,21 +558,21 @@ public class CalenderDetailActivity extends CommonActivity implements MessageCon
 
     private void shareToWechat() {
         String titleStr = title_tv.getText().toString();
-        String title = CommonAction.getUserName() + "邀请您参加 "+ "\""+titleStr+"\"";
-        String content = "\""+titleStr+"\""+",日程开始时间：" + beaginTime;
+        String title = CommonAction.getUserName() + "邀请您参加 " + "\"" + titleStr + "\"";
+        String content = "\"" + titleStr + "\"" + ",日程开始时间：" + beaginTime;
         String headUrl = (String) SpUtils.getParam(Const.userHeadUrl, "");
-        String clickUrl = Const.wechatFrend_ShareClickUrl + CommonAction.getUserId()+"&scheduleId="+scheduleId;
-        DialogUtils.showShareWX(mActivity, Wechat.NAME, title, content,headUrl, clickUrl);
+        String clickUrl = Const.wechatFrend_ShareClickUrl + CommonAction.getUserId() + "&scheduleId=" + scheduleId;
+        DialogUtils.showShareWX(mActivity, Wechat.NAME, title, content, headUrl, clickUrl);
     }
 
     private void toParticipants() {
-        Intent intent = new Intent(mContext,ParticipantsActivity.class);
+        Intent intent = new Intent(mContext, ParticipantsActivity.class);
         Bundle bundle = new Bundle();
         tempData.setParticipant(participantList);
         bundle.putSerializable("data", tempData);
-        bundle.putString("scheduleId",scheduleId);
+        bundle.putString("scheduleId", scheduleId);
         intent.putExtras(bundle);
-        startActivityForResult(intent,101);
+        startActivityForResult(intent, 101);
     }
 
     private List<TimeTipBean> tipList = new ArrayList<>();
@@ -586,7 +603,6 @@ public class CalenderDetailActivity extends CommonActivity implements MessageCon
                 files.add(file);
             }
         }
-        Log.e("tag", "files.size()=" + files.size());
         return files;
     }
 
@@ -609,12 +625,12 @@ public class CalenderDetailActivity extends CommonActivity implements MessageCon
             public void onClick(View view) {
                 morepop.dismiss();
                 Bundle bundle = new Bundle();
-                if (tempData!=null){
-                    bundle.putSerializable("data",tempData);
-                    Intent intent = new Intent(mActivity,NewCalenderActivity.class);
-                    intent.putExtra(Const.intentTag,"edit");
+                if (tempData != null) {
+                    bundle.putSerializable("data", tempData);
+                    Intent intent = new Intent(mActivity, NewCalenderActivity.class);
+                    intent.putExtra(Const.intentTag, "edit");
                     intent.putExtras(bundle);
-                    startActivityForResult(intent,123);
+                    startActivityForResult(intent, 123);
                 }
             }
         });
@@ -626,7 +642,7 @@ public class CalenderDetailActivity extends CommonActivity implements MessageCon
                     morepop.dismiss();
                     Intent intent = new Intent(mContext, NewCalenderActivity.class);
                     Bundle bundle = new Bundle();
-                    intent.putExtra(Const.intentTag,"copy");
+                    intent.putExtra(Const.intentTag, "copy");
                     bundle.putSerializable("data", (Serializable) tempData);
                     intent.putExtras(bundle);
                     startActivity(intent);
@@ -643,7 +659,7 @@ public class CalenderDetailActivity extends CommonActivity implements MessageCon
                     @Override
                     public void onNoDoubleClick(View view) {
                         loadingDialog.show();
-                        detailPresenter.deleteCalendar(scheduleId,CommonAction.getUserId());
+                        detailPresenter.deleteCalendar(scheduleId, CommonAction.getUserId());
                     }
                 });
             }
@@ -652,6 +668,7 @@ public class CalenderDetailActivity extends CommonActivity implements MessageCon
 
     private List<CalendarDetailBean.DataBean.RemindBean> remindBeanList = new ArrayList<>();
     private String mProjectId;
+
     @Override
     public void showData(CalendarDetailBean dataBean) {
         loadingDialog.dismiss();
@@ -659,19 +676,19 @@ public class CalenderDetailActivity extends CommonActivity implements MessageCon
             CalendarDetailBean.DataBean data = dataBean.getData();
             if (data != null) {
                 tempData = data;
-                Log.e("tag","data="+new Gson().toJson(data));
+                Log.e("tag", "data=" + new Gson().toJson(data));
                 String status = data.getStatus();
-                if (status!=null){
-                    if (status.equals("3")){
+                if (status != null) {
+                    if (status.equals("3")) {
                         ToastUtils.Toast_short("该日程已被删除");
                         CommonAction.refreshLogined();
                         finish();
-                    }else {
+                    } else {
                         String projectId = data.getProjectId();
 
-                        if (projectId!=null&&!projectId.isEmpty()){
+                        if (projectId != null && !projectId.isEmpty()) {
                             mProjectId = projectId;
-                            programDetailPresenter.getProjectProgramDetail(projectId,CommonAction.getUserId(),"1");
+                            programDetailPresenter.getProjectProgramDetail(projectId, CommonAction.getUserId(), "1");
                         }
 
                         //创建人
@@ -706,25 +723,25 @@ public class CalenderDetailActivity extends CommonActivity implements MessageCon
                         starttime_tv2.setText(startTime + "(周" + weekDay + ")");
                         endtime_tv1.setText(endDateStr1);
                         endtime_tv2.setText(endDateStr + "(周" + weekDay1 + ")");
-                        duringtime_tv.setText(CalculateTimeUtil.getTimeExpend(startDate,endDate));
+                        duringtime_tv.setText(CalculateTimeUtil.getTimeExpend(startDate, endDate));
 
                         //日程类型
                         String type = data.getType();
-                        if (type!=null&&!type.isEmpty()){
+                        if (type != null && !type.isEmpty()) {
                             type_relay.setVisibility(View.VISIBLE);
                             line_type.setVisibility(View.VISIBLE);
-                            if (type.equals("1")){
+                            if (type.equals("1")) {
                                 work_iv.setImageResource(R.mipmap.check_green);
                                 personal_iv.setImageResource(R.mipmap.icon_checkempty);
                                 work_lay.setVisibility(View.VISIBLE);
                                 personal_lay.setVisibility(View.GONE);
-                            }else if (type.equals("2")){
+                            } else if (type.equals("2")) {
                                 work_iv.setImageResource(R.mipmap.icon_checkempty);
                                 work_lay.setVisibility(View.GONE);
                                 personal_lay.setVisibility(View.VISIBLE);
                                 personal_iv.setImageResource(R.mipmap.check_green);
                             }
-                        }else {
+                        } else {
                             type_relay.setVisibility(View.GONE);
                             line_type.setVisibility(View.GONE);
                         }
@@ -733,7 +750,7 @@ public class CalenderDetailActivity extends CommonActivity implements MessageCon
                         List<CalendarDetailBean.DataBean.RemindBean> remind = data.getRemind();
                         StringBuffer buff = new StringBuffer();
                         remindBeanList.clear();
-                        if (remind!=null&&remind.size()>0){
+                        if (remind != null && remind.size() > 0) {
                             remind_relay.setVisibility(View.VISIBLE);
                             for (int i = 0; i < remind.size(); i++) {
                                 String description = remind.get(i).getDescription();
@@ -745,12 +762,12 @@ public class CalenderDetailActivity extends CommonActivity implements MessageCon
                                 bean.setDescription(description);
                                 remindBeanList.add(bean);
                             }
-                        }else {
+                        } else {
                             remind_relay.setVisibility(View.GONE);
                         }
-                        if (buff.toString().length()>0){
+                        if (buff.toString().length() > 0) {
                             remind_tv.setText(buff.toString().substring(0, buff.toString().length() - 1));
-                        }else {
+                        } else {
                             remind_tv.setText("");
                         }
 
@@ -767,58 +784,58 @@ public class CalenderDetailActivity extends CommonActivity implements MessageCon
                         bean.setStatus(data.getStatus());
                         participantList.add(bean);
 
-                        if (participant!=null){
+                        if (participant != null) {
                             participantList.addAll(participant);
                         }
-                        if (participantList.size()>0){
+                        if (participantList.size() > 0) {
                             particepant_lay.setVisibility(View.VISIBLE);
                             tempParts.addAll(participantList);
                             for (int i = 0; i < tempParts.size(); i++) {
-                                map.put(tempParts.get(i).getUserId(),tempParts.get(i));
+                                map.put(tempParts.get(i).getUserId(), tempParts.get(i));
                             }
 //                    particepant_tv.setText("参与人("+participantList.size()+")");
                             participantAdapter.notifyDataSetChanged();
-                        }else {
+                        } else {
                             particepant_lay.setVisibility(View.GONE);
                         }
 
 
                         //地址
                         String address = data.getAddress();
-                        if (address !=null&&!address.isEmpty()){
+                        if (address != null && !address.isEmpty()) {
                             address_relay.setVisibility(View.VISIBLE);
                             line_address.setVisibility(View.VISIBLE);
                             address_edt.setText(address);
                             address_tv.setText(address);
-                        }else {
+                        } else {
                             address_relay.setVisibility(View.GONE);
                             line_address.setVisibility(View.GONE);
                         }
 
                         //备注
                         String remark = data.getRemark();
-                        if (remark !=null&&!remark.isEmpty()){
+                        if (remark != null && !remark.isEmpty()) {
                             beizu_relay.setVisibility(View.VISIBLE);
                             line_beizu.setVisibility(View.VISIBLE);
-                             beizu_tv.setText("备注："+remark);
-                           // SpannableStringUtil.setTelUrl(mActivity,remark,beizu_tv);
-                           // beizu_edt.setText(remark);
-                        }else {
+                            beizu_tv.setText("备注：" +"\n"+ remark);
+                            // SpannableStringUtil.setTelUrl(mActivity,remark,beizu_tv);
+                            // beizu_edt.setText(remark);
+                        } else {
                             beizu_relay.setVisibility(View.GONE);
                             line_beizu.setVisibility(View.GONE);
                         }
 
                         List<CalendarDetailBean.DataBean.PicBean> picList = data.getPic();
-                        if (picBeanList != null&&picList.size()>0) {
+                        if (picBeanList != null && picList.size() > 0) {
                             file_lay.setVisibility(View.VISIBLE);
                             picBeanList.clear();
                             picBeanList.addAll(picList);
                             picAdapter.notifyDataSetChanged();
                             pictures.clear();
-                            for (int i = 0; i <picList.size() ; i++) {
+                            for (int i = 0; i < picList.size(); i++) {
                                 pictures.add(picList.get(i).getImgUrl());
                             }
-                        }else {
+                        } else {
                             file_lay.setVisibility(View.GONE);
                         }
 
@@ -831,6 +848,7 @@ public class CalenderDetailActivity extends CommonActivity implements MessageCon
     }
 
     private ArrayList<String> pictures = new ArrayList<>();
+
     @Override
     public void deletePicResult(CommonBean dataBean, int position) {
         if (dataBean.getError().equals(Const.success)) {
@@ -865,18 +883,18 @@ public class CalenderDetailActivity extends CommonActivity implements MessageCon
                 for (int i = 0; i < picBeanList.size(); i++) {
                     picBeanList.get(i).setDelete(false);
                 }
-                if (beizuEdt.isEmpty()){
+                if (beizuEdt.isEmpty()) {
                     beizu_relay.setVisibility(View.GONE);
                     line_beizu.setVisibility(View.GONE);
-                }else {
-                    beizu_tv.setText("备注:"+beizuEdt);
+                } else {
+                    beizu_tv.setText("备注:" + beizuEdt);
                 }
 
-                if (addressEdt.isEmpty()){
+                if (addressEdt.isEmpty()) {
                     address_relay.setVisibility(View.GONE);
                     line_address.setVisibility(View.GONE);
 
-                }else {
+                } else {
                     address_tv.setText(addressEdt);
                 }
                 picAdapter.notifyDataSetChanged();
@@ -896,19 +914,20 @@ public class CalenderDetailActivity extends CommonActivity implements MessageCon
     @Override
     public void deleteCalResult(CommonBean dataBean) {
         ToastUtils.Toast_short(dataBean.getMessage());
-        if (dataBean.getError().equals(Const.success)){
+        if (dataBean.getError().equals(Const.success)) {
             refreshData();
             finish();
         }
     }
+
     //是否有看项目的权限
     @Override
     public void validateProjectShowResult(CommonBean1 databean) {
-        if (databean.getError().equals(Const.success)){
-            if (databean.getIsShow().equals("true")){
+        if (databean.getError().equals(Const.success)) {
+            if (databean.getIsShow().equals("true")) {
                 IntentUtils.toActivityWithTag(ProjectDetailActivity.class, mActivity, mProjectId, 006);
-            }else {
-                ToastUtils.Toast_short(mActivity,"您没有查看项目的权力");
+            } else {
+                ToastUtils.Toast_short(mActivity, "您没有查看项目的权力");
             }
         }
     }
@@ -945,23 +964,23 @@ public class CalenderDetailActivity extends CommonActivity implements MessageCon
         if (requestCode == Const.CAMERA && data != null) {
             parseDate(data, Const.CAMERA, mActivity);
         }
-        if (requestCode==123&&resultCode==123){
+        if (requestCode == 123 && resultCode == 123) {
             reloadData();
         }
-        if (requestCode == 101 && resultCode == 102 ) {
+        if (requestCode == 101 && resultCode == 102) {
             reloadData();
         }
-        if (requestCode==006){
+        if (requestCode == 006) {
             reloadData();
         }
-        if (requestCode==555){
+        if (requestCode == 555) {
             reloadData();
         }
     }
 
     private void reloadData() {
         loadingDialog.show();
-        detailPresenter.getCalendarDetail(userId,scheduleId);
+        detailPresenter.getCalendarDetail(userId, scheduleId);
 
     }
 
@@ -988,14 +1007,14 @@ public class CalenderDetailActivity extends CommonActivity implements MessageCon
     @Override
     public void showData(ProgramDetailBean dataBean) {
         loadingDialog.dismiss();
-        if (dataBean.getError().equals(Const.success)){
+        if (dataBean.getError().equals(Const.success)) {
             String name = dataBean.getData().getName();
-            if (name!=null){
+            if (name != null) {
                 project_relay.setVisibility(View.VISIBLE);
                 line_project.setVisibility(View.VISIBLE);
                 tempData.setProjectTitle(name);
                 project_tv.setText(name);
-            }else {
+            } else {
                 project_relay.setVisibility(View.GONE);
                 line_project.setVisibility(View.GONE);
             }
@@ -1021,14 +1040,13 @@ public class CalenderDetailActivity extends CommonActivity implements MessageCon
 
     @Override
     public void showEditData(CommonBean dataBean) {
-        if (dataBean.getError().equals(Const.success)){
+        if (dataBean.getError().equals(Const.success)) {
             mLoadingDialog.dismiss();
             CommonAction.refreshCal();
-            ToastUtils.showToast(mActivity,"修改成功",R.mipmap.checkmark);
+            ToastUtils.showToast(mActivity, "修改成功", R.mipmap.checkmark);
             reloadData();
         }
     }
-
 
 
     @Override
@@ -1048,6 +1066,7 @@ public class CalenderDetailActivity extends CommonActivity implements MessageCon
 
     /**
      * 答复日程邀请
+     *
      * @param dataBean
      */
     @Override
@@ -1058,8 +1077,8 @@ public class CalenderDetailActivity extends CommonActivity implements MessageCon
                 CommonAction.refreshCal();
                 setResult(101);
                 finish();
-            }else if (status.equals("2")){
-                if (mCustomPopWindow!=null) {
+            } else if (status.equals("2")) {
+                if (mCustomPopWindow != null) {
                     mCustomPopWindow.dissmiss();
                 }
                 ToastUtils.showToast1(mActivity, "已拒绝并通知了邀请人");
@@ -1068,6 +1087,22 @@ public class CalenderDetailActivity extends CommonActivity implements MessageCon
             }
         } else {
             ToastUtils.Toast_short(dataBean.getMessage());
+        }
+    }
+    //与该日程冲突的日程！
+    @Override
+    public void showValidateResult(ConflictCalBean databean) {
+        if (databean.getError().equals(Const.success)){
+            ArrayList<ConflictCalBean.DataBean> data = databean.getData();
+            if (data!=null&&data.size()>0){
+                conflictCalList.clear();
+                conflictCalList.addAll(data);
+                conflictAdapter.notifyDataSetChanged();
+            }else {
+                warn_lay.setVisibility(View.GONE);
+            }
+        }else {
+            ToastUtils.Toast_short(databean.getMessage());
         }
     }
 
@@ -1089,7 +1124,7 @@ public class CalenderDetailActivity extends CommonActivity implements MessageCon
                 close_iv.setVisibility(View.GONE);
             }
             if (item.getImgUrl() != null) {
-                Glide.with(mActivity).load(item.getImgUrl()).transform(new GlideRoundTransform(mContext,5)).into(only_iv);
+                Glide.with(mActivity).load(item.getImgUrl()).transform(new GlideRoundTransform(mContext, 5)).into(only_iv);
             } else if (item.getBitmap() != null) {
                 only_iv.setImageBitmap(item.getBitmap());
             } else if (item.isAdd()) {
@@ -1119,20 +1154,8 @@ public class CalenderDetailActivity extends CommonActivity implements MessageCon
             helper.getConvertView().setOnClickListener(new NoDoubleClickListener() {
                 @Override
                 public void onNoDoubleClick(View view) {
-                   /* Intent intent = new Intent(mActivity, SpaceImageDetailActivity.class);
-                    intent.putExtra("picUrl", item.getImgUrl());
-                    int[] location = new int[2];
-                    only_iv.getLocationOnScreen(location);
-                    intent.putExtra("locationX", location[0]);
-                    intent.putExtra("locationY", location[1]);
-
-                    intent.putExtra("width", only_iv.getWidth());
-                    intent.putExtra("height", only_iv.getHeight());
-                    startActivity(intent);
-                    overridePendingTransition(0, 0);*/
-
                     new PhotoPagerConfig.Builder(mActivity)
-                            .setBigImageUrls( pictures)                //大图片url,可以是sd卡res，asset，网络图片.
+                            .setBigImageUrls(pictures)                //大图片url,可以是sd卡res，asset，网络图片.
                             .setSavaImage(true)                        //开启保存图片，默认false
                             .setPosition(position)                     //默认展示第2张图片
                             .setSaveImageLocalPath("Pictures")        //这里是你想保存大图片到手机的地址,可在手机图库看到，不传会有默认地址
@@ -1167,199 +1190,185 @@ public class CalenderDetailActivity extends CommonActivity implements MessageCon
         super.onDestroy();
         mHandler.removeCallbacks(svRunnable);
     }
-   /* //自定义时间选择框
-    new OptionsPickerView.Builder(this,new OptionsPickerView.OnOptionsSelectListener(){
 
-    });*/
-   private TimePickerView pvCustomTime;
-   private TextView start_tv1;
-   private TextView start_tv2 ;
-   private TextView end_tv1;
-    private  TextView end_tv2 ;
+    /* //自定义时间选择框
+     new OptionsPickerView.Builder(this,new OptionsPickerView.OnOptionsSelectListener(){
+
+     });*/
+    private TimePickerView pvCustomTime;
+    private TextView start_tv1;
+    private TextView start_tv2;
+    private TextView end_tv1;
+    private TextView end_tv2;
     private View startselect_v;
-    private  View endselect_v ;
-   private void initCustomTimePicker(final Calendar selectedDate, final String status) {
+    private View endselect_v;
 
-       /**
-        * @description
-        *
-        * 注意事项：
-        * 1.自定义布局中，id为 optionspicker 或者 timepicker 的布局以及其子控件必须要有，否则会报空指针.
-        * 具体可参考demo 里面的两个自定义layout布局。
-        * 2.因为系统Calendar的月份是从0-11的,所以如果是调用Calendar的set方法来设置时间,月份的范围也要是从0-11
-        * setRangDate方法控制起始终止时间(如果不设置范围，则使用默认时间1900-2100年，此段代码可注释)
-        */
+    private void initCustomTimePicker(final Calendar selectedDate, final String status) {
+
+        /**
+         * @description
+         *
+         * 注意事项：
+         * 1.自定义布局中，id为 optionspicker 或者 timepicker 的布局以及其子控件必须要有，否则会报空指针.
+         * 具体可参考demo 里面的两个自定义layout布局。
+         * 2.因为系统Calendar的月份是从0-11的,所以如果是调用Calendar的set方法来设置时间,月份的范围也要是从0-11
+         * setRangDate方法控制起始终止时间(如果不设置范围，则使用默认时间1900-2100年，此段代码可注释)
+         */
+
+        //时间选择器 ，自定义布局
+        pvCustomTime = new TimePickerBuilder(this, new OnTimeSelectListener() {
 
 
-       //时间选择器 ，自定义布局
-       pvCustomTime = new TimePickerBuilder(this, new OnTimeSelectListener() {
+            @Override
+            public void onTimeSelect(Date date, View v) {//选中事件回调
 
+            }
+        })
+                .setDate(selectedDate)
+                .setLayoutRes(R.layout.pickerview_custom_time, new CustomListener() {
 
-           @Override
-           public void onTimeSelect(Date date, View v) {//选中事件回调
+                    @Override
+                    public void customLayout(View v) {
+                        final TextView tvSubmit = (TextView) v.findViewById(R.id.tv_finish);
+                        TextView tvCancel = (TextView) v.findViewById(R.id.tv_cancel);
+                        start_tv1 = (TextView) v.findViewById(R.id.starttime_tv1);
+                        start_tv2 = (TextView) v.findViewById(R.id.starttime_tv2);
+                        end_tv1 = (TextView) v.findViewById(R.id.endtime_tv1);
+                        end_tv2 = (TextView) v.findViewById(R.id.endtime_tv2);
+                        startselect_v = v.findViewById(R.id.startselect_v);
+                        endselect_v = v.findViewById(R.id.endselect_v);
+                        LinearLayout start_lay = (LinearLayout) v.findViewById(R.id.start_lay);
+                        LinearLayout end_lay = (LinearLayout) v.findViewById(R.id.end_lay);
+                        final CheckBox end_checkbox = (CheckBox) v.findViewById(R.id.end_checkbox);
+                        final CheckBox start_checkbox = (CheckBox) v.findViewById(R.id.start_checkbox);
+                        end_checkbox.setClickable(false);
+                        start_checkbox.setClickable(false);
+                        checkBoxStatus(end_checkbox, start_checkbox, status);
+                        testatus = status;
+                        String beginTime = tempData.getBeginTime();
+                        final Date starT1 = DateFormatUtil.getTime(beginTime, Const.YMD_HMS);
+                        start_tv1.setText(DateFormatUtil.getTime(starT1, Const.Y_M_D));
+                        start_tv2.setText(DateFormatUtil.getTime(starT1, Const.HM));
+                        String endTime = tempData.getEndTime();
+                        final Date enD = DateFormatUtil.getTime(endTime, Const.YMD_HMS);
+                        end_tv1.setText(DateFormatUtil.getTime(enD, Const.Y_M_D));
+                        end_tv2.setText(DateFormatUtil.getTime(enD, Const.HM));
+                        start_lay.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                testatus = "1";
+                                checkBoxStatus(end_checkbox, start_checkbox, testatus);
+                                selectedDate.setTimeInMillis(starT1.getTime());
+                                pvCustomTime.setDate(selectedDate);
+                            }
+                        });
+                        end_lay.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                testatus = "2";
+                                checkBoxStatus(end_checkbox, start_checkbox, testatus);
+                                selectedDate.setTimeInMillis(enD.getTime());
+                                pvCustomTime.setDate(selectedDate);
+                            }
+                        });
+                        tvSubmit.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                String beginTime = start_tv1.getText().toString() + "  " + start_tv2.getText().toString();
+                                String endTime = end_tv1.getText().toString() + "  " + end_tv2.getText().toString();
+                                Date staD = DateFormatUtil.getTime(beginTime, Const.YMD_HM);
+                                Date enD = DateFormatUtil.getTime(endTime, Const.YMD_HM);
+                                if (staD.getTime() > enD.getTime()) {
+                                    ToastUtils.Toast_short(mActivity, "开始时间不能大于结束时间");
+                                } else {
+                                    CalendarDetailBean.DataBean dataBean = new CalendarDetailBean.DataBean();
+                                    dataBean.setBeginTime(beginTime);
+                                    dataBean.setEndTime(endTime);
+                                    dataBean.setStatus("3");
+                                    dataBean.setScheduleId(scheduleId);
+                                    dataBean.setUserId(CommonAction.getUserId());
+                                    mLoadingDialog.show();
+                                    editScheduleInfoPresenter.editScheduleInfo(new Gson().toJson(dataBean));
+                                    pvCustomTime.dismiss();
+                                }
+                            }
+                        });
+                        tvCancel.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                pvCustomTime.dismiss();
+                            }
+                        });
+                    }
+                }).setType(new boolean[]{true, true, true, true, true, false}).setTimeSelectChangeListener(new OnTimeSelectChangeListener() {
+                    @Override
+                    public void onTimeSelectChanged(Date date) {
+                        String ymd = DateFormatUtil.getTime(date, Const.Y_M_D);
+                        String hm = DateFormatUtil.getTime(date, Const.HM);
+                        if (testatus.equals("1")) {
+                            start_tv1.setText(ymd);
+                            start_tv2.setText(hm);
+                        } else {
+                            end_tv1.setText(ymd);
+                            end_tv2.setText(hm);
+                        }
+                    }
+                })
+                .setContentTextSize(16)//滚轮文字大小
+                .setOutSideCancelable(false)
+                .setTitleSize(13)//标题文字大小
+                .setCancelText("取消")//取消按钮文字
+                .setLabel(" 年", "月", "日", "时", "分", "秒")
+                .isCyclic(true)//是否循环滚动
+                .setLineSpacingMultiplier(3.0f)
+                .build();
 
-           }
-       })
-                /*.setType(TimePickerView.Type.ALL)//default is all
-                .setCancelText("Cancel")
-                .setSubmitText("Sure")
-                .setContentTextSize(18)
-                .setTitleSize(20)
-                .setTitleText("Title")
-                .setTitleColor(Color.BLACK)
-               /*.setDividerColor(Color.WHITE)//设置分割线的颜色
-                .setTextColorCenter(Color.LTGRAY)//设置选中项的颜色
-                .setLineSpacingMultiplier(1.6f)//设置两横线之间的间隔倍数
-                .setTitleBgColor(Color.DKGRAY)//标题背景颜色 Night mode
-                .setBgColor(Color.BLACK)//滚轮背景颜色 Night mode
-                .setSubmitColor(Color.WHITE)
-                .setCancelColor(Color.WHITE)*/
-               /*.animGravity(Gravity.RIGHT)// default is center*/
-               .setDate(selectedDate)
-               .setLayoutRes(R.layout.pickerview_custom_time, new CustomListener() {
-
-                   @Override
-                   public void customLayout(View v) {
-                       final TextView tvSubmit = (TextView) v.findViewById(R.id.tv_finish);
-                       TextView tvCancel = (TextView) v.findViewById(R.id.tv_cancel);
-                       start_tv1 = (TextView) v.findViewById(R.id.starttime_tv1);
-                       start_tv2 = (TextView) v.findViewById(R.id.starttime_tv2);
-                       end_tv1 = (TextView) v.findViewById(R.id.endtime_tv1);
-                       end_tv2 = (TextView) v.findViewById(R.id.endtime_tv2);
-                       startselect_v = v.findViewById(R.id.startselect_v);
-                       endselect_v = v.findViewById(R.id.endselect_v);
-                       LinearLayout start_lay = (LinearLayout) v.findViewById(R.id.start_lay);
-                       LinearLayout end_lay = (LinearLayout) v.findViewById(R.id.end_lay);
-                       final CheckBox end_checkbox= (CheckBox) v.findViewById(R.id.end_checkbox);
-                       final CheckBox start_checkbox= (CheckBox) v.findViewById(R.id.start_checkbox);
-                       end_checkbox.setClickable(false);
-                       start_checkbox.setClickable(false);
-                       checkBoxStatus(end_checkbox, start_checkbox, status);
-                       testatus=status;
-                       String beginTime = tempData.getBeginTime();
-                       final Date starT1 = DateFormatUtil.getTime(beginTime, Const.YMD_HMS);
-                       start_tv1.setText(DateFormatUtil.getTime(starT1,Const.Y_M_D));
-                       start_tv2.setText(DateFormatUtil.getTime(starT1,Const.HM));
-                       String endTime = tempData.getEndTime();
-                       final Date enD = DateFormatUtil.getTime(endTime, Const.YMD_HMS);
-                       end_tv1.setText(DateFormatUtil.getTime(enD,Const.Y_M_D));
-                       end_tv2.setText(DateFormatUtil.getTime(enD,Const.HM));
-                       start_lay.setOnClickListener(new View.OnClickListener() {
-                           @Override
-                           public void onClick(View v) {
-                               testatus="1";
-                               checkBoxStatus(end_checkbox, start_checkbox, testatus);
-                               selectedDate.setTimeInMillis(starT1.getTime());
-                               pvCustomTime.setDate(selectedDate);
-                           }
-                       });
-                       end_lay.setOnClickListener(new View.OnClickListener() {
-                           @Override
-                           public void onClick(View v) {
-                               testatus="2";
-                               checkBoxStatus(end_checkbox, start_checkbox, testatus);
-                               selectedDate.setTimeInMillis(enD.getTime());
-                               pvCustomTime.setDate(selectedDate);
-                           }
-                       });
-                       tvSubmit.setOnClickListener(new View.OnClickListener() {
-                           @Override
-                           public void onClick(View v) {
-                               String beginTime=start_tv1.getText().toString()+"  "+start_tv2.getText().toString();
-                               String endTime=end_tv1.getText().toString()+"  "+end_tv2.getText().toString();
-                               Date staD = DateFormatUtil.getTime(beginTime, Const.YMD_HM);
-                               Date enD = DateFormatUtil.getTime(endTime, Const.YMD_HM);
-                               if (staD.getTime()>enD.getTime()) {
-                                  ToastUtils.Toast_short(mActivity,"开始时间不能大于结束时间");
-                               }else {
-                                   CalendarDetailBean.DataBean dataBean=new CalendarDetailBean.DataBean();
-                                   dataBean.setBeginTime(beginTime);
-                                   dataBean.setEndTime(endTime);
-                                   dataBean.setStatus("3");
-                                   dataBean.setScheduleId(scheduleId);
-                                   dataBean.setUserId(CommonAction.getUserId());
-                                   mLoadingDialog.show();
-                                   editScheduleInfoPresenter.editScheduleInfo(new Gson().toJson(dataBean));
-                                   pvCustomTime.dismiss();
-                               }
-                           }
-                       });
-                       tvCancel.setOnClickListener(new View.OnClickListener() {
-                           @Override
-                           public void onClick(View v) {
-                               pvCustomTime.dismiss();
-                           }
-                       });
-                   }
-               }).setType(new boolean[]{true, true, true, true, true, false}).setTimeSelectChangeListener(new OnTimeSelectChangeListener() {
-                   @Override
-                   public void onTimeSelectChanged(Date date) {
-                       String ymd = DateFormatUtil.getTime(date, Const.Y_M_D);
-                       String hm = DateFormatUtil.getTime(date, Const.HM);
-                       if (testatus.equals("1")) {
-                           start_tv1.setText(ymd);
-                           start_tv2.setText(hm);
-                       }else {
-                           end_tv1.setText(ymd);
-                           end_tv2.setText(hm);
-                       }
-                   }
-               })
-               .setContentTextSize(16)//滚轮文字大小
-               .setOutSideCancelable(false)
-               .setTitleSize(13)//标题文字大小
-               .setCancelText("取消")//取消按钮文字
-               .setLabel(" 年", "月", "日", "时", "分", "秒")
-               .isCyclic(true)//是否循环滚动
-               .setLineSpacingMultiplier(3.0f)
-               .build();
-
-   }
+    }
 
     private void checkBoxStatus(CheckBox end_checkbox, CheckBox start_checkbox, String status) {
-        if (status.equals("1")){
+        if (status.equals("1")) {
             start_checkbox.setChecked(true);
             end_checkbox.setChecked(false);
             startselect_v.setBackgroundColor(getResources().getColor(R.color.blue_title));
             endselect_v.setBackgroundColor(getResources().getColor(R.color.white));
 
-        }else {
+        } else {
             start_checkbox.setChecked(false);
             end_checkbox.setChecked(true);
             endselect_v.setBackgroundColor(getResources().getColor(R.color.blue_title));
             startselect_v.setBackgroundColor(getResources().getColor(R.color.white));
         }
     }
+
     //填写拒绝弹框
     private void showInputReason(View v, final String id) {
-        View contentView = LayoutInflater.from(this).inflate(R.layout.pop_inputenote,null);
-        final EditText editText= (EditText) contentView.findViewById(R.id.note_edit);
-        TextView title_tv= (TextView) contentView.findViewById(R.id.title_tv);
+        View contentView = LayoutInflater.from(this).inflate(R.layout.pop_inputenote, null);
+        final EditText editText = (EditText) contentView.findViewById(R.id.note_edit);
+        TextView title_tv = (TextView) contentView.findViewById(R.id.title_tv);
         title_tv.setText("拒绝理由");
         editText.setHint("请填写拒绝理由(不得超过20个字)");
         //处理popWindow 显示内容
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switch (v.getId()){
+                switch (v.getId()) {
                     case R.id.cancel_tv:
                         mCustomPopWindow.dissmiss();
                         break;
                     case R.id.sure_tv:
-                        String edit=editText.getText().toString().trim();
+                        String edit = editText.getText().toString().trim();
                         if (!TextUtils.isEmpty(edit)) {
-                            if (edit.length()<20) {
-                                status="2";
+                            if (edit.length() < 20) {
+                                status = "2";
                                 messagePresenter.replySchedule(id, "2", CommonAction.getUserId(), edit);
-                            }else {
-                                ToastUtils.Toast_short(mActivity,"字数不能超过20个字！");
+                            } else {
+                                ToastUtils.Toast_short(mActivity, "字数不能超过20个字！");
                             }
-                        }else {
-                            ToastUtils.Toast_short(mActivity,"理由不能为空");
+                        } else {
+                            ToastUtils.Toast_short(mActivity, "理由不能为空");
                         }
                         break;
                 }
-                //Toast.makeText(HomeActivity.this,showContent,Toast.LENGTH_SHORT).show();
             }
         };
 
@@ -1368,16 +1377,40 @@ public class CalenderDetailActivity extends CommonActivity implements MessageCon
         // 获取编辑框焦点
         editText.setFocusable(true);
         //打开软键盘
-        InputMethodManager imm = (InputMethodManager)getApplication().getSystemService(Context.INPUT_METHOD_SERVICE);
+        InputMethodManager imm = (InputMethodManager) getApplication().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
         //创建并显示popWindow
-        mCustomPopWindow= new CustomPopWindow.PopupWindowBuilder(this)
+        mCustomPopWindow = new CustomPopWindow.PopupWindowBuilder(this)
                 .setView(contentView)
                 .setBgDarkAlpha(0.7f)
                 .setAnimationStyle(R.anim.pickerview_slide_in_bottom)
                 .size(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)//显示大小
                 .enableBackgroundDark(true)
                 .create()
-                .showAtLocation(v, Gravity.BOTTOM,0,0);
+                .showAtLocation(v, Gravity.BOTTOM, 0, 0);
+
+    }
+    //有时间冲突的日程列表
+    public class ConflictAdapter extends CommonAdapter<ConflictCalBean.DataBean> {
+
+        public ConflictAdapter(Context context, List<ConflictCalBean.DataBean> mDatas, int itemLayoutId) {
+            super(context, mDatas, itemLayoutId);
+        }
+
+        @Override
+        public void convert(BaseViewHolder helper, ConflictCalBean.DataBean item, int position) {
+            helper.setText(R.id.title_tv,item.getTitle());
+            String beginTime = item.getBeginTime();
+            String endTime = item.getEndTime();
+            Date endDate = DateFormatUtil.getTime(endTime+":00", Const.YMD_HMS);
+            Date beginDate = DateFormatUtil.getTime(beginTime+":00", Const.YMD_HMS);
+            Log.i("myTag",endDate.getTime()+","+beginDate);
+            int dayExpend = CalculateTimeUtil.getDayExpend(beginDate.getTime(), endDate.getTime());
+            if (dayExpend>=1){
+                helper.setText(R.id.time_tv, beginTime.substring(5,beginTime.length())+"  —  "+ endTime.substring(5,endTime.length()));
+            }else {
+                helper.setText(R.id.time_tv, beginTime.substring(11,beginTime.length())+"  —  "+ endTime.substring(11,endTime.length()));
+            }
+        }
     }
 }

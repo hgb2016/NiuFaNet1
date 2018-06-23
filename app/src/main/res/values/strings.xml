@@ -4,6 +4,7 @@
     <string name="failconnect">连接服务器失败，请检查网络</string>
     <string name="voicefirst">我是妞妞，有什么可以帮您？</string>
     <string name="pleaseinputkeyword">请输入搜索关键字</string>
+    <string name="version_tip">1.个人日程导出，细化工作流程\n2.个人日程迅速发送到你的邮箱</string>
 
     <!--极光推送集成所需-->
 </resources>

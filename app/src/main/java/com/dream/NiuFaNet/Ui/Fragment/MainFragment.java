@@ -296,9 +296,12 @@ public class MainFragment extends BaseFragmentV4 implements MainContract.View, M
                     @Override
                     public void OnBannerClick(int position) {
                         Log.e("tag","link="+link);
-                        IntentUtils.toActivityWithUrl(WebActivity.class,getActivity(),link, ResourcesUtils.getString(R.string.app_name));
+                        if (!link.isEmpty()) {
+                            IntentUtils.toActivityWithUrl(WebActivity.class, getActivity(), link, ResourcesUtils.getString(R.string.app_name));
+                        }
                     }
                 });
+
             }
             banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
             banner.setImages(imgUrls);
@@ -400,7 +403,9 @@ public class MainFragment extends BaseFragmentV4 implements MainContract.View, M
                         @Override
                         public void OnBannerClick(int position) {
                             Log.e("tag","link="+link);
-                            IntentUtils.toActivityWithUrl(WebActivity.class,getActivity(),link,ResourcesUtils.getString(R.string.app_name));
+                            if (!link.isEmpty()) {
+                                IntentUtils.toActivityWithUrl(WebActivity.class, getActivity(), link, ResourcesUtils.getString(R.string.app_name));
+                            }
                         }
                     });
                 }
@@ -758,7 +763,6 @@ public class MainFragment extends BaseFragmentV4 implements MainContract.View, M
                 gDay_tv.setTextColor(Color.RED);
                 gDay_tv.setBackgroundResource(R.drawable.shape_selectcal);
                 nday_tv.setTextColor(Color.RED);
-
             } else {
                 if (year.equals(s) && mm.equals(s1)) {
                     gDay_tv.setTextColor(ResourcesUtils.getColor(R.color.black));
@@ -892,7 +896,6 @@ public class MainFragment extends BaseFragmentV4 implements MainContract.View, M
                 work_title.setTextColor(ResourcesUtils.getColor(R.color.black));
                 dot_iv.setImageResource(R.mipmap.dot1 );
             }
-
             holder.getConvertView().setOnClickListener(new NoDoubleClickListener() {
                 @Override
                 public void onNoDoubleClick(View view) {

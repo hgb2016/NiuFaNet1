@@ -18,8 +18,8 @@ android {
         applicationId "com.dream.NiuFaNet"
         minSdkVersion 16
         targetSdkVersion 22
-        versionCode 25
-        versionName "2.0.5"
+        versionCode 26
+        versionName "2.0.6"
         multiDexEnabled true
     }
     buildTypes {
@@ -67,8 +67,6 @@ dependencies {
     compile 'com.android.support:design:24.0.0'
     compile 'com.kevin:wraprecyclerview:1.0.6'
     compile 'com.github.AItsuki:SwipeMenuRecyclerView:1.1.1'
-
-    //侧滑删除
 
     // Rx
     compile 'io.reactivex:rxandroid:1.1.0'

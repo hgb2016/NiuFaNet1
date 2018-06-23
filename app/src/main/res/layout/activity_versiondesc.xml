@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen45"
+        android:layout_marginTop="@dimen/icon_size_20dp"
+        android:background="@color/white">
+
+        <RelativeLayout
+            android:id="@+id/back_relay"
+            android:layout_width="@dimen/dimen45"
+            android:layout_height="@dimen/dimen45">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/padding15"
+                android:src="@mipmap/back" />
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="版本介绍"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/layout_padding_1dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/gray" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_above="@+id/bot_lay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#f6f6f6"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@mipmap/logo" />
+                <TextView
+                    android:id="@+id/versioncode_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="V 2.0.6"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="法律机器人"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/version_newcode_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="14dp"
+                        android:text="法律机器人2.0.2主要更新"
+                        android:textColor="@color/black"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/versiondesc_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="11dp"
+                        android:layout_marginLeft="@dimen/icon_size_40dp"
+                        android:layout_marginRight="@dimen/icon_size_20dp"
+                        android:layout_marginTop="10dp"
+                        android:lineSpacingExtra="5dp"
+                        android:text="@string/version_tip"
+                        android:textColor="@color/textcolor_ac"
+                        android:textSize="13sp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:layout_marginRight="47dp"
+                        android:background="@color/gray" />
+                </LinearLayout>
+            </ScrollView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:background="#f6f6f6"
+            android:id="@+id/bot_lay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/update_tv"
+                android:layout_width="match_parent"
+                android:layout_height="39dp"
+                android:layout_marginBottom="@dimen/icon_size_20dp"
+                android:layout_marginLeft="@dimen/icon_size_20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/shape_update"
+                android:gravity="center"
+                android:text="立即更新"
+                android:textColor="@color/black" />
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/new_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="17dp"
+                android:text="当前版本已是最新版本！"
+                android:textColor="@color/black" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="17dp"
+                android:text="深圳市牛法信息科技有限公司 版权所有"
+                android:textColor="@color/textcolor_ac"
+                android:textSize="@dimen/text_size_12sp" />
+        </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>

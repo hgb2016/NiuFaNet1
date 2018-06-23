@@ -59,4 +59,30 @@ public class DownSchedulePresenter extends RxPresenter<DownScheduleContract.View
                 });
         addSubscrebe(rxSubscription);
     }
+
+    @Override
+    public void exportMySchedule(Map<String, String> map) {
+        Subscription rxSubscription = itApi.exportMySchedule(map).subscribeOn(Schedulers.io())//放在异步中执行
+                .observeOn(AndroidSchedulers.mainThread())//回到主线程
+                .subscribe(new Observer<CommonBean>() {
+                    @Override
+                    public void onNext(CommonBean dataBean) {
+                        if (dataBean != null && mView != null) {
+                            mView.showExportResult(dataBean);
+                        }
+                    }
+
+                    @Override
+                    public void onCompleted() {
+
+                    }
+                    @Override
+                    public void onError(Throwable e) {
+
+                        Log.e(TAG, "onError: " + e);
+                        mView.showError();
+                    }
+                });
+        addSubscrebe(rxSubscription);
+    }
 }

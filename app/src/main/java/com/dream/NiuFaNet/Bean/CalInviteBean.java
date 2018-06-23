@@ -65,6 +65,15 @@ public class CalInviteBean {
         private String method;
         private int position;
         private String headUrl;
+        private boolean isConflict;
+
+        public boolean isConflict() {
+            return isConflict;
+        }
+
+        public void setConflict(boolean conflict) {
+            isConflict = conflict;
+        }
 
         public String getHeadUrl() {
             return headUrl;

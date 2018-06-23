@@ -16,6 +16,15 @@ public class VersionBean {
     private String url;
     private String error;
     private String message;
+    private String versionRemark;
+
+    public String getVersionRemark() {
+        return versionRemark;
+    }
+
+    public void setVersionRemark(String versionRemark) {
+        this.versionRemark = versionRemark;
+    }
 
     public String getVersion() {
         return version;

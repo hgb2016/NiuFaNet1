@@ -59,6 +59,7 @@ public class LoginActivity1 extends CommonActivity implements ThirdLoginContract
                 .inject(this);
         thirdLoginPresenter.attachView(this);
         loginPresenter.attachView(this);
+
     }
 
     @Override

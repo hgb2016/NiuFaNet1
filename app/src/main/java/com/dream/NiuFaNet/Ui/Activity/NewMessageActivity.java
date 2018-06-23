@@ -20,6 +20,7 @@ import com.dream.NiuFaNet.Base.CommonAdapter;
 import com.dream.NiuFaNet.Bean.ApplyBeFrendBean;
 import com.dream.NiuFaNet.Bean.CalInviteBean;
 import com.dream.NiuFaNet.Bean.CommonBean;
+import com.dream.NiuFaNet.Bean.ConflictCalBean;
 import com.dream.NiuFaNet.Bean.MessageLayBean;
 import com.dream.NiuFaNet.Component.DaggerNFComponent;
 import com.dream.NiuFaNet.Contract.MessageContract;
@@ -34,6 +35,7 @@ import com.dream.NiuFaNet.R;
 import com.dream.NiuFaNet.Utils.CalculateTimeUtil;
 import com.dream.NiuFaNet.Utils.DateFormatUtil;
 import com.dream.NiuFaNet.Utils.DateUtils.Week;
+import com.dream.NiuFaNet.Utils.MapUtils;
 import com.dream.NiuFaNet.Utils.NetUtil;
 import com.dream.NiuFaNet.Utils.ResourcesUtils;
 import com.dream.NiuFaNet.Utils.ToastUtils;
@@ -43,6 +45,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -158,6 +161,11 @@ public class NewMessageActivity extends CommonActivity implements MessageContrac
         }
     }
 
+    @Override
+    public void showValidateResult(ConflictCalBean databean) {
+
+    }
+
 
     public class MessageAdapter extends CommonAdapter<CalInviteBean.DataBean> {
 
@@ -177,8 +185,9 @@ public class NewMessageActivity extends CommonActivity implements MessageContrac
             TextView address_tv=helper.getView(R.id.address_tv);
             TextView outofdate_tv=helper.getView(R.id.outofdate_tv);
             LinearLayout address_lay=helper.getView(R.id.address_lay);
+            LinearLayout warn_lay=helper.getView(R.id.warn_lay);
             //起始时间
-            Date tempbd = DateFormatUtil.getTime(item.getBeginTime(), Const.YMD_HMS);
+            final Date tempbd = DateFormatUtil.getTime(item.getBeginTime(), Const.YMD_HMS);
             String startTime = DateFormatUtil.getTime(tempbd, Const.MR);
             String startTime1 = DateFormatUtil.getTime(tempbd, Const.HM);
             Calendar calendar = Calendar.getInstance();
@@ -207,6 +216,24 @@ public class NewMessageActivity extends CommonActivity implements MessageContrac
             }else {
                 outofdate_tv.setVisibility(View.GONE);
             }
+            if (item.isConflict()){
+                warn_lay.setVisibility(View.VISIBLE);
+            }else {
+                warn_lay.setVisibility(View.GONE);
+            }
+            warn_lay.setOnClickListener(new NoDoubleClickListener() {
+                @Override
+                public void onNoDoubleClick(View view) {
+                    String scheduleId = item.getId();
+                    if (scheduleId!=null&&!scheduleId.isEmpty()){
+                        Intent intent = new Intent(mContext, CalenderDetailActivity.class);
+                        intent.putExtra(Const.scheduleId, scheduleId);
+                        intent.putExtra("inviteCal","inviteCal");
+                        intent.putExtra(Const.userId, CommonAction.getUserId());
+                        startActivityForResult(intent,100);
+                    }
+                }
+            });
             helper.setText(R.id.duringtime_tv,CalculateTimeUtil.getTimeExpend(tempbd.getTime(),tempnd.getTime()));
             helper.setOnClickListener(R.id.reject_tv, new NoDoubleClickListener() {
                 @Override

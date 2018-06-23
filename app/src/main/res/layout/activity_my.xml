@@ -69,14 +69,18 @@
             android:orientation="vertical">
 
             <RelativeLayout
+                android:background="@mipmap/effect"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 android:id="@+id/myinfo_relay"
                 android:layout_width="match_parent"
                 android:layout_height="140dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginBottom="20dp"
                 android:layout_marginLeft="6dp"
                 android:layout_marginRight="6dp"
                 >
-                <View
+               <!-- <View
                     android:layout_marginRight="10dp"
                     android:layout_marginLeft="10dp"
                     android:layout_alignParentTop="true"
@@ -103,7 +107,7 @@
                     android:layout_alignParentBottom="true"
                     android:background="@drawable/shape_grident_bottom"
                     android:layout_width="match_parent"
-                    android:layout_height="10dp"/>
+                    android:layout_height="10dp"/>-->
                 <RelativeLayout
 
                     android:layout_centerInParent="true"
@@ -177,207 +181,14 @@
                 </RelativeLayout>
 
             </RelativeLayout>
-            <LinearLayout
-                android:visibility="gone"
-                android:id="@+id/message_lay"
+
+            <com.dream.NiuFaNet.CustomView.MyListView
+                android:id="@+id/my_lv"
+                android:dividerHeight="1px"
+                android:divider="@color/gray"
                 android:layout_width="match_parent"
-                android:layout_height="65dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginLeft="@dimen/icon_size_20dp"
-                    android:src="@mipmap/icon_message" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="11dp"
-                    android:text="消息"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/text_size_15sp" />
-                <View
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"/>
-                <TextView
-                    android:layout_marginRight="26dp"
-                    android:text="4"
-                    android:textColor="@color/white"
-                    android:gravity="center"
-                    android:background="@drawable/shape_circle_red"
-                    android:layout_width="18dp"
-                    android:layout_height="18dp" />
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="@color/gray" />
-            <LinearLayout
-                android:visibility="visible"
-                android:id="@+id/client_lay"
-                android:layout_width="match_parent"
-                android:layout_height="65dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginLeft="@dimen/icon_size_20dp"
-                    android:src="@mipmap/icon_client" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="11dp"
-                    android:text="我的客户"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/text_size_15sp" />
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="@color/gray" />
-
-            <LinearLayout
-                android:id="@+id/whocansee_lay"
-                android:layout_width="match_parent"
-                android:layout_height="65dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/icon_size_20dp"
-                    android:src="@mipmap/see" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="11dp"
-                    android:text="谁可以看我的工作"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/text_size_15sp" />
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="@color/gray" />
-
-            <LinearLayout
-                android:id="@+id/share_lay"
-                android:layout_width="match_parent"
-                android:layout_height="65dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/icon_size_20dp"
-                    android:src="@mipmap/share" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="11dp"
-                    android:text="分享"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/text_size_15sp" />
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="@color/gray" />
-
-            <LinearLayout
-                android:id="@+id/feedback_lay"
-                android:layout_width="match_parent"
-                android:layout_height="65dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/icon_size_20dp"
-                    android:src="@mipmap/opinion" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="11dp"
-                    android:text="意见反馈"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/text_size_15sp" />
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="@color/gray" />
-
-            <LinearLayout
-                android:id="@+id/aboutus_lay"
-                android:layout_width="match_parent"
-                android:layout_height="65dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/icon_size_20dp"
-                    android:src="@mipmap/about" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="11dp"
-                    android:text="关于我们"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/text_size_15sp" />
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="@color/gray" />
-
-            <LinearLayout
-                android:id="@+id/contactus_lay"
-                android:layout_width="match_parent"
-                android:layout_height="65dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/icon_size_20dp"
-                    android:src="@mipmap/phone" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="11dp"
-                    android:text="联系我们"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/text_size_15sp" />
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="@color/gray" />
+                android:layout_height="wrap_content">
+            </com.dream.NiuFaNet.CustomView.MyListView>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

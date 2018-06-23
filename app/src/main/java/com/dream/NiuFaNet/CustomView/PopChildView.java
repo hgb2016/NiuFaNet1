@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import com.dream.NiuFaNet.Bean.ApplyBeFrendBean;
 import com.dream.NiuFaNet.Bean.CalInviteBean;
 import com.dream.NiuFaNet.Bean.CommonBean;
+import com.dream.NiuFaNet.Bean.ConflictCalBean;
 import com.dream.NiuFaNet.Bean.MessageLayBean;
 import com.dream.NiuFaNet.Component.DaggerNFComponent;
 import com.dream.NiuFaNet.Contract.MessageContract;
@@ -226,6 +227,11 @@ public class PopChildView extends LinearLayout implements MessageContract.View{
         }else {
             ToastUtils.Toast_short(dataBean.getMessage());
         }
+    }
+
+    @Override
+    public void showValidateResult(ConflictCalBean databean) {
+
     }
 
     @Override

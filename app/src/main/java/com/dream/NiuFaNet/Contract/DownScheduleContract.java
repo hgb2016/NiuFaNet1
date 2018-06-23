@@ -15,11 +15,11 @@ public interface DownScheduleContract {
     interface View extends BaseContract.BaseView {
 
         void showDownload(CommonBean dataBean);
-
+        void showExportResult(CommonBean dataBean);
     }
 
     interface Presenter<T> extends BaseContract.BasePresenter<T> {
         void exportProjectSchedule(Map<String,String> map);
-
+        void exportMySchedule(Map<String,String> map);
     }
 }

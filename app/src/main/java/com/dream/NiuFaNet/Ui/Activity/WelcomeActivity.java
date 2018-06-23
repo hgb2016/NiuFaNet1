@@ -95,12 +95,10 @@ public class WelcomeActivity extends BaseActivityWG implements ShareContract.Vie
     public void initView() {
         DaggerNFComponent.builder()
                 .appComponent(MyApplication.getInstance().getAppComponent())
-//                .mainActivityModule(new MainActivityModule(this))
                 .build()
                 .inject(this);
         sharePresenter.attachView(this);
         mainPresenter.attachView(this);
-
         mImageView= (ImageView) findViewById(R.id.welcome_pic);
         mImageView.startAnimation(AnimationUtils.loadAnimation(WelcomeActivity.this, R.anim.alpha));
         toNextActivity();

@@ -80,7 +80,7 @@ import butterknife.OnClick;
 import cn.sharesdk.wechat.friends.Wechat;
 
 /**
- *日程详情
+ *日程详情(没用)
  * Created by Administrator on 2017/11/19 0019.
  */
 public class CalenderDetailActivity1 extends CommonActivity {
