@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:voiceView="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
     android:background="@color/white"
     android:gravity="center_horizontal"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
     <TextView
         android:textSize="@dimen/text_size_18sp"
         android:layout_marginTop="33dp"
@@ -51,7 +52,7 @@
         android:textColor="@color/textcolor_ac"
         android:textSize="15sp" />
     <LinearLayout
-        android:visibility="visible"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginBottom="10dp"
@@ -64,6 +65,40 @@
             android:layout_height="match_parent"
             android:layout_weight="1" />
     </LinearLayout>
+    <RelativeLayout
+        android:id="@+id/volume_lay"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical"
+        android:visibility="visible">
+        <TextView
+            android:layout_centerInParent="true"
+            android:visibility="gone"
+            android:id="@+id/voicetip_tv"
+            android:textSize="@dimen/text_size_14sp"
+            android:text="请点击'点我说话'按钮"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <com.dream.NiuFaNet.CustomView.VoiceLineView
+            android:id="@+id/voicline"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@android:color/white"
+            android:visibility="visible"
+            voiceView:fineness="three"
+            voiceView:lineSpeed="90"
+            voiceView:maxVolume="100"
+            voiceView:middleLine="@android:color/holo_red_light"
+            voiceView:middleLineHeight="1px"
+            voiceView:rectSpace="2dp"
+            voiceView:rectWidth="5dp"
+            voiceView:sensibility="four"
+            voiceView:viewMode="line"
+            voiceView:voiceLine="@android:color/holo_red_light" />
+
+    </RelativeLayout>
     <RelativeLayout
         android:id="@+id/voice_bot_relay"
         android:layout_width="match_parent"

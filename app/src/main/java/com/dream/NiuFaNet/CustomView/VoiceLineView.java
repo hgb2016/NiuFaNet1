@@ -27,14 +27,14 @@ public class VoiceLineView extends View {
 
     private int middleLineColor = Color.BLACK;
     private int voiceLineColor = Color.BLACK;
-    private float middleLineHeight = 4;
+    private float middleLineHeight = 0;
     private Paint paint;
     private Paint paintVoicLine;
     private int mode;
     /**
      * 灵敏度
      */
-    private int sensibility = 4;
+    private int sensibility = 1;
 
     private float maxVolume = 100;
 
@@ -49,7 +49,7 @@ public class VoiceLineView extends View {
     /**
      * 音量
      */
-    private float volume = 10;
+    private float volume = 0;
     private int fineness = 1;
     private float targetVolume = 1;
 

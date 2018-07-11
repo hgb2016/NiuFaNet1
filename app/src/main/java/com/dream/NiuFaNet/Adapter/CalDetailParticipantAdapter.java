@@ -1,6 +1,7 @@
 package com.dream.NiuFaNet.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -11,6 +12,7 @@ import com.dream.NiuFaNet.Base.CommonAdapter;
 import com.dream.NiuFaNet.Bean.CalendarDetailBean;
 import com.dream.NiuFaNet.Other.CommonAction;
 import com.dream.NiuFaNet.R;
+import com.dream.NiuFaNet.Ui.Activity.FriendDetailActivity;
 
 import java.util.List;
 
@@ -20,7 +22,7 @@ public class CalDetailParticipantAdapter extends CommonAdapter<CalendarDetailBea
         }
 
         @Override
-        public void convert(BaseViewHolder helper, CalendarDetailBean.DataBean.participantBean item, final int position) {
+        public void convert(BaseViewHolder helper, final CalendarDetailBean.DataBean.participantBean item, final int position) {
 
             ImageView only_iv = helper.getView(R.id.only_iv);
             ImageView close_iv = helper.getView(R.id.close_iv);
@@ -40,6 +42,15 @@ public class CalDetailParticipantAdapter extends CommonAdapter<CalendarDetailBea
             }else {
                 only_tv.setTextColor(mContext.getResources().getColor(R.color.black));
                 only_tv.setText(userName);
+                helper.getConvertView().setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent1=new Intent(mContext,FriendDetailActivity.class);
+                        intent1.putExtra("friendid",item.getUserId());
+                        intent1.putExtra("type","1");
+                        mContext.startActivity(intent1);
+                    }
+                });
             }
            /* if (item.isDelete()) {
                 close_iv.setVisibility(View.VISIBLE);
@@ -55,5 +66,7 @@ public class CalDetailParticipantAdapter extends CommonAdapter<CalendarDetailBea
                     only_iv.setImageResource(R.mipmap.niu);
                 }
             }
+
+
         }
     }

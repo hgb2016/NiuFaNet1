@@ -6,6 +6,8 @@ import com.dream.NiuFaNet.Bean.BannerBean;
 import com.dream.NiuFaNet.Bean.CalInviteBean;
 import com.dream.NiuFaNet.Bean.CalendarDetailBean;
 import com.dream.NiuFaNet.Bean.CalenderedBean;
+import com.dream.NiuFaNet.Bean.CaseDetailBean;
+import com.dream.NiuFaNet.Bean.CaseListBean;
 import com.dream.NiuFaNet.Bean.ChatBean;
 import com.dream.NiuFaNet.Bean.ClientDataBean;
 import com.dream.NiuFaNet.Bean.ClientDescBean;
@@ -484,4 +486,35 @@ public interface NFApiService {
     @FormUrlEncoded
     @POST(Const.app+"validateScheduleData.do")
     Observable<ConflictCalBean> validateScheduleData(@FieldMap Map<String,String> map);
+
+
+    //创建日程验证日程的时间是否有冲突
+    @Headers({Const.token})
+    @FormUrlEncoded
+    @POST(Const.app+"validateScheduleDataAdd.do")
+    Observable<ConflictCalBean> validateScheduleDataAdd(@FieldMap Map<String,String> map);
+
+    //获取案件列表
+    @Headers({Const.token})
+    @FormUrlEncoded
+    @POST(Const.app+"selectCaseInfoList.do")
+    Observable<CaseListBean> selectCaseInfoList(@FieldMap Map<String,String> map);
+
+    //获取案件详情
+    @Headers({Const.token})
+    @FormUrlEncoded
+    @POST(Const.app+"selectCaseInfo.do")
+    Observable<CaseDetailBean> selectCaseInfo(@Field("userId") String userId, @Field("caseId") String caseId);
+
+    //案件竞标
+    @Headers({Const.token})
+    @FormUrlEncoded
+    @POST(Const.app+"addCaseOrder.do")
+    Observable<CommonBean> addCaseOrder(@FieldMap Map<String,String> map);
+
+    //检验是否重复竞标
+    @Headers({Const.token})
+    @FormUrlEncoded
+    @POST(Const.app+"validateCaseOrder.do")
+    Observable<CommonBean1> validateCaseOrder(@Field("userId") String userId, @Field("caseId") String caseId);
 }

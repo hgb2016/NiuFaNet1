@@ -109,7 +109,7 @@ public class CustomHelper {
 ////        不压缩的配置
 //        mTakePhoto.onEnableCompress(null,false);
         //压缩的配置
-        int maxSize = 1000*1024;//压缩后的最大尺寸，一般设置3M
+        int maxSize = 3*1000*1024;//压缩后的最大尺寸，一般设置3M
         int width = Integer.parseInt(mWidth);//宽
         int height = Integer.parseInt(mHeight);//高
         boolean showProgressBar = true;//是否展示压缩进度条

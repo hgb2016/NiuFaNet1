@@ -436,7 +436,7 @@ public class UserInfoActivity1 extends CommonActivity implements UserInfoContrac
 
     //获取用户信息
     @Override
-    public void showData(UserInfoBean dataBean) {
+    public void showUserInfoData(UserInfoBean dataBean) {
         //Log.i("myTag",new Gson().toJson(dataBean)+"获取用户信息");
         mLoadingDialog.dismiss();
         if (dataBean.getError().equals(Const.success)){

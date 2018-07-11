@@ -163,7 +163,7 @@ public class ProjectFragment extends BaseFragmentV4 implements ProgramContract.V
 
     private int pageNum = 2;
     private boolean isLoadMore;
-    private String sortField = "t.updateTime";
+    private String sortField = "isEdit";
     String status = "";
 
     /**
@@ -290,7 +290,9 @@ public class ProjectFragment extends BaseFragmentV4 implements ProgramContract.V
                 mapInstance.put("status", status);
                 mapInstance.put("userId", CommonAction.getUserId());
                 programPresenter.getProjectList(mapInstance);
+
             }else {
+
                 dataList.clear();
                 Map<String, String> map = MapUtils.getMapInstance();
                 map.put("sortField", sortField);
@@ -361,9 +363,6 @@ public class ProjectFragment extends BaseFragmentV4 implements ProgramContract.V
             if (data != null && data.size() > 0) {
                 project_rv.setVisibility(View.GONE);
                 project_grv.setVisibility(View.VISIBLE);
-              /*  if (projectList.size()>0){
-                    project_grv.smoothScrollToPosition(projectList.size()-1);
-                }*/
                 projectList.addAll(data);
                 projectadapter = new ProjectAdapter(getContext(), projectList);
                 project_grv.setAdapter(projectadapter);
@@ -665,9 +664,22 @@ public class ProjectFragment extends BaseFragmentV4 implements ProgramContract.V
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void eventMain1(LoginBus refreshCalBean) {
         if (refreshCalBean.getEventStr().equals(Const.refresh)) {
-            dataList.clear();
-            Map<String, String> map = MapUtils.getMapInstance();
-            loadData(map);
+            if (isSelectClient){
+                dataList.clear();
+                Map<String, String> mapInstance = MapUtils.getMapInstance();
+                mapInstance.put("page", "1");
+                mapInstance.put("status", status);
+                mapInstance.put("userId", CommonAction.getUserId());
+                programPresenter.getProjectList(mapInstance);
+
+            }else {
+
+                dataList.clear();
+                Map<String, String> map = MapUtils.getMapInstance();
+                map.put("sortField", sortField);
+                map.put("status", status);
+                loadData(map);
+            }
         }
     }
 
@@ -688,7 +700,6 @@ public class ProjectFragment extends BaseFragmentV4 implements ProgramContract.V
             if (item.isSelect()) {
                 check_iv.setVisibility(View.VISIBLE);
                 sortTv.setTextColor(getResources().getColor(R.color.blue_title));
-
             } else {
                 check_iv.setVisibility(View.GONE);
                 sortTv.setTextColor(getResources().getColor(R.color.black));
@@ -902,15 +913,20 @@ public class ProjectFragment extends BaseFragmentV4 implements ProgramContract.V
         sort3.setStatus("2");
         sortList1.add(sort3);
 
+        SortBean sort8 = new SortBean();
+        sort8.setSelect(false);
+        sort8.setSortName("未读");
+        sort8.setSortField("isEdit");
+        sortList.add(sort8);
         SortBean sort4 = new SortBean();
         sort4.setSelect(false);
         sort4.setSortName("名称");
-        sort4.setSortField("t.name");
+        sort4.setSortField("name");
         sortList.add(sort4);
         SortBean sort5 = new SortBean();
         sort5.setSelect(false);
         sort5.setSortName("时间");
-        sort5.setSortField("t.updateTime");
+        sort5.setSortField("updateTime");
         sortList.add(sort5);
         SortBean sort6 = new SortBean();
         sort6.setSelect(false);

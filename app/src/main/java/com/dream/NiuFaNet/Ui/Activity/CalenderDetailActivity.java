@@ -1258,17 +1258,32 @@ public class CalenderDetailActivity extends CommonActivity implements MessageCon
                             public void onClick(View v) {
                                 testatus = "1";
                                 checkBoxStatus(end_checkbox, start_checkbox, testatus);
-                                selectedDate.setTimeInMillis(starT1.getTime());
+                                String start_1=start_tv1.getText().toString()+"  "+start_tv2.getText().toString();
+                                Date starD_1=DateFormatUtil.getTime(start_1,Const.YMD_HM);
+                                selectedDate.setTimeInMillis(starD_1.getTime());
                                 pvCustomTime.setDate(selectedDate);
                             }
                         });
                         end_lay.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                testatus = "2";
-                                checkBoxStatus(end_checkbox, start_checkbox, testatus);
-                                selectedDate.setTimeInMillis(enD.getTime());
-                                pvCustomTime.setDate(selectedDate);
+                                String start_1=start_tv1.getText().toString()+"  "+start_tv2.getText().toString();
+                                Date starD_1=DateFormatUtil.getTime(start_1,Const.YMD_HM);
+                                String end_1=end_tv1.getText().toString()+"  "+end_tv2.getText().toString();
+                                Date enD_1=DateFormatUtil.getTime(end_1,Const.YMD_HM);
+                                if (starD_1.getTime()<enD_1.getTime()){
+                                    testatus = "2";
+                                    checkBoxStatus(end_checkbox, start_checkbox, testatus);
+                                    selectedDate.setTimeInMillis(enD_1.getTime());
+                                    pvCustomTime.setDate(selectedDate);
+                                }else {
+                                    testatus = "2";
+                                    checkBoxStatus(end_checkbox, start_checkbox, testatus);
+                                    selectedDate.setTimeInMillis(starD_1.getTime()+3600000);
+                                    end_tv1.setText(DateFormatUtil.getTime(starD_1.getTime()+3600000, Const.Y_M_D));
+                                    end_tv2.setText(DateFormatUtil.getTime(starD_1.getTime()+3600000, Const.HM));
+                                    pvCustomTime.setDate(selectedDate);
+                                }
                             }
                         });
                         tvSubmit.setOnClickListener(new View.OnClickListener() {

@@ -340,10 +340,6 @@
         <activity android:name=".Ui.Activity.CalenderDetailActivity"
             android:windowSoftInputMode="adjustNothing"
             />
-        <activity android:name=".Ui.Activity.CalenderDetailActivity1"
-            android:windowSoftInputMode="adjustNothing"
-            >
-        </activity>
         <activity android:name=".Ui.Activity.InputGetActivity">
         </activity>
         <activity android:name=".Ui.Activity.MineActivity">
@@ -468,6 +464,14 @@
         <activity android:name=".Ui.Activity.CalendarMessageActivity" >
         </activity>
         <activity android:name=".Ui.Activity.VersionDescActivity" >
+        </activity>
+        <activity android:name=".Ui.Activity.CaseCenterActivity" >
+        </activity>
+        <activity android:name=".Ui.Activity.CaseDetailActivity" >
+        </activity>
+        <activity android:name=".Ui.Activity.SearchCaseActivity" >
+        </activity>
+        <activity android:name=".Ui.Activity.DateCalculateActivity" >
         </activity>
     </application>
 

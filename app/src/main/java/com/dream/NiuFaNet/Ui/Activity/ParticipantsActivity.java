@@ -19,6 +19,7 @@ import com.dream.NiuFaNet.Base.RVBaseAdapter;
 import com.dream.NiuFaNet.Base.RVBaseHolder;
 import com.dream.NiuFaNet.Bean.CalendarDetailBean;
 import com.dream.NiuFaNet.Bean.CommonBean;
+import com.dream.NiuFaNet.Bean.ConflictCalBean;
 import com.dream.NiuFaNet.Bean.InputGetBean;
 import com.dream.NiuFaNet.Bean.MyFrendBean;
 import com.dream.NiuFaNet.Bean.NewCalResultBean;
@@ -305,6 +306,11 @@ public class ParticipantsActivity extends CommonActivity implements CalendarDeta
         }else {
             ToastUtils.Toast_short(dataBean.getMessage());
         }
+    }
+
+    @Override
+    public void showValidateResult(ConflictCalBean dataBean) {
+
     }
 
 

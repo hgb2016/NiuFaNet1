@@ -183,6 +183,7 @@
                             android:src="@mipmap/icon_client" />
 
                         <TextView
+
                             android:id="@+id/client_tv"
                             android:layout_width="0dp"
                             android:layout_weight="1"

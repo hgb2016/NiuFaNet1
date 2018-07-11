@@ -79,6 +79,7 @@ public class MineActivity1 extends CommonActivity implements VersionUpdateContra
                 .inject(this);
         versionUpdatePresenter.attachView(this);
         loginDialog = DialogUtils.getLoginTip(this);
+
     }
 
     @Override
@@ -93,7 +94,7 @@ public class MineActivity1 extends CommonActivity implements VersionUpdateContra
         //listBeans.add(new ListBean("消息",R.mipmap.icon_message,false));
         listBeans.add(new ListBean("我的客户",R.mipmap.icon_client,false));
         listBeans.add(new ListBean("谁可以看我的工作",R.mipmap.see,false));
-        listBeans.add(new ListBean("导出我的日程",R.mipmap.export_1,false));
+        listBeans.add(new ListBean("导出我的日程",R.mipmap.export_1,true));
         listBeans.add(new ListBean("分享",R.mipmap.share,false));
         listBeans.add(new ListBean("意见反馈",R.mipmap.opinion,false));
         listBeans.add(new ListBean("关于我们",R.mipmap.about,false));

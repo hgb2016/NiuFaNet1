@@ -5,12 +5,14 @@ import android.util.Log;
 import com.dream.NiuFaNet.Api.NFApi;
 import com.dream.NiuFaNet.Base.RxPresenter;
 import com.dream.NiuFaNet.Bean.CommonBean;
+import com.dream.NiuFaNet.Bean.ConflictCalBean;
 import com.dream.NiuFaNet.Bean.InputGetBean;
 import com.dream.NiuFaNet.Bean.NewCalResultBean;
 import com.dream.NiuFaNet.Contract.CodeContract;
 import com.dream.NiuFaNet.Contract.NewCalenderContract;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -100,6 +102,33 @@ public class NewCalenderPresenter extends RxPresenter<NewCalenderContract.View> 
                     public void onNext(CommonBean dataBean) {
                         if (dataBean != null && mView != null) {
                             mView.showDleteParcipant(dataBean,position);
+                        }
+                    }
+
+                    @Override
+                    public void onCompleted() {
+                        mView.complete();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                        Log.e(TAG, "onError: " + e);
+                        mView.showError();
+                    }
+                });
+        addSubscrebe(rxSubscription);
+    }
+
+    @Override
+    public void valitdateSchduleAdded(Map<String, String> map) {
+        Subscription rxSubscription = itApi.validateScheduleDataAdd(map).subscribeOn(Schedulers.io())//放在异步中执行
+                .observeOn(AndroidSchedulers.mainThread())//回到主线程
+                .subscribe(new Observer<ConflictCalBean>() {
+                    @Override
+                    public void onNext(ConflictCalBean dataBean) {
+                        if (dataBean != null && mView != null) {
+                            mView.showValidateResult(dataBean);
                         }
                     }
 

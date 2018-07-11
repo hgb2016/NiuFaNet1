@@ -21,7 +21,7 @@ public interface GetUserInfoContract {
 
     interface View extends BaseContract.BaseView {
 
-        void showData(UserInfoBean dataBean);
+        void showUserInfoData(UserInfoBean dataBean);
     }
 
     interface Presenter<T> extends BaseContract.BasePresenter<T> {

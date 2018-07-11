@@ -113,17 +113,22 @@
 
         <RelativeLayout
             android:id="@+id/mine_relay"
-            android:layout_width="wrap_content"
+            android:layout_width="37dp"
             android:layout_height="@dimen/title_height"
             android:layout_alignParentRight="true"
             android:layout_marginRight="12dp"
             android:gravity="center_vertical">
-
             <ImageView
                 android:id="@+id/mine_iv"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:src="@mipmap/icon_user" />
+            <ImageView
+                android:layout_alignParentRight="true"
+                android:id="@+id/new_iv"
+                android:src="@mipmap/dot1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
         </RelativeLayout>
 
         <RelativeLayout

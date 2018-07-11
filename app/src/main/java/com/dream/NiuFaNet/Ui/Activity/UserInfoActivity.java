@@ -148,6 +148,7 @@ public class UserInfoActivity extends CommonActivity implements UserInfoContract
         String userName = (String) SpUtils.getParam(Const.userName, "");
         String tdName = (String) SpUtils.getParam(Const.userName, "");
         String type = (String) SpUtils.getParam(Const.thirdType, Const.bdUser);
+
         if (type.equals(Const.bdUser)){
             if (!userName.isEmpty()){
                 username_tv.setText(userName);

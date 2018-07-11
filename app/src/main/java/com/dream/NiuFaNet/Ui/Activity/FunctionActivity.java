@@ -509,7 +509,7 @@ public class FunctionActivity extends CommonActivity implements FunctionContract
                     @Override
                     public void onNoDoubleClick(View view) {
                         if (url != null && !url.isEmpty()) {
-                            Intent intent = new Intent(mContext, WebActivity.class);
+                            Intent intent = new Intent(mContext, DateCalculateActivity.class);
                             intent.putExtra(Const.webUrl, url);
                             startActivity(intent);
                         }

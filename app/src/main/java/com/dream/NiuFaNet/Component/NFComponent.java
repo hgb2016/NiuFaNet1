@@ -9,11 +9,13 @@ import com.dream.NiuFaNet.Ui.Activity.AddFrendsActivity;
 import com.dream.NiuFaNet.Ui.Activity.AddProjectActivity;
 import com.dream.NiuFaNet.Ui.Activity.CalendarMessageActivity;
 import com.dream.NiuFaNet.Ui.Activity.CalenderDetailActivity;
-import com.dream.NiuFaNet.Ui.Activity.CalenderDetailActivity1;
+import com.dream.NiuFaNet.Ui.Activity.CaseCenterActivity;
+import com.dream.NiuFaNet.Ui.Activity.CaseDetailActivity;
 import com.dream.NiuFaNet.Ui.Activity.ChangePwdActivity;
 import com.dream.NiuFaNet.Ui.Activity.ChatActivity;
 import com.dream.NiuFaNet.Ui.Activity.ClientDetailActivity;
 import com.dream.NiuFaNet.Ui.Activity.ClientsActivity;
+import com.dream.NiuFaNet.Ui.Activity.DateCalculateActivity;
 import com.dream.NiuFaNet.Ui.Activity.DownScheduleActivity;
 import com.dream.NiuFaNet.Ui.Activity.FeedBackActivity;
 import com.dream.NiuFaNet.Ui.Activity.FindPwdOrBindUserActivity;
@@ -42,6 +44,7 @@ import com.dream.NiuFaNet.Ui.Activity.ProgramDetailActivity;
 import com.dream.NiuFaNet.Ui.Activity.ProjectDetailActivity;
 import com.dream.NiuFaNet.Ui.Activity.RegisterActivity;
 import com.dream.NiuFaNet.Ui.Activity.ResetPwdActivity;
+import com.dream.NiuFaNet.Ui.Activity.SearchCaseActivity;
 import com.dream.NiuFaNet.Ui.Activity.SearchFriendsActivity;
 import com.dream.NiuFaNet.Ui.Activity.SearchNewFriendsActivity;
 import com.dream.NiuFaNet.Ui.Activity.SearchProjectActivity;
@@ -89,7 +92,6 @@ public interface NFComponent {
     CalendarRecyclerView inject(CalendarRecyclerView view);
     CalendarGridViewAdapter inject(CalendarGridViewAdapter adapter);
     CalenderDetailActivity inject(CalenderDetailActivity activity);
-    CalenderDetailActivity1 inject(CalenderDetailActivity1 activity);
     InputGetActivity inject(InputGetActivity activity);
     NewProgramActivity inject(NewProgramActivity activity);
     ProgramDetailActivity inject(ProgramDetailActivity activity);
@@ -132,6 +134,8 @@ public interface NFComponent {
     MessageActivity inject(MessageActivity activity);
     CalendarMessageActivity inject(CalendarMessageActivity activity);
     VersionDescActivity inject(VersionDescActivity activity);
-
-
+    CaseCenterActivity inject(CaseCenterActivity activity);
+    CaseDetailActivity inject(CaseDetailActivity activity);
+    SearchCaseActivity inject(SearchCaseActivity activity);
+    DateCalculateActivity inject(DateCalculateActivity activity);
 }

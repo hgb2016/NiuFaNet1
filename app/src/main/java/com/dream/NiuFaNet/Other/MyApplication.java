@@ -109,7 +109,7 @@ public class MyApplication extends Application {
         //ShareSDK.initSDK(this);
         SpeechUtility.createUtility(context, SpeechConstant.APPID + "=598a8250");
         //百度统计服务开启
-        StatService.autoTrace(this,true,true);
+        //StatService.autoTrace(this,true,true);
         JPushInterface.setDebugMode(true);//如果时正式版就改成false
         JPushInterface.init(this);
 

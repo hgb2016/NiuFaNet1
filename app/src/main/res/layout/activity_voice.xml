@@ -80,19 +80,19 @@
 
 
         <include
-            android:layout_above="@+id/audio_lay"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
             android:id="@+id/caculate_include"
             layout="@layout/view_calculate"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/audio_lay"
             android:visibility="gone" />
 
         <include
-            android:layout_above="@+id/audio_lay"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
             android:id="@+id/search_include"
             layout="@layout/view_search"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/audio_lay"
             android:visibility="gone" />
 
         <include
@@ -301,6 +301,8 @@
 
             <TextView
                 android:id="@+id/audiores_tv"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -308,32 +310,47 @@
                 android:textColor="@color/textcolor_ac"
                 android:textSize="15sp" />
 
-            <com.dream.NiuFaNet.CustomView.VoiceLineView
-                android:id="@+id/voicline"
+            <RelativeLayout
+                android:id="@+id/volume_lay"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_marginBottom="20dp"
                 android:layout_marginTop="20dp"
-                android:background="@android:color/white"
-                android:visibility="gone"
-                voiceView:fineness="three"
-                voiceView:lineSpeed="90"
-                voiceView:maxVolume="200"
-                voiceView:middleLine="@android:color/holo_red_light"
-                voiceView:middleLineHeight="1dp"
-                voiceView:rectSpace="2dp"
-                voiceView:rectWidth="5dp"
-                voiceView:sensibility="four"
-                voiceView:viewMode="line"
-                voiceView:voiceLine="@android:color/holo_red_light" />
+                android:orientation="vertical"
+                android:visibility="visible">
+                <TextView
+                    android:layout_centerInParent="true"
+                    android:visibility="gone"
+                    android:id="@+id/voicetip_tv"
+                    android:textSize="@dimen/text_size_14sp"
+                    android:text="请点击'点我说话'按钮"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <com.dream.NiuFaNet.CustomView.VoiceLineView
+                    android:id="@+id/voicline"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:background="@android:color/white"
+                    android:visibility="visible"
+                    voiceView:fineness="three"
+                    voiceView:lineSpeed="90"
+                    voiceView:maxVolume="100"
+                    voiceView:middleLine="@android:color/holo_red_light"
+                    voiceView:middleLineHeight="1px"
+                    voiceView:rectSpace="2dp"
+                    voiceView:rectWidth="5dp"
+                    voiceView:sensibility="four"
+                    voiceView:viewMode="line"
+                    voiceView:voiceLine="@android:color/holo_red_light" />
 
+            </RelativeLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_marginBottom="20dp"
                 android:layout_marginTop="20dp"
                 android:gravity="center"
-                android:visibility="visible">
+                android:visibility="gone">
 
                 <com.dream.NiuFaNet.CustomView.AudioAnimView
                     android:id="@+id/audioview_left"

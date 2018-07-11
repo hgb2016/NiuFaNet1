@@ -193,7 +193,6 @@ public class MainActivity extends BaseActivityRelay implements VersionUpdateCont
     TextView projectnum_tv;
     private View statutView;
     private Fragment recommendFra, scheduleFra, progamFra, contactFra;
-    ;
     private FragmentManager mFragmentManager;
     private Fragment currentFragment;
     private Bitmap contactnormal, contactselect, minenormal, mineselect, progselect, prognomal;
@@ -217,7 +216,8 @@ public class MainActivity extends BaseActivityRelay implements VersionUpdateCont
     @Inject
     ShowNoticeCountPresenter showNoticeCountPresenter;
     private String szImei;
-
+    @Bind(R.id.new_iv)
+    ImageView new_iv;
 
     //首页布局
     @Override
@@ -262,10 +262,17 @@ public class MainActivity extends BaseActivityRelay implements VersionUpdateCont
         szImei = TelephonyMgr.getDeviceId();
         applyPermission();
         initMsgDialog();
+        Log.i("tag",CommonAction.getUserId()+"userId");
+        getNewTip();
+    }
+
+    private void getNewTip() {
+        new_iv.setVisibility(View.VISIBLE);
 
     }
 
     private LinearLayout message_lay;
+
     private PopupWindow dialog;
 
     //消息弹窗
@@ -547,6 +554,7 @@ public class MainActivity extends BaseActivityRelay implements VersionUpdateCont
         String them = CommonAction.getThem();
         switch (v.getId()) {
             case R.id.contact_lay:
+                new_iv.setVisibility(View.GONE);
                 mImmersionBar.fitsSystemWindows(true).statusBarColor(R.color.white).init();
                 if (CommonAction.getIsLogin()) {
                     CommonAction.refreshContact();
@@ -558,6 +566,7 @@ public class MainActivity extends BaseActivityRelay implements VersionUpdateCont
                 }
                 break;
             case R.id.mine_lay:
+                new_iv.setVisibility(View.VISIBLE);
                 mImmersionBar.fitsSystemWindows(true).statusBarColor(R.color.white).init();
 //                refreshMine(them);
                 if (CommonAction.getIsLogin()) {
@@ -568,6 +577,7 @@ public class MainActivity extends BaseActivityRelay implements VersionUpdateCont
                 }
                 break;
             case R.id.main_lay:
+                new_iv.setVisibility(View.VISIBLE);
                 refreshMain();
                 getEditProjectCount();
                 CommonAction.refreshLogined();
@@ -575,6 +585,7 @@ public class MainActivity extends BaseActivityRelay implements VersionUpdateCont
                 mImmersionBar.fitsSystemWindows(true).statusBarColor(R.color.white).init();
                 break;
             case R.id.schedule_lay:
+                new_iv.setVisibility(View.VISIBLE);
                 getEditProjectCount();
                 mImmersionBar.fitsSystemWindows(true).statusBarColor(R.color.white).init();
                 if (CommonAction.getIsLogin()) {
@@ -686,7 +697,7 @@ public class MainActivity extends BaseActivityRelay implements VersionUpdateCont
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+       /* if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
             if ((System.currentTimeMillis() - exitTime) > 2000) {
                 Toast.makeText(MainActivity.this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
                 exitTime = System.currentTimeMillis();
@@ -697,8 +708,15 @@ public class MainActivity extends BaseActivityRelay implements VersionUpdateCont
 
             return true;
         }
+        return super.onKeyDown(keyCode, event);*/
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            Intent home = new Intent(Intent.ACTION_MAIN);
+            home.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            home.addCategory(Intent.CATEGORY_HOME);
+            startActivity(home);
+            return true;
+        }
         return super.onKeyDown(keyCode, event);
-
     }
 
     private void returnMain() {

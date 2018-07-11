@@ -1,5 +1,7 @@
 package com.dream.NiuFaNet.Ui.Activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -53,10 +55,26 @@ public class SettingActivity extends CommonActivity {
                 }
                 break;
             case R.id.exitlogin_relay:
-                CommonAction.clearUserData();
-                setResult(103);
-                CommonAction.refreshLogined();
-                finish();
+                new AlertDialog.Builder(this)
+                        .setTitle("温馨提示：")
+                        .setMessage("您确定要退出登录吗？")
+                        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                CommonAction.clearUserData();
+                                setResult(103);
+                                CommonAction.refreshLogined();
+                                finish();
+                            }
+                        })
+                        .create().show();
+
                 break;
             case R.id.back_relay:
                 finish();

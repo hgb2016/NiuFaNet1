@@ -519,7 +519,7 @@ public class ProjectDetailActivity extends CommonActivity implements ProgramDeta
         }
 
         @Override
-        public void convert(BaseViewHolder helper, ProgramDetailBean.DataBean.participantBean item, int position) {
+        public void convert(BaseViewHolder helper, final ProgramDetailBean.DataBean.participantBean item, int position) {
             ImageView only_iv = helper.getView(R.id.only_iv);
             ImageView lancher_iv = helper.getView(R.id.lancher_iv);
             TextView only_tv = helper.getView(R.id.only_tv);
@@ -532,6 +532,15 @@ public class ProjectDetailActivity extends CommonActivity implements ProgramDeta
             }else {
                 only_tv.setTextColor(mContext.getResources().getColor(R.color.black));
                 only_tv.setText(item.getUserName());
+                helper.getConvertView().setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent1=new Intent(mContext,FriendDetailActivity.class);
+                        intent1.putExtra("friendid",item.getUserId());
+                        intent1.putExtra("type","1");
+                        mContext.startActivity(intent1);
+                    }
+                });
             }
 
             String headUrl = item.getHeadUrl();

@@ -98,6 +98,7 @@
     <color name="gray_2">#f4f4f4</color>
     <color name="textcolor_ac">#acacac</color>
     <color name="text_2">#919191</color>
+    <color name="bg_F5">#F5F5F5</color>
     <color name="outdatecolor">#d6d6d6</color>
     <color name="textgray_94">#949494</color>
     <color name="red_delete">#FF5A5A</color>
@@ -112,4 +113,6 @@
     <color name="shadow">#cc222222</color>
     <color name="bg_d933">#D9333333</color>
     <color name="textcolor_blue1">#6FB8FF</color>
+    <color name="textcolor_66">#666666</color>
+    <color name="yellow_2">#E8D84F</color>
 </resources>

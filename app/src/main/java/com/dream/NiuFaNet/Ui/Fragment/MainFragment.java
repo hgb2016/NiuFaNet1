@@ -1,32 +1,27 @@
 package com.dream.NiuFaNet.Ui.Fragment;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.media.Image;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
+import android.view.ViewTreeObserver;
 import android.widget.GridView;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -34,11 +29,9 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.target.Target;
 import com.dream.NiuFaNet.Adapter.BannerAdapter;
 import com.dream.NiuFaNet.Adapter.ChatMainRvAdapter;
-import com.dream.NiuFaNet.Adapter.FunctionViewAdapter;
 import com.dream.NiuFaNet.Adapter.MainFunctionAdpter;
 import com.dream.NiuFaNet.Adapter.MainVpAdapterView;
 import com.dream.NiuFaNet.Base.BaseFragmentV4;
-import com.dream.NiuFaNet.Base.BasePagerAdapter;
 import com.dream.NiuFaNet.Base.BaseViewHolder;
 import com.dream.NiuFaNet.Base.CommonAdapter;
 import com.dream.NiuFaNet.Base.RVBaseAdapter;
@@ -56,11 +49,7 @@ import com.dream.NiuFaNet.Component.DaggerNFComponent;
 import com.dream.NiuFaNet.Contract.CalenderMainContract;
 import com.dream.NiuFaNet.Contract.MainContract;
 import com.dream.NiuFaNet.Contract.MainFunctionContract;
-import com.dream.NiuFaNet.Contract.MyToolsContract;
-import com.dream.NiuFaNet.Contract.PermissionListener;
-import com.dream.NiuFaNet.CustomView.CalenderItemView;
 import com.dream.NiuFaNet.CustomView.Emptyview_RvSchedule;
-import com.dream.NiuFaNet.CustomView.GuideView;
 import com.dream.NiuFaNet.CustomView.MyListView;
 import com.dream.NiuFaNet.CustomView.MyScrollView;
 import com.dream.NiuFaNet.Listener.NoDoubleClickListener;
@@ -71,14 +60,11 @@ import com.dream.NiuFaNet.Presenter.CalenderMainPresenter;
 import com.dream.NiuFaNet.Presenter.MainFunctionPresenter;
 import com.dream.NiuFaNet.Presenter.MainPresenter;
 import com.dream.NiuFaNet.R;
-import com.dream.NiuFaNet.Ui.Activity.AddFriendsActivity;
 import com.dream.NiuFaNet.Ui.Activity.CalenderDetailActivity;
-import com.dream.NiuFaNet.Ui.Activity.CalenderDetailActivity1;
+import com.dream.NiuFaNet.Ui.Activity.CaseCenterActivity;
 import com.dream.NiuFaNet.Ui.Activity.FunctionActivity;
-import com.dream.NiuFaNet.Ui.Activity.MineActivity;
 import com.dream.NiuFaNet.Ui.Activity.NewCalenderActivity;
 
-import com.dream.NiuFaNet.Ui.Activity.TestActivity;
 import com.dream.NiuFaNet.Ui.Activity.WebActivity;
 import com.dream.NiuFaNet.Ui.Service.SendAlarmBroadcast;
 import com.dream.NiuFaNet.Utils.CalculateTimeUtil;
@@ -88,10 +74,7 @@ import com.dream.NiuFaNet.Utils.DateUtils.DateUtil;
 import com.dream.NiuFaNet.Utils.DateUtils.Week;
 import com.dream.NiuFaNet.Utils.DensityUtil;
 import com.dream.NiuFaNet.Utils.Dialog.DialogUtils;
-import com.dream.NiuFaNet.Utils.GlideCircleTransform;
-import com.dream.NiuFaNet.Utils.GlideRoundTransform;
 import com.dream.NiuFaNet.Utils.IntentUtils;
-import com.dream.NiuFaNet.Utils.NetUtil;
 import com.dream.NiuFaNet.Utils.ResourcesUtils;
 import com.dream.NiuFaNet.Utils.RvUtils;
 import com.dream.NiuFaNet.Utils.SpUtils;
@@ -115,7 +98,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
-import java.util.IllegalFormatCodePointException;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -172,7 +154,7 @@ public class MainFragment extends BaseFragmentV4 implements MainContract.View, M
      * 跟随ScrollView的TabviewLayout
      */
     @Bind(R.id.ll_tabView)
-    RelativeLayout mTabViewLayout;
+    LinearLayout mTabViewLayout;
 
 
     private BannerAdapter bannerAdapter;
@@ -201,6 +183,8 @@ public class MainFragment extends BaseFragmentV4 implements MainContract.View, M
     private  MyToolsAdapter myToolsAdapter;
     private List<MyToolsBean.DataBean> myTools=new ArrayList<>();
     private Bitmap localbanner;
+    private int mHeight;
+
     @Override
     protected View loadViewLayout(LayoutInflater inflater, ViewGroup container) {
         return inflater.inflate(R.layout.fragment_main, null);
@@ -251,6 +235,7 @@ public class MainFragment extends BaseFragmentV4 implements MainContract.View, M
     //初始化数据
     @Override
     public void initDta() {
+
         mainPresenter.getBannerDat("2");
         //mainFunctionPresenter.getMianFunction("");
         String cacheData = (String) SpUtils.getParam(Const.mainCache, "");
@@ -268,18 +253,61 @@ public class MainFragment extends BaseFragmentV4 implements MainContract.View, M
 
         Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), "fonts/fzlth.ttf");
         cmd_tv.setTypeface(tf);
-
         //获取我的工具
         getMyToolsData();
         //设置我的日程数据
         setCalendarData();
+        //获取缓存日程数据
+        getCacheCalendarData();
         //获取我的日程数据
         getCalendarData();
         //获取缓存图片
         getCacheBanner();
-
     }
 
+    //获取缓存日程数据
+    private void getCacheCalendarData() {
+        String calInfo= (String) SpUtils.getParam("calendarInfo","");
+        if (calInfo!=null&&!calInfo.isEmpty()) {
+            Type type = new TypeToken<List<CalenderedBean.DataBean>>() {
+            }.getType();
+            Gson gson = new Gson();
+            List<CalenderedBean.DataBean> list = gson.fromJson(calInfo, type);
+            if (list.size()>0) {
+                this.data.clear();
+                this.data.addAll(list);
+                SpUtils.setParam("calendarInfo", new Gson().toJson(data));
+                for (int i = 0; i < calendarList.size(); i++) {
+                    calendarList.get(i).setWork(false);
+                }
+                for (int i = 0; i < data.size(); i++) {
+                    String beginTime = data.get(i).getBeginTime();
+                    Date timeb = DateFormatUtil.getTime(beginTime, Const.YMD_HMS);
+                    String endTime = data.get(i).getEndTime();
+                    Date endD = DateFormatUtil.getTime(endTime, Const.YMD_HMS);
+                    long startL = timeb.getTime();
+                    long endL = endD.getTime();
+                    for (int j = 0; j < calendarList.size(); j++) {
+                        Date currentD = calendarList.get(j).getDate();
+                        String ymd = DateFormatUtil.getTime(currentD, Const.Y_M_D);
+                        Date startDL = DateFormatUtil.getTime(ymd + Const.endTime, Const.YMD_HMS);
+                        long startTL = startDL.getTime();
+                        Date endDd = DateFormatUtil.getTime(ymd + Const.startTime, Const.YMD_HMS);
+                        long endDL = endDd.getTime();
+                        if (startTL >= startL && endDL <= endL) {
+                            calendarList.get(j).setWork(true);
+                        }
+                    }
+                }
+
+//                mainCalenderAdapter.notifyDataSetChanged();
+                refreshMainVP();
+                refreshWorkRv(mPosition);
+            }
+        }
+
+    }
+    //获取缓存的banner图，
     private void getCacheBanner() {
         String bannerData = (String) SpUtils.getParam(Const.Banner, "");
         if (bannerData!=null&&!bannerData.isEmpty()){
@@ -297,7 +325,7 @@ public class MainFragment extends BaseFragmentV4 implements MainContract.View, M
                     public void OnBannerClick(int position) {
                         Log.e("tag","link="+link);
                         if (!link.isEmpty()) {
-                            IntentUtils.toActivityWithUrl(WebActivity.class, getActivity(), link, ResourcesUtils.getString(R.string.app_name));
+                            IntentUtils.toActivityWithUrl(CaseCenterActivity.class, getActivity(), link, ResourcesUtils.getString(R.string.app_name));
                         }
                     }
                 });
@@ -404,7 +432,7 @@ public class MainFragment extends BaseFragmentV4 implements MainContract.View, M
                         public void OnBannerClick(int position) {
                             Log.e("tag","link="+link);
                             if (!link.isEmpty()) {
-                                IntentUtils.toActivityWithUrl(WebActivity.class, getActivity(), link, ResourcesUtils.getString(R.string.app_name));
+                                IntentUtils.toActivityWithUrl(CaseCenterActivity.class, getActivity(), link, ResourcesUtils.getString(R.string.app_name));
                             }
                         }
                     });
@@ -455,6 +483,7 @@ public class MainFragment extends BaseFragmentV4 implements MainContract.View, M
             if (data != null) {
                 this.data.clear();
                 this.data.addAll(data);
+                SpUtils.setParam("calendarInfo",new Gson().toJson(data));
                 for (int i = 0; i < calendarList.size(); i++) {
                     calendarList.get(i).setWork(false);
                 }
@@ -528,7 +557,7 @@ public class MainFragment extends BaseFragmentV4 implements MainContract.View, M
              传输的到的是什么格式，那么这种就使用Object接收和返回，你只需要强转成你传输的类型就行，
              切记不要胡乱强转！
              */
-
+            Log.i("tag","path"+path.toString());
             //Glide 加载图片简单用法
             Glide.with(getContext()).load(path.toString()).diskCacheStrategy(DiskCacheStrategy.ALL).crossFade().centerCrop().into(imageView);
            // Glide.with(getContext()).load(R.drawable.banner).transform(new GlideRoundTransform(context,10)).into(imageView);
@@ -721,8 +750,15 @@ public class MainFragment extends BaseFragmentV4 implements MainContract.View, M
         }
         Log.e("tag","calViews.size()="+calViews.size());
 //        clv_vp.removeAllViews();
+
         clv_vp.setAdapter(new MainVpAdapterView(calViews));
-        clv_vp.setCurrentItem(2);
+        if (mPosition!=0){
+            int b=mPosition/7;
+            clv_vp.setCurrentItem(b);
+        }else {
+            clv_vp.setCurrentItem(2);
+        }
+
     }
 
     public class MainCalenderAdapter extends RVBaseAdapter<CalendarBean> {
@@ -739,7 +775,7 @@ public class MainFragment extends BaseFragmentV4 implements MainContract.View, M
             params.width = itemWidth;
             holder.itemView.setLayoutParams(params);
             final Date date = calendarBean.getDate();
-            Calendar calendar = Calendar.getInstance();
+            final Calendar calendar = Calendar.getInstance();
             int currentMonth = calendar.get(Calendar.MONTH) + 1;
             int currentYear = calendar.get(Calendar.YEAR);
             String mm = DateFormatUtil.getTime(date, "MM");
@@ -796,6 +832,7 @@ public class MainFragment extends BaseFragmentV4 implements MainContract.View, M
                             mPosition = i;
                             calendarList.get(i).setSelect(true);
                             refreshWorkRv(mPosition);
+                            Log.i("tag","time:"+DateFormatUtil.getTime(calendarBean.getDate(),Const.YMD_HMS));
                             tempCalendar.setTime(calendarBean.getDate());
                         }else {
                             calendarList.get(i).setSelect(false);
@@ -820,6 +857,7 @@ public class MainFragment extends BaseFragmentV4 implements MainContract.View, M
          }else {
              day_tv1.setText(nyr);
          }
+
         Date startDL = DateFormatUtil.getTime(ymd + Const.endTime, Const.YMD_HMS);
         long startTL = startDL.getTime();
         Date endDd = DateFormatUtil.getTime(ymd + Const.startTime, Const.YMD_HMS);
@@ -1011,14 +1049,14 @@ public class MainFragment extends BaseFragmentV4 implements MainContract.View, M
     //滑动监听
     @Override
     public void onScroll(int scrollY) {
-        int mHeight = mTabViewLayout.getTop();
+        mHeight =mTabViewLayout.getTop();
         //判断滑动距离scrollY是否大于0，因为大于0的时候就是可以滑动了，此时mTabViewLayout.getTop()才能取到值。
-        if (scrollY > 0 && scrollY >= mHeight) {
+        Log.e("tag",mHeight+"mHeight"+","+scrollY);
+        if (scrollY > 0 && scrollY>= mHeight) {
             if (mTopView.getParent() != mTopTabViewLayout) {
                 mTabViewLayout.removeView(mTopView);
                 mTopTabViewLayout.addView(mTopView);
             }
-
         } else {
             if (mTopView.getParent() != mTabViewLayout) {
                 mTopTabViewLayout.removeView(mTopView);
@@ -1028,4 +1066,9 @@ public class MainFragment extends BaseFragmentV4 implements MainContract.View, M
         }
     }
 
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+    }
 }

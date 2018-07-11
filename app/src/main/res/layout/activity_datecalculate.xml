@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_height"
+        android:layout_marginTop="20dp">
+
+        <RelativeLayout
+            android:id="@+id/back_relay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:src="@mipmap/back" />
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center_horizontal"
+            android:text="日期计算"
+            android:textColor="@color/black"
+            android:textSize="17sp" />
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/layout_margin_70dp"
+                    android:background="@color/yellow_2" />
+
+                <LinearLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="14dp"
+                    android:layout_marginRight="14dp"
+                    android:layout_marginTop="33dp"
+                    android:background="@drawable/shape_lay"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/day_tv"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="天数计算"
+                            android:textColor="@color/black" />
+
+                        <TextView
+                            android:background="@color/bg_F5"
+                            android:id="@+id/date_tv"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="日期计算"
+                            android:textColor="@color/textcolor_ac" />
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/starttime_relay"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/icon_size_20dp"
+                            android:text="开始日期"
+                            android:textColor="@color/black" />
+
+                        <TextView
+                            android:id="@+id/starttime_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginRight="@dimen/icon_size_20dp"
+                            android:text="2018/08/08 "
+                            android:textColor="@color/black" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/endtime_relay"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp">
+
+                        <TextView
+                            android:id="@+id/change_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="@dimen/icon_size_20dp"
+                            android:text="结束日期"
+                            android:textColor="@color/black" />
+
+                        <TextView
+                            android:id="@+id/endtime_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="@dimen/icon_size_20dp"
+                            android:text="2018-08-08 "
+                            android:textColor="@color/black"
+                            android:visibility="visible" />
+
+                        <LinearLayout
+                            android:id="@+id/daynum_lay"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:orientation="horizontal"
+                            android:visibility="gone">
+
+                            <EditText
+                                android:id="@+id/daynum_edt"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="@dimen/layout_margin_2dp"
+                                android:background="@null"
+                                android:hint="请输入天数"
+                                android:inputType="number"
+                                android:textColorHint="@color/textcolor_ac"
+                                android:textSize="@dimen/text_size_14sp" />
+
+                            <TextView
+                                android:id="@+id/daystatus_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="@dimen/icon_size_20dp"
+                                android:drawablePadding="@dimen/layout_margin_4dp"
+                                android:drawableRight="@mipmap/down_black"
+                                android:text="天之前"
+                                android:textColor="@color/black" />
+                        </LinearLayout>
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="88dp"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/reset_tv"
+                            android:layout_width="140dp"
+                            android:layout_height="@dimen/icon_size_40dp"
+                            android:layout_marginRight="20dp"
+                            android:background="@drawable/shape_accept"
+                            android:gravity="center"
+                            android:text="重置"
+                            android:textColor="@color/textcolor_ac" />
+
+                        <TextView
+                            android:id="@+id/calculate_tv"
+                            android:layout_width="140dp"
+                            android:layout_height="@dimen/icon_size_40dp"
+                            android:background="@drawable/shape_reject"
+                            android:gravity="center"
+                            android:text="计算"
+                            android:textColor="@color/red_delete" />
+                    </LinearLayout>
+                </LinearLayout>
+            </RelativeLayout>
+
+            <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/icon_size_40dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <View
+                        android:layout_width="53dp"
+                        android:layout_height="1px"
+                        android:background="#dcdcdc" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/icon_size_40dp"
+                        android:layout_marginLeft="@dimen/icon_size_20dp"
+                        android:layout_marginRight="@dimen/icon_size_20dp"
+                        android:gravity="center"
+                        android:text="计算结果"
+                        android:textColor="@color/textcolor_ac" />
+
+                    <View
+                        android:layout_width="53dp"
+                        android:layout_height="1px"
+                        android:background="#dcdcdc" />
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:visibility="gone"
+                    android:id="@+id/date_relay"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/icon_size_40dp"
+                    android:layout_marginLeft="14dp"
+                    android:layout_marginRight="14dp"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/datetime_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/layout_margin_28dp"
+                        android:text="  2017/02/03（星期五）"
+                        android:textColor="@color/black" />
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:visibility="visible"
+                    android:id="@+id/calculateresult_lay"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+
+                    <RelativeLayout
+                        android:id="@+id/normal_relay"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/icon_size_40dp"
+                        android:layout_marginLeft="14dp"
+                        android:layout_marginRight="14dp"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/layout_margin_28dp"
+                            android:text="自然日"
+                            android:textColor="@color/black" />
+
+                        <TextView
+                            android:id="@+id/normal_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginRight="@dimen/icon_size_20dp"
+                            android:text="天 "
+                            android:textColor="@color/black" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/work_relay"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/icon_size_40dp"
+                        android:layout_marginLeft="14dp"
+                        android:layout_marginRight="14dp"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/layout_margin_28dp"
+                            android:text="工作日"
+                            android:textColor="@color/black" />
+
+                        <TextView
+                            android:id="@+id/work_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginRight="@dimen/icon_size_20dp"
+                            android:text="天"
+                            android:textColor="@color/black" />
+                    </RelativeLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="29dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="29dp"
+                        android:text="* 不含开始日期，包含结束日期"
+                        android:textColor="@color/textcolor_ac"
+                        android:textSize="@dimen/text_size_12sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="29dp"
+                        android:layout_marginTop="13dp"
+                        android:text="* 以公历为准"
+                        android:textColor="@color/textcolor_ac"
+                        android:textSize="@dimen/text_size_12sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="29dp"
+                        android:layout_marginTop="13dp"
+                        android:text="* 工作日未扣除法定节假日"
+                        android:textColor="@color/textcolor_ac"
+                        android:textSize="@dimen/text_size_12sp" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

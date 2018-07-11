@@ -52,6 +52,7 @@ import com.dream.NiuFaNet.Contract.MainContract;
 import com.dream.NiuFaNet.Contract.MainFunctionContract;
 import com.dream.NiuFaNet.Contract.VoiceContentContract;
 import com.dream.NiuFaNet.CustomView.AudioAnimView;
+import com.dream.NiuFaNet.CustomView.CircularAnim;
 import com.dream.NiuFaNet.CustomView.HeadService;
 import com.dream.NiuFaNet.CustomView.MyListView;
 import com.dream.NiuFaNet.CustomView.VoiceLineView;
@@ -151,6 +152,11 @@ public class VoiceActivity extends CommonActivity implements VoiceContentContrac
     @Inject
     FunctionPresenter functionPresenter;
 
+    @Bind(R.id.volume_lay)
+    RelativeLayout volume_lay;
+    @Bind(R.id.voicetip_tv)
+    TextView voicetip_tv;
+
     private SpeechRecognizer mIat;// 语音听写
     private String TAG = "tag";
     private String audioResultStr;
@@ -160,6 +166,7 @@ public class VoiceActivity extends CommonActivity implements VoiceContentContrac
     private String szImei;
     private String tag;
     private SpeechSynthesizer mTts;// 语音合成
+    private int voice=0;
  /*    0 小燕 青年女声 中英文（普通话） xiaoyan
      1 默认 小宇 青年男声 中英文（普通话） xiaoyu
      2 凯瑟琳 青年女声 英文 catherine
@@ -233,6 +240,14 @@ public class VoiceActivity extends CommonActivity implements VoiceContentContrac
         }
     };
 
+    private Handler voiceHandler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+                voiceLineView.setVolume(voice);
+
+        }
+    };
     private ChatRvAdapter chatRvAdapter;
     private HeadService headService;
     private List<ChatBean.BodyBean> listData = new ArrayList<>();
@@ -242,7 +257,7 @@ public class VoiceActivity extends CommonActivity implements VoiceContentContrac
     private FindAdapter findAdapter;
     private boolean force = false;
 
-
+    private boolean isAlive = true;
     @Override
     public int getLayoutId() {
         return R.layout.activity_voice;
@@ -279,7 +294,19 @@ public class VoiceActivity extends CommonActivity implements VoiceContentContrac
         } else if (voiceType.equals(Const.vTyep_Off)) {
             right_voice.setImageResource(R.mipmap.horn_close);
         }
-
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (isAlive) {
+                    voiceHandler.sendEmptyMessage(0);
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }).start();
     }
 
     @Override
@@ -350,7 +377,7 @@ public class VoiceActivity extends CommonActivity implements VoiceContentContrac
         {
 
             ActivityCompat.requestPermissions(mActivity, new String[]{Manifest.permission.RECORD_AUDIO}, 250
-            );
+                );
         } else//已授予权限
         {
             mIatResults.clear();
@@ -388,7 +415,11 @@ public class VoiceActivity extends CommonActivity implements VoiceContentContrac
                         starWrite();
                     }
                     status = "2";
+                    CircularAnim.hide(voicetip_tv).go();
+                    CircularAnim.show(voiceLineView).go();
+                   // voiceLineView.setVisibility(View.VISIBLE);
                 } else if (status.equals("2")) {
+
                     force = true;
                     voice_tv.setText("点我说话");
                     tip_tv.setVisibility(View.GONE);
@@ -397,6 +428,11 @@ public class VoiceActivity extends CommonActivity implements VoiceContentContrac
                     isUp = true;
                     mIat.stopListening();
                     status = "1";
+                    voice=0;
+                    CircularAnim.hide(voiceLineView).go();
+                    CircularAnim.show(voicetip_tv).go();
+                   // voicetip_tv.setVisibility(View.VISIBLE);
+                   // voiceLineView.setVisibility(View.GONE);
                 }
                 break;
             case R.id.calculate_lay:
@@ -486,6 +522,7 @@ public class VoiceActivity extends CommonActivity implements VoiceContentContrac
         // 设置听写引擎（云端）
         mIat.setParameter(SpeechConstant.ENGINE_TYPE, SpeechConstant.TYPE_CLOUD);
 
+
         /**
          * 语音合成设置
          */
@@ -543,7 +580,11 @@ public class VoiceActivity extends CommonActivity implements VoiceContentContrac
             // 错误码：10118(您没有说话)，可能是录音机权限被禁，需要提示用户打开应用的录音权限。
             int errorCode = error.getErrorCode();
             if (errorCode == 10118) {
+                voice=0;
                 ToastUtils.Toast_short(mActivity, "你好像没有说话哦");
+                CircularAnim.hide(voiceLineView).go();
+                CircularAnim.show(voicetip_tv).go();
+              //  voicetip_tv.setVisibility(View.VISIBLE);
             } else if (errorCode == 20006) {//录音权限被拒绝
 
                 Log.e("tag", "ErrorCode=" + errorCode);
@@ -579,7 +620,10 @@ public class VoiceActivity extends CommonActivity implements VoiceContentContrac
 
             }
             status = "1";
-
+            voice=0;
+            CircularAnim.hide(voiceLineView).go();
+            CircularAnim.show(voicetip_tv).go();
+           // voicetip_tv.setVisibility(View.VISIBLE);
         }
 
         // 扩展用接口
@@ -596,11 +640,17 @@ public class VoiceActivity extends CommonActivity implements VoiceContentContrac
                     audioview_left.refreshView(volume);
                     audioview_right.refreshView(volume);
                 }
-                voiceLineView.setVolume(volume);
+                double db=0;
+                if (volume>1) {
+                    db = 20 * Math.log10(volume)+20;
+                }
+                voice= (int) db;
+
             }
         }
 
     };
+
 
     private void printResult(RecognizerResult results) {
         String text = JsonParser.parseIatResult(results.getResultString());
@@ -658,6 +708,7 @@ public class VoiceActivity extends CommonActivity implements VoiceContentContrac
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        isAlive=false;
         if (mIat != null) {
             mIat.destroy();
         }

@@ -3,13 +3,16 @@ package com.dream.NiuFaNet.Ui.Activity;
 import android.content.Intent;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 
 import com.dream.NiuFaNet.Base.CommonActivity;
 import com.dream.NiuFaNet.Bean.LoginBean;
 import com.dream.NiuFaNet.Component.DaggerNFComponent;
 import com.dream.NiuFaNet.Contract.LoginContract;
 import com.dream.NiuFaNet.Contract.ThirdLoginContract;
+import com.dream.NiuFaNet.CustomView.CircularAnim;
 import com.dream.NiuFaNet.Other.CommonAction;
 import com.dream.NiuFaNet.Other.Const;
 import com.dream.NiuFaNet.Other.MyApplication;
@@ -41,6 +44,10 @@ public class LoginActivity1 extends CommonActivity implements ThirdLoginContract
     EditText pwd_edt;
     @Inject
     ThirdLoginPresenter thirdLoginPresenter;
+    @Bind(R.id.progressBar2)
+    ProgressBar progressBar;
+    @Bind(R.id.login_btn)
+    Button login_btn;
     @Inject
     LoginPresenter loginPresenter;
     private int reSultCode;
@@ -171,7 +178,28 @@ public class LoginActivity1 extends CommonActivity implements ThirdLoginContract
             CommonAction.refreshLogined();
             CommonAction.refreshContact();
             CommonAction.refreshCal();
-            finish();
+          /*  CircularAnim.hide(login_btn)
+                    .endRadius(progressBar.getHeight() / 2)
+                    .go(new CircularAnim.OnAnimationEndListener() {
+                        @Override
+                        public void onAnimationEnd() {
+                            progressBar.setVisibility(View.VISIBLE);
+                            progressBar.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    CircularAnim.fullActivity(LoginActivity1.this, progressBar)
+                                            .go(new CircularAnim.OnAnimationEndListener() {
+                                                @Override
+                                                public void onAnimationEnd() {
+
+                                                    finish();
+                                                }
+                                            });
+                                }
+                            }, 1000);
+                        }
+                    });*/
+          finish();
         } else {
             ToastUtils.Toast_short(dataBean.getMessage());
         }

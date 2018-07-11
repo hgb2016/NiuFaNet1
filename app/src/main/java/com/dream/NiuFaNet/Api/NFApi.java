@@ -6,6 +6,8 @@ import com.dream.NiuFaNet.Bean.BannerBean;
 import com.dream.NiuFaNet.Bean.CalInviteBean;
 import com.dream.NiuFaNet.Bean.CalendarDetailBean;
 import com.dream.NiuFaNet.Bean.CalenderedBean;
+import com.dream.NiuFaNet.Bean.CaseDetailBean;
+import com.dream.NiuFaNet.Bean.CaseListBean;
 import com.dream.NiuFaNet.Bean.ChatBean;
 import com.dream.NiuFaNet.Bean.ClientDataBean;
 import com.dream.NiuFaNet.Bean.ClientDescBean;
@@ -324,5 +326,20 @@ public class NFApi {
     }
     public Observable<ConflictCalBean> validateScheduleData(Map<String, String> map) {
         return service.validateScheduleData(map);
+    }
+    public Observable<ConflictCalBean> validateScheduleDataAdd(Map<String, String> map) {
+        return service.validateScheduleDataAdd(map);
+    }
+    public Observable<CaseListBean> selectCaseInfoList(Map<String, String> map) {
+        return service.selectCaseInfoList(map);
+    }
+    public Observable<CaseDetailBean> selectCaseInfo(String userId,String caseId) {
+        return service.selectCaseInfo(userId,caseId);
+    }
+    public Observable<CommonBean> addCaseOrder(Map<String, String> map) {
+        return service.addCaseOrder(map);
+    }
+    public Observable<CommonBean1> validateCaseOrder(String userId,String caseId) {
+        return service.validateCaseOrder(userId, caseId);
     }
 }

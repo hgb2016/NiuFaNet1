@@ -17,17 +17,22 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.awen.photo.photopick.controller.PhotoPagerConfig;
 import com.bumptech.glide.Glide;
 import com.dream.NiuFaNet.Base.CommonActivity;
 import com.dream.NiuFaNet.Bean.CommonBean;
 import com.dream.NiuFaNet.Bean.Contact;
 import com.dream.NiuFaNet.Bean.MyFrendBean;
+import com.dream.NiuFaNet.Bean.SearchUserBean;
+import com.dream.NiuFaNet.Bean.UserBean;
 import com.dream.NiuFaNet.Bean.UserInfoBean;
 import com.dream.NiuFaNet.Component.DaggerNFComponent;
 import com.dream.NiuFaNet.Contract.DeleteUserFriendsContract;
 import com.dream.NiuFaNet.Contract.EditFriendRemarkContract;
 import com.dream.NiuFaNet.Contract.GetUserInfoContract;
+import com.dream.NiuFaNet.Contract.MyFrendsContract;
 import com.dream.NiuFaNet.Contract.SearchFriendInfoContract;
+import com.dream.NiuFaNet.Contract.SearchUserContract;
 import com.dream.NiuFaNet.Contract.SimFrendsContract;
 import com.dream.NiuFaNet.Listener.NoDoubleClickListener;
 import com.dream.NiuFaNet.Other.CommonAction;
@@ -36,7 +41,9 @@ import com.dream.NiuFaNet.Other.MyApplication;
 import com.dream.NiuFaNet.Presenter.DeleteUserFridendsPresenter;
 import com.dream.NiuFaNet.Presenter.EditFriendRemarkPresenter;
 import com.dream.NiuFaNet.Presenter.GetUserInfoPresenter;
+import com.dream.NiuFaNet.Presenter.MyFrendsPresenter;
 import com.dream.NiuFaNet.Presenter.SearchFriendInfoPresenter;
+import com.dream.NiuFaNet.Presenter.SearchUserPresenter;
 import com.dream.NiuFaNet.R;
 import com.dream.NiuFaNet.Utils.Dialog.DialogUtils;
 import com.dream.NiuFaNet.Utils.GlideCircleTransform;
@@ -47,6 +54,8 @@ import com.google.gson.Gson;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import javax.inject.Inject;
@@ -59,7 +68,13 @@ import butterknife.OnClick;
  * Created by Administrator on 2018/4/3.
  */
 
-public class FriendDetailActivity extends CommonActivity implements SearchFriendInfoContract.View, DeleteUserFriendsContract.View, EditFriendRemarkContract.View {
+public class FriendDetailActivity extends CommonActivity implements
+        GetUserInfoContract.View,
+        SearchUserContract.View,
+        MyFrendsContract.View,
+        SearchFriendInfoContract.View,
+        DeleteUserFriendsContract.View,
+        EditFriendRemarkContract.View {
     @Bind(R.id.head_iv)
     ImageView head_iv;
     @Bind(R.id.username_tv)
@@ -100,17 +115,26 @@ public class FriendDetailActivity extends CommonActivity implements SearchFriend
     RelativeLayout bg_relay;
     @Bind(R.id.empty_lay)
     LinearLayout empty_lay;
+    @Bind(R.id.bot_tv)
+    TextView bot_tv;
     @Inject
     SearchFriendInfoPresenter searchFriendInfoPresenter;
     @Inject
     DeleteUserFridendsPresenter deleteUserFridendsPresenter;
     @Inject
     EditFriendRemarkPresenter editFriendRemarkPresenter;
+    @Inject
+    MyFrendsPresenter myFrendsPresenter;
+    @Inject
+    GetUserInfoPresenter getUserInfoPresenter;
+    @Inject
+    SearchUserPresenter searchUserPresenter;
     private CustomPopWindow mCustomPopWindow;
     private String friendid;
     private MyFrendBean.DataBean temData;
     private InputMethodManager imm;
-
+    private boolean isFriend;//是否是好友
+    private ArrayList<String> pics=new ArrayList<>();
     @Override
     public int getLayoutId() {
         return R.layout.activity_frienddetail;
@@ -125,6 +149,9 @@ public class FriendDetailActivity extends CommonActivity implements SearchFriend
         searchFriendInfoPresenter.attachView(this);
         deleteUserFridendsPresenter.attachView(this);
         editFriendRemarkPresenter.attachView(this);
+        myFrendsPresenter.attachView(this);
+        searchUserPresenter.attachView(this);
+        getUserInfoPresenter.attachView(this);
         imm = ImmUtils.getImm(this);
         RandomBg();
     }
@@ -148,10 +175,19 @@ public class FriendDetailActivity extends CommonActivity implements SearchFriend
     @Override
     public void initDatas() {
         friendid = getIntent().getStringExtra("friendid");
-        if (friendid != null) {
+        String type=getIntent().getStringExtra("type");
+
+        if (friendid!=null&&type!=null&&type.equals("1")){
+            Log.i("tag",friendid+"走到这了");
+            mLoadingDialog.show();
+            UserBean userBean=new UserBean();
+            userBean.setUserId(friendid);
+            getUserInfoPresenter.GetUserInfo(new Gson().toJson(userBean));
+        }else if (friendid!=null){
             mLoadingDialog.show();
             searchFriendInfoPresenter.SearchFriendInfoInfo(CommonAction.getUserId(), friendid);
         }
+        myFrendsPresenter.getMyFrends(CommonAction.getUserId());
     }
 
     @Override
@@ -159,7 +195,7 @@ public class FriendDetailActivity extends CommonActivity implements SearchFriend
 
     }
     //点击事件
-    @OnClick({R.id.username_tv,R.id.back_relay, R.id.note_lay, R.id.more_relay, R.id.friendcal_relay,R.id.phone_relay})
+    @OnClick({R.id.username_tv,R.id.back_relay, R.id.note_lay, R.id.more_relay, R.id.friendcal_relay,R.id.phone_relay,R.id.head_iv})
     public void OnClick(View v) {
         switch (v.getId()) {
             case R.id.back_relay:
@@ -172,12 +208,16 @@ public class FriendDetailActivity extends CommonActivity implements SearchFriend
                 showMorePop(more_iv);
                 break;
             case R.id.friendcal_relay:
-                Intent intent = new Intent(mActivity, FriendCalenderActivity.class);
-                Bundle bundle = new Bundle();
-                if (temData != null) {
-                    bundle.putSerializable("data", temData);
-                    intent.putExtras(bundle);
-                    startActivity(intent);
+                if (isFriend) {
+                    Intent intent = new Intent(mActivity, FriendCalenderActivity.class);
+                    Bundle bundle = new Bundle();
+                    if (temData != null) {
+                        bundle.putSerializable("data", temData);
+                        intent.putExtras(bundle);
+                        startActivity(intent);
+                    }
+                }else {
+                    searchUserPresenter.addRends(CommonAction.getUserId(),friendid);
                 }
                 break;
             case R.id.phone_relay:
@@ -188,6 +228,17 @@ public class FriendDetailActivity extends CommonActivity implements SearchFriend
                 break;
             case R.id.username_tv:
                 showinputnote(v);
+                break;
+            case R.id.head_iv:
+                if (pics.size()>0) {
+                    new PhotoPagerConfig.Builder(mActivity)
+                            .setBigImageUrls(pics)            //大图片url,可以是sd卡res，asset，网络图片.
+                            .setSavaImage(true)                        //开启保存图片，默认false
+                            .setPosition(0)                     //默认展示第2张图片
+                            .setSaveImageLocalPath("Pictures")        //这里是你想保存大图片到手机的地址,可在手机图库看到，不传会有默认地址
+                            .setOpenDownAnimate(true)                 //是否开启下滑关闭activity，默认开启。类似微信的图片浏览，可下滑关闭一样
+                            .build();
+                }
                 break;
         }
     }
@@ -206,56 +257,7 @@ public class FriendDetailActivity extends CommonActivity implements SearchFriend
     @Override
     public void showData(UserInfoBean dataBean) {
         mLoadingDialog.dismiss();
-        if (dataBean.getError().equals(Const.success)) {
-            UserInfoBean.UserBean userBean = dataBean.getBody();
-            String headUrl = userBean.getHeadUrl();
-            String userName = userBean.getUserName();
-            String friendRemark = userBean.getFriendRemark();
-            String company = userBean.getCompany();
-            String duty = userBean.getDuty();
-            String hourRate = userBean.getHourRate();
-            String email = userBean.getEmail();
-            String phone = userBean.getMobilePhone();
-            String address = userBean.getAddress();
-            if (company.isEmpty()&&duty.isEmpty()&&email.isEmpty()&&phone.isEmpty()&&address.isEmpty()&&hourRate.equals("0")){
-                empty_lay.setVisibility(View.VISIBLE);
-            }else {
-                empty_lay.setVisibility(View.GONE);
-            }
-            temData = new MyFrendBean.DataBean();
-            temData.setFriendId(friendid);
-            temData.setFriendName(userName);
-            temData.setFriendRemark(friendRemark);
-            temData.setHeadUrl(headUrl);
-            if (!headUrl.isEmpty()) {
-                Glide.with(this).load(headUrl).transform(new GlideCircleTransform(mActivity)).into(head_iv);
-
-            } else {
-                head_iv.setImageResource(R.mipmap.niu);
-            }
-            if (!friendRemark.isEmpty()) {
-                username_tv.setText(friendRemark);
-                edit_iv.setVisibility(View.GONE);
-                note_tv.setText(userName);
-                note_lay.setClickable(false);
-                username_tv.setClickable(true);
-            } else {
-                username_tv.setClickable(false);
-                username_tv.setText(userName);
-            }
-            setUserInfo(company, company_tv, company_relay);
-            setUserInfo(duty, duty_tv, duty_relay);
-            setUserInfo(email, email_tv, email_relay);
-            setUserInfo(phone, phone_tv, phone_relay);
-            setUserInfo(address, address_tv, address_realy);
-            if (hourRate.equals("0")) {
-                hourate_relay.setVisibility(View.GONE);
-            }else {
-                hourate_relay.setVisibility(View.VISIBLE);
-                hourate_tv.setText(hourRate+"元/小时");
-            }
-
-        }
+        praseUserData(dataBean);
     }
 
     public void setUserInfo(String userInfo, TextView tv, RelativeLayout relay) {
@@ -384,5 +386,106 @@ public class FriendDetailActivity extends CommonActivity implements SearchFriend
         Uri data = Uri.parse("tel:" + phoneNum);
         intent.setData(data);
         startActivity(intent);
+    }
+
+    //我的好友
+    @Override
+    public void showData(MyFrendBean dataBean) {
+        if (dataBean.getError().equals(Const.success)){
+            List<MyFrendBean.DataBean> data = dataBean.getData();
+            Log.i("tag","我的好友"+new Gson().toJson(data));
+            if (data!=null&&data.size()>0){
+                bot_tv.setText("加为好友");
+                isFriend=false;//不是你的好友
+                more_iv.setVisibility(View.GONE);
+                note_lay.setVisibility(View.GONE);
+                for (int i=0;i<data.size();i++){
+                    if (friendid.equals(data.get(i).getFriendId())){
+                        bot_tv.setText("查看好友日程");
+                        more_iv.setVisibility(View.VISIBLE);
+                        note_lay.setVisibility(View.VISIBLE);
+                        isFriend=true;//是你的好友
+                    }
+                }
+            }
+        }
+    }
+
+    @Override
+    public void showData(SearchUserBean dataBean) {
+
+    }
+
+    @Override
+    public void showAddFrendData(CommonBean dataBean) {
+        if (dataBean.getError().equals(Const.success)) {
+            ToastUtils.Toast_short("添加好友请求已发送");
+        } else {
+            ToastUtils.Toast_short(dataBean.getMessage());
+        }
+    }
+
+    @Override
+    public void showUserInfoData(UserInfoBean dataBean) {
+        mLoadingDialog.dismiss();
+        Log.i("tag",new Gson().toJson(dataBean));
+        UserInfoBean.UserBean body = dataBean.getBody();
+        body.setFriendId(friendid);
+        body.setFriendRemark("");
+        praseUserData(dataBean);
+
+    }
+
+    private void praseUserData(UserInfoBean dataBean) {
+        if (dataBean.getError().equals(Const.success)) {
+            UserInfoBean.UserBean userBean = dataBean.getBody();
+            String headUrl = userBean.getHeadUrl();
+            String userName = userBean.getUserName();
+            String friendRemark = userBean.getFriendRemark();
+            String company = userBean.getCompany();
+            String duty = userBean.getDuty();
+            String hourRate = userBean.getHourRate();
+            String email = userBean.getEmail();
+            String phone = userBean.getMobilePhone();
+            String address = userBean.getAddress();
+            if (company.isEmpty()&&duty.isEmpty()&&email.isEmpty()&&phone.isEmpty()&&address.isEmpty()&&hourRate.equals("0")){
+                empty_lay.setVisibility(View.VISIBLE);
+            }else {
+                empty_lay.setVisibility(View.GONE);
+            }
+            temData = new MyFrendBean.DataBean();
+            temData.setFriendId(friendid);
+            temData.setFriendName(userName);
+            temData.setFriendRemark(friendRemark);
+            temData.setHeadUrl(headUrl);
+            if (!headUrl.isEmpty()) {
+                pics.add(headUrl);
+                Glide.with(this).load(headUrl).transform(new GlideCircleTransform(mActivity)).into(head_iv);
+            } else {
+                head_iv.setImageResource(R.mipmap.niu);
+            }
+            if (!friendRemark.isEmpty()) {
+                username_tv.setText(friendRemark);
+                edit_iv.setVisibility(View.GONE);
+                note_tv.setText(userName);
+                note_lay.setClickable(false);
+                username_tv.setClickable(true);
+            } else {
+                username_tv.setClickable(false);
+                username_tv.setText(userName);
+            }
+            setUserInfo(company, company_tv, company_relay);
+            setUserInfo(duty, duty_tv, duty_relay);
+            setUserInfo(email, email_tv, email_relay);
+            setUserInfo(phone, phone_tv, phone_relay);
+            setUserInfo(address, address_tv, address_realy);
+            if (hourRate.equals("0")) {
+                hourate_relay.setVisibility(View.GONE);
+            }else {
+                hourate_relay.setVisibility(View.VISIBLE);
+                hourate_tv.setText(hourRate+"元/小时");
+            }
+
+        }
     }
 }

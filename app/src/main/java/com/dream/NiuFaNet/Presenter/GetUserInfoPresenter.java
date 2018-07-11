@@ -39,7 +39,7 @@ public class GetUserInfoPresenter extends RxPresenter<GetUserInfoContract.View> 
                     @Override
                     public void onNext(UserInfoBean dataBean) {
                         if (dataBean != null && mView != null) {
-                            mView.showData(dataBean);
+                            mView.showUserInfoData(dataBean);
                         }
                     }
 

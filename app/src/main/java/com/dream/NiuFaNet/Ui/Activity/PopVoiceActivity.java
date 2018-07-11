@@ -25,6 +25,8 @@ import com.dream.NiuFaNet.Bean.RemindWordBean;
 import com.dream.NiuFaNet.Component.DaggerNFComponent;
 import com.dream.NiuFaNet.Contract.RemindWordContract;
 import com.dream.NiuFaNet.CustomView.AudioAnimView;
+import com.dream.NiuFaNet.CustomView.CircularAnim;
+import com.dream.NiuFaNet.CustomView.VoiceLineView;
 import com.dream.NiuFaNet.Listener.NoDoubleClickListener;
 import com.dream.NiuFaNet.Other.Const;
 import com.dream.NiuFaNet.Other.MyApplication;
@@ -71,6 +73,14 @@ public class PopVoiceActivity extends Activity implements RemindWordContract.Vie
     TextView voice_tv;
     @Inject
     RemindWordPresenter remindWordPresenter;
+    @Bind(R.id.volume_lay)
+    RelativeLayout volume_lay;
+    @Bind(R.id.voicetip_tv)
+    TextView voicetip_tv;
+    @Bind(R.id.voicline)
+    VoiceLineView voiceLineView;
+
+
     private SpeechRecognizer mIat;// 语音听写
     private String audioResultStr;
     private boolean isUp, isInit, isOver,isMove;
@@ -100,6 +110,8 @@ public class PopVoiceActivity extends Activity implements RemindWordContract.Vie
             }
         }
     };
+    private boolean isAlive=true;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -115,8 +127,29 @@ public class PopVoiceActivity extends Activity implements RemindWordContract.Vie
         initmTat();
         initeventListener();
         permissionDialog = DialogUtils.showPermissionTip(this);
-    }
 
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (isAlive) {
+                    voiceHandler.sendEmptyMessage(0);
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }).start();
+    }
+    private Handler voiceHandler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            voiceLineView.setVolume(voice);
+
+        }
+    };
     private void initeventListener() {
         tip_tv.setVisibility(View.VISIBLE);
         voice_tv.setText("我说完了");
@@ -157,6 +190,8 @@ public class PopVoiceActivity extends Activity implements RemindWordContract.Vie
                         starWrite();
                     }
                     status="2";
+                    CircularAnim.hide(voicetip_tv).go();
+                    CircularAnim.show(voiceLineView).go();
                 }else {
                     voice_tv.setText("点我说话");
                     tip_tv.setVisibility(View.GONE);
@@ -169,6 +204,8 @@ public class PopVoiceActivity extends Activity implements RemindWordContract.Vie
                         mHandler.sendMessage(message);
                     }
                     status="1";
+                    CircularAnim.hide(voiceLineView).go();
+                    CircularAnim.show(voicetip_tv).go();
                 }
             }
         });
@@ -186,7 +223,6 @@ public class PopVoiceActivity extends Activity implements RemindWordContract.Vie
         WindowManager.LayoutParams lp = getWindow().getAttributes();// //lp包含了布局的很多信息，通过lp来设置对话框的布局
         lp.width = WindowManager.LayoutParams.FILL_PARENT;
         lp.gravity = Gravity.BOTTOM;
-        lp.height = (int) (screenHeight /2);// lp高度设置为屏幕的一半(改为1/4)
         getWindow().setAttributes(lp);// 将设置好属性的lp应用到对话框
     }
 
@@ -256,6 +292,7 @@ public class PopVoiceActivity extends Activity implements RemindWordContract.Vie
 
     }
 
+    private int voice=0;
     /**
      * 语音听写监听
      */
@@ -278,6 +315,8 @@ public class PopVoiceActivity extends Activity implements RemindWordContract.Vie
                 voice_tv.setText("点我说话");
                 audiores_tv.setText("");
                 tip_tv.setVisibility(View.GONE);
+                CircularAnim.hide(voiceLineView).go();
+                CircularAnim.show(voicetip_tv).go();
                 ToastUtils.Toast_short(PopVoiceActivity.this, "你好像没有说话哦");
 
 //                ToastUtils.Toast_short(mActivity, "你好像没有说话哦");
@@ -312,7 +351,8 @@ public class PopVoiceActivity extends Activity implements RemindWordContract.Vie
                 mHandler.sendMessage(message);
             }
             status="1";
-
+            CircularAnim.hide(voiceLineView).go();
+            CircularAnim.show(voicetip_tv).go();
         }
 
         // 扩展用接口
@@ -327,6 +367,11 @@ public class PopVoiceActivity extends Activity implements RemindWordContract.Vie
                 if (audioview != null ) {
                     audioview.refreshView(volume);
                 }
+                double db=0;
+                if (volume>1) {
+                    db = 20 * Math.log10(volume)+20;
+                }
+                voice= (int) db;
             }
         }
 
@@ -381,6 +426,7 @@ public class PopVoiceActivity extends Activity implements RemindWordContract.Vie
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        isAlive=false;
         ButterKnife.unbind(this);
         if (mIat!=null){
             mIat.destroy();

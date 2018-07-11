@@ -455,6 +455,7 @@ public class DialogUtils {
         return alertDialog;
     }
 
+    //版本信息弹框
     public static void getVersionDialog(String webVersionName,String versionRemark, final String apkUrl, final Activity activity) {
         final Dialog dialog_tip = new Dialog(activity);
         View login = LayoutInflater.from(activity).inflate(R.layout.dialog_versionupdate, null);
@@ -535,6 +536,16 @@ public class DialogUtils {
         });
     }
 
+
+    //广告弹框
+    public static void advertiseTip(final Activity activity){
+        final Dialog dialog_tip = new Dialog(activity, R.style.ActionSheetDialogStyle);
+        View adv=LayoutInflater.from(activity).inflate(R.layout.dialog_adv,null);
+
+    }
+
+
+    //下载提示弹框
     public static void downloadTip(final Activity activity, final String apkUrl) {
         final Dialog dialog_tip = new Dialog(activity, R.style.ActionSheetDialogStyle);
         View login = LayoutInflater.from(activity).inflate(R.layout.dialog_networktip, null);

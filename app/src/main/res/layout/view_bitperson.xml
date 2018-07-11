@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:id="@+id/root_relay"
+    android:layout_height="@dimen/layout_margin_64dp">
+
+    <LinearLayout
+        android:layout_centerVertical="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_marginLeft="20dp"
+            android:id="@+id/head_icon"
+            android:layout_width="36dp"
+            android:background="@drawable/niu"
+            android:layout_height="36dp" />
+        <TextView
+            android:id="@+id/username_tv"
+            android:layout_width="wrap_content"
+            android:text="欧阳"
+            android:layout_marginLeft="15dp"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:layout_gravity="center_vertical"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_marginLeft="20dp"
+            android:id="@+id/bid_iv"
+            android:layout_width="wrap_content"
+            android:background="@mipmap/bids"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_marginRight="14dp"
+            android:id="@+id/phone_tv"
+            android:layout_width="wrap_content"
+            android:text="135*****"
+            android:layout_marginLeft="15dp"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:layout_gravity="center_vertical"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+        android:layout_height="wrap_content" />
+</RelativeLayout>

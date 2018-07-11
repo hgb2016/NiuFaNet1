@@ -1,8 +1,10 @@
 package com.dream.NiuFaNet.Ui.Activity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -40,6 +42,7 @@ import com.dream.NiuFaNet.Base.CommonActivity;
 import com.dream.NiuFaNet.Base.CommonAdapter;
 import com.dream.NiuFaNet.Bean.CalendarDetailBean;
 import com.dream.NiuFaNet.Bean.CommonBean;
+import com.dream.NiuFaNet.Bean.ConflictCalBean;
 import com.dream.NiuFaNet.Bean.InputGetBean;
 import com.dream.NiuFaNet.Bean.MyFrendBean;
 import com.dream.NiuFaNet.Bean.NewCalResultBean;
@@ -491,18 +494,14 @@ public class NewCalenderActivity extends CommonActivity implements NewCalenderCo
         //是否个人
         String type = origData.getType();
         if (type.equals("2")) {
-           // pw_iv.setImageResource(R.mipmap.offclick_private);
             personal_iv.setImageResource(R.mipmap.check_green);
             work_iv.setImageResource(R.mipmap.icon_checkempty);
             isCompaney = "2";
         } else {
-          //  pw_iv.setImageResource(R.mipmap.offclick_work);
             personal_iv.setImageResource(R.mipmap.icon_checkempty);
             work_iv.setImageResource(R.mipmap.check_green);
             isCompaney = "1";
         }
-
-
         //提醒
         List<CalendarDetailBean.DataBean.RemindBean> remind = origData.getRemind();
         if (remind != null) {
@@ -658,6 +657,7 @@ public class NewCalenderActivity extends CommonActivity implements NewCalenderCo
                 edtstatus="1";
                 title_tv.setFocusable(true);
                 ImmUtils.showImm(mActivity, title_tv,imm);
+                voice_bot_relay.setVisibility(View.VISIBLE);
                 break;
             case R.id.recorde_lay:
                 ToastUtils.Toast_short("暂未开放");
@@ -681,6 +681,7 @@ public class NewCalenderActivity extends CommonActivity implements NewCalenderCo
 
             case R.id.address_edt:
                 edtstatus="2";
+                voice_bot_relay.setVisibility(View.GONE);
                 address_edt.setFocusable(true);
                 address_edt.setFocusableInTouchMode(true);
                 address_edt.requestFocus();
@@ -688,12 +689,14 @@ public class NewCalenderActivity extends CommonActivity implements NewCalenderCo
                 break;
             case R.id.beizu_edt:
                 edtstatus="3";
+                voice_bot_relay.setVisibility(View.GONE);
                 beizu_edt.setFocusable(true);
                 beizu_edt.setFocusableInTouchMode(true);
                 beizu_edt.requestFocus();
                 ImmUtils.showImm(mActivity, beizu_edt,imm);
                 break;
             case R.id.submit_relay://创建日程、编辑日程
+
                 ImmUtils.hideImm(mActivity, imm);
                 String title = title_tv.getText().toString();
                 String address = address_edt.getText().toString();
@@ -740,19 +743,14 @@ public class NewCalenderActivity extends CommonActivity implements NewCalenderCo
                     ToastUtils.Toast_short("时间段有误，请重新选择");
                 } else {
                     origData.setRemind(getReminds(startDate));
-                    String data = new Gson().toJson(origData);
-                    Log.e("tag", "data=" + data);
                     loadingDialog.show();
-                    if (tag != null) {
-                        if (tag.equals("edit")) {//编辑日程
-                            calendarDetailPresenter.edtCalender(HttpUtils.getBody(data), HttpUtils.getRequestBodyParts("file", getFiles()));
-                        } else {
-                            newCalenderPresenter.addCalender(HttpUtils.getBody(data), HttpUtils.getRequestBodyParts("file", getFiles()));
-                        }
-                    } else {
+                    //1.提交前检查日程是否冲突
+                    Map<String, String> map = MapUtils.getMap();
+                    map.put("userId",CommonAction.getUserId());
+                    map.put("beginTime",DateFormatUtil.getTime(startDate, Const.YMD_HMS));
+                    map.put("endTime",DateFormatUtil.getTime(endDate, Const.YMD_HMS));
+                    newCalenderPresenter.valitdateSchduleAdded(map);
 
-                        newCalenderPresenter.addCalender(HttpUtils.getBody(data), HttpUtils.getRequestBodyParts("file", getFiles()));
-                    }
                 }
                 break;
             case R.id.startime_lay:
@@ -949,6 +947,53 @@ public class NewCalenderActivity extends CommonActivity implements NewCalenderCo
         }
     }
 
+    //检查日程是否冲突返回结果
+    @Override
+    public void showValidateResult(ConflictCalBean dataBean) {
+        if (dataBean.getError().equals(Const.success)){
+            if (dataBean.isConflict()){
+                new AlertDialog.Builder(this)
+                        .setTitle("温馨提示：")
+                        .setMessage("您所选时间段，已有日程安排！")
+                        .setNegativeButton("取消日程", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .setPositiveButton("确定日程", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                String data = new Gson().toJson(origData);
+                                if (tag != null) {
+                                    if (tag.equals("edit")) {//编辑日程
+                                        calendarDetailPresenter.edtCalender(HttpUtils.getBody(data), HttpUtils.getRequestBodyParts("file", getFiles()));
+                                    } else {
+                                        newCalenderPresenter.addCalender(HttpUtils.getBody(data), HttpUtils.getRequestBodyParts("file", getFiles()));
+                                    }
+                                } else {
+                                    newCalenderPresenter.addCalender(HttpUtils.getBody(data), HttpUtils.getRequestBodyParts("file", getFiles()));
+                                }
+                            }
+                        })
+                        .create().show();
+            }else {
+                String data = new Gson().toJson(origData);
+                if (tag != null) {
+                    if (tag.equals("edit")) {//编辑日程
+                        calendarDetailPresenter.edtCalender(HttpUtils.getBody(data), HttpUtils.getRequestBodyParts("file", getFiles()));
+                    } else {
+                        newCalenderPresenter.addCalender(HttpUtils.getBody(data), HttpUtils.getRequestBodyParts("file", getFiles()));
+                    }
+                } else {
+                    newCalenderPresenter.addCalender(HttpUtils.getBody(data), HttpUtils.getRequestBodyParts("file", getFiles()));
+                }
+            }
+        }else {
+            ToastUtils.Toast_short(dataBean.getMessage());
+        }
+    }
+
     @Override
     public void showError() {
         loadingDialog.dismiss();
@@ -982,7 +1027,6 @@ public class NewCalenderActivity extends CommonActivity implements NewCalenderCo
             }
         }
         Log.e("tag","remindBeanList.size()="+remindBeanList.size());
-
         return remindBeanList;
     }
 
@@ -1519,42 +1563,7 @@ public class NewCalenderActivity extends CommonActivity implements NewCalenderCo
             isSelected = selected;
         }
     }
-    //
-    //语音弹框
-    private void showvoice(View v) {
-        View contentView = LayoutInflater.from(this).inflate(R.layout.pop_voice,null);
-        //处理popWindow 显示内容
-        View.OnClickListener listener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(mCustomPopWindow!=null){
-                    mCustomPopWindow.dissmiss();
-                }
-                switch (v.getId()){
 
-                }
-                //Toast.makeText(HomeActivity.this,showContent,Toast.LENGTH_SHORT).show();
-            }
-        };
-        ImageView voice= (ImageView) contentView.findViewById(R.id.voice_iv);
-        voice.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return false;
-            }
-        });
-        //创建并显示popWindow
-        mCustomPopWindow= new CustomPopWindow.PopupWindowBuilder(this)
-                .setView(contentView)
-                .setAnimationStyle(R.anim.pickerview_slide_in_bottom)
-                .size(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)//显示大小
-                .create()
-                .showAtLocation(v, Gravity.BOTTOM,0,0);
-    }
-    /* //自定义时间选择框
-    new OptionsPickerView.Builder(this,new OptionsPickerView.OnOptionsSelectListener(){
-
-    });*/
     private TimePickerView pvCustomTime;
     private TextView start_tv1;
     private TextView start_tv2 ;
@@ -1643,17 +1652,32 @@ public class NewCalenderActivity extends CommonActivity implements NewCalenderCo
                                 public void onClick(View v) {
                                     testatus = "1";
                                     checkBoxStatus(end_checkbox, start_checkbox, testatus);
-                                    selectedDate.setTimeInMillis(starT1.getTime());
+                                    String start_1=start_tv1.getText().toString()+"  "+start_tv2.getText().toString();
+                                    Date starD_1=DateFormatUtil.getTime(start_1,Const.YMD_HM);
+                                    selectedDate.setTimeInMillis(starD_1.getTime());
                                     pvCustomTime.setDate(selectedDate);
                                 }
                             });
                             end_lay.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    testatus = "2";
-                                    checkBoxStatus(end_checkbox, start_checkbox, testatus);
-                                    selectedDate.setTimeInMillis(enD.getTime());
-                                    pvCustomTime.setDate(selectedDate);
+                                    String start_1=start_tv1.getText().toString()+"  "+start_tv2.getText().toString();
+                                    Date starD_1=DateFormatUtil.getTime(start_1,Const.YMD_HM);
+                                    String end_1=end_tv1.getText().toString()+"  "+end_tv2.getText().toString();
+                                    Date enD_1=DateFormatUtil.getTime(end_1,Const.YMD_HM);
+                                    if (starD_1.getTime()<enD_1.getTime()){
+                                        testatus = "2";
+                                        checkBoxStatus(end_checkbox, start_checkbox, testatus);
+                                        selectedDate.setTimeInMillis(enD_1.getTime());
+                                        pvCustomTime.setDate(selectedDate);
+                                    }else {
+                                        testatus = "2";
+                                        checkBoxStatus(end_checkbox, start_checkbox, testatus);
+                                        selectedDate.setTimeInMillis(starD_1.getTime()+3600000);
+                                        end_tv1.setText(DateFormatUtil.getTime(starD_1.getTime()+3600000, Const.Y_M_D));
+                                        end_tv2.setText(DateFormatUtil.getTime(starD_1.getTime()+3600000, Const.HM));
+                                        pvCustomTime.setDate(selectedDate);
+                                    }
                                 }
                             });
 
