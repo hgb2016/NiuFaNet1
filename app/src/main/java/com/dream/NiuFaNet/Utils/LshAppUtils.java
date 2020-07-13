@@ -8,11 +8,10 @@ import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.support.annotation.RequiresPermission;
+import androidx.annotation.RequiresPermission;
 
 import com.dream.NiuFaNet.Other.MyApplication;
 
-import java.io.File;
 import java.util.List;
 
 /**

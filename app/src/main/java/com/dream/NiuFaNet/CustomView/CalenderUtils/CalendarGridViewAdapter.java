@@ -2,8 +2,8 @@ package com.dream.NiuFaNet.CustomView.CalenderUtils;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.os.SystemClock;
-import android.support.v7.widget.OrientationHelper;
+
+import androidx.recyclerview.widget.OrientationHelper;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -11,21 +11,18 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.dream.NiuFaNet.Bean.CalenderedBean;
 import com.dream.NiuFaNet.Bean.MainCalendarBean;
 import com.dream.NiuFaNet.Component.DaggerNFComponent;
 import com.dream.NiuFaNet.Contract.CalenderMainContract;
-import com.dream.NiuFaNet.Other.CommonAction;
 import com.dream.NiuFaNet.Other.Const;
 import com.dream.NiuFaNet.Other.MyApplication;
 import com.dream.NiuFaNet.Presenter.CalenderMainPresenter;
 import com.dream.NiuFaNet.R;
 import com.dream.NiuFaNet.Utils.DateFormatUtil;
 import com.dream.NiuFaNet.Utils.DateUtils.DateUtil;
-import com.dream.NiuFaNet.Utils.DateUtils.Week;
 import com.dream.NiuFaNet.Utils.DensityUtil;
 import com.dream.NiuFaNet.Utils.ResourcesUtils;
 import com.dream.NiuFaNet.Utils.SpUtils;
@@ -38,8 +35,6 @@ import java.util.List;
 import java.util.Locale;
 
 import javax.inject.Inject;
-
-import butterknife.Bind;
 
 /**
  * 显示日期的adapter

@@ -1,21 +1,24 @@
 package com.dream.NiuFaNet.Other;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Application;
+import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.multidex.MultiDex;
+import androidx.multidex.MultiDex;
+import androidx.core.app.ActivityCompat;
 import android.telephony.TelephonyManager;
 
 import com.awen.photo.FrescoImageLoader;
-import com.baidu.mobstat.StatService;
 import com.dream.NiuFaNet.Component.AppComponent;
 import com.dream.NiuFaNet.Component.DaggerAppComponent;
 import com.dream.NiuFaNet.Module.AppModule;
 import com.dream.NiuFaNet.Module.NFApiModule;
-import com.dream.NiuFaNet.R;
 import com.dream.NiuFaNet.Ui.Service.AlarmService;
 import com.dream.NiuFaNet.Utils.AppUtils;
 import com.iflytek.cloud.SpeechConstant;
@@ -27,17 +30,12 @@ import com.scwang.smartrefresh.layout.api.DefaultRefreshHeaderCreater;
 import com.scwang.smartrefresh.layout.api.RefreshFooter;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.footer.BallPulseFooter;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
-import com.scwang.smartrefresh.layout.header.BezierRadarHeader;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.UUID;
 
 import cn.jpush.android.api.JPushInterface;
-import cn.sharesdk.framework.ShareSDK;
 
 
 /**
@@ -84,14 +82,28 @@ public class MyApplication extends Application {
         return typeface_xh;
     }
 
+    @SuppressLint("HardwareIds")
     public static String getDeviceId() {
         if (null == szImei) {
             //设备id
-            TelephonyManager TelephonyMgr = (TelephonyManager) context.getSystemService(TELEPHONY_SERVICE);
-            szImei = TelephonyMgr.getDeviceId();
+            TelephonyManager tm = (TelephonyManager) context.getSystemService(Service.TELEPHONY_SERVICE);
+            if (ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+
+                return UUID.randomUUID().toString();
+
+            }
+
         }
         return szImei;
     }
+
 
     @Override
     protected void attachBaseContext(Context base) {

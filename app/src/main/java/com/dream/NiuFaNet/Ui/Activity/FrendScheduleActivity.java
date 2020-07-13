@@ -2,7 +2,7 @@ package com.dream.NiuFaNet.Ui.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -20,7 +20,6 @@ import com.dream.NiuFaNet.Component.DaggerNFComponent;
 import com.dream.NiuFaNet.Contract.CalenderMainContract;
 import com.dream.NiuFaNet.CustomView.CalenderRvUtils.CalendarRecyclerView;
 import com.dream.NiuFaNet.CustomView.CalenderUtils.CalendarView;
-import com.dream.NiuFaNet.Other.CommonAction;
 import com.dream.NiuFaNet.Other.Const;
 import com.dream.NiuFaNet.Other.MyApplication;
 import com.dream.NiuFaNet.Presenter.CalenderMainPresenter;
@@ -28,11 +27,9 @@ import com.dream.NiuFaNet.R;
 import com.dream.NiuFaNet.Utils.DateFormatUtil;
 import com.dream.NiuFaNet.Utils.DensityUtil;
 import com.dream.NiuFaNet.Utils.GlideCircleTransform;
-import com.dream.NiuFaNet.Utils.IntentUtils;
 import com.dream.NiuFaNet.Utils.RvUtils;
 import com.dream.NiuFaNet.Utils.SpUtils;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;

@@ -55,7 +55,6 @@
                     android:background="@color/yellow_2" />
 
                 <LinearLayout
-
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="14dp"
@@ -67,6 +66,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="60dp"
+
                         android:orientation="horizontal">
 
                         <TextView
@@ -108,7 +108,7 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
                             android:layout_marginRight="@dimen/icon_size_20dp"
-                            android:text="2018/08/08 "
+                            android:text="请选择"
                             android:textColor="@color/black" />
                     </RelativeLayout>
 
@@ -133,7 +133,7 @@
                             android:layout_alignParentRight="true"
                             android:layout_centerVertical="true"
                             android:layout_marginRight="@dimen/icon_size_20dp"
-                            android:text="2018-08-08 "
+                            android:text="请选择"
                             android:textColor="@color/black"
                             android:visibility="visible" />
 
@@ -147,6 +147,7 @@
                             android:visibility="gone">
 
                             <EditText
+                                android:gravity="right"
                                 android:id="@+id/daynum_edt"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -163,8 +164,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginRight="@dimen/icon_size_20dp"
                                 android:drawablePadding="@dimen/layout_margin_4dp"
-                                android:drawableRight="@mipmap/down_black"
-                                android:text="天之前"
+                                android:drawableRight="@mipmap/triangle"
+                                android:text="天之后"
                                 android:textColor="@color/black" />
                         </LinearLayout>
                     </RelativeLayout>
@@ -240,6 +241,7 @@
                     android:gravity="center">
 
                     <TextView
+                        android:textSize="@dimen/text_size_22sp"
                         android:id="@+id/datetime_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

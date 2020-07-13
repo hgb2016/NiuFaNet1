@@ -1,6 +1,5 @@
 package com.dream.NiuFaNet.Ui.Activity;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -13,21 +12,18 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.os.PowerManager;
 import android.provider.Settings;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.RecyclerView;
-import android.telephony.TelephonyManager;
+import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.util.Log;
-import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -36,7 +32,6 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.dream.NiuFaNet.Adapter.VoiceContentAdapter;
@@ -61,11 +56,9 @@ import com.dream.NiuFaNet.Contract.MessageContract;
 import com.dream.NiuFaNet.Contract.ShowNoticeCountContract;
 import com.dream.NiuFaNet.Contract.VersionUpdateContract;
 import com.dream.NiuFaNet.Contract.VoiceContentContract;
-import com.dream.NiuFaNet.CustomView.ApplyFrendView;
 import com.dream.NiuFaNet.CustomView.AudioAnimView;
 import com.dream.NiuFaNet.CustomView.MessageChildView1;
 import com.dream.NiuFaNet.Listener.NoDoubleClickListener;
-import com.dream.NiuFaNet.Listener.NoShortClickListener;
 import com.dream.NiuFaNet.Other.CommonAction;
 import com.dream.NiuFaNet.Other.Const;
 import com.dream.NiuFaNet.Other.MyApplication;
@@ -77,19 +70,15 @@ import com.dream.NiuFaNet.Presenter.VoiceContentPresenter;
 import com.dream.NiuFaNet.R;
 import com.dream.NiuFaNet.Ui.Fragment.CalenderFragment;
 import com.dream.NiuFaNet.Ui.Fragment.ContactFragment;
-import com.dream.NiuFaNet.Ui.Fragment.FunctionFragment;
 import com.dream.NiuFaNet.Ui.Fragment.MainFragment;
-import com.dream.NiuFaNet.Ui.Fragment.ProgramFragment;
 import com.dream.NiuFaNet.Ui.Fragment.ProjectFragment;
 import com.dream.NiuFaNet.Ui.Service.SendAlarmBroadcast;
-import com.dream.NiuFaNet.Utils.AppManager;
 import com.dream.NiuFaNet.Utils.BlurBuilder;
 import com.dream.NiuFaNet.Utils.DensityUtil;
 import com.dream.NiuFaNet.Utils.Dialog.DialogUtils;
 import com.dream.NiuFaNet.Utils.GlideCircleTransform;
 import com.dream.NiuFaNet.Utils.ImgUtil;
 import com.dream.NiuFaNet.Utils.IntentUtils;
-import com.dream.NiuFaNet.Utils.JsonParser;
 import com.dream.NiuFaNet.Utils.PopWindowUtil;
 import com.dream.NiuFaNet.Utils.ResourcesUtils;
 import com.dream.NiuFaNet.Utils.RvUtils;
@@ -98,29 +87,19 @@ import com.dream.NiuFaNet.Utils.ToastUtils;
 import com.dream.NiuFaNet.Utils.XuniKeyWord;
 import com.iflytek.cloud.ErrorCode;
 import com.iflytek.cloud.InitListener;
-import com.iflytek.cloud.RecognizerListener;
-import com.iflytek.cloud.RecognizerResult;
-import com.iflytek.cloud.SpeechConstant;
-import com.iflytek.cloud.SpeechError;
-import com.iflytek.cloud.SpeechRecognizer;
 import com.iflytek.sunflower.FlowerCollector;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import butterknife.Bind;
-import butterknife.BindBool;
 import butterknife.OnClick;
 import cn.jpush.android.api.JPushInterface;
 
@@ -215,7 +194,6 @@ public class MainActivity extends BaseActivityRelay implements VersionUpdateCont
     ChatPresenter chatPresenter;
     @Inject
     ShowNoticeCountPresenter showNoticeCountPresenter;
-    private String szImei;
     @Bind(R.id.new_iv)
     ImageView new_iv;
 
@@ -256,13 +234,13 @@ public class MainActivity extends BaseActivityRelay implements VersionUpdateCont
         }
         //您可以这样说的内容初始化
         mContentAdapter = new VoiceContentAdapter(this, voiceContentList, R.layout.rvitem_voicecontent);
-        RvUtils.setOptionnoLine(mVoiceContentRv, this);
+     //   RvUtils.setOptionnoLine(mVoiceContentRv, this);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mActivity);
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        mVoiceContentRv.setLayoutManager(linearLayoutManager);
         mVoiceContentRv.setAdapter(mContentAdapter);
-        TelephonyManager TelephonyMgr = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
-        szImei = TelephonyMgr.getDeviceId();
         applyPermission();
         initMsgDialog();
-        Log.i("tag",CommonAction.getUserId()+"userId");
         getNewTip();
     }
 

@@ -1,91 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.dream.NiuFaNet">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <!--获取手机录音机使用权限，听写、识别、语义理解需要用到此权限 -->
-    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
-    <!--读取网络信息状态 -->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <!--获取当前wifi状态 -->
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <!--允许程序改变网络连接状态 -->
-    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
-    <!--读取手机信息权限 -->
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-    <!--读取联系人权限，上传联系人需要用到此权限 -->
-    <uses-permission android:name="android.permission.READ_CONTACTS"/>
-
-
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- 获取手机录音机使用权限，听写、识别、语义理解需要用到此权限 -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <!-- 读取网络信息状态 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- 获取当前wifi状态 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!-- 允许程序改变网络连接状态 -->
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <!-- 读取手机信息权限 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!-- 读取联系人权限，上传联系人需要用到此权限 -->
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <!-- 添加必要的权限 -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-    <uses-permission android:name="android.permission.VIBRATE"/>
-    <!--读写系统日历权限-->
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <!-- 读写系统日历权限 -->
     <uses-permission android:name="android.permission.READ_CALENDAR" />
     <uses-permission android:name="android.permission.WRITE_CALENDAR" />
-    <!--极光推送所需权限-->
+    <!-- 极光推送所需权限 -->
     <permission
         android:name="com.dream.NiuFaNet.permission.JPUSH_MESSAGE"
-        android:protectionLevel="signature"/>
+        android:protectionLevel="signature" />
+
     <uses-permission android:name="com.dream.NiuFaNet.permission.JPUSH_MESSAGE" />
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
-    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS"
+        tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
-    <uses-permission android:name="android.permission.CALL_PHONE"/>
-    <uses-permission android:name="android.permission.DISABLE_KEYGUARD"/>
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
-    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS"/>
-
-
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <application
+        android:name=".Other.MyApplication"
         android:allowBackup="true"
-        android:supportsRtl="true"
         android:icon="@mipmap/logo"
         android:label="@string/app_name"
-        android:name=".Other.MyApplication"
+        android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".Ui.Activity.WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <!--//Mob-->
+        <!-- //Mob -->
         <activity
             android:name="com.mob.tools.MobUIShell"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:windowSoftInputMode="stateHidden|adjustResize" >
-
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
                 <data android:scheme="tencent100371282" />
+
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.BROWSABLE" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
@@ -93,57 +89,63 @@
             <!-- 调用新浪原生SDK，需要注册的回调activity -->
             <intent-filter>
                 <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
 
-            <!--集成line客户端登录授权，需要添如下格式的过滤器-->
+            <!-- 集成line客户端登录授权，需要添如下格式的过滤器 -->
             <intent-filter>
                 <data android:scheme="line.1477692153" />
-                <action android:name="android.intent.action.VIEW"/>
+
+                <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.BROWSABLE" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-
         </activity>
-        <!--科大讯飞-->
-        <meta-data  android:name="IFLYTEK_APPKEY" android:value="'598a8250'"/>
+        <!-- 科大讯飞 -->
+        <meta-data
+            android:name="IFLYTEK_APPKEY"
+            android:value="&apos;598a8250&apos;" />
         <!-- 填写您从Mob开发者后台中得到的Appkey和AppSecret -->
-        <meta-data android:name="Mob-AppKey" android:value="2004d2b67514a"/>
-        <meta-data android:name="Mob-AppSecret" android:value="15c499bd8288292616e0c25d4f10a0ad"/>
+        <meta-data
+            android:name="Mob-AppKey"
+            android:value="2004d2b67514a" />
+        <meta-data
+            android:name="Mob-AppSecret"
+            android:value="15c499bd8288292616e0c25d4f10a0ad" />
 
-
-        <!--极光推送的相关配置-->
-        <!-- Required SDK核心功能-->
+        <!-- 极光推送的相关配置 -->
+        <!-- Required SDK核心功能 -->
         <activity
             android:name="cn.jpush.android.ui.PushActivity"
             android:configChanges="orientation|keyboardHidden"
             android:exported="false"
             android:theme="@android:style/Theme.NoTitleBar">
             <intent-filter>
-                <action android:name="cn.jpush.android.ui.PushActivity"/>
+                <action android:name="cn.jpush.android.ui.PushActivity" />
 
-                <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="com.dream.NiuFaNet"/>
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="com.dream.NiuFaNet" />
             </intent-filter>
         </activity>
-        <!-- Required  SDK核心功能-->
+        <!-- Required  SDK核心功能 -->
         <service
             android:name="cn.jpush.android.service.DownloadService"
             android:enabled="true"
-            android:exported="false">
-        </service>
+            android:exported="false"></service>
 
-        <!-- Required SDK 核心功能-->
+        <!-- Required SDK 核心功能 -->
         <!-- 可配置android:process参数将PushService放在其他进程中 -->
         <service
             android:name="cn.jpush.android.service.PushService"
             android:enabled="true"
             android:exported="false">
             <intent-filter>
-                <action android:name="cn.jpush.android.intent.REGISTER"/>
-                <action android:name="cn.jpush.android.intent.REPORT"/>
-                <action android:name="cn.jpush.android.intent.PushService"/>
-                <action android:name="cn.jpush.android.intent.PUSH_TIME"/>
+                <action android:name="cn.jpush.android.intent.REGISTER" />
+                <action android:name="cn.jpush.android.intent.REPORT" />
+                <action android:name="cn.jpush.android.intent.PushService" />
+                <action android:name="cn.jpush.android.intent.PUSH_TIME" />
             </intent-filter>
         </service>
 
@@ -154,61 +156,59 @@
             android:enabled="true"
             android:exported="true">
             <intent-filter>
-                <action android:name="cn.jpush.android.intent.DaemonService"/>
-                <category android:name="com.dream.NiuFaNet"/>
+                <action android:name="cn.jpush.android.intent.DaemonService" />
+
+                <category android:name="com.dream.NiuFaNet" />
             </intent-filter>
         </service>
 
-        <!-- since 3.1.0 Required SDK 核心功能-->
+        <!-- since 3.1.0 Required SDK 核心功能 -->
         <provider
-            android:authorities="com.dream.NiuFaNet.DownloadProvider"
             android:name="cn.jpush.android.service.DownloadProvider"
-            android:exported="true"
-            />
+            android:authorities="com.dream.NiuFaNet.DownloadProvider"
+            android:exported="true" />
 
-        <!-- Required SDK核心功能-->
+        <!-- Required SDK核心功能 -->
         <receiver
             android:name="cn.jpush.android.service.PushReceiver"
             android:enabled="true"
             android:exported="false">
             <intent-filter android:priority="1000">
-                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY"/>   <!--Required  显示通知栏 -->
-                <category android:name="com.dream.NiuFaNet"/>
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY" /> <!-- Required  显示通知栏 -->
+                <category android:name="com.dream.NiuFaNet" />
             </intent-filter>
             <intent-filter>
-                <action android:name="android.intent.action.USER_PRESENT"/>
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
+                <action android:name="android.intent.action.USER_PRESENT" />
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
             <!-- Optional -->
             <intent-filter>
-                <action android:name="android.intent.action.PACKAGE_ADDED"/>
-                <action android:name="android.intent.action.PACKAGE_REMOVED"/>
+                <action android:name="android.intent.action.PACKAGE_ADDED" />
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
 
-                <data android:scheme="package"/>
+                <data android:scheme="package" />
             </intent-filter>
-
         </receiver>
 
-        <!-- Required SDK核心功能-->
+        <!-- Required SDK核心功能 -->
         <receiver
             android:name="cn.jpush.android.service.AlarmReceiver"
-            android:exported="false"/>
+            android:exported="false" />
 
-
-        <!-- User defined.  For test only  用户自定义的广播接收器-->
+        <!-- User defined.  For test only  用户自定义的广播接收器 -->
         <receiver
-            android:name="com.dream.NiuFaNet.jpush.MyReceiver"
+            android:name=".jpush.MyReceiver"
             android:enabled="true"
             android:exported="false">
             <intent-filter>
-                <action android:name="cn.jpush.android.intent.REGISTRATION"/> <!--Required  用户注册SDK的intent-->
-                <action android:name="cn.jpush.android.intent.UNREGISTRATION"/>
-                <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED"/> <!--Required  用户接收SDK消息的intent-->
-                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED"/> <!--Required  用户接收SDK通知栏信息的intent-->
-                <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED"/> <!--Required  用户打开自定义通知栏的intent-->
-                <action android:name="cn.jpush.android.intent.ACTION_RICHPUSH_CALLBACK"/> <!--Optional 用户接受Rich Push Javascript 回调函数的intent-->
-                <action android:name="cn.jpush.android.intent.CONNECTION"/><!-- 接收网络变化 连接/断开 since 1.6.3 -->
-                <category android:name="com.dream.NiuFaNet"/>
+                <action android:name="cn.jpush.android.intent.REGISTRATION" /> <!-- Required  用户注册SDK的intent -->
+                <action android:name="cn.jpush.android.intent.UNREGISTRATION" />
+                <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" /> <!-- Required  用户接收SDK消息的intent -->
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" /> <!-- Required  用户接收SDK通知栏信息的intent -->
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" /> <!-- Required  用户打开自定义通知栏的intent -->
+                <action android:name="cn.jpush.android.intent.ACTION_RICHPUSH_CALLBACK" /> <!-- Optional 用户接受Rich Push Javascript 回调函数的intent -->
+                <action android:name="cn.jpush.android.intent.CONNECTION" /> <!-- 接收网络变化 连接/断开 since 1.6.3 -->
+                <category android:name="com.dream.NiuFaNet" />
             </intent-filter>
         </receiver>
         <!-- since 1.8.0 option 可选项。用于同一设备中不同应用的JPush服务相互拉起的功能。 -->
@@ -218,32 +218,32 @@
             android:enabled="true"
             android:exported="true">
             <intent-filter>
-                <action android:name="cn.jpush.android.intent.DaemonService"/>
-                <category android:name="com.dream.NiuFaNet"/>
+                <action android:name="cn.jpush.android.intent.DaemonService" />
+
+                <category android:name="com.dream.NiuFaNet" />
             </intent-filter>
-
         </service>
-        <!-- since 3.0.9 Required SDK 核心功能-->
+        <!-- since 3.0.9 Required SDK 核心功能 -->
         <provider
-            android:authorities="com.dream.NiuFaNet.DataProvider"
             android:name="cn.jpush.android.service.DataProvider"
-            android:exported="false"
-            />
+            android:authorities="com.dream.NiuFaNet.DataProvider"
+            android:exported="false" />
 
-        <!-- User defined.  For test only  用户自定义接收消息器,3.0.7开始支持,目前新tag/alias接口设置结果会在该广播接收器对应的方法中回调-->
+        <!-- User defined.  For test only  用户自定义接收消息器,3.0.7开始支持,目前新tag/alias接口设置结果会在该广播接收器对应的方法中回调 -->
         <receiver android:name=".jpush.MyJPushMessageReceiver">
             <intent-filter>
                 <action android:name="cn.jpush.android.intent.RECEIVE_MESSAGE" />
-                <category android:name="com.dream.NiuFaNet"></category>
+
+                <category android:name="com.dream.NiuFaNet" />
             </intent-filter>
         </receiver>
         <!-- Required  . Enable it you can get statistics data with channel -->
         <meta-data
             android:name="JPUSH_CHANNEL"
-            android:value="developer-default"/>
+            android:value="developer-default" />
         <meta-data
             android:name="JPUSH_APPKEY"
-            android:value="8ab808705affa310f7e38743"/> <!--  </>值来自开发者平台取得的AppKey-->
+            android:value="8ab808705affa310f7e38743" /> <!-- </>值来自开发者平台取得的AppKey -->
 
 
         <!-- 您从百度网站获取的APP KEY，根据实际您的APP申请的APP_KEY进行修改 -->
@@ -281,198 +281,133 @@
         <meta-data
             android:name="BaiduMobAd_WIFI_LOCATION"
             android:value="true" />
+
         <activity
             android:name=".wxapi.WXEntryActivity"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
-            android:screenOrientation="portrait" />
-
-        <activity android:name=".Ui.Activity.ChatActivity">
-        </activity>
-        <activity android:name=".Ui.Activity.RegisterActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity android:name=".Ui.Activity.ChatActivity"></activity>
+        <activity
+            android:name=".Ui.Activity.RegisterActivity"
+            android:launchMode="singleTask"></activity>
+        <activity
+            android:name=".Ui.Activity.LoginActivity"
             android:launchMode="singleTask"
-            >
-        </activity>
-        <activity android:name=".Ui.Activity.LoginActivity"
+            android:windowSoftInputMode="adjustNothing"></activity>
+        <activity android:name=".Ui.Activity.UserInfoActivity"></activity>
+        <activity android:name=".Ui.Activity.FeedBackActivity"></activity>
+        <activity android:name=".Ui.Activity.AboutusActivity"></activity>
+        <activity android:name=".Ui.Activity.SetActivity"></activity>
+        <activity android:name=".Ui.Activity.ChangePwdActivity"></activity>
+        <activity android:name=".Ui.Activity.ChangeThemActivity"></activity>
+        <activity android:name=".Ui.Activity.FindPwdOrBindUserActivity"></activity>
+        <activity android:name=".Ui.Activity.ResetPwdActivity"></activity>
+        <activity android:name=".Ui.Activity.WebActivity"></activity>
+        <activity android:name=".Ui.Activity.GuideActivity"></activity>
+        <activity android:name=".Ui.Activity.FunctionActivity"></activity>
+        <activity
+            android:name=".Ui.Activity.MainActivity"
             android:launchMode="singleTask"
-            android:windowSoftInputMode="adjustNothing">
-        </activity>
-        <activity android:name=".Ui.Activity.UserInfoActivity">
-        </activity>
-        <activity android:name=".Ui.Activity.FeedBackActivity">
-        </activity>
-        <activity android:name=".Ui.Activity.AboutusActivity">
-        </activity>
-        <activity android:name=".Ui.Activity.SetActivity">
-        </activity>
-        <activity android:name=".Ui.Activity.ChangePwdActivity">
-        </activity>
-        <activity android:name=".Ui.Activity.ChangeThemActivity">
-        </activity>
-        <activity android:name=".Ui.Activity.FindPwdOrBindUserActivity">
-        </activity>
-        <activity android:name=".Ui.Activity.ResetPwdActivity">
-        </activity>
-        <activity android:name=".Ui.Activity.WebActivity">
-        </activity>
-        <activity android:name=".Ui.Activity.GuideActivity">
-        </activity>
-        <activity android:name=".Ui.Activity.FunctionActivity">
-        </activity>
-        <activity android:name=".Ui.Activity.MainActivity"
-            android:windowSoftInputMode="adjustNothing"
-                  android:launchMode="singleTask"
-            >
-        </activity>
-        <activity android:name=".Ui.Activity.MainActivity1"
-            android:windowSoftInputMode="adjustNothing"
+            android:windowSoftInputMode="adjustNothing"></activity>
+        <activity
+            android:name=".Ui.Activity.MainActivity1"
             android:launchMode="singleTask"
-            ></activity>
-        <activity android:name=".Ui.Activity.TestActivity">
-        </activity>
-        <activity android:name=".Ui.Activity.SetRemindActivity">
-        </activity>
-        <activity android:name=".Ui.Activity.NewCalenderActivity"  android:windowSoftInputMode="stateVisible|adjustResize">
+            android:windowSoftInputMode="adjustNothing" />
+        <activity android:name=".Ui.Activity.TestActivity"></activity>
+        <activity android:name=".Ui.Activity.SetRemindActivity"></activity>
+        <activity
+            android:name=".Ui.Activity.NewCalenderActivity"
+            android:windowSoftInputMode="stateVisible|adjustResize"></activity>
+        <activity
+            android:name=".Ui.Activity.CalenderDetailActivity"
+            android:windowSoftInputMode="adjustNothing" />
+        <activity android:name=".Ui.Activity.InputGetActivity"></activity>
+        <activity android:name=".Ui.Activity.MineActivity"></activity>
+        <activity android:name=".Ui.Activity.NewProgramActivity"></activity>
+        <activity
+            android:name=".Ui.Activity.ProgramDetailActivity"
+            android:windowSoftInputMode="adjustNothing"></activity>
+        <activity android:name=".Ui.Activity.MyFrendsActivity"></activity>
+        <activity android:name=".Ui.Activity.AddFrendsActivity"></activity>
+        <activity android:name=".Ui.Activity.InputActivity"></activity>
+        <activity android:name=".Ui.Activity.CalenderApendixActivity"></activity>
 
-        </activity>
-
-        <activity android:name=".Ui.Activity.CalenderDetailActivity"
-            android:windowSoftInputMode="adjustNothing"
-            />
-        <activity android:name=".Ui.Activity.InputGetActivity">
-        </activity>
-        <activity android:name=".Ui.Activity.MineActivity">
-        </activity>
-        <activity android:name=".Ui.Activity.NewProgramActivity"
-            >
-        </activity>
-        <activity android:name=".Ui.Activity.ProgramDetailActivity"
-            android:windowSoftInputMode="adjustNothing"
-            >
-        </activity>
-        <activity android:name=".Ui.Activity.MyFrendsActivity">
-        </activity>
-        <activity android:name=".Ui.Activity.AddFrendsActivity">
-        </activity>
-        <activity android:name=".Ui.Activity.InputActivity">
-        </activity>
-        <activity android:name=".Ui.Activity.CalenderApendixActivity">
-        </activity>
-        <service android:name=".Ui.Service.AlarmService"
-            android:process="com.dream.NiuFaNet.serviceProcess"
+        <service
+            android:name=".Ui.Service.AlarmService"
             android:icon="@mipmap/logo"
             android:label="@string/app_name"
-            >
-        </service>
-        <receiver android:name=".Ui.Service.AlarmAlertBroadcastReceiver"
-            android:process="com.dream.NiuFaNet.serviceProcess"
-            ></receiver>
-        <receiver android:name=".Ui.Service.AlarmServiceBroadcastReceiver"
-            android:process="com.dream.NiuFaNet.serviceProcess"
-            >
+            android:process="com.dream.NiuFaNet.serviceProcess"></service>
+
+        <receiver
+            android:name=".Ui.Service.AlarmAlertBroadcastReceiver"
+            android:process="com.dream.NiuFaNet.serviceProcess" />
+        <receiver
+            android:name=".Ui.Service.AlarmServiceBroadcastReceiver"
+            android:process="com.dream.NiuFaNet.serviceProcess">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
-
-        <receiver android:name=".Ui.Service.ContentReceiver"
-            >
+        <receiver android:name=".Ui.Service.ContentReceiver">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
                 <category android:name="android.intent.category.HOME" />
             </intent-filter>
         </receiver>
-        <!--android:theme="@android:style/Theme.Wallpaper.NoTitleBar"-->
+        <!-- android:theme="@android:style/Theme.Wallpaper.NoTitleBar" -->
 
-        <activity android:name=".Ui.Activity.RemindActivity"
-            android:launchMode="singleInstance"
+        <activity
+            android:name=".Ui.Activity.RemindActivity"
             android:excludeFromRecents="true"
-            android:taskAffinity=""
-            >
-
-        </activity>
-        <activity android:name=".Ui.Activity.FrendScheduleActivity">
-        </activity>
-        <activity android:name=".Ui.Activity.SpaceImageDetailActivity">
-        </activity>
-        <activity android:name=".Ui.Activity.MySimFrendsActivity">
-        </activity>
-        <activity android:name=".Ui.Activity.ParticipantsActivity">
-        </activity>
-        <activity android:name=".Ui.Activity.ParticipantsActivity1">
-        </activity>
-        <activity android:name=".Ui.Activity.WorkVisibleFrendsActivity">
-        </activity>
-        <activity android:name=".Ui.Activity.DownScheduleActivity">
-        </activity>
-        <activity android:name=".Ui.Activity.AddProjectActivity">
-        </activity>
-        <activity android:name=".Ui.Activity.CalenderLogActivity">
-        </activity>
-        <activity android:name=".Ui.Activity.EditCalenderActivity">
-        </activity>
-        <activity android:name=".Ui.Activity.AddFriendsActivity">
-        </activity>
-        <activity android:name=".Ui.Activity.UserInfoActivity1">
-        </activity>
-        <activity android:name=".Ui.Activity.MineActivity1">
-        </activity>
-        <activity android:name=".Ui.Activity.WhoCanSeeActivity">
-        </activity>
-        <activity android:name=".Ui.Activity.SettingActivity">
-        </activity>
-        <activity android:name=".Ui.Activity.LoginActivity1">
-        </activity>
-        <activity android:name=".Ui.Activity.FriendCalenderActivity">
-        </activity>
-        <activity android:name=".Ui.Activity.NewTodoActivity">
-        </activity>
-        <activity android:name=".Ui.Activity.ProjectDetailActivity">
-        </activity>
-        <activity android:name=".Ui.Activity.ClientsActivity">
-        </activity>
-        <activity android:name=".Ui.Activity.ClientDetailActivity">
-        </activity>
-        <activity android:name=".Ui.Activity.NewClientActivity">
-        </activity>
-        <activity android:name=".Ui.Activity.FriendDetailActivity">
-        </activity>
-        <activity android:name=".Ui.Activity.SearchFriendsActivity">
-        </activity>
-        <activity android:name=".Ui.Activity.NewFriendsActivity" >
-         </activity>
-        <activity android:name=".Ui.Activity.SearchNewFriendsActivity" >
-        </activity>
-        <activity android:name=".Ui.Activity.ContactusActivity" >
-        </activity>
-        <activity android:name=".Ui.Activity.SetRemindActivity1" >
-        </activity>
-        <activity android:name=".Ui.Activity.NewMessageActivity" >
-        </activity>
-        <activity android:name=".Ui.Activity.VoiceActivity" >
-        </activity>
-        <activity android:name=".Ui.Activity.SearchProjectActivity" >
-        </activity>
-        <activity android:name=".Ui.Activity.WhoCanSeeClientActivity" >
-        </activity>
-        <activity android:name=".Ui.Activity.MessageActivity" >
-        </activity>
-        <activity android:name=".Ui.Activity.PopVoiceActivity" android:theme="@style/Theme_dialog">
-        </activity>
-        <activity android:name=".Ui.Activity.CalendarMessageActivity" >
-        </activity>
-        <activity android:name=".Ui.Activity.VersionDescActivity" >
-        </activity>
-        <activity android:name=".Ui.Activity.CaseCenterActivity" >
-        </activity>
-        <activity android:name=".Ui.Activity.CaseDetailActivity" >
-        </activity>
-        <activity android:name=".Ui.Activity.SearchCaseActivity" >
-        </activity>
-        <activity android:name=".Ui.Activity.DateCalculateActivity" >
-        </activity>
+            android:launchMode="singleInstance"
+            android:taskAffinity=""></activity>
+        <activity android:name=".Ui.Activity.FrendScheduleActivity"></activity>
+        <activity android:name=".Ui.Activity.SpaceImageDetailActivity"></activity>
+        <activity android:name=".Ui.Activity.MySimFrendsActivity"></activity>
+        <activity android:name=".Ui.Activity.ParticipantsActivity"></activity>
+        <activity android:name=".Ui.Activity.ParticipantsActivity1"></activity>
+        <activity android:name=".Ui.Activity.WorkVisibleFrendsActivity"></activity>
+        <activity android:name=".Ui.Activity.DownScheduleActivity"></activity>
+        <activity android:name=".Ui.Activity.AddProjectActivity"></activity>
+        <activity android:name=".Ui.Activity.CalenderLogActivity"></activity>
+        <activity android:name=".Ui.Activity.EditCalenderActivity"></activity>
+        <activity android:name=".Ui.Activity.AddFriendsActivity"></activity>
+        <activity android:name=".Ui.Activity.UserInfoActivity1"></activity>
+        <activity android:name=".Ui.Activity.MineActivity1"></activity>
+        <activity android:name=".Ui.Activity.WhoCanSeeActivity"></activity>
+        <activity android:name=".Ui.Activity.SettingActivity"></activity>
+        <activity android:name=".Ui.Activity.LoginActivity1"></activity>
+        <activity android:name=".Ui.Activity.FriendCalenderActivity"></activity>
+        <activity android:name=".Ui.Activity.NewTodoActivity"></activity>
+        <activity android:name=".Ui.Activity.ProjectDetailActivity"></activity>
+        <activity android:name=".Ui.Activity.ClientsActivity"></activity>
+        <activity android:name=".Ui.Activity.ClientDetailActivity"></activity>
+        <activity android:name=".Ui.Activity.NewClientActivity"></activity>
+        <activity android:name=".Ui.Activity.FriendDetailActivity"></activity>
+        <activity android:name=".Ui.Activity.SearchFriendsActivity"></activity>
+        <activity android:name=".Ui.Activity.NewFriendsActivity"></activity>
+        <activity android:name=".Ui.Activity.SearchNewFriendsActivity"></activity>
+        <activity android:name=".Ui.Activity.ContactusActivity"></activity>
+        <activity android:name=".Ui.Activity.SetRemindActivity1"></activity>
+        <activity android:name=".Ui.Activity.NewMessageActivity"></activity>
+        <activity android:name=".Ui.Activity.VoiceActivity"></activity>
+        <activity android:name=".Ui.Activity.SearchProjectActivity"></activity>
+        <activity android:name=".Ui.Activity.WhoCanSeeClientActivity"></activity>
+        <activity android:name=".Ui.Activity.MessageActivity"></activity>
+        <activity
+            android:name=".Ui.Activity.PopVoiceActivity"
+            android:theme="@style/Theme_dialog"></activity>
+        <activity android:name=".Ui.Activity.CalendarMessageActivity"></activity>
+        <activity android:name=".Ui.Activity.VersionDescActivity"></activity>
+        <activity android:name=".Ui.Activity.CaseCenterActivity"></activity>
+        <activity android:name=".Ui.Activity.CaseDetailActivity"></activity>
+        <activity android:name=".Ui.Activity.SearchCaseActivity"></activity>
+        <activity android:name=".Ui.Activity.DateCalculateActivity"></activity>
+        <activity android:name=".Ui.Activity.LawCalculateActivity"></activity>
     </application>
 
 </manifest>

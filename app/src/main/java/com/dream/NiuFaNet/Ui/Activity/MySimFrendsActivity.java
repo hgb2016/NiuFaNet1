@@ -3,11 +3,10 @@ package com.dream.NiuFaNet.Ui.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.AsyncTask;
-import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.text.Editable;
-import android.text.TextWatcher;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
@@ -37,14 +36,11 @@ import com.dream.NiuFaNet.Utils.CheckForAllUtils;
 import com.dream.NiuFaNet.Utils.Dialog.DialogUtils;
 import com.dream.NiuFaNet.Utils.FrendsUtils;
 import com.dream.NiuFaNet.Utils.IntentUtils;
-import com.dream.NiuFaNet.Utils.LocalGroupSearch;
 import com.dream.NiuFaNet.Utils.PinYinUtil;
 import com.dream.NiuFaNet.Utils.ResourcesUtils;
 import com.dream.NiuFaNet.Utils.RvUtils;
 import com.dream.NiuFaNet.Utils.SpUtils;
-import com.dream.NiuFaNet.Utils.StringUtil;
 import com.dream.NiuFaNet.Utils.ToastUtils;
-import com.dream.NiuFaNet.jpush.Logger;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -60,7 +56,6 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 
 /**
  * Created by Administrator on 2017/12/17 0017.

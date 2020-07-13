@@ -4,18 +4,12 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.support.v4.app.ActivityCompat;
-import android.text.Layout;
-import android.text.StaticLayout;
-import android.text.TextPaint;
+
+import androidx.core.app.ActivityCompat;
+
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
 import com.dream.NiuFaNet.Base.BaseViewHolder;
@@ -39,17 +33,12 @@ import com.dream.NiuFaNet.Presenter.EditMyToolsPresenter;
 import com.dream.NiuFaNet.Presenter.FunctionPresenter;
 import com.dream.NiuFaNet.Presenter.MyToolsPresenter;
 import com.dream.NiuFaNet.R;
-import com.dream.NiuFaNet.Utils.DensityUtil;
 import com.dream.NiuFaNet.Utils.Dialog.DialogUtils;
 import com.dream.NiuFaNet.Utils.ResourcesUtils;
 import com.dream.NiuFaNet.Utils.SpUtils;
 import com.dream.NiuFaNet.Utils.ToastUtils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.huxq17.handygridview.HandyGridView;
-import com.huxq17.handygridview.listener.IDrawer;
-import com.huxq17.handygridview.listener.OnItemCapturedListener;
-import com.huxq17.handygridview.scrollrunner.OnItemMovedListener;
 
 
 import java.lang.reflect.Type;
@@ -457,7 +446,7 @@ public class FunctionActivity extends CommonActivity implements FunctionContract
         }
 
         @Override
-        public void convert(BaseViewHolder holder, final FunctionBean.BodyBean.CalculateBean dataBean, int position) {
+        public void convert(BaseViewHolder holder, final FunctionBean.BodyBean.CalculateBean dataBean, final int position) {
 
             holder.setImageByUrl(R.id.img_iv, dataBean.getActionPic(), false);
             holder.setText(R.id.content_tv, dataBean.getActionName());
@@ -509,9 +498,16 @@ public class FunctionActivity extends CommonActivity implements FunctionContract
                     @Override
                     public void onNoDoubleClick(View view) {
                         if (url != null && !url.isEmpty()) {
-                            Intent intent = new Intent(mContext, DateCalculateActivity.class);
-                            intent.putExtra(Const.webUrl, url);
-                            startActivity(intent);
+                            if (position==4){
+                                Intent intent = new Intent(mContext, DateCalculateActivity.class);
+                                intent.putExtra(Const.webUrl, url);
+                                startActivity(intent);
+                            }else {
+                                Intent intent = new Intent(mContext, WebActivity.class);
+                                intent.putExtra(Const.webUrl, url);
+                                startActivity(intent);
+                            }
+
                         }
                     }
                 });

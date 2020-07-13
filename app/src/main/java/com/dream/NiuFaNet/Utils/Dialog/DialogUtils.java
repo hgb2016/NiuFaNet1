@@ -1,25 +1,18 @@
 package com.dream.NiuFaNet.Utils.Dialog;
 
-import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.ClipboardManager;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.graphics.Rect;
-import android.net.Uri;
-import android.os.Build;
-import android.provider.MediaStore;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.RecyclerView;
+
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
 import android.text.TextPaint;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -35,18 +28,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.dream.NiuFaNet.Bean.BusBean.FinishBus;
-import com.dream.NiuFaNet.BuildConfig;
 import com.dream.NiuFaNet.CustomView.AudioAnimView;
-import com.dream.NiuFaNet.CustomView.VoiceLineView;
 import com.dream.NiuFaNet.Listener.NoDoubleClickListener;
 import com.dream.NiuFaNet.Other.CommonAction;
 import com.dream.NiuFaNet.Other.Const;
 import com.dream.NiuFaNet.Other.MyApplication;
 import com.dream.NiuFaNet.R;
-import com.dream.NiuFaNet.Ui.Activity.LoginActivity;
 import com.dream.NiuFaNet.Ui.Activity.LoginActivity1;
-import com.dream.NiuFaNet.Utils.AppManager;
-import com.dream.NiuFaNet.Utils.CustomHelper;
 import com.dream.NiuFaNet.Utils.FileUtil;
 import com.dream.NiuFaNet.Utils.HttpUtils;
 import com.dream.NiuFaNet.Utils.IntentUtils;
@@ -65,7 +53,6 @@ import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.onekeyshare.OnekeyShare;
 import cn.sharesdk.sina.weibo.SinaWeibo;
 import cn.sharesdk.tencent.qq.QQ;
-import cn.sharesdk.wechat.favorite.WechatFavorite;
 import cn.sharesdk.wechat.friends.Wechat;
 import cn.sharesdk.wechat.moments.WechatMoments;
 
@@ -341,6 +328,7 @@ public class DialogUtils {
         mDialog.getWindow().setAttributes(lp);
     }
 
+
     public static void show(Activity activity, final Dialog dialog) {
 
         if ("main".equals(Thread.currentThread().getName())) {
@@ -405,7 +393,6 @@ public class DialogUtils {
             public void onNoDoubleClick(View view) {
                 //相机
                 headDialog.dismiss();
-
                 IntentUtils.toCamare(activity);
             }
         });

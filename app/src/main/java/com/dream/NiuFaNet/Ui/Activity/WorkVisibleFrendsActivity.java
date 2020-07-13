@@ -3,10 +3,9 @@ package com.dream.NiuFaNet.Ui.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
@@ -20,11 +19,8 @@ import com.dream.NiuFaNet.Base.CommonActivity;
 import com.dream.NiuFaNet.Base.RVBaseAdapter;
 import com.dream.NiuFaNet.Base.RVBaseHolder;
 import com.dream.NiuFaNet.Bean.AddWorkVisibleBean;
-import com.dream.NiuFaNet.Bean.CalendarDetailBean;
 import com.dream.NiuFaNet.Bean.CommonBean;
-import com.dream.NiuFaNet.Bean.Contact;
 import com.dream.NiuFaNet.Bean.MyFrendBean;
-import com.dream.NiuFaNet.Bean.SimFrendsBean;
 import com.dream.NiuFaNet.Bean.WorkVisibleBean;
 import com.dream.NiuFaNet.Bean.WorkVisibleFrendsBean;
 import com.dream.NiuFaNet.Component.DaggerNFComponent;
@@ -36,12 +32,10 @@ import com.dream.NiuFaNet.Other.MyApplication;
 import com.dream.NiuFaNet.Presenter.WorkVisiblePresenter;
 import com.dream.NiuFaNet.R;
 import com.dream.NiuFaNet.Utils.Dialog.DialogUtils;
-import com.dream.NiuFaNet.Utils.FrendsUtils;
 import com.dream.NiuFaNet.Utils.IntentUtils;
 import com.dream.NiuFaNet.Utils.PinYinUtil;
 import com.dream.NiuFaNet.Utils.ResourcesUtils;
 import com.dream.NiuFaNet.Utils.RvUtils;
-import com.dream.NiuFaNet.Utils.SpUtils;
 import com.dream.NiuFaNet.Utils.ToastUtils;
 import com.google.gson.Gson;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -49,10 +43,7 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -60,7 +51,6 @@ import java.util.Map;
 import javax.inject.Inject;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**

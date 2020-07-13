@@ -90,7 +90,7 @@
                                 android:layout_marginRight="20dp"
                                 android:background="#cccccc" />
 
-                            <android.support.v4.view.ViewPager
+                            <androidx.viewpager.widget.ViewPager
                                 android:id="@+id/clv_vp"
                                 android:layout_width="match_parent"
                                 android:layout_height="65dp"
@@ -258,17 +258,22 @@
                 android:layout_height="120dp"
                 android:orientation="vertical" />
         </FrameLayout>
-
-        <ImageView
-            android:id="@+id/add_schedule"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <com.andexert.library.RippleView
+            android:id="@+id/more"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:layout_marginBottom="40dp"
             android:layout_marginRight="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/more2"
+            rv_centered="true">
+        <ImageView
+            android:id="@+id/add_schedule"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:src="@mipmap/icon_add" />
-
+        </com.andexert.library.RippleView>
     </RelativeLayout>
 
 </LinearLayout>

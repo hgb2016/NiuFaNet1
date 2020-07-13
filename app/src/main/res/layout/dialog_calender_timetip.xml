@@ -32,14 +32,14 @@
             android:layout_height="3dp"
             android:layout_marginTop="11dp"
             android:background="@color/color98" />
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/timetip_rv"
             android:layout_width="match_parent"
             android:layout_marginTop="5dp"
             android:paddingLeft="38dp"
             android:paddingRight="38dp"
             android:layout_height="wrap_content">
-        </android.support.v7.widget.RecyclerView>
+        </androidx.recyclerview.widget.RecyclerView>
         <View
             android:layout_width="match_parent"
             android:background="@color/colorb5"

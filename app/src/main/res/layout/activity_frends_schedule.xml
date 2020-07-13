@@ -90,7 +90,7 @@
                     android:src="@drawable/today_c" />
             </RelativeLayout>
 
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/week_rv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>

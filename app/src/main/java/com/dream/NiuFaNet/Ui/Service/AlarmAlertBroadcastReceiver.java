@@ -1,33 +1,18 @@
 package com.dream.NiuFaNet.Ui.Service;
 
-import android.Manifest;
-import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.media.AudioManager;
-import android.media.MediaPlayer;
-import android.media.RingtoneManager;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Vibrator;
-import android.provider.MediaStore;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
+
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import android.util.Log;
-import android.view.WindowManager;
 
 import com.dream.NiuFaNet.Bean.CalendarDetailBean;
-import com.dream.NiuFaNet.Other.Const;
 import com.dream.NiuFaNet.Other.MyApplication;
-import com.dream.NiuFaNet.Ui.Activity.MainActivity;
 import com.dream.NiuFaNet.Ui.Activity.RemindActivity;
-import com.dream.NiuFaNet.Utils.SpUtils;
 import com.google.gson.Gson;
-
-import java.io.IOException;
 
 /**
  * Created by acer-pc on 2016/4/21.

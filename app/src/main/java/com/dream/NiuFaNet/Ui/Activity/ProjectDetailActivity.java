@@ -1,31 +1,23 @@
 package com.dream.NiuFaNet.Ui.Activity;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.dream.NiuFaNet.Base.BaseViewHolder;
 import com.dream.NiuFaNet.Base.CommonActivity;
 import com.dream.NiuFaNet.Base.CommonAdapter;
-import com.dream.NiuFaNet.Base.RVBaseAdapter;
-import com.dream.NiuFaNet.Base.RVBaseHolder;
 import com.dream.NiuFaNet.Bean.ClientDescBean;
 import com.dream.NiuFaNet.Bean.CommonBean;
 import com.dream.NiuFaNet.Bean.ProgramDetailBean;
@@ -44,16 +36,12 @@ import com.dream.NiuFaNet.Presenter.SearchClientDescPresenter;
 import com.dream.NiuFaNet.R;
 import com.dream.NiuFaNet.Utils.CalculateTimeUtil;
 import com.dream.NiuFaNet.Utils.DateFormatUtil;
-import com.dream.NiuFaNet.Utils.DateUtils.DateUtil;
 import com.dream.NiuFaNet.Utils.DensityUtil;
 import com.dream.NiuFaNet.Utils.Dialog.DialogUtils;
 import com.dream.NiuFaNet.Utils.ImmUtils;
-import com.dream.NiuFaNet.Utils.MapUtils;
 import com.dream.NiuFaNet.Utils.PopUtils;
 import com.dream.NiuFaNet.Utils.PopWindowUtil;
 import com.dream.NiuFaNet.Utils.ResourcesUtils;
-import com.dream.NiuFaNet.Utils.RvUtils;
-import com.dream.NiuFaNet.Utils.SpannableStringUtil;
 import com.dream.NiuFaNet.Utils.StringUtil;
 import com.dream.NiuFaNet.Utils.ToastUtils;
 import com.google.gson.Gson;
@@ -66,9 +54,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.inject.Inject;
 

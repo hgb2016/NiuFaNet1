@@ -189,12 +189,12 @@
                 android:textColor="@color/white"
                 android:textSize="19sp"/>
 
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/voiceContent_rv"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:padding="20dp"></android.support.v7.widget.RecyclerView>
+                android:padding="20dp"></androidx.recyclerview.widget.RecyclerView>
 
             <LinearLayout
                 android:layout_width="match_parent"

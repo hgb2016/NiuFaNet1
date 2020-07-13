@@ -8,19 +8,16 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
+import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.dream.NiuFaNet.Base.BaseActivity;
-import com.dream.NiuFaNet.Base.CommonActivity;
 import com.dream.NiuFaNet.Bean.RemindWordBean;
 import com.dream.NiuFaNet.Component.DaggerNFComponent;
 import com.dream.NiuFaNet.Contract.RemindWordContract;
@@ -28,7 +25,6 @@ import com.dream.NiuFaNet.CustomView.AudioAnimView;
 import com.dream.NiuFaNet.CustomView.CircularAnim;
 import com.dream.NiuFaNet.CustomView.VoiceLineView;
 import com.dream.NiuFaNet.Listener.NoDoubleClickListener;
-import com.dream.NiuFaNet.Other.Const;
 import com.dream.NiuFaNet.Other.MyApplication;
 import com.dream.NiuFaNet.Presenter.RemindWordPresenter;
 import com.dream.NiuFaNet.R;
@@ -46,7 +42,6 @@ import com.iflytek.cloud.SpeechRecognizer;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.nio.Buffer;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 

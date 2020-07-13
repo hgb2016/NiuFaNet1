@@ -1,18 +1,14 @@
 package com.dream.NiuFaNet.CustomView.CalenderRvUtils;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Handler;
-import android.os.Message;
-import android.support.v7.widget.OrientationHelper;
-import android.support.v7.widget.RecyclerView;
+
+import androidx.recyclerview.widget.OrientationHelper;
+import androidx.recyclerview.widget.RecyclerView;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -20,7 +16,6 @@ import android.widget.TextView;
 
 import com.dream.NiuFaNet.Base.RVBaseAdapter;
 import com.dream.NiuFaNet.Base.RVBaseHolder;
-import com.dream.NiuFaNet.Bean.BaseBean;
 import com.dream.NiuFaNet.Bean.CalenderedBean;
 import com.dream.NiuFaNet.Bean.CommonBean;
 import com.dream.NiuFaNet.Bean.WorkVisibleBean;
@@ -39,11 +34,9 @@ import com.dream.NiuFaNet.Ui.Activity.NewCalenderActivity;
 import com.dream.NiuFaNet.Utils.DateFormatUtil;
 import com.dream.NiuFaNet.Utils.DateUtils.Week;
 import com.dream.NiuFaNet.Utils.Dialog.DialogUtils;
-import com.dream.NiuFaNet.Utils.IntentUtils;
 import com.dream.NiuFaNet.Utils.ResourcesUtils;
 import com.dream.NiuFaNet.Utils.RvUtils;
 import com.dream.NiuFaNet.Utils.StringUtil;
-import com.dream.NiuFaNet.Utils.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.Calendar;

@@ -1,6 +1,6 @@
 package com.dream.NiuFaNet.Adapter;
 
-import android.support.v4.view.PagerAdapter;
+import androidx.viewpager.widget.PagerAdapter;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -8,7 +8,6 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.dream.NiuFaNet.Bean.BannerBean;
 import com.dream.NiuFaNet.Other.MyApplication;
-import com.dream.NiuFaNet.Utils.GlideCircleTransform;
 
 import java.util.ArrayList;
 import java.util.List;

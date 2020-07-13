@@ -9,8 +9,7 @@ import com.dream.NiuFaNet.Module.NFApiModule;
 import dagger.Component;
 
 /**
- * @author yuyh.
- * @date 2016/8/3.
+ *
  */
 @Component(modules = {AppModule.class, NFApiModule.class})
 public interface AppComponent {

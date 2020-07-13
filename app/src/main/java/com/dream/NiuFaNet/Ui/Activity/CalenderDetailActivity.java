@@ -9,7 +9,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
@@ -76,7 +76,6 @@ import com.dream.NiuFaNet.Utils.MapUtils;
 import com.dream.NiuFaNet.Utils.PopWindowUtil;
 import com.dream.NiuFaNet.Utils.ResourcesUtils;
 import com.dream.NiuFaNet.Utils.SpUtils;
-import com.dream.NiuFaNet.Utils.SpannableStringUtil;
 import com.dream.NiuFaNet.Utils.ToastUtils;
 import com.example.zhouwei.library.CustomPopWindow;
 import com.google.gson.Gson;
@@ -93,10 +92,8 @@ import java.util.Map;
 import javax.inject.Inject;
 
 import butterknife.Bind;
-import butterknife.BindInt;
 import butterknife.OnClick;
 import cn.sharesdk.wechat.friends.Wechat;
-import retrofit2.http.Field;
 
 /**
  * Created by Administrator on 2017/11/19 0019.

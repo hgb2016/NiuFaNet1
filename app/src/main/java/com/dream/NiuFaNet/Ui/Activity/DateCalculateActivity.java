@@ -15,16 +15,21 @@ import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.TimePickerView;
 import com.dream.NiuFaNet.Base.CommonActivity;
 import com.dream.NiuFaNet.Component.DaggerNFComponent;
+import com.dream.NiuFaNet.CustomView.CircularAnim;
 import com.dream.NiuFaNet.Listener.NoDoubleClickListener;
 import com.dream.NiuFaNet.Other.CommonAction;
 import com.dream.NiuFaNet.Other.Const;
 import com.dream.NiuFaNet.Other.MyApplication;
 import com.dream.NiuFaNet.R;
+import com.dream.NiuFaNet.Utils.AnimaCommonUtil;
 import com.dream.NiuFaNet.Utils.CalculateTimeUtil;
 import com.dream.NiuFaNet.Utils.DateFormatUtil;
+import com.dream.NiuFaNet.Utils.DateUtils.Week;
 import com.dream.NiuFaNet.Utils.Dialog.DialogUtils;
 import com.dream.NiuFaNet.Utils.ImmUtils;
 import com.dream.NiuFaNet.Utils.ResourcesUtils;
+import com.dream.NiuFaNet.Utils.ToastUtils;
+import com.example.zhouwei.library.CustomPopWindow;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -75,6 +80,8 @@ public class DateCalculateActivity extends CommonActivity {
     private String endStr;
     private int status=1;
     private  boolean isbefore;
+    private CustomPopWindow mCustomPopWindow;
+
     @Override
     public int getLayoutId() {
         return R.layout.activity_datecalculate;
@@ -110,15 +117,17 @@ public class DateCalculateActivity extends CommonActivity {
         }
 
     }
-    @OnClick({R.id.back_relay,R.id.day_tv,R.id.date_tv,R.id.starttime_relay,R.id.endtime_relay,R.id.reset_tv,R.id.calculate_tv,R.id.daystatus_tv})
+    @OnClick({R.id.back_relay,R.id.day_tv,R.id.date_tv,R.id.starttime_relay,R.id.endtime_tv,R.id.reset_tv,R.id.calculate_tv,R.id.daystatus_tv})
     public void OnClick(View v){
         switch (v.getId()){
             case R.id.back_relay:
                 finish();
-
                 break;
             case R.id.reset_tv:
-
+                normal_tv.setText("天");
+                work_tv.setText("天");
+                datetime_tv.setText("");
+                daynum_edt.setText("");
                 break;
             case R.id.day_tv:
                 status=1;
@@ -136,7 +145,7 @@ public class DateCalculateActivity extends CommonActivity {
                 calendar.setTime(stR);
                 chooseTime(calendar);
                 break;
-            case R.id.endtime_relay:
+            case R.id.endtime_tv:
                 tempTag = 1;
                 String endStr1 = endtime_tv.getText().toString();
                 Date endD = DateFormatUtil.getTime(endStr1, Const.Y_M_D);
@@ -147,29 +156,40 @@ public class DateCalculateActivity extends CommonActivity {
                 break;
             case R.id.calculate_tv:
                 if (status==1) {
-                    calculateresult_lay.setVisibility(View.VISIBLE);
-                    date_relay.setVisibility(View.GONE);
-                    int timeExpend = CalculateTimeUtil.getDayExpend(startDate, endDate);
-                    int days = CalculateTimeUtil.isWeekend(startStr, endStr);
-                    normal_tv.setText(timeExpend + "天");
-                    work_tv.setText(days + "天");
-                }else {
-                    calculateresult_lay.setVisibility(View.GONE);
-                    date_relay.setVisibility(View.VISIBLE);
-                    Calendar calendar2=Calendar.getInstance();
-                    calendar2.setTime(DateFormatUtil.getTime(startStr,Const.Y_M_D));
-                    String days = daynum_edt.getText().toString().trim();
-                    int count=0;
-                    if (!TextUtils.isEmpty(days)){
-                        count=Integer.parseInt(days);
+                    if (startStr!=null&&endStr!=null) {
+                        calculateresult_lay.setVisibility(View.VISIBLE);
+                        date_relay.setVisibility(View.GONE);
+                        int timeExpend = CalculateTimeUtil.getDayExpend(startDate, endDate);
+                        int days = CalculateTimeUtil.isWeekend(startStr, endStr);
+                        normal_tv.setText(timeExpend + "天");
+                        work_tv.setText(days + "天");
+                    }else {
+                        ToastUtils.Toast_short("请选择起始时间");
                     }
-                    calendar2.add(Calendar.DAY_OF_YEAR,count);
-                    Date time = calendar2.getTime();
-                    datetime_tv.setText(DateFormatUtil.getTime(time,Const.Y_M_D));
+                }else {
+                    if (startStr!=null) {
+                        ImmUtils.hideImm(mActivity);
+                        calculateresult_lay.setVisibility(View.GONE);
+                        date_relay.setVisibility(View.VISIBLE);
+                        Calendar calendar2 = Calendar.getInstance();
+                        calendar2.setTime(DateFormatUtil.getTime(startStr, Const.Y_M_D));
+                        String days = daynum_edt.getText().toString().trim();
+                        int count = 0;
+                        if (!TextUtils.isEmpty(days)) {
+                            count= isbefore ?  -Integer.parseInt(days) : Integer.parseInt(days);
+                        }
+                        calendar2.add(Calendar.DAY_OF_YEAR, count);
+                        Date time = calendar2.getTime();
+                        CircularAnim.show(datetime_tv).go();
+                        datetime_tv.setText(DateFormatUtil.getTime(time, Const.Y_M_D) + " (星期" + Week.getWeekDay(calendar2.get(Calendar.DAY_OF_WEEK)) + ")");
+
+                    }else {
+                        ToastUtils.Toast_short("请选择开始时间");
+                    }
                 }
                 break;
             case R.id.daystatus_tv:
-
+                showMorePop(v);
                 break;
         }
     }
@@ -190,6 +210,7 @@ public class DateCalculateActivity extends CommonActivity {
         String endTime = DateFormatUtil.getTime(calendar.getTimeInMillis(), Const.Y_M_D);
         endtime_tv.setText(endTime);
         endStr=endtime_tv.getText().toString().trim();
+
     }
 
     @Override
@@ -226,5 +247,46 @@ public class DateCalculateActivity extends CommonActivity {
                 .build();
         dateDialog.show();
     }
+    //更多弹框
+    private void showMorePop(View v) {
+        View contentView = LayoutInflater.from(this).inflate(R.layout.pop_more, null);
+        //处理popWindow 显示内容
+        View.OnClickListener listener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mCustomPopWindow != null) {
+                    mCustomPopWindow.dissmiss();
+                }
+                switch (v.getId()) {
+                    case R.id.setnote_tv:
+                        isbefore=true;
+                        daystatus_tv.setText("天之前");
+                        break;
+                    case R.id.deletefrident_tv:
+                        isbefore=false;
+                        daystatus_tv.setText("天之后");
+                        break;
+                }
+            }
+        };
+        TextView before_tv= (TextView) contentView.findViewById(R.id.setnote_tv);
+        TextView after_tv=(TextView) contentView.findViewById(R.id.deletefrident_tv);
+        before_tv.setText("天之前");
+        after_tv.setText("天之后");
+        after_tv.setTextColor(ResourcesUtils.getColor(R.color.black));
+        before_tv.setTextColor(ResourcesUtils.getColor(R.color.black));
+        before_tv.setOnClickListener(listener);
+        after_tv.setOnClickListener(listener);
+        contentView.findViewById(R.id.deletefrident_tv).setOnClickListener(listener);
+        //创建并显示popWindow
+        mCustomPopWindow = new CustomPopWindow.PopupWindowBuilder(this)
+                .setView(contentView)
+                .setBgDarkAlpha(0.7f)
+                .enableBackgroundDark(true)
+                .setAnimationStyle(R.anim.actionsheet_dialog_in)
+                .create()
+                .showAsDropDown(v, 0, 0);
 
+
+    }
 }

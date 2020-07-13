@@ -2,12 +2,7 @@ package com.dream.NiuFaNet.Ui.Fragment;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
-import android.text.format.DateUtils;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,26 +12,15 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.dream.NiuFaNet.Adapter.WeekAdapter;
 import com.dream.NiuFaNet.Base.BaseFragmentV4;
 import com.dream.NiuFaNet.Base.BaseViewHolder;
 import com.dream.NiuFaNet.Base.CommonAdapter;
-import com.dream.NiuFaNet.Base.RVBaseAdapter;
-import com.dream.NiuFaNet.Base.RVBaseHolder;
-import com.dream.NiuFaNet.Bean.BaseBean;
-import com.dream.NiuFaNet.Bean.BusBean.LoginBus;
 import com.dream.NiuFaNet.Bean.BusBean.RefreshCalBean;
-import com.dream.NiuFaNet.Bean.BusBean.RefreshProBean;
 import com.dream.NiuFaNet.Bean.CalenderedBean;
 import com.dream.NiuFaNet.Bean.MarkDateBean;
-import com.dream.NiuFaNet.Bean.WeekBean;
 import com.dream.NiuFaNet.Component.DaggerNFComponent;
 import com.dream.NiuFaNet.Contract.CalenderMainContract;
 import com.dream.NiuFaNet.Contract.MarkDateContract;
-import com.dream.NiuFaNet.CustomView.CalenderRvUtils.CalendarRecyclerView;
-import com.dream.NiuFaNet.CustomView.CalenderUtils.CalendarView;
-import com.dream.NiuFaNet.CustomView.Emptyview_RvSchedule;
-import com.dream.NiuFaNet.CustomView.MessageRightPopView;
 import com.dream.NiuFaNet.CustomView.MyListView;
 import com.dream.NiuFaNet.Listener.NoDoubleClickListener;
 import com.dream.NiuFaNet.Other.CommonAction;
@@ -46,22 +30,12 @@ import com.dream.NiuFaNet.Presenter.CalenderMainPresenter;
 import com.dream.NiuFaNet.Presenter.MarkDatePresenter;
 import com.dream.NiuFaNet.R;
 import com.dream.NiuFaNet.Ui.Activity.CalenderDetailActivity;
-import com.dream.NiuFaNet.Ui.Activity.CalenderLogActivity;
-import com.dream.NiuFaNet.Ui.Activity.EditCalenderActivity;
-import com.dream.NiuFaNet.Ui.Activity.FriendCalenderActivity;
-import com.dream.NiuFaNet.Ui.Activity.MyFrendsActivity;
 import com.dream.NiuFaNet.Ui.Activity.NewCalenderActivity;
 import com.dream.NiuFaNet.Ui.Activity.NewTodoActivity;
 import com.dream.NiuFaNet.Utils.CalculateTimeUtil;
 import com.dream.NiuFaNet.Utils.DateFormatUtil;
-import com.dream.NiuFaNet.Utils.DateUtils.DateUtil;
 import com.dream.NiuFaNet.Utils.Dialog.DialogUtils;
-import com.dream.NiuFaNet.Utils.IntentUtils;
-import com.dream.NiuFaNet.Utils.MapUtils;
-import com.dream.NiuFaNet.Utils.PopWindowUtil;
 import com.dream.NiuFaNet.Utils.ResourcesUtils;
-import com.dream.NiuFaNet.Utils.RvUtils;
-import com.dream.NiuFaNet.Utils.StringUtil;
 import com.dream.NiuFaNet.Utils.ToastUtils;
 import com.example.zhouwei.library.CustomPopWindow;
 import com.google.gson.Gson;
@@ -75,13 +49,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 
 import javax.inject.Inject;
 
 import butterknife.Bind;
-import butterknife.BindInt;
 import butterknife.OnClick;
 
 /**
@@ -152,7 +123,10 @@ public class CalenderFragment extends BaseFragmentV4 implements CalenderMainCont
                 //标记日期
                 String begindate=year+"-"+(month-1)+"-"+30;
                 String enddate=year+"-"+month+"-"+30;
-                markDatePresenter.toGetDateMark(CommonAction.getUserId(),begindate,enddate);
+                if (CommonAction.getIsLogin()){
+                    markDatePresenter.toGetDateMark(CommonAction.getUserId(),begindate,enddate);
+                }
+
             }
         });
 
@@ -188,7 +162,7 @@ public class CalenderFragment extends BaseFragmentV4 implements CalenderMainCont
         String beginTime =mCalendarView.getCurYear()+"-"+mCalendarView.getCurMonth()+"-"+mCalendarView.getCurDay();
 
         //标记日期
-        if (CommonAction.getUserId()!=null&&!CommonAction.getUserId().isEmpty()) {
+        if (CommonAction.getIsLogin()) {
             calenderMainPresenter.getCalenders(CommonAction.getUserId(),beginTime+ Const.startTime,beginTime+Const.endTime);
             String begindate = mCalendarView.getCurYear() + "-" + (mCalendarView.getCurMonth() - 1) + "-" + 30;
             String enddate = mCalendarView.getCurYear() + "-" + (mCalendarView.getCurMonth() + 1) + "-" + 30;

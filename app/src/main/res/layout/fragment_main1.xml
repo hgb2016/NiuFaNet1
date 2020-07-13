@@ -73,13 +73,13 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <android.support.v4.view.ViewPager
+                    <androidx.viewpager.widget.ViewPager
                         android:id="@+id/clv_vp"
                         android:layout_width="match_parent"
                         android:layout_height="65dp"
                         android:layout_marginTop="20dp"
                         android:paddingLeft="11dp"
-                        android:paddingRight="11dp"></android.support.v4.view.ViewPager>
+                        android:paddingRight="11dp"></androidx.viewpager.widget.ViewPager>
 
                     <HorizontalScrollView
                         android:id="@+id/main_hsv"

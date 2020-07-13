@@ -2,11 +2,9 @@ package com.dream.NiuFaNet.CustomView;
 
 import android.app.Activity;
 import android.content.Context;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.view.ViewPager;
+
+import androidx.fragment.app.FragmentManager;
+import androidx.viewpager.widget.ViewPager;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageView;
@@ -14,13 +12,10 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.dream.NiuFaNet.Base.BasePagerAdapter;
 import com.dream.NiuFaNet.Base.BasePagerAdapterView;
 import com.dream.NiuFaNet.Listener.NoDoubleClickListener;
 import com.dream.NiuFaNet.R;
-import com.dream.NiuFaNet.Utils.DensityUtil;
 import com.dream.NiuFaNet.Utils.ResourcesUtils;
-import com.dream.NiuFaNet.Utils.XuniKeyWord;
 
 import java.util.ArrayList;
 import java.util.List;

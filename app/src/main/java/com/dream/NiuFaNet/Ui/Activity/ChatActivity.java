@@ -11,9 +11,9 @@ import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.RecyclerView;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.RecyclerView;
 import android.telephony.TelephonyManager;
 import android.text.Html;
 import android.text.Spannable;
@@ -40,7 +40,6 @@ import android.widget.TextView;
 
 import com.dream.NiuFaNet.Adapter.ChatMainRvAdapter;
 import com.dream.NiuFaNet.Adapter.VoiceContentAdapter;
-import com.dream.NiuFaNet.Base.BaseActivity;
 import com.dream.NiuFaNet.Base.BaseActivityRelay;
 import com.dream.NiuFaNet.Base.BaseViewHolder;
 import com.dream.NiuFaNet.Base.CommonAdapter;
@@ -53,7 +52,6 @@ import com.dream.NiuFaNet.Bean.RecomendBean;
 import com.dream.NiuFaNet.Bean.VoiceRvBean;
 import com.dream.NiuFaNet.Component.DaggerNFComponent;
 import com.dream.NiuFaNet.Contract.ChatContract;
-import com.dream.NiuFaNet.Contract.PermissionListener;
 import com.dream.NiuFaNet.Contract.VoiceContentContract;
 import com.dream.NiuFaNet.CustomView.AudioAnimView;
 import com.dream.NiuFaNet.CustomView.CustomeGridView;
@@ -71,7 +69,6 @@ import com.dream.NiuFaNet.Utils.Dialog.DialogUtils;
 import com.dream.NiuFaNet.Utils.IntentUtils;
 import com.dream.NiuFaNet.Utils.JsonParser;
 import com.dream.NiuFaNet.Utils.ResourcesUtils;
-import com.dream.NiuFaNet.Utils.ReturnUtil;
 import com.dream.NiuFaNet.Utils.RvUtils;
 import com.dream.NiuFaNet.Utils.SpUtils;
 import com.dream.NiuFaNet.Utils.ToastUtils;
@@ -104,7 +101,6 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**

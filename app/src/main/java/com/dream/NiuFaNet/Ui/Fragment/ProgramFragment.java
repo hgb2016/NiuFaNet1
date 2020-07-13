@@ -3,8 +3,8 @@ package com.dream.NiuFaNet.Ui.Fragment;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.LayoutRes;
-import android.support.annotation.Nullable;
+import androidx.annotation.LayoutRes;
+import androidx.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,32 +20,22 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.dream.NiuFaNet.Base.BaseFragmentV4;
 import com.dream.NiuFaNet.Base.CommonAdapter;
-import com.dream.NiuFaNet.Base.RVBaseAdapter;
-import com.dream.NiuFaNet.Base.RVBaseHolder;
-import com.dream.NiuFaNet.Bean.BaseBean;
 import com.dream.NiuFaNet.Bean.BusBean.LoginBus;
 import com.dream.NiuFaNet.Bean.BusBean.RefreshProBean;
-import com.dream.NiuFaNet.Bean.CalendarDetailBean;
-import com.dream.NiuFaNet.Bean.CommonBean;
 import com.dream.NiuFaNet.Bean.ProgramListBean;
 import com.dream.NiuFaNet.Bean.ProjectClientListBean;
 import com.dream.NiuFaNet.Component.DaggerNFComponent;
-import com.dream.NiuFaNet.Contract.ProCalContract;
 import com.dream.NiuFaNet.Contract.ProgramContract;
 import com.dream.NiuFaNet.CustomView.Emptyview_Pro;
 import com.dream.NiuFaNet.Listener.NoDoubleClickListener;
 import com.dream.NiuFaNet.Other.CommonAction;
 import com.dream.NiuFaNet.Other.Const;
 import com.dream.NiuFaNet.Other.MyApplication;
-import com.dream.NiuFaNet.Presenter.ProCalPresenter;
 import com.dream.NiuFaNet.Presenter.ProgramPresenter;
 import com.dream.NiuFaNet.R;
 import com.dream.NiuFaNet.Ui.Activity.CalenderDetailActivity;
-import com.dream.NiuFaNet.Ui.Activity.MineActivity;
-import com.dream.NiuFaNet.Ui.Activity.NewCalenderActivity;
 import com.dream.NiuFaNet.Ui.Activity.NewProgramActivity;
 import com.dream.NiuFaNet.Ui.Activity.ProgramDetailActivity;
-import com.dream.NiuFaNet.Utils.AnimaCommonUtil;
 import com.dream.NiuFaNet.Utils.DateFormatUtil;
 import com.dream.NiuFaNet.Utils.DateUtils.DateUtil;
 import com.dream.NiuFaNet.Utils.DensityUtil;
@@ -67,7 +57,6 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -95,6 +84,7 @@ public class ProgramFragment extends BaseFragmentV4 implements ProgramContract.V
     TextView sort_tv;
     @Bind(R.id.smart_refreshlay)
     SmartRefreshLayout smart_refreshlay;
+
     private Dialog mLoadingDialog;
 
     @Inject

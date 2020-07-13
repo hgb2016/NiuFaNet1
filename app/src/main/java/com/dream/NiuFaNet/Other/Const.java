@@ -8,10 +8,10 @@ public class Const {
     public static final String LogTag = "LogTag";
     public static final int time = 3000;
 
-    public static final String API_BASE_URL = "http://api.niufa.cn:9081/";
+    public static final String API_BASE_URL = "http://api.niuer.cn:9080/";
 //    public static final String API_BASE_URL = "http://192.168.1.143:8080/niufa_chatbot/";
-    public static final String aboutmeUrl = "http://api.niufa.cn:9081/about.html";
-    public static final String shareUrl = "http://api.niufa.cn:9081"+
+    public static final String aboutmeUrl = "http://api.niuer.cn:9080/about.html";
+    public static final String shareUrl = "http://api.niuer.cn:9080"+
             "/sharing.html";
     //public static final String API_BASE_URL="http://10.0.0.59:8080/niufa_chatbot/";
     public static final String app = "app/";
@@ -72,7 +72,7 @@ public class Const {
     //分享
     public static final String wechatFrend_ShareTitle = "邀你成为好友，一起使用法律机器人";
     public static final String wechatFrend_ShareContent = "法律机器人会18 项技能，还会做案件管理和日程协同，快去查看他的日程吧。";
-    public static final String wechatFrend_ShareClickUrl = "http://m.niufa.cn/Schedule/index?userId=";
+    public static final String wechatFrend_ShareClickUrl = "http://m.niuer.cn/Schedule/index?userId=";
 
 
     public static final int CAll = 28;

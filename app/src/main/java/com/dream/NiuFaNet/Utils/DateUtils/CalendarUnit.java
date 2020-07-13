@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import org.joda.time.DateTimeConstants;
 import org.joda.time.LocalDate;
 
-import android.support.annotation.IntDef;
+import androidx.annotation.IntDef;
 
 /**
  * 

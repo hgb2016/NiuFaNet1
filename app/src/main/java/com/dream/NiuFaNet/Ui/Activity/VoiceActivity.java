@@ -6,15 +6,13 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import android.telephony.TelephonyManager;
 import android.text.Html;
 import android.text.Spannable;
@@ -36,20 +34,14 @@ import com.dream.NiuFaNet.Base.CommonActivity;
 import com.dream.NiuFaNet.Base.CommonAdapter;
 import com.dream.NiuFaNet.Base.MultiLayoutsBaseAdapter;
 import com.dream.NiuFaNet.Base.RVBaseHolder;
-import com.dream.NiuFaNet.Bean.BannerBean;
 import com.dream.NiuFaNet.Bean.BusBean.RefreshBean;
 import com.dream.NiuFaNet.Bean.ChatBean;
 import com.dream.NiuFaNet.Bean.FunctionBean;
 import com.dream.NiuFaNet.Bean.InputGetBean;
-import com.dream.NiuFaNet.Bean.MainFunctionBean;
-import com.dream.NiuFaNet.Bean.MyToolsBean;
-import com.dream.NiuFaNet.Bean.RecomendBean;
 import com.dream.NiuFaNet.Bean.VoiceRvBean;
 import com.dream.NiuFaNet.Component.DaggerNFComponent;
 import com.dream.NiuFaNet.Contract.ChatContract;
 import com.dream.NiuFaNet.Contract.FunctionContract;
-import com.dream.NiuFaNet.Contract.MainContract;
-import com.dream.NiuFaNet.Contract.MainFunctionContract;
 import com.dream.NiuFaNet.Contract.VoiceContentContract;
 import com.dream.NiuFaNet.CustomView.AudioAnimView;
 import com.dream.NiuFaNet.CustomView.CircularAnim;
@@ -62,14 +54,11 @@ import com.dream.NiuFaNet.Other.Const;
 import com.dream.NiuFaNet.Other.MyApplication;
 import com.dream.NiuFaNet.Presenter.ChatPresenter;
 import com.dream.NiuFaNet.Presenter.FunctionPresenter;
-import com.dream.NiuFaNet.Presenter.MainFunctionPresenter;
-import com.dream.NiuFaNet.Presenter.MainPresenter;
 import com.dream.NiuFaNet.Presenter.VoiceContentPresenter;
 import com.dream.NiuFaNet.R;
 import com.dream.NiuFaNet.Utils.BlurBuilder;
 import com.dream.NiuFaNet.Utils.DensityUtil;
 import com.dream.NiuFaNet.Utils.Dialog.DialogUtils;
-import com.dream.NiuFaNet.Utils.IntentUtils;
 import com.dream.NiuFaNet.Utils.JsonParser;
 import com.dream.NiuFaNet.Utils.ResourcesUtils;
 import com.dream.NiuFaNet.Utils.RvUtils;
@@ -87,7 +76,6 @@ import com.iflytek.cloud.SpeechError;
 import com.iflytek.cloud.SpeechRecognizer;
 import com.iflytek.cloud.SpeechSynthesizer;
 import com.iflytek.cloud.SynthesizerListener;
-import com.iflytek.cloud.ui.RecognizerDialog;
 import com.kevin.wraprecyclerview.WrapRecyclerView;
 import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;
@@ -330,8 +318,7 @@ public class VoiceActivity extends CommonActivity implements VoiceContentContrac
 
     private void getRecommendData() {
         String userId = CommonAction.getUserId();
-        Log.e("tag", "userId=" + userId);
-        Log.e("tag", "szImei=" + MyApplication.getDeviceId());
+
         if (userId.isEmpty()) {
             functionPresenter.getFunctionData("type");
         } else {
@@ -789,7 +776,6 @@ public class VoiceActivity extends CommonActivity implements VoiceContentContrac
                                     chat_rv.smoothScrollToPosition(listData.size() - 1);
                                     int martopHeight = XuniKeyWord.initStateView(mActivity).getHeight() + DensityUtil.dip2px(65);
                                     int dy = DensityUtil.getScreenHeight(mActivity) - martopHeight * 4;
-
                                     //获取当前屏幕内容的高度
                                     int screenHeight = mActivity.getWindow().getDecorView().getHeight();
                                     //获取View可见区域的bottom

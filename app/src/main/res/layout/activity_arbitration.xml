@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_height"
+        android:layout_marginTop="20dp">
+
+        <RelativeLayout
+            android:id="@+id/back_relay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:src="@mipmap/back" />
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center_horizontal"
+            android:text="仲裁费计算"
+            android:textColor="@color/black"
+            android:textSize="17sp" />
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/layout_margin_70dp"
+                    android:background="#8ED217" />
+
+                <LinearLayout
+                    android:id="@+id/top_lay"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="14dp"
+                    android:layout_marginRight="14dp"
+                    android:layout_marginTop="33dp"
+                    android:background="@drawable/shape_lay"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:id="@+id/starttime_relay"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/icon_size_20dp"
+                            android:text="仲裁机构"
+                            android:textColor="@color/black" />
+
+                        <TextView
+                            android:id="@+id/starttime_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginRight="@dimen/icon_size_20dp"
+                            android:drawablePadding="@dimen/layout_margin_5dp"
+                            android:drawableRight="@mipmap/triangle"
+                            android:text="中国国家经济贸易仲裁委员会"
+                            android:textColor="@color/black" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/endtime_relay"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp">
+
+                        <TextView
+                            android:id="@+id/change_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="@dimen/icon_size_20dp"
+                            android:text="类别"
+                            android:textColor="@color/black" />
+
+                        <TextView
+                            android:id="@+id/endtime_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="@dimen/icon_size_20dp"
+                            android:drawablePadding="@dimen/layout_margin_5dp"
+                            android:drawableRight="@mipmap/triangle"
+                            android:text="国际、涉外及涉港澳台案件"
+                            android:textColor="@color/black"
+                            android:visibility="visible" />
+
+                        <LinearLayout
+                            android:id="@+id/daynum_lay"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:orientation="horizontal"
+                            android:visibility="gone">
+
+                            <EditText
+                                android:id="@+id/daynum_edt"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="@dimen/layout_margin_2dp"
+                                android:background="@null"
+                                android:gravity="right"
+                                android:hint="请输入天数"
+                                android:inputType="number"
+                                android:textColorHint="@color/textcolor_ac"
+                                android:textSize="@dimen/text_size_14sp" />
+
+                            <TextView
+                                android:id="@+id/daystatus_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="@dimen/icon_size_20dp"
+                                android:drawablePadding="@dimen/layout_margin_4dp"
+                                android:drawableRight="@mipmap/down_black"
+                                android:text="天之后"
+                                android:textColor="@color/black" />
+                        </LinearLayout>
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="@dimen/icon_size_20dp"
+                            android:text="争议金额"
+                            android:textColor="@color/black" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:orientation="horizontal"
+                            android:visibility="visible">
+
+                            <EditText
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="@dimen/layout_margin_2dp"
+                                android:background="@null"
+                                android:gravity="right"
+                                android:hint="请输入金额"
+                                android:inputType="number"
+                                android:textColorHint="@color/textcolor_ac"
+                                android:textSize="@dimen/text_size_14sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="@dimen/icon_size_20dp"
+                                android:drawablePadding="@dimen/layout_margin_4dp"
+                                android:text="元"
+                                android:textColor="@color/black" />
+                        </LinearLayout>
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="88dp"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/reset_tv"
+                            android:layout_width="140dp"
+                            android:layout_height="@dimen/icon_size_40dp"
+                            android:layout_marginRight="20dp"
+                            android:background="@drawable/shape_accept"
+                            android:gravity="center"
+                            android:text="重置"
+                            android:textColor="@color/textcolor_ac" />
+
+                        <TextView
+                            android:id="@+id/calculate_tv"
+                            android:layout_width="140dp"
+                            android:layout_height="@dimen/icon_size_40dp"
+                            android:background="@drawable/shape_reject"
+                            android:gravity="center"
+                            android:text="计算"
+                            android:textColor="@color/red_delete" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/top_lay"
+                    android:orientation="vertical">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/icon_size_40dp"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <View
+                            android:layout_width="53dp"
+                            android:layout_height="1px"
+                            android:background="#dcdcdc" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/icon_size_40dp"
+                            android:layout_marginLeft="@dimen/icon_size_20dp"
+                            android:layout_marginRight="@dimen/icon_size_20dp"
+                            android:gravity="center"
+                            android:text="计算结果"
+                            android:textColor="@color/textcolor_ac" />
+
+                        <View
+                            android:layout_width="53dp"
+                            android:layout_height="1px"
+                            android:background="#dcdcdc" />
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/date_relay"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/icon_size_40dp"
+                        android:layout_marginLeft="14dp"
+                        android:layout_marginRight="14dp"
+                        android:gravity="center"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/datetime_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/layout_margin_28dp"
+                            android:text="  "
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/text_size_22sp" />
+                    </RelativeLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:gravity="center_horizontal"
+                    android:layout_alignParentBottom="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_marginBottom="27dp"
+                        android:text="依据《广东律师收费标准》文件计算,结果仅供参考"
+                        android:textColor="@color/textcolor_ac"
+                        android:textSize="12sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:layout_marginBottom="13dp"
+                        android:text="你可能要 诉讼费计算"
+                        android:textColor="@color/textcolor_ac"
+                        android:textSize="12sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:layout_marginBottom="27dp"
+                        android:text="你可能要 仲裁费计算"
+                        android:textColor="@color/textcolor_ac"
+                        android:textSize="12sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

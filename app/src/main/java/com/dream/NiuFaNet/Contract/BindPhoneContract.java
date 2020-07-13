@@ -7,7 +7,7 @@ import com.dream.NiuFaNet.Bean.LoginBean;
 
 /**
  * @author lfh.
- * @date 2016/8/6.
+ * @date 2018/8/6.
  */
 public interface BindPhoneContract {
 

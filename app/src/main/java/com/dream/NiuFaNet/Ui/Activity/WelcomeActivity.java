@@ -58,6 +58,7 @@ public class WelcomeActivity extends BaseActivityWG implements ShareContract.Vie
                 case Const.GO_GUIDE:
                     mIntent.setClass(WelcomeActivity.this,GuideActivity.class);
                     startActivity(mIntent);
+                    SpUtils.setParam(Const.is_first,true);
                     finish();
                     break;
                 case Const.GO_MAIN:
@@ -114,10 +115,8 @@ public class WelcomeActivity extends BaseActivityWG implements ShareContract.Vie
     public void initDatas() {
         sharePresenter.getShareData("");
         String userId = CommonAction.getUserId();
-        Log.e("tag","userId="+userId);
-        Log.e("tag","szImei="+MyApplication.getDeviceId());
         if(userId.isEmpty()){
-            mainPresenter.getRecomendData(MyApplication.getDeviceId());
+          //  mainPresenter.getRecomendData(MyApplication.getDeviceId());
         }else {
             mainPresenter.getRecomendData(userId);
         }

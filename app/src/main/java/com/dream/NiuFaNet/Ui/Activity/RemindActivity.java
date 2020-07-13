@@ -160,6 +160,7 @@ public class RemindActivity extends CommonActivity1 {
      * @param context
      */
     private void playMusicAndVibrate(Context context){
+
         Uri ringtoneUri = RingtoneManager.getActualDefaultRingtoneUri(context, RingtoneManager.TYPE_RINGTONE);
         if (mediaPlayer == null) {
             mediaPlayer = new MediaPlayer();

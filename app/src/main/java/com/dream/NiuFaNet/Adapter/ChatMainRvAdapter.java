@@ -3,7 +3,7 @@ package com.dream.NiuFaNet.Adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.support.v4.graphics.ColorUtils;
+import androidx.core.graphics.ColorUtils;
 import android.view.View;
 import android.widget.TextView;
 

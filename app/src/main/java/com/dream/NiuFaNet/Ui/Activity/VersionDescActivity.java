@@ -25,7 +25,7 @@ import com.dream.NiuFaNet.Utils.NetUtil;
 import com.dream.NiuFaNet.Utils.ResourcesUtils;
 import com.dream.NiuFaNet.Utils.ToastUtils;
 
-import junit.runner.Version;
+
 
 import java.util.ArrayList;
 import java.util.List;

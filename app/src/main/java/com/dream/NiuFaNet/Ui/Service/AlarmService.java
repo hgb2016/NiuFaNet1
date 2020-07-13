@@ -1,22 +1,15 @@
 package com.dream.NiuFaNet.Ui.Service;
 
-import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
-import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
-import android.os.Bundle;
 import android.os.IBinder;
-import android.os.PowerManager;
-import android.os.SystemClock;
-import android.support.annotation.Nullable;
+
+import androidx.annotation.Nullable;
 import android.util.Log;
 
-import com.dream.NiuFaNet.Bean.BusBean.RefreshBean;
 import com.dream.NiuFaNet.Bean.CalendarDetailBean;
 import com.dream.NiuFaNet.Bean.CalenderedBean;
 import com.dream.NiuFaNet.Component.DaggerNFComponent;
@@ -28,10 +21,7 @@ import com.dream.NiuFaNet.Other.MyApplication;
 import com.dream.NiuFaNet.Presenter.CalendarDetail2Presenter;
 import com.dream.NiuFaNet.Presenter.CalenderMainPresenter;
 import com.dream.NiuFaNet.Utils.DateFormatUtil;
-import com.dream.NiuFaNet.Utils.SpUtils;
 import com.google.gson.Gson;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.Calendar;
 import java.util.Date;

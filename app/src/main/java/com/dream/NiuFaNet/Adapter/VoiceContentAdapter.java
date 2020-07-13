@@ -1,15 +1,12 @@
 package com.dream.NiuFaNet.Adapter;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.widget.TextView;
 
 import com.dream.NiuFaNet.Base.RVBaseAdapter;
 import com.dream.NiuFaNet.Base.RVBaseHolder;
-import com.dream.NiuFaNet.Bean.BaseBean;
 import com.dream.NiuFaNet.Bean.VoiceRvBean;
 import com.dream.NiuFaNet.R;
 import com.dream.NiuFaNet.Utils.ResourcesUtils;

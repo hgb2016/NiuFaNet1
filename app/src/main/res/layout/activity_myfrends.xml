@@ -120,7 +120,7 @@
             android:layout_marginLeft="15dp"
             android:verticalSpacing="5dp"/>
 
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/users_rv"
             android:visibility="visible"
             android:layout_width="match_parent"

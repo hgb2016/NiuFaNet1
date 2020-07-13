@@ -37,7 +37,7 @@ public class SpUtils {
         }else if (type.equals("Float")){
             editor.putFloat(key, (Float)object);
         }
-        editor.commit();
+        editor.apply();
     }
 
     /**
@@ -68,7 +68,7 @@ public class SpUtils {
         SharedPreferences.Editor edit = sp.edit();
 
         edit.clear();
-        edit.commit();
+        edit.apply();
     }
 
     public static void savaUserInfo(String key, Object info) {

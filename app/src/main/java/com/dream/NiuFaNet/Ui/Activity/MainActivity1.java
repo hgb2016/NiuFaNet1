@@ -2,14 +2,12 @@ package com.dream.NiuFaNet.Ui.Activity;
 
 import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.view.Gravity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,14 +17,11 @@ import com.dream.NiuFaNet.Other.Const;
 import com.dream.NiuFaNet.R;
 import com.dream.NiuFaNet.Ui.Fragment.CalenderFragment;
 import com.dream.NiuFaNet.Ui.Fragment.ContactFragment;
-import com.dream.NiuFaNet.Ui.Fragment.FunctionFragment;
 import com.dream.NiuFaNet.Ui.Fragment.MainFragment;
 import com.dream.NiuFaNet.Ui.Fragment.ProgramFragment;
 import com.dream.NiuFaNet.Utils.AppManager;
 import com.dream.NiuFaNet.Utils.Dialog.DialogUtils;
 import com.dream.NiuFaNet.Utils.ImgUtil;
-import com.dream.NiuFaNet.Utils.IntentUtils;
-import com.dream.NiuFaNet.Utils.PopWindowUtil;
 import com.dream.NiuFaNet.Utils.ResourcesUtils;
 import com.dream.NiuFaNet.Utils.SpUtils;
 

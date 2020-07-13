@@ -18,8 +18,8 @@ package com.dream.NiuFaNet.CustomView;
 
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import android.text.Html;
 import android.widget.TextView;
 
@@ -32,11 +32,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import okhttp3.ResponseBody;
-import rx.Subscriber;
 import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func1;
-import rx.schedulers.Schedulers;
 
 /**
  * @author 咖枯

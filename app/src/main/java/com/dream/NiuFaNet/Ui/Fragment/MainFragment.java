@@ -11,13 +11,12 @@ import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.view.ViewPager;
-import android.support.v7.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.GridView;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
@@ -61,7 +60,6 @@ import com.dream.NiuFaNet.Presenter.MainFunctionPresenter;
 import com.dream.NiuFaNet.Presenter.MainPresenter;
 import com.dream.NiuFaNet.R;
 import com.dream.NiuFaNet.Ui.Activity.CalenderDetailActivity;
-import com.dream.NiuFaNet.Ui.Activity.CaseCenterActivity;
 import com.dream.NiuFaNet.Ui.Activity.FunctionActivity;
 import com.dream.NiuFaNet.Ui.Activity.NewCalenderActivity;
 
@@ -74,7 +72,6 @@ import com.dream.NiuFaNet.Utils.DateUtils.DateUtil;
 import com.dream.NiuFaNet.Utils.DateUtils.Week;
 import com.dream.NiuFaNet.Utils.DensityUtil;
 import com.dream.NiuFaNet.Utils.Dialog.DialogUtils;
-import com.dream.NiuFaNet.Utils.IntentUtils;
 import com.dream.NiuFaNet.Utils.ResourcesUtils;
 import com.dream.NiuFaNet.Utils.RvUtils;
 import com.dream.NiuFaNet.Utils.SpUtils;
@@ -325,7 +322,6 @@ public class MainFragment extends BaseFragmentV4 implements MainContract.View, M
                     public void OnBannerClick(int position) {
                         Log.e("tag","link="+link);
                         if (!link.isEmpty()) {
-                            IntentUtils.toActivityWithUrl(CaseCenterActivity.class, getActivity(), link, ResourcesUtils.getString(R.string.app_name));
                         }
                     }
                 });
@@ -432,7 +428,7 @@ public class MainFragment extends BaseFragmentV4 implements MainContract.View, M
                         public void OnBannerClick(int position) {
                             Log.e("tag","link="+link);
                             if (!link.isEmpty()) {
-                                IntentUtils.toActivityWithUrl(CaseCenterActivity.class, getActivity(), link, ResourcesUtils.getString(R.string.app_name));
+
                             }
                         }
                     });

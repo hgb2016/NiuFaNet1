@@ -4,17 +4,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Bundle;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
 
 import com.dream.NiuFaNet.Base.BaseActivityWG;
-import com.dream.NiuFaNet.Base.CommonActivity;
 import com.dream.NiuFaNet.Other.Const;
 import com.dream.NiuFaNet.R;
 import com.dream.NiuFaNet.Utils.SpUtils;
@@ -67,7 +66,7 @@ public class GuideActivity extends BaseActivityWG {
         view4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                join();
+                SpUtils.setParam(Const.is_first, true);
                 Intent intent1=new Intent();
 //                intent1.putExtras(bundleExtra);
                 intent1.setClass(GuideActivity.this, MainActivity.class);
@@ -135,6 +134,6 @@ public class GuideActivity extends BaseActivityWG {
 
     private void join() {
         //记录页已打开过
-        SpUtils.setParam(Const.is_first, true);
+
     }
 }
